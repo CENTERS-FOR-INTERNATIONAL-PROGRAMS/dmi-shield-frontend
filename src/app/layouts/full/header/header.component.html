@@ -5,9 +5,14 @@
   </span>
 
   <div style="display: flex; align-items: center; justify-content: space-between; min-width: 30%;">
-    <span class="toolbar-text">Home</span>
+    <a [routerLink]="['/dashboard']" style="text-decoration: none;">
+      <span class="toolbar-text">Home</span>
+    </a>
     <span class="toolbar-text">Dashboard</span>
-    <span class="toolbar-text">Resources</span>
+
+    <a [routerLink]="['/resources/composites']" style="text-decoration: none;">
+      <span  class="toolbar-text">Resources</span>
+    </a>
   </div>
 
 

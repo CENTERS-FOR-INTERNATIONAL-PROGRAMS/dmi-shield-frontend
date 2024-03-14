@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AuthGuard } from './services/authentication.service';
+import {AssetsComponent} from "./pages/assets_data/assets/assets.component";
 
 const routes: Routes = [
   {
@@ -108,7 +109,8 @@ const routes: Routes = [
         canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/resources/resources.module').then((m) => m.ResourcesModule),
-      }
+      },
+      { path: 'assets/:fileName', component: AssetsComponent },
     ],
   },
   {
