@@ -3,19 +3,18 @@ import { CommonModule } from '@angular/common';
 import {RouterModule} from "@angular/router";
 import {MaterialModule} from "../../material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SurveillanceDataRoutes} from "./resources.routing";
 import {CompositeComponent} from "./composite/composite.component";
-import {ModifyComponent} from "./modify/modify.component";
 import {CFieldsModule} from "../cfields/cfields.module";
 import {TablerIconsModule} from "angular-tabler-icons";
 import {NgxFileDropModule} from "ngx-file-drop";
+import {ResourcesRoutes} from "./resources.routing";
 
 
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(SurveillanceDataRoutes),
+    RouterModule.forChild(ResourcesRoutes),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
@@ -25,7 +24,6 @@ import {NgxFileDropModule} from "ngx-file-drop";
   ],
   declarations: [
     CompositeComponent,
-    ModifyComponent
   ]
 })
 export class ResourcesModule { }
