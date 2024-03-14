@@ -1,65 +1,51 @@
 <div class="m-l-24 m-r-24">
   <mat-card class="composite-data">
     <mat-card-header>
-      <mat-card-title>Uploaded Files</mat-card-title>
+      <mat-card-title>Resources Files</mat-card-title>
 
       <span class="flex-1-auto"></span>
 
-      <a [routerLink]="['/surveillance/modify']" mat-flat-button class="view-button"
-         style="background: var(--Primary-Blue, #222A69);">
-        <span style="color: #FFF">
-        Upload New File
+<!--      <a [routerLink]="['/surveillance/modify']" mat-flat-button class="view-button"-->
+<!--         style="background: var(&#45;&#45;Primary-Blue, #222A69);">-->
+<!--        <span style="color: #FFF">-->
+<!--        Upload New File-->
 
-        </span>
-      </a>
+<!--        </span>-->
+<!--      </a>-->
     </mat-card-header>
 
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-100" color="primary">
         <mat-label>Search</mat-label>
-        <input type="string" matInput [(ngModel)]="FilterSurveillanceData.MFilter.mf_search" (change)="loadComposite()" />
+        <input type="string" matInput [(ngModel)]="FilterResource.MFilter.mf_search" (change)="loadComposite()" />
       </mat-form-field>
     </mat-card-content>
 
     <mat-card-content>
 
-      <table mat-table [dataSource]="Surveillance">
+      <table mat-table [dataSource]="FileNames">
 
-        <ng-container matColumnDef="file_original_name">
+        <ng-container matColumnDef="file_name">
           <th mat-header-cell *matHeaderCellDef> <b>Name</b> </th>
-          <td mat-cell *matCellDef="let element">{{element.file_original_name}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="file_type">
-          <th mat-header-cell *matHeaderCellDef> <b>Type</b> </th>
-          <td mat-cell *matCellDef="let element">{{element.file_type}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="validated">
-          <th mat-header-cell *matHeaderCellDef> <b>Validity Status</b> </th>
-          <td mat-cell *matCellDef="let element">{{ getValidityStatus(element.validated) }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="createdDate">
-          <th mat-header-cell *matHeaderCellDef> <b>Created Date</b> </th>
-          <td mat-cell *matCellDef="let element">{{ parseDate(element.createdDate) }}</td>
+          <td mat-cell *matCellDef="let element">{{element}}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef><b>Actions</b></th>
           <td mat-cell *matCellDef="let element">
-            <mat-menu #actionsMenu="matMenu">
-              <button mat-menu-item (click)="deleteInstance(element)">Delete</button>
-              <button mat-menu-item (click)="downloadFile(element)">Download</button>
+
+            <mat-menu #actionsMenu="matMenu" class="custom-menu" panelClass="custom-menu">
+              <button mat-menu-item (click)="downloadFileStream(element)">
+                <div >Download</div>
+              </button>
             </mat-menu>
 
-            <a mat-stroked-button color="primary" class="view-button" [matMenuTriggerFor]="actionsMenu">
+            <a mat-button color="primary"  [matMenuTriggerFor]="actionsMenu">
               Options
             </a>
 
           </td>
         </ng-container>
-
 
         <tr mat-header-row *matHeaderRowDef="TableHeaders"></tr>
         <tr mat-row *matRowDef="let row; columns: TableHeaders;"></tr>
