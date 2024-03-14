@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
 
   showFiller = false;
   UserInstance: User = new User();
+  showMenu: boolean = false;
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService, private location: Location) {
 
@@ -65,5 +66,9 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/authentication']);
       });
     }
+  }
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
   }
 }

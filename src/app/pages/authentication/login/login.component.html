@@ -1,66 +1,7 @@
-<!--<div class="blank-layout-container justify-content-center align-items-center bg-light-primary">-->
-<!--  <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">-->
-<!--    <div class="col-lg-4 d-flex align-items-center">-->
-<!--      <mat-card class="cardWithShadow boxed-auth">-->
-<!--        <mat-card-content class="p-32">-->
-<!--          <div class="text-center">-->
-<!--            <a [routerLink]="['/dashboard']">-->
-<!--              <img src="./assets/images/logos/logo-morlig.png" class="view-logo align-middle" style="width: 100px;"-->
-<!--                alt="logo" />-->
-<!--            </a>-->
-<!--          </div>-->
-
-<!--          <form class="m-t-30" name="form_user" id="fform_user_authenticate" #AuthenticateUser="ngForm"-->
-<!--            (ngSubmit)="submitInstance()">-->
-<!--            &lt;!&ndash; Email &ndash;&gt;-->
-<!--            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email Address</mat-label>-->
-<!--            <mat-form-field appearance="outline" class="w-100" color="primary">-->
-<!--              <input matInput [formControl]="UserFormControls['user_email']" type="email"-->
-<!--                [(ngModel)]="UserInstance.user_email" />-->
-
-<!--              <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">-->
-<!--                <strong>Required</strong>-->
-<!--              </mat-error>-->
-<!--            </mat-form-field>-->
-
-<!--            &lt;!&ndash; Password &ndash;&gt;-->
-<!--            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>-->
-<!--            <mat-form-field appearance="outline" class="w-100" color="primary">-->
-<!--              <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"-->
-<!--                [type]="hide ? 'password' : 'text'" />-->
-<!--              <img matSuffix (click)="hide = !hide"-->
-<!--                src="{{hide ? 'assets/images/icons/icon-eye-invisible&#45;&#45;black.png' : 'assets/images/icons/icon-eye-visible&#45;&#45;black.png'}}"-->
-<!--                alt="" class="view-icon&#45;&#45;image" />-->
-
-<!--              <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">-->
-<!--                <strong>Required</strong>-->
-<!--              </mat-error>-->
-<!--            </mat-form-field>-->
-
-<!--            <div class="view-align&#45;&#45;right">-->
-<!--              <button type="button" mat-button color="primary" (click)="resetPassword()">-->
-<!--                Forgot Password?-->
-<!--              </button>-->
-
-<!--              <br />-->
-<!--              <br />-->
-
-<!--              <button type="submit" mat-raised-button color="primary">-->
-<!--                Sign In-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </form>-->
-<!--        </mat-card-content>-->
-<!--      </mat-card>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-
 <div
   style="   padding: 2rem; display: flex; margin: auto; max-width: 99%; flex-wrap: wrap; gap: 2rem;">
 
-  <section style="width: 48%;  display: flex; align-items: center; flex-direction: column;">
+  <section style=" width: 48%;  display: flex; align-items: center; flex-direction: column;">
     <header style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
       <div
         style="width: 408px; height: 100px; flex-shrink: 0; background-image: url('assets/images/logos/logo-moh.png');  background-position: 48%; background-size: cover; background-repeat: no-repeat;">
@@ -96,30 +37,74 @@
     </header>
     <br>
     <!-- sign In Form -->
-    <div
-      style="width: 100%; height: 552px; flex-shrink: 0;border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);">
+<!--    <div style="justify-content: center; width: 100%; height: 552px; flex-shrink: 0;border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);">-->
 
-      <form id="form_user_authenticate" style="padding: 2rem; display: grid; gap: 20px; max-width: 20rem; margin: auto;"
-      (ngSubmit)="submitInstance()">
-        <h1
-          style="font-family: Lato,sans-serif,sans-serif; font-size: 26px; font-style: normal; font-weight: 700; line-height: 32px; border-bottom: 2px solid #FFA500; width: fit-content;">
+<!--      <form id="form_user_authenticate" style="padding: 2rem; display: grid; gap: 20px; max-width: 20rem; margin: auto;"-->
+<!--      (ngSubmit)="submitInstance()">-->
+<!--        <h1-->
+<!--          style="font-family: Lato,sans-serif,sans-serif; font-size: 26px; font-style: normal; font-weight: 700; line-height: 32px; border-bottom: 2px solid #FFA500; width: fit-content;">-->
+<!--          Sign in to your account</h1>-->
+
+<!--        <div style="display: flex;flex-direction: column;">-->
+<!--          <mat-label class="form-label">Email Address</mat-label>-->
+<!--            <input matInput [formControl]="UserFormControls['user_email']"-->
+<!--              style="width: 381px; height: 54px; font-size: 18px; flex-shrink: 0; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"-->
+<!--              type="email" placeholder="Your email address" [(ngModel)]="UserInstance.user_email"/>-->
+
+<!--            <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">-->
+<!--              <strong>Required</strong>-->
+<!--            </mat-error>-->
+<!--        </div>-->
+
+<!--        <div style="display: flex;flex-direction: column;">-->
+<!--          <mat-label class="form-label">Password</mat-label>-->
+
+<!--          <div style="position: relative; width: 381px;">-->
+<!--            <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"-->
+<!--                   style="width: 100%; height: 54px; font-size: 18px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"-->
+<!--                   type="{{ hide ? 'password' : 'text' }}" placeholder="Enter your password" />-->
+
+<!--            <img matSuffix (click)="hide = !hide"-->
+<!--                 src="{{hide ? 'assets/images/icons/icon-eye-invisible&#45;&#45;black.png' : 'assets/images/icons/icon-eye-visible&#45;&#45;black.png'}}"-->
+<!--                 alt="" class="view-icon&#45;&#45;image"-->
+<!--                 style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; cursor: pointer;" />-->
+<!--          </div>-->
+<!--            <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">-->
+<!--              <strong>Required</strong>-->
+<!--            </mat-error>-->
+
+<!--        </div>-->
+
+<!--        <input-->
+<!--          style="display: flex; height: 54px;  justify-content: center; align-items: center; flex-shrink: 0; border-radius: 8px; background: var(&#45;&#45;Accent-Orange, #FFA500); border: 0; color: white; font-weight: 700; font-size: large; width: 100%;"-->
+<!--          type="submit" value="Sign In">-->
+<!--        <p> <a href="http://"-->
+<!--               style="font-family: Lato,sans-serif; text-decoration: none; font-size: 14px; font-style: normal; font-weight: 400; line-height: 32px;">Forgot-->
+<!--          password?</a></p>-->
+<!--      </form>-->
+
+<!--    </div>-->
+    <div style="position: relative; width: 100%; height: 552px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);">
+      <form id="form_user_authenticate" style="padding: 2rem; display: grid; gap: 20px; max-width: 20rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+            (ngSubmit)="submitInstance()">
+        <h1 style="font-family: Lato,sans-serif,sans-serif; font-size: 26px; font-style: normal; font-weight: 700; line-height: 32px; border-bottom: 2px solid #FFA500; width: fit-content;">
           Sign in to your account</h1>
 
-        <div style="display: flex;flex-direction: column;">
+        <div style="display: flex; flex-direction: column;">
           <mat-label class="form-label">Email Address</mat-label>
-            <input matInput [formControl]="UserFormControls['user_email']"
-              style="width: 381px; height: 54px; font-size: 18px; flex-shrink: 0; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"
-              type="email" placeholder="Your email address" [(ngModel)]="UserInstance.user_email"/>
+          <input matInput [formControl]="UserFormControls['user_email']"
+                 style="width: 100%; height: 54px; font-size: 18px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"
+                 type="email" placeholder="Your email address" [(ngModel)]="UserInstance.user_email"/>
 
-            <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
-              <strong>Required</strong>
-            </mat-error>
+          <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
+            <strong>Required</strong>
+          </mat-error>
         </div>
 
-        <div style="display: flex;flex-direction: column;">
+        <div style="display: flex; flex-direction: column;">
           <mat-label class="form-label">Password</mat-label>
 
-          <div style="position: relative; width: 381px;">
+          <div style="position: relative; width: 100%;">
             <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"
                    style="width: 100%; height: 54px; font-size: 18px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"
                    type="{{ hide ? 'password' : 'text' }}" placeholder="Enter your password" />
@@ -129,30 +114,21 @@
                  alt="" class="view-icon--image"
                  style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; cursor: pointer;" />
           </div>
-<!--            <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"-->
-<!--              style="width: 381px; height: 54px; font-size: 18px; flex-shrink: 0; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"-->
-<!--              type="password" placeholder="Enter your password"/>-->
-
-<!--            <img matSuffix (click)="hide = !hide"-->
-<!--                 src="{{hide ? 'assets/images/icons/icon-eye-invisible&#45;&#45;black.png' : 'assets/images/icons/icon-eye-visible&#45;&#45;black.png'}}"-->
-<!--                 alt="" class="view-icon&#45;&#45;image" />-->
-
-
-            <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
-              <strong>Required</strong>
-            </mat-error>
+          <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
+            <strong>Required</strong>
+          </mat-error>
 
         </div>
 
         <input
-          style="display: flex; height: 54px;  justify-content: center; align-items: center; flex-shrink: 0; border-radius: 8px; background: var(--Accent-Orange, #FFA500); border: 0; color: white; font-weight: 700; font-size: large; width: 100%;"
+          style="display: flex; height: 54px; justify-content: center; align-items: center; border-radius: 8px; background: var(--Accent-Orange, #FFA500); border: 0; color: white; font-weight: 700; font-size: large; width: 100%;"
           type="submit" value="Sign In">
         <p> <a href="http://"
                style="font-family: Lato,sans-serif; text-decoration: none; font-size: 14px; font-style: normal; font-weight: 400; line-height: 32px;">Forgot
           password?</a></p>
       </form>
-
     </div>
+
   </section>
   <aside
     style="width: 48%; display: flex; align-items: center; justify-content: center; background: var(--gradient-secondary-blue, linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%)); ">
