@@ -103,6 +103,11 @@ const routes: Routes = [
         canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/home/home.module').then((m) => m.HomeModule),
+      },{
+        path: 'resources',
+        canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        loadChildren: () =>
+          import('./pages/resources/resources.module').then((m) => m.ResourcesModule),
       }
     ],
   },
