@@ -17,7 +17,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo cp -rf /etc/deploy_shield_frontend/* /tmp/dmi-shield-frontend-backup/
-          cd /var/lib/var/lib/shield_workflows/dmi-shield-frontend
+          cd /var/lib/shield_workflows/dmi-shield-frontend
           sudo git switch main
           sudo rm -rf dist
           sudo rm package-lock.json
