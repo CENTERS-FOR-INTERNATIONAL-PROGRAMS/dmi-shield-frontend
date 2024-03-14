@@ -11,8 +11,7 @@ import {HttpClient} from "@angular/common/http";
 export class CompositeComponent implements OnInit{
   Surveillance: Surveillance[] = [];
   TableHeaders: string[] = [ "file_original_name", "file_type", "validated", "createdDate", "actions"];
-  SurveillanceInstance: Surveillance;
-  FilesIdList: string[] = [];
+
   FilterSurveillanceData: Surveillance = new Surveillance();
 
   constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
