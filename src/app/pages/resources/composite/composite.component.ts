@@ -45,7 +45,7 @@ export class CompositeComponent implements OnInit{
 
 
   getFileNames(): void {
-    const url = 'http://localhost:3000/resources';
+    const url = 'http://localhost:30009/resources';
 
     this.http.get<{ fileNames: string[] }>(url)
       .subscribe(data => {
@@ -54,6 +54,7 @@ export class CompositeComponent implements OnInit{
         // Process the file names as needed
       }, error => {
         console.error('Error fetching resource file names:', error);
+        this.FileNames = ["IDSR Technical Guidelines for Kenya Final 06.09.2022-7.pdf", "ADAM MOH TRAINING updated-2.pptx"];
       });
   }
 
