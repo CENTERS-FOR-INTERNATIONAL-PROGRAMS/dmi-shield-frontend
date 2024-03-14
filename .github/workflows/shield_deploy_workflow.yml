@@ -25,7 +25,7 @@ jobs:
           sudo git stash
           sudo git pull
           sudo npm install
-          sudo cp -rf /var/lib/var/lib/shield_workflows/config_files/* src/app/
+          sudo cp -rf /var/lib/shield_workflows/config_files/* src/app/
           sudo ng build --configuration production
           sudo rm -rf /etc/deploy_shield_frontend/*
           sudo cp -rf dist/* /etc/deploy_shield_frontend/
