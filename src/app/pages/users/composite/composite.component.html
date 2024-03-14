@@ -1,0 +1,43 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>Users</mat-card-title>
+
+    <span class="flex-1-auto"></span>
+
+    <a [routerLink]="['/users/modify']" mat-flat-button color="primary" class="view-button"
+      (click)="awareness.setFocused('user', '')">
+      Create User
+    </a>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-label>Search</mat-label>
+      <input type="string" matInput [(ngModel)]="FilterUser.MFilter.mf_search" (change)="loadComposite()" />
+    </mat-form-field>
+
+    <mat-card class="b-1 shadow-none view-card" *ngFor="let SeekUser of Users">
+      <mat-card-content>
+        <a mat-stroked-button color="accent" class="view-button view-float--right" [routerLink]="['/users/modify_role']"
+          (click)="awareness.setFocused('user', SeekUser._id)">
+          Role
+        </a>
+
+        <a mat-stroked-button color="primary" class="view-button view-float--right" [routerLink]="['/users/modify']"
+          (click)="awareness.setFocused('user', SeekUser._id)">
+          Edit
+        </a>
+
+        <a mat-stroked-button color="primary" class="view-button view-float--right" [routerLink]="['/users/view']"
+          (click)="awareness.setFocused('user', SeekUser._id)">
+          View
+        </a>
+
+        <p class="view-text--size-large">
+          {{ SeekUser.user_name }}
+          ({{ SeekUser.user_email }})
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

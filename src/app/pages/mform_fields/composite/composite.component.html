@@ -1,0 +1,79 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title> {{ FocusedMForm._id != "" ? FocusedMForm.CFields.values['form_label']['field_value'] : '' }}
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      <p>Attached Fields</p>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-label>Search</mat-label>
+      <input type="string" matInput [(ngModel)]="FilterFField.MFilter.mf_search" (change)="searchFFields()" />
+    </mat-form-field>
+
+    <mat-card *ngFor="let SeekFField of CompositeFFields" appearance="outlined">
+      <mat-card-content>
+        <a mat-stroked-button color="warn" class="view-button view-float--right" (click)="removeFField(SeekFField._id)">
+          Remove
+        </a>
+
+        <a mat-stroked-button color="primary" class="view-button view-float--right"
+          [routerLink]="['/mform_fields/modify']" (click)="awareness.setFocused('ffield', SeekFField._id)">
+          Edit
+        </a>
+
+        <a mat-stroked-button color="primary" class="view-button view-float--right"
+          [routerLink]="['/mfield_options/composite']" (click)="awareness.setFocused('mfield', SeekFField.mfield_id)"
+          *ngIf="(SeekFField.CFields.values['field_type']['field_value'][0]['value'] == 'single_select') || (SeekFField.CFields.values['field_type']['field_value'][0]['value'] == 'multiple_select')">
+          Field Options
+        </a>
+
+        <p class="view-text--size-large">
+          {{ SeekFField.CFields.values['field_index']['field_value'] }}.
+          {{ SeekFField.CFields.values['field_label']['field_value'] }},
+          {{ SeekFField.CFields.values['field_name']['field_value'] }}
+          ({{ SeekFField.CFields.values['field_type']['field_value'][0] }})
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title> Available Fields </mat-card-title>
+    <mat-card-subtitle>
+      <p>Attach fields to the <strong>{{ FocusedMForm.CFields.values['form_label']['field_value'] }}</strong> form.</p>
+    </mat-card-subtitle>
+
+    <span class="flex-1-auto"></span>
+
+    <a mat-flat-button color="primary" class="view-button" [routerLink]="['/fields/modify']"
+      (click)="awareness.setFocused('mfield', '')">
+      * New Field
+    </a>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-label>Search</mat-label>
+      <input type="string" matInput [(ngModel)]="FilterMField.MFilter.mf_search" (change)="searchMFields()" />
+    </mat-form-field>
+
+    <mat-card *ngFor="let SeekFField of CompositeMFields" appearance="outlined">
+      <mat-card-content>
+        <a mat-stroked-button color="primary" class="view-button view-float--right" (click)="attachFField(SeekFField)">
+          Attach
+        </a>
+
+        <p class="view-text--size-large">
+          {{ SeekFField.CFields.values['field_label']['field_value'] }}
+          ({{ SeekFField.CFields.values['field_type']['field_value'][0] }})
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

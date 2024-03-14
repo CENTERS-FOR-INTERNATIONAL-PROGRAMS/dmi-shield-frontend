@@ -1,0 +1,77 @@
+<div *ngFor="let SeekFField of FFields">
+  <div *ngIf="SeekFField.MCodeLogic.IMCodeInstance.mcode_result">
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">
+      {{SeekFField.mfields['field_label']['field_value']}}
+    </mat-label>
+
+    <!-- Number -->
+    <div *ngIf="SeekFField.mfields['field_type']['field_value'][0]['value'] == 'number'">
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input type="number" matInput [formControl]="SeekFField._form_control"
+          [(ngModel)]="SeekFField.DFieldInstance.df_value" (input)="evaluateLogic()"
+          (ngModelChange)="initializeLogic(SeekFField)" />
+
+        <mat-error *ngIf="SeekFField._form_control.hasError('required')">
+          <strong>Required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- String -->
+    <div *ngIf="SeekFField.mfields['field_type']['field_value'][0]['value'] == 'string'">
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <input type="string" matInput [formControl]="SeekFField._form_control"
+          [(ngModel)]="SeekFField.DFieldInstance.df_value" (input)="evaluateLogic()"
+          (ngModelChange)="initializeLogic(SeekFField)" />
+
+        <mat-error *ngIf="SeekFField._form_control.hasError('required')">
+          <strong>Required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Date -->
+    <div *ngIf="SeekFField.mfields['field_type']['field_value'][0]['value'] == 'date'">
+      <mat-form-field appearance="outline" class="w-100" color="primary">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="SeekFField.DFieldInstance.df_value"
+          [formControl]="SeekFField._form_control" (dateChange)="evaluateLogic()"
+          (ngModelChange)="initializeLogic(SeekFField)">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!-- Single Select -->
+    <div *ngIf="SeekFField.mfields['field_type']['field_value'][0]['value'] == 'single_select'">
+      <mat-selection-list [formControl]="SeekFField._form_control" [(ngModel)]="SeekFField.DFieldInstance.df_value"
+        [multiple]="false" (ngModelChange)="initializeLogic(SeekFField)" (selectionChange)="evaluateLogic()">
+
+        <mat-list-option *ngFor="let field_option of SeekFField.mfield_options"
+          [value]="field_option['mfields']['fo_value']['field_value']" class="b-1 m-b-12 view-border-radius--30">
+          {{ field_option['mfields']['fo_label']['field_value'] }}
+        </mat-list-option>
+
+        <mat-error *ngIf="SeekFField._form_control.hasError('required')">
+          <strong>Required</strong>
+        </mat-error>
+      </mat-selection-list>
+    </div>
+
+    <!-- Multiple Select -->
+    <div *ngIf="SeekFField.mfields['field_type']['field_value'][0]['value'] == 'multiple_select'">
+      <mat-selection-list [formControl]="SeekFField._form_control" [(ngModel)]="SeekFField.DFieldInstance.df_value"
+        [multiple]="true" (ngModelChange)="initializeLogic(SeekFField)" (selectionChange)="evaluateLogic()">
+
+        <mat-list-option *ngFor="let field_option of SeekFField.mfield_options"
+          [value]="field_option['mfields']['fo_value']['field_value']" class="b-1 m-b-12 view-border-radius--30">
+          {{ field_option['mfields']['fo_label']['field_value'] }}
+        </mat-list-option>
+
+        <mat-error *ngIf="SeekFField._form_control.hasError('required')">
+          <strong>Required</strong>
+        </mat-error>
+      </mat-selection-list>
+    </div>
+  </div>
+</div>

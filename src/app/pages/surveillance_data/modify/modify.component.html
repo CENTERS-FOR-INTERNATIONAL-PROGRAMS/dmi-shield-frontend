@@ -1,0 +1,65 @@
+<div class="m-l-24 m-r-24">
+  <mat-card class="composite-data">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>File</h3>
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        <p>{{'Upload'}}</p>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="m-t-30" name="form_surveillance" id="form_surveillance_modify" #ModifyMField="ngForm">
+
+
+        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+                       (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" [multiple]=true
+                       [accept]="allowedFiles">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <a (click)="openFileSelector()">
+              Click or drop a file here to upload - {{allowedFiles}}
+            </a>
+          </ng-template>
+        </ngx-file-drop>
+
+        <mat-card class="b-1 shadow-none view-card" *ngFor="let File of Files; let i=index">
+          <mat-card-content>
+            <a mat-stroked-button color="warn" class="view-button view-float--right" (click)="removeFile(i)">
+              Remove
+            </a>
+
+            <a mat-stroked-button color="primary" class="view-button view-float--right"
+               *ngIf="describeFileType(File)">
+              <select  class="custom-select mb-3 view-float--right border-none" (change)="assignDocumentType($event, i)">
+                <option value="">Select File Type</option>
+                <option *ngFor="let DocumentType of DocumentTypes">
+                  {{ DocumentType }}
+                </option>
+              </select>
+            </a>
+
+            <p class="view-text--size-large">
+              {{ File.fileEntry.name }}
+            </p>
+
+          </mat-card-content>
+        </mat-card>
+
+        <div class="view-align--right">
+          <mat-spinner *ngIf="MFieldInstance._processing" class="view-spinner--inline"></mat-spinner>
+
+          <i-tabler *ngIf="MFieldInstance._action_result" class="view-icon--inline view-color--green" name="circle-check-filled">
+
+          </i-tabler>
+
+          <button type="submit" mat-flat-button color="primary" class="view-button" (click)="SubmitInstance()">
+            {{MFieldInstance._id == '' ? 'Submit' : 'Update'}}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>

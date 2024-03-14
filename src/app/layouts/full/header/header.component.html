@@ -1,0 +1,33 @@
+<mat-toolbar style="background-color:transparent;">
+
+  <span >
+    <img style="display: flex; align-items: center; justify-content: space-between;width: 150px; margin: auto;" src="https://s3-alpha-sig.figma.com/img/ec93/783c/5a1a8d55aa830eeb2fcdd9a93353c4d0?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UxwpxaOfSzSr6oPsgzy50L4oS3cK4kvk5cmcsPMzRE7MRKU~sLZAnv8UuDwvvCrIAJdIoBLW6oouZ46HPXBShRHkjgNSnK5gZazjApqZ6VV7v4CXLDB1nK04oiDXk7lqPqCQ3hhn4rdaEMWcyOoNsjU5kjLsqT9qrasUc3J8TS0HNidzx3vdENHd62a2F8S-7AFHTaqFbF0YY1I5~UFfw31n9UkC3XHgkUyOwttcB2s0-gPuKZBUVXItljPwX8M7iF9aDEdXu9KGzshtk3ildf~fkxmVjcsf~zWTrtfnjZ0JrIw85ysaJ1VOVp1y9inQ8-H8UIgshc5nWOEu~KVrTw__" alt="Shield Logo">
+  </span>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; min-width: 30%;">
+    <span class="toolbar-text">Home</span>
+    <span class="toolbar-text">Dashboard</span>
+    <span class="toolbar-text">Resources</span>
+  </div>
+
+<!--  <div *ngIf="UserInstance._id; else signUpLoginButton">-->
+<!--  <div >-->
+<!--    <a style="text-decoration: none;" [routerLink]="['/authentication/login']">-->
+<!--      <button               class="toolbar-sign-button">Sign-->
+<!--        In</button>-->
+<!--    </a>-->
+<!--  </div>-->
+  <div >
+    <a style="text-decoration: none;" [routerLink]="['/surveillance/composites']">
+      <button               class="toolbar-sign-button">Sign
+        In</button>
+    </a>
+  </div>
+
+<!--  <ng-template #signUpLoginButton>-->
+<!--    <div class="E" style="color: black; font-size: 20px; font-family: Lato, sans-serif; font-weight: 800; line-height: 32px; word-wrap: break-word">E</div>-->
+
+<!--  </ng-template>-->
+
+</mat-toolbar>
+

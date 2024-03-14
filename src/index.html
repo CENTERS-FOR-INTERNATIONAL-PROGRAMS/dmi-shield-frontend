@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Shield</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/logos/logo-morlig.png" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1976d2">
+
+  <style>
+
+    .composite-data{
+      width: 100%;
+      position: absolute;
+      background: white;
+      overflow: hidden;
+    }
+
+    .form-label{
+      font-family: Lato,sans-serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 32px;
+    }
+
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .custom-footer {
+      width: 100%;
+      height: 291px;
+      background: #24ABCE;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .main-container {
+      border-radius: 8px;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
+      padding: 2rem;
+    }
+
+    .this{
+      display: flex;
+      width: 100%;
+      align-items: center;
+      min-height: 20vh;
+      width: 90%;
+      margin: auto;
+    }
+
+    .this-main-container{
+      border-radius: 8px;
+      width: 100%;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
+      padding: 2rem;
+    }
+
+    .hero {
+      border-radius: 8px;
+      height: 787px;
+      width: 1438px;
+    }
+    .text-1 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 64px;
+      font-family: Lato;
+      line-height: 76%;
+      color: #333333;
+    }
+    .text-2 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 26px;
+      font-family: Lato;
+      line-height: 32%;
+      color: #03062c;
+    }
+    .navlinks {
+      height: 32px;
+      width: 339px;
+    }
+    .text-3 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 18px;
+      font-family: Lato;
+      line-height: 32%;
+      color: #333333;
+    }
+    .text-4 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 18px;
+      font-family: Lato;
+      line-height: 32%;
+      color: #333333;
+    }
+    .text-5 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 18px;
+      font-family: Lato;
+      line-height: 32%;
+      color: #333333;
+    }
+    .findtutorbtn {
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0px 25px;
+      gap: 10px;
+      background-color: #ffa500;
+    }
+    .text-6 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 18px;
+      font-family: Lato;
+      line-height: 32%;
+      color: #ffffff;
+    }
+
+    .toolbar-sign-button{
+      display: flex; width: 122px; height: 39px; padding: 0px 25px;  justify-content: center; align-items: center; gap: 10px; flex-shrink: 0; border-radius: 8px; background: var(--Accent-Orange, #FFA500); border: 0; color: white; font-weight: 700; font-size: large;
+    }
+    .signupbtn {
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0px 25px;
+      gap: 10px;
+      background-color: #ffa500;
+    }
+    .text-7 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 18px;
+      font-family: Lato;
+      line-height: 32%;
+      color: #ffffff;
+    }
+    .ellipse-6 {
+      opacity: 0.4000000059604645;
+      height: 216px;
+      width: 208px;
+    }
+    .learnmore {
+      height: 32px;
+      width: 173px;
+    }
+    .ellipse-8 {
+      height: 24px;
+      width: 24px;
+    }
+    .text-8 {
+      text-align: left;
+      vertical-align: top;
+      font-size: 18px;
+      font-family: Lato;
+      line-height: 32%;
+      color: #03062c;
+    }
+    .img-9 {
+      height: 128px;
+      width: 229px;
+    }
+    .img-1-0 {
+      height: 692px;
+      width: 692px;
+    }
+    .toolbar-text {
+      color: #333; /* Body/bold */
+      font-family: Lato, sans-serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 32px; /* 177.778% */
+    }
+
+
+    .welcome-container {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 5px;
+    }
+
+    .raised-button-color {
+      background-color: #FFA500;
+    }
+
+    .toolbar-text-size {
+      font-size: 20px;
+    }
+    .shield-logo {
+      width: 150px; /* Adjust the width as needed */
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    .right-aligned-image {
+      float: right;
+      margin-left: 10px;
+      width: 692px;
+      height: auto;
+    }
+
+    .centered-options {
+      flex: 1 1 auto;
+      text-align: center;
+      /*display: flex;*/
+      /*justify-content: center;*/
+      /*align-items: center;*/
+    }
+
+    .right-aligned-options {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    mat-toolbar {
+      background-color: #FFA500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .spacer {
+      flex: 1 1 auto
+    }
+
+    .container {
+      height: 100vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+
+    .nav {
+      position: fixed;
+      height: 50px;
+      display: flex;
+    }
+
+    .nav.hide-nav {
+      display: none; /* You can play on opacity for nice transitions*/
+    }
+
+    .view-button {
+      margin: 5px 5px 5px 0 !important;
+    }
+
+    .view-icon--image {
+      width: 20px;
+      margin-right: 5px;
+      border-radius: 10px;
+    }
+
+    .view-icon--image:hover {
+      cursor: pointer;
+      background: rgb(230, 230, 230);
+    }
+
+    .view-spinner--inline {
+      width: 30px !important;
+      height: 30px !important;
+      display: inline-block !important;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    .view-icon--inline {
+      width: 30px !important;
+      height: 30px !important;
+      display: inline-block !important;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    .view-color--green {
+      color: green;
+    }
+
+    .view-border-radius--30 {
+      border-radius: 30px !important;
+    }
+
+    /* View Card */
+    .view-card {
+      margin: 20px 0 !important;
+    }
+
+    .view-float--right {
+      float: right;
+    }
+
+     .border-none{
+       border:0;
+       outline:0;
+    }
+
+
+
+    .view-text--size-large {
+      font-size: large;
+    }
+
+    .view--text-title {
+      display: inline-block;
+      margin: 0 5px 8px;
+      padding: 0 10px;
+      min-width: 180px;
+    }
+
+    .view--text-title .text {
+      color: black;
+    }
+
+    .view--text-title .title {
+      font-size: 13px;
+    }
+
+    mat-error {
+      margin: 0 0 20px;
+    }
+
+    .mat-mdc-form-field-hint-wrapper, .mat-mdc-form-field-error-wrapper {
+      position: relative !important;
+    }
+
+    /* Alignment */
+    .view-align--right {
+      text-align: right;
+    }
+
+    .view-align--left {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <app-root></app-root>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+
+<script>
+  var global = global || window
+</script>
+
+</html>

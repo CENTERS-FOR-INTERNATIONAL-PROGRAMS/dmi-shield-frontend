@@ -1,0 +1,57 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>
+      {{ FocusedMField._id != "" ? FocusedMField.CFields.values['field_label']['field_value'] : '' }}
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      <p>Field Options</p>
+    </mat-card-subtitle>
+
+    <span class="flex-1-auto"></span>
+
+    <a mat-flat-button color="primary" class="view-button" [routerLink]="['/mfield_options/modify']"
+      (click)="awareness.setFocused('mfield_option', '')">
+      * New Field Option
+    </a>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-label>Search</mat-label>
+      <input type="string" matInput [(ngModel)]="FilterFieldOption.MFilter.mf_search" (change)="loadComposite()" />
+    </mat-form-field>
+
+    <mat-card class="b-1 shadow-none view-card" *ngFor="let SeekFieldOption of CompositeFieldOptions">
+      <mat-card-content>
+        <a mat-stroked-button color="warn" class="view-button view-float--right"
+          (click)="removeInstance(SeekFieldOption._id)">
+          Remove
+        </a>
+
+        <a mat-stroked-button color="primary" class="view-button view-float--right"
+          [routerLink]="['/mfield_options/modify']"
+          (click)="awareness.setFocused('mfield_option', SeekFieldOption._id)">
+          Edit
+        </a>
+
+        <div class="view-text--size-large">
+          <div class="view--text-title">
+            <div class="text">{{SeekFieldOption.CFields.values['fo_label']['field_value']}}</div>
+            <label class="title">Label</label>
+          </div>
+
+          <div class="view--text-title">
+            <div class="text">{{SeekFieldOption.CFields.values['fo_value']['field_value']}}</div>
+            <label class="title">Value</label>
+          </div>
+
+          <div class="view--text-title">
+            <div class="text">{{SeekFieldOption.CFields.values['fo_tag']['field_value']}}</div>
+            <label class="title">Tag</label>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,28 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>
+      <h3>Field</h3>
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      <p>{{MFieldInstance._id == '' ? 'Create' : 'Edit'}}</p>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="m-t-30" name="form_user" id="form_user_modify" #ModifyMField="ngForm" (ngSubmit)="submitInstance()">
+      <app-cfields [CFields]="MFieldInstance.CFields"></app-cfields>
+
+      <div class="view-align--right">
+        <mat-spinner *ngIf="MFieldInstance._processing" class="view-spinner--inline"></mat-spinner>
+
+        <i-tabler *ngIf="MFieldInstance._action_result" class="view-icon--inline view-color--green"
+          name="circle-check-filled"></i-tabler>
+
+        <button type="submit" mat-flat-button color="primary" class="view-button">
+          {{MFieldInstance._id == '' ? 'Create' : 'Update'}}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

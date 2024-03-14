@@ -1,0 +1,57 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Configurations</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="b-t-1">
+    <div class="row">
+      <div class="col-6">
+        <mat-card class="b-1 shadow-none">
+          <mat-card-header>
+            <mat-card-title>Fields</mat-card-title>
+            <mat-card-subtitle class="mat-body-1">Fields are areas that accept input form users. They come together to
+              make a form e.g.
+              case invetigation form</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content class="b-t-1">
+            <a [routerLink]="['/fields/composite']" mat-flat-button color="primary" class="view-button">
+              Configure
+            </a>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-6">
+        <mat-card class="b-1 shadow-none">
+          <mat-card-header>
+            <mat-card-title>Forms</mat-card-title>
+            <mat-card-subtitle class="mat-body-1">A group of fields</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content class="b-t-1">
+            <a [routerLink]="['/mforms/composite']" mat-flat-button color="primary" class="view-button"
+              (click)="setFocusedMForm('')">
+              Manage
+            </a>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-6">
+        <mat-card class="b-1 shadow-none">
+          <mat-card-header>
+            <mat-card-title>Users</mat-card-title>
+            <mat-card-subtitle class="mat-body-1">Create, edit and delete</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content class="b-t-1">
+            <a [routerLink]="['/users/composite']" mat-flat-button color="primary" class="view-button">
+              Manage
+            </a>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

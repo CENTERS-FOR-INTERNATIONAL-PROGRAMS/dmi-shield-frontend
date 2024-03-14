@@ -1,0 +1,40 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>Syndromes</mat-card-title>
+
+    <span class="flex-1-auto"></span>
+
+    <a mat-flat-button color="primary" class="view-button" [routerLink]="['/syndromes/modify']" (click)="setFocused()">
+      Create Syndrome
+    </a>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-card class="b-1 shadow-none view-card" *ngFor="let SeekSyndrome of CompositeSyndromes">
+      <mat-card-header>
+        <mat-card-title>{{ SeekSyndrome.syndrome_name }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>{{ SeekSyndrome.syndrome_description }}</p>
+      </mat-card-content>
+
+      <mat-card-header>
+        <a mat-flat-button color="primary" class="view-button" [routerLink]="['/mforms/composite']"
+          (click)="setFocused(SeekSyndrome._id)">
+          Forms
+        </a>
+
+        <a mat-flat-button color="primary" class="view-button" [routerLink]="['/diseases/composite']"
+          (click)="setFocused(SeekSyndrome._id)">
+          Diseases
+        </a>
+
+        <a mat-flat-button color="primary" class="view-button" [routerLink]="['/syndromes/modify']"
+          (click)="setFocused(SeekSyndrome._id)">
+          Edit
+        </a>
+      </mat-card-header>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

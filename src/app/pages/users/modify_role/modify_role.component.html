@@ -1,0 +1,41 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>
+      <h3>
+        {{UserInstance._id == '' ? 'User' : UserInstance.user_name}}
+      </h3>
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      <p>
+        Edit Role
+      </p>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="m-t-30" name="form_user" id="form_user_modify" #ModifyUser="ngForm" (ngSubmit)="submitInstance()">
+      <mat-selection-list [formControl]="UserFormControls['user_role']" [(ngModel)]="UserInstance.user_role"
+        [multiple]="false">
+
+        <mat-list-option class="b-1 m-b-12 view-border-radius--30" *ngFor="let SeekRole of CompositeRoles"
+          [value]="SeekRole.value">{{SeekRole.name}}</mat-list-option>
+
+        <mat-error *ngIf="UserFormControls['user_role'].hasError('required')">
+          <strong>Required</strong>
+        </mat-error>
+      </mat-selection-list>
+
+      <div class="view-align--right">
+        <mat-spinner *ngIf="UserInstance.MStatus.ms_processing" class="view-spinner--inline"></mat-spinner>
+
+        <i-tabler *ngIf="UserInstance.MStatus.ms_action_result" class="view-icon--inline view-color--green"
+          name="circle-check-filled"></i-tabler>
+
+        <button type="submit" mat-flat-button color="primary">
+          Update
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
