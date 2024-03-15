@@ -45,4 +45,15 @@ export class AppDashboardComponent {
   scroll(el: HTMLElement) {
     el.scrollIntoView({behavior: 'smooth'});
   }
+
+  scrollToViewMore() {
+    // Get a reference to the viewMoreContent element
+    const viewMoreContent = document.querySelector('#viewMoreContent');
+
+    // Check if the element exists
+    if (viewMoreContent) {
+      // Scroll to the viewMoreContent element
+      viewMoreContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }
