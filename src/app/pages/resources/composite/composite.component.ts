@@ -45,7 +45,7 @@ export class CompositeComponent implements OnInit{
 
 
   getFileNames(): void {
-    const url = 'http://localhost:30009/resources';
+    const url = 'http://localhost:3000/resources';
 
     this.http.get<{ fileNames: string[] }>(url)
       .subscribe(data => {
