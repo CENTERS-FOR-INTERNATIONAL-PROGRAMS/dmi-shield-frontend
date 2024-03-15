@@ -111,6 +111,12 @@ const routes: Routes = [
           import('./pages/resources/resources.module').then((m) => m.ResourcesModule),
       },
       { path: 'assets/:fileName', component: AssetsComponent },
+      {
+        path: 'thresholds',
+        canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        loadChildren: () =>
+          import('./pages/thresholds/thresholds.module').then((m) => m.ThresholdsModule),
+      }
     ],
   },
   {
