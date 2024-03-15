@@ -14,7 +14,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
 export class AppSideLoginComponent {
 
   hide: boolean = true;
-  UserInstance: User = new User();
+  AuthUser: User = new User();
   UserFormControls: CompositeFormControls = {};
   user_password: string = "";
 
@@ -30,33 +30,36 @@ export class AppSideLoginComponent {
     this.UserFormControls["user_password"] = new FormControl('', [Validators.required]);
   }
 
-  resetPassword() {
-    console.log("Reset password");
-  }
 
-  submitInstance(): void {
+  validateInstance(): boolean {
     let is_valid = true;
 
     // Validate required fields
     Object.keys(this.UserFormControls).forEach(fc_key => {
-      if (this.UserFormControls[fc_key].hasError("required")) {
+      if (this.UserFormControls[fc_key].hasError("required") ||
+        this.UserFormControls[fc_key].hasError("email")) {
         is_valid = false;
       }
     });
 
-    if (is_valid) {
-      this.UserInstance.user_password = this.user_password;
-      this.UserInstance.authenticateInstance((res: any) => {
+    return is_valid;
+  }
+
+  submitInstance(): void {
+    if (this.validateInstance()) {
+      this.AuthUser.user_password = this.user_password;
+      this.AuthUser.authenticateInstance((res: any) => {
         if (res) {
           this.user_password = "";
 
-          this.awareness.setFocused("authenticated", this.UserInstance._id, (res: any) => {
+          this.awareness.setFocused("authenticated", this.AuthUser._id, (res: any) => {
             this.router.navigate(['/authentication']);
           });
 
           this.communication.showSuccessToast();
         }
       }, (err: any) => {
+        console.log('err', err)
         this.communication.showToast("Failed! Check your credentials and try again.");
       });
     } else {

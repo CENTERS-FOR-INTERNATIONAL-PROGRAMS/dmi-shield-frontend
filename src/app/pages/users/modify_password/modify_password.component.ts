@@ -68,13 +68,13 @@ export class ModifyPasswordComponent implements OnInit {
     if (is_valid && this.user_password_matched) {
       this.UserInstance.user_password = sha256(this.user_password + "mlg").toString()
 
-      this.UserInstance.putInstance((res: any) => {
-        this.UserInstance.user_password = "~";
-        this.location.back();
-        this.communication.showSuccessToast();
-      }, (err: any) => {
-        this.communication.showFailedToast();
-      });
+      // this.UserInstance.putInstance((res: any) => {
+      //   this.UserInstance.user_password = "~";
+      //   this.location.back();
+      //   this.communication.showSuccessToast();
+      // }, (err: any) => {
+      //   this.communication.showFailedToast();
+      // });
     } else {
       this.communication.showToast("Kindly fill in all required fields!");
     }

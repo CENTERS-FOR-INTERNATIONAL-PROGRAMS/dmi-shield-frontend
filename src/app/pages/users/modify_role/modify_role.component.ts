@@ -67,11 +67,11 @@ export class ModifyRoleComponent implements OnInit {
     // #endregion
 
     if (is_valid) {
-      this.UserInstance.putInstance((res: any) => {
-        this.communication.showSuccessToast();
-      }, (err: any) => {
-        this.communication.showFailedToast();
-      });
+      // this.UserInstance.putInstance((res: any) => {
+      //   this.communication.showSuccessToast();
+      // }, (err: any) => {
+      //   this.communication.showFailedToast();
+      // });
     } else {
       this.communication.showToast("Kindly fill in all required fields!");
     }

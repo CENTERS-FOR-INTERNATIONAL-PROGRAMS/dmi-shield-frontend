@@ -4,57 +4,66 @@
       <mat-card class="cardWithShadow boxed-auth">
         <mat-card-content class="p-32">
           <div class="text-center">
-            <a [routerLink]="['/dashboard']">
-              <img src="./assets/images/logos/dark-logo.svg" class="align-middle m-2" alt="logo" />
+            <a [routerLink]="['/home']">
+              <img src="./assets/images/logos/logo-moh.png" class="view-logo align-middle" style="width: 100%;"
+                   alt="logo" />
             </a>
           </div>
 
-          <div class="row m-t-24 custom-row">
-            <div class="col-12 col-sm-6">
-              <button mat-stroked-button class="w-100">
-                <div class="d-flex align-items-center">
-                  <img src="/assets/images/svgs/google-icon.svg" alt="google" width="16" class="m-r-8" />
-                  Sign in with Google
-                </div>
-              </button>
-            </div>
-            <div class="col-12 col-sm-6">
-              <button mat-stroked-button class="w-100 d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                  <img src="/assets/images/svgs/facebook-icon.svg" alt="facebook" width="40" class="m-r-4" />
-                  Sign in with FB
-                </div>
-              </button>
-            </div>
-          </div>
-
-          <div class="or-border m-t-30">or sign up with</div>
-
-          <form class="m-t-30">
+          <form class="m-t-30" name="form_user" id="form_user_register" #AuthenticateUser="ngForm"
+                (ngSubmit)="submitInstance()">
+            <!-- Name -->
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput />
+              <input matInput [formControl]="UserFormControls['user_name']" type="text"
+                     [(ngModel)]="UserInstance.user_name" />
+
+              <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
             </mat-form-field>
-            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email Adddress</mat-label>
+
+            <!-- Email -->
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email Address</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput type="email" />
+              <input matInput [formControl]="UserFormControls['user_email']" type="email"
+                     [(ngModel)]="UserInstance.user_email" />
+
+              <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+
+              <mat-error *ngIf="UserFormControls['user_email'].hasError('email')">
+                <strong>Invalid email format</strong>
+              </mat-error>
             </mat-form-field>
-            <!-- password -->
+
+            <!-- Password -->
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput type="password" />
+              <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"
+                     [type]="hide ? 'password' : 'text'" />
+              <img matSuffix (click)="hide = !hide"
+                   src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
+                   alt="" class="view-icon--image" />
+
+              <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
             </mat-form-field>
 
-            <a [routerLink]="['/']" mat-flat-button color="primary" class="w-100">
-              Sign Up
-            </a>
-            <!-- input -->
-          </form>
-          <span class="d-block f-w-500 text-center m-t-24">Already have an Account?
+            <div class="view-align--right">
+              <button mat-button type="button" color="accent" [routerLink]="['/authentication']">
+                Cancel
+              </button>
 
-            <a [routerLink]="['/authentication/login']" class="text-decoration-none text-primary f-w-500 f-s-14">
-              Sign In</a>
-          </span>
+              <span class="flex-1-auto"></span>
+
+              <button type="submit" mat-raised-button color="primary">
+                Register
+              </button>
+            </div>
+          </form>
         </mat-card-content>
       </mat-card>
     </div>
