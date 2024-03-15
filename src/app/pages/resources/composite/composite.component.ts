@@ -62,29 +62,29 @@ export class CompositeComponent implements OnInit{
     const fileName = fileId;
     const fileIds = [fileName];
 
-    this.downloadFile(fileName);
+    // this.downloadFile(fileName);
 
-    // if (fileIds.length === 0) {
-    //   console.error('No file IDs provided');
-    //   return false;
-    // }
-    //
-    // const url = 'http://localhost:3000/files';
-    //
-    // this.http.post(url, fileIds, { responseType: 'blob' }).subscribe(
-    //   (data: Blob) => {
-    //     if (data) {
-    //       this.downloadFileByBlob(data, fileId);
-    //     } else {
-    //       console.error('No file data found');
-    //     }
-    //   },
-    //   error => {
-    //     console.error('Error downloading file:', error);
-    //   }
-    // );
-    //
-    // return true;
+    if (fileIds.length === 0) {
+      console.error('No file IDs provided');
+      return false;
+    }
+
+    const url = 'http://localhost:3000/files';
+
+    this.http.post(url, fileIds, { responseType: 'blob' }).subscribe(
+      (data: Blob) => {
+        if (data) {
+          this.downloadFileByBlob(data, fileId);
+        } else {
+          console.error('No file data found');
+        }
+      },
+      error => {
+        console.error('Error downloading file:', error);
+      }
+    );
+
+    return true;
   }
 
   private downloadFileByBlob(blob: Blob, fileName: string): void {
