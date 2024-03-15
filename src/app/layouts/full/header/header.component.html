@@ -59,7 +59,7 @@
 <!--        </span>-->
 <!--        </a>-->
 
-        <a>
+        <a [matMenuTriggerFor]="actionsMenu">
           <span style="width: 41px; height: 41px; flex-shrink: 0;">
           <svg xmlns="http://www.w3.org/2000/svg" width="41" height="43" viewBox="0 0 41 43" fill="none">
             <path
@@ -68,6 +68,11 @@
           </svg>
         </span>
         </a>
+
+        <mat-menu #actionsMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
+          <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
+        </mat-menu>
 
       </div>
     </ng-template>
