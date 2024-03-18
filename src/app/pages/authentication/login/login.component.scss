@@ -1,0 +1,30 @@
+.login-section {
+  height: 100vh;
+  display: flex;
+  background: #ffffff;
+}
+
+.login-contents {
+  width: 50%; /* Each section takes up equal space */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin: 5rem 0;
+}
+.login-hero {
+  width: 50%; /* Each section takes up equal space */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
+}
+
+.login-contents {
+  border: 2px solid blue;
+}
+
+.login-hero {
+  border: 2px solid red;
+}
