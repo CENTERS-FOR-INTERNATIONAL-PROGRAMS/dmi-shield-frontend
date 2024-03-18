@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {Component, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,7 @@ import {
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import {RouterModule} from "@angular/router";
+import {AwarenessService} from "../../services/awareness.service";
 
 
 @Component({
@@ -27,14 +28,15 @@ import {RouterModule} from "@angular/router";
     NgApexchartsModule,
     MatTableModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    NgOptimizedImage
   ],
 })
 export class AppDashboardComponent {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   @ViewChild('viewMoreContent') targetElement: ElementRef;
 
-  constructor(){
+  constructor(public awareness: AwarenessService){
 
   }
 
@@ -48,7 +50,7 @@ export class AppDashboardComponent {
 
   scrollToViewMore() {
     // Get a reference to the viewMoreContent element
-    const viewMoreContent = document.querySelector('#viewMoreContent');
+    const viewMoreContent = document.querySelector('#cards');
 
     // Check if the element exists
     if (viewMoreContent) {
@@ -56,4 +58,6 @@ export class AppDashboardComponent {
       viewMoreContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
+
 }

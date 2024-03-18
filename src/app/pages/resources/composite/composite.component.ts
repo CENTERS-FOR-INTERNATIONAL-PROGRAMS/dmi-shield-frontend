@@ -3,6 +3,7 @@ import {AwarenessService} from "../../../services/awareness.service";
 import {CommunicationService} from "../../../services/communication.service";
 import {HttpClient} from "@angular/common/http";
 import {Resource} from "../../../models/Resources.model";
+import {User} from "../../../models/User.model";
 
 @Component({
   selector: 'app-composite',
@@ -13,14 +14,29 @@ export class CompositeComponent implements OnInit{
   TableHeaders: string[] = ["file_name", "actions"];
   FileNames: string[] = [];
   FilterResource: Resource = new Resource();
+  UserInstance : User = new User;
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
+  constructor(public awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
 
 
   ngOnInit() {
     this.getFileNames()
+    this.awaken();
   }
 
+  awaken(){
+    this.awareness.awaken(() => {
+      this.UserInstance._id = this.awareness.getFocused("authenticated");
+
+      if (this.UserInstance._id != "") {
+        this.UserInstance.acquireInstance((doc: any) => {
+          this.UserInstance.parseInstance(doc);
+        }, (err: any) => {
+          //TODO! Handle errors
+        });
+      }
+    });
+  }
   loadComposite() {
     this.FilterResource.acquireComposite((Surveillance: Resource[]) => {
       this.Resource = Surveillance;

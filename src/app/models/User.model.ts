@@ -115,7 +115,7 @@ export class User {
       this.user_role = [3];
 
       // Set Status
-      this.user_status = "false";
+      this.user_status = "true";
 
       // Metadata
       this.created_username = user_username;

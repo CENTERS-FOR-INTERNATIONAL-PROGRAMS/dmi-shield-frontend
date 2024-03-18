@@ -1,76 +1,114 @@
-<div class="p-t-24 main-content-padding" >
-  <mat-toolbar style="background-color:transparent;">
 
-    <div>
-      <span >
-        <img style="width: 298px; height: 74px;" src="assets/images/logos/logo-moh.png" alt="Shield Logo">
-      </span>
+  <header class="header">
+    <!-- <a href="#" class="logo">Shield</a> -->
+    <a href="#">
+      <img class="logo" src="assets/images/logos/logo-moh.png" alt="">
+    </a>
+
+
+    <div class="navbar">
+      <a [routerLink]="['/dashboard']" class="active">Home</a>
+      <a [routerLink]="['/home/welcome']">Dashboard</a>
+      <a  [routerLink]="['/surveillance/composites']">Upload Data</a>
+      <a [routerLink]="['/resources/composites']">Resources</a>
+
+      <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>
+      <a class="navbar-extra" [routerLink]="['/resources/composites']">Notifications</a>
+      <a class="navbar-extra" >Settings</a>
+
+      <span class="active-nav"></span>
     </div>
 
-
-    <div style="display: flex; align-items: center; justify-content: space-between; min-width: 40%;">
-
-      <a [routerLink]="['/dashboard']" style="text-decoration: none;">
-        <span class="toolbar-text">Home</span>
-      </a>
-
-      <a style="text-decoration: none;">
-        <span class="toolbar-text">Dashboard</span>
-      </a>
-
-      <a [routerLink]="['/surveillance/composites']" style="text-decoration: none;">
-        <span  class="toolbar-text">Upload Data</span>
-      </a>
-
-      <a [routerLink]="['/resources/composites']" style="text-decoration: none;">
-        <span  class="toolbar-text">Resources</span>
-      </a>
-    </div>
-
-
-    <div *ngIf="!this.awareness.UserInstance?._id; else signUpLoginButton">
-      <a style="text-decoration: none;" [routerLink]="['/authentication/login']">
-        <button class="toolbar-sign-button">Sign In</button>
-      </a>
-    </div>
-    <ng-template #signUpLoginButton>
-
-      <div style="display: flex; align-items: center;justify-content: space-between; min-width: 15%;">
-      <span style="width: 41px; height: 41px; flex-shrink: 0; display: flex; justify-content: center; align-items: center;">
+    <nav class="navbar-tools">
+<!--      <a *ngIf="awareness.UserInstance?._id"  href="#"><img src="assets/images/icons/circle.svg" alt="profile">-->
+<!--          {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0] : '' }}-->
+<!--        </a>-->
+      <a>
+        <span style="width: 41px; height: 41px; flex-shrink: 0;">
         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
-            {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0] : '' }}
+            {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0].toUpperCase() : '' }}
           </text>
         </svg>
       </span>
-        <span style="width: 41px; height: 41px; flex-shrink: 0; margin-right: 2px">
-          <svg xmlns="http://www.w3.org/2000/svg" width="49" height="49" viewBox="0 0 49 49" fill="none">
-            <path
-              d="M24.5001 44.9166C26.7459 44.9166 28.5834 43.0791 28.5834 40.8333H20.4167C20.4167 43.0791 22.2338 44.9166 24.5001 44.9166ZM36.7501 32.6666V22.4583C36.7501 16.1904 33.4017 10.9433 27.5626 9.55496V8.16663C27.5626 6.47204 26.1947 5.10413 24.5001 5.10413C22.8055 5.10413 21.4376 6.47204 21.4376 8.16663V9.55496C15.578 10.9433 12.2501 16.17 12.2501 22.4583V32.6666L8.16675 36.75V38.7916H40.8334V36.75L36.7501 32.6666Z"
-              fill="#434343" />
-            <circle cx="6" cy="6" r="6" transform="matrix(-1 0 0 1 49 0)" fill="#FFA500" />
-          </svg>
-        </span>
+      </a>
 
-        <a [matMenuTriggerFor]="actionsMenu">
-          <span style="width: 41px; height: 41px; flex-shrink: 0;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="41" height="43" viewBox="0 0 41 43" fill="none">
-            <path
-              d="M36.1634 23.607C36.2477 22.919 36.311 22.231 36.311 21.5C36.311 20.769 36.2477 20.081 36.1634 19.393L40.6103 15.8455C41.0107 15.523 41.1161 14.9425 40.8632 14.4695L36.6482 7.0305C36.4585 6.6865 36.1002 6.493 35.7209 6.493C35.5944 6.493 35.468 6.5145 35.3626 6.5575L30.1149 8.7075C29.019 7.8475 27.8388 7.138 26.5532 6.6005L25.7523 0.903C25.6891 0.387 25.2465 0 24.7197 0H16.2896C15.7628 0 15.3202 0.387 15.257 0.903L14.4561 6.6005C13.1705 7.138 11.9903 7.869 10.8944 8.7075L5.64672 6.5575C5.52026 6.5145 5.39381 6.493 5.26736 6.493C4.90909 6.493 4.55081 6.6865 4.36114 7.0305L0.146117 14.4695C-0.127859 14.9425 -0.00140846 15.523 0.399018 15.8455L4.84586 19.393C4.76156 20.081 4.69834 20.7905 4.69834 21.5C4.69834 22.2095 4.76156 22.919 4.84586 23.607L0.399018 27.1545C-0.00140846 27.477 -0.106784 28.0575 0.146117 28.5305L4.36114 35.9695C4.55081 36.3135 4.90909 36.507 5.28844 36.507C5.41489 36.507 5.54134 36.4855 5.64672 36.4425L10.8944 34.2925C11.9903 35.1525 13.1705 35.862 14.4561 36.3995L15.257 42.097C15.3202 42.613 15.7628 43 16.2896 43H24.7197C25.2465 43 25.6891 42.613 25.7523 42.097L26.5532 36.3995C27.8388 35.862 29.019 35.131 30.1149 34.2925L35.3626 36.4425C35.489 36.4855 35.6155 36.507 35.7419 36.507C36.1002 36.507 36.4585 36.3135 36.6482 35.9695L40.8632 28.5305C41.1161 28.0575 41.0107 27.477 40.6103 27.1545L36.1634 23.607ZM31.9906 19.9305C32.0749 20.597 32.096 21.0485 32.096 21.5C32.096 21.9515 32.0538 22.4245 31.9906 23.0695L31.6955 25.499L33.5712 27.004L35.8473 28.81L34.3721 31.4115L31.6955 30.315L29.5037 29.412L27.607 30.874C26.7007 31.562 25.8367 32.078 24.9726 32.4435L22.7386 33.368L22.4014 35.7975L21.9799 38.7H19.0294L18.629 35.7975L18.2918 33.368L16.0578 32.4435C15.1516 32.0565 14.3086 31.562 13.4656 30.917L11.5477 29.412L9.31378 30.3365L6.63724 31.433L5.16199 28.8315L7.4381 27.0255L9.31378 25.5205L9.01873 23.091C8.9555 22.4245 8.91335 21.93 8.91335 21.5C8.91335 21.07 8.9555 20.5755 9.01873 19.9305L9.31378 17.501L7.4381 15.996L5.16199 14.19L6.63724 11.5885L9.31378 12.685L11.5056 13.588L13.4023 12.126C14.3086 11.438 15.1727 10.922 16.0367 10.5565L18.2707 9.632L18.6079 7.2025L19.0294 4.3H21.9588L22.3593 7.2025L22.6965 9.632L24.9304 10.5565C25.8367 10.9435 26.6797 11.438 27.5227 12.083L29.4405 13.588L31.6744 12.6635L34.351 11.567L35.8262 14.1685L33.5712 15.996L31.6955 17.501L31.9906 19.9305ZM20.5047 12.9C15.8471 12.9 12.0746 16.7485 12.0746 21.5C12.0746 26.2515 15.8471 30.1 20.5047 30.1C25.1622 30.1 28.9347 26.2515 28.9347 21.5C28.9347 16.7485 25.1622 12.9 20.5047 12.9ZM20.5047 25.8C18.1864 25.8 16.2896 23.865 16.2896 21.5C16.2896 19.135 18.1864 17.2 20.5047 17.2C22.8229 17.2 24.7197 19.135 24.7197 21.5C24.7197 23.865 22.8229 25.8 20.5047 25.8Z"
-              fill="#03062C" />
-          </svg>
-        </span>
-        </a>
+      <a  href="#"><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
+      <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
 
-        <mat-menu #actionsMenu="matMenu">
-          <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
-          <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
-        </mat-menu>
+      <mat-menu #actionsMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
+        <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
+      </mat-menu>
+    </nav>
 
-      </div>
-    </ng-template>
-  </mat-toolbar>
+    <div class="bx bx-menu" id="menu-icon"></div>
 
-</div>
+
+
+  </header>
+<!--  <mat-toolbar style="background-color:transparent;">-->
+
+<!--    <div>-->
+<!--      <span >-->
+<!--        <img style="width: 298px; height: 74px;" src="assets/images/logos/logo-moh.png" alt="Shield Logo">-->
+<!--      </span>-->
+<!--    </div>-->
+
+
+<!--    <div style="display: flex; align-items: center; justify-content: space-between; min-width: 40%;">-->
+
+
+
+<!--      <a [routerLink]="['/resources/composites']" style="text-decoration: none;">-->
+<!--        <span  class="toolbar-text">Resources</span>-->
+<!--      </a>-->
+<!--    </div>-->
+
+
+<!--    <div *ngIf="!this.awareness.UserInstance?._id; else signUpLoginButton">-->
+<!--      <a style="text-decoration: none;" [routerLink]="['/authentication/login']">-->
+<!--        <button class="toolbar-sign-button">Sign In</button>-->
+<!--      </a>-->
+<!--    </div>-->
+<!--    <ng-template #signUpLoginButton>-->
+
+<!--      <div style="display: flex; align-items: center;justify-content: space-between; min-width: 15%;">-->
+<!--      <span style="width: 41px; height: 41px; flex-shrink: 0; display: flex; justify-content: center; align-items: center;">-->
+<!--        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">-->
+<!--          <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />-->
+<!--          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">-->
+<!--            {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0] : '' }}-->
+<!--          </text>-->
+<!--        </svg>-->
+<!--      </span>-->
+<!--        <span style="width: 41px; height: 41px; flex-shrink: 0; margin-right: 2px">-->
+<!--          <svg xmlns="http://www.w3.org/2000/svg" width="49" height="49" viewBox="0 0 49 49" fill="none">-->
+<!--            <path-->
+<!--              d="M24.5001 44.9166C26.7459 44.9166 28.5834 43.0791 28.5834 40.8333H20.4167C20.4167 43.0791 22.2338 44.9166 24.5001 44.9166ZM36.7501 32.6666V22.4583C36.7501 16.1904 33.4017 10.9433 27.5626 9.55496V8.16663C27.5626 6.47204 26.1947 5.10413 24.5001 5.10413C22.8055 5.10413 21.4376 6.47204 21.4376 8.16663V9.55496C15.578 10.9433 12.2501 16.17 12.2501 22.4583V32.6666L8.16675 36.75V38.7916H40.8334V36.75L36.7501 32.6666Z"-->
+<!--              fill="#434343" />-->
+<!--            <circle cx="6" cy="6" r="6" transform="matrix(-1 0 0 1 49 0)" fill="#FFA500" />-->
+<!--          </svg>-->
+<!--        </span>-->
+
+<!--        <a [matMenuTriggerFor]="actionsMenu">-->
+<!--          <span style="width: 41px; height: 41px; flex-shrink: 0;">-->
+<!--          <svg xmlns="http://www.w3.org/2000/svg" width="41" height="43" viewBox="0 0 41 43" fill="none">-->
+<!--            <path-->
+<!--              d="M36.1634 23.607C36.2477 22.919 36.311 22.231 36.311 21.5C36.311 20.769 36.2477 20.081 36.1634 19.393L40.6103 15.8455C41.0107 15.523 41.1161 14.9425 40.8632 14.4695L36.6482 7.0305C36.4585 6.6865 36.1002 6.493 35.7209 6.493C35.5944 6.493 35.468 6.5145 35.3626 6.5575L30.1149 8.7075C29.019 7.8475 27.8388 7.138 26.5532 6.6005L25.7523 0.903C25.6891 0.387 25.2465 0 24.7197 0H16.2896C15.7628 0 15.3202 0.387 15.257 0.903L14.4561 6.6005C13.1705 7.138 11.9903 7.869 10.8944 8.7075L5.64672 6.5575C5.52026 6.5145 5.39381 6.493 5.26736 6.493C4.90909 6.493 4.55081 6.6865 4.36114 7.0305L0.146117 14.4695C-0.127859 14.9425 -0.00140846 15.523 0.399018 15.8455L4.84586 19.393C4.76156 20.081 4.69834 20.7905 4.69834 21.5C4.69834 22.2095 4.76156 22.919 4.84586 23.607L0.399018 27.1545C-0.00140846 27.477 -0.106784 28.0575 0.146117 28.5305L4.36114 35.9695C4.55081 36.3135 4.90909 36.507 5.28844 36.507C5.41489 36.507 5.54134 36.4855 5.64672 36.4425L10.8944 34.2925C11.9903 35.1525 13.1705 35.862 14.4561 36.3995L15.257 42.097C15.3202 42.613 15.7628 43 16.2896 43H24.7197C25.2465 43 25.6891 42.613 25.7523 42.097L26.5532 36.3995C27.8388 35.862 29.019 35.131 30.1149 34.2925L35.3626 36.4425C35.489 36.4855 35.6155 36.507 35.7419 36.507C36.1002 36.507 36.4585 36.3135 36.6482 35.9695L40.8632 28.5305C41.1161 28.0575 41.0107 27.477 40.6103 27.1545L36.1634 23.607ZM31.9906 19.9305C32.0749 20.597 32.096 21.0485 32.096 21.5C32.096 21.9515 32.0538 22.4245 31.9906 23.0695L31.6955 25.499L33.5712 27.004L35.8473 28.81L34.3721 31.4115L31.6955 30.315L29.5037 29.412L27.607 30.874C26.7007 31.562 25.8367 32.078 24.9726 32.4435L22.7386 33.368L22.4014 35.7975L21.9799 38.7H19.0294L18.629 35.7975L18.2918 33.368L16.0578 32.4435C15.1516 32.0565 14.3086 31.562 13.4656 30.917L11.5477 29.412L9.31378 30.3365L6.63724 31.433L5.16199 28.8315L7.4381 27.0255L9.31378 25.5205L9.01873 23.091C8.9555 22.4245 8.91335 21.93 8.91335 21.5C8.91335 21.07 8.9555 20.5755 9.01873 19.9305L9.31378 17.501L7.4381 15.996L5.16199 14.19L6.63724 11.5885L9.31378 12.685L11.5056 13.588L13.4023 12.126C14.3086 11.438 15.1727 10.922 16.0367 10.5565L18.2707 9.632L18.6079 7.2025L19.0294 4.3H21.9588L22.3593 7.2025L22.6965 9.632L24.9304 10.5565C25.8367 10.9435 26.6797 11.438 27.5227 12.083L29.4405 13.588L31.6744 12.6635L34.351 11.567L35.8262 14.1685L33.5712 15.996L31.6955 17.501L31.9906 19.9305ZM20.5047 12.9C15.8471 12.9 12.0746 16.7485 12.0746 21.5C12.0746 26.2515 15.8471 30.1 20.5047 30.1C25.1622 30.1 28.9347 26.2515 28.9347 21.5C28.9347 16.7485 25.1622 12.9 20.5047 12.9ZM20.5047 25.8C18.1864 25.8 16.2896 23.865 16.2896 21.5C16.2896 19.135 18.1864 17.2 20.5047 17.2C22.8229 17.2 24.7197 19.135 24.7197 21.5C24.7197 23.865 22.8229 25.8 20.5047 25.8Z"-->
+<!--              fill="#03062C" />-->
+<!--          </svg>-->
+<!--        </span>-->
+<!--        </a>-->
+
+<!--        <mat-menu #actionsMenu="matMenu">-->
+<!--          <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>-->
+<!--          <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>-->
+<!--        </mat-menu>-->
+
+<!--      </div>-->
+<!--    </ng-template>-->
+<!--  </mat-toolbar>-->
+
 

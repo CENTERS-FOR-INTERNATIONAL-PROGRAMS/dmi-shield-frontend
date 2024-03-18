@@ -9,6 +9,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 
 export class AppSideLoginComponent {
