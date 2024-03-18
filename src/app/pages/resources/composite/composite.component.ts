@@ -3,6 +3,7 @@ import {AwarenessService} from "../../../services/awareness.service";
 import {CommunicationService} from "../../../services/communication.service";
 import {HttpClient} from "@angular/common/http";
 import {Resource} from "../../../models/Resources.model";
+import {User} from "../../../models/User.model";
 
 @Component({
   selector: 'app-composite',
@@ -13,14 +14,29 @@ export class CompositeComponent implements OnInit{
   TableHeaders: string[] = ["file_name", "actions"];
   FileNames: string[] = [];
   FilterResource: Resource = new Resource();
+  UserInstance : User = new User;
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
+  constructor(public awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
 
 
   ngOnInit() {
     this.getFileNames()
+    this.awaken();
   }
 
+  awaken(){
+    this.awareness.awaken(() => {
+      this.UserInstance._id = this.awareness.getFocused("authenticated");
+
+      if (this.UserInstance._id != "") {
+        this.UserInstance.acquireInstance((doc: any) => {
+          this.UserInstance.parseInstance(doc);
+        }, (err: any) => {
+          //TODO! Handle errors
+        });
+      }
+    });
+  }
   loadComposite() {
     this.FilterResource.acquireComposite((Surveillance: Resource[]) => {
       this.Resource = Surveillance;
@@ -62,29 +78,29 @@ export class CompositeComponent implements OnInit{
     const fileName = fileId;
     const fileIds = [fileName];
 
-    this.downloadFile(fileName);
+    // this.downloadFile(fileName);
 
-    // if (fileIds.length === 0) {
-    //   console.error('No file IDs provided');
-    //   return false;
-    // }
-    //
-    // const url = 'http://localhost:3000/files';
-    //
-    // this.http.post(url, fileIds, { responseType: 'blob' }).subscribe(
-    //   (data: Blob) => {
-    //     if (data) {
-    //       this.downloadFileByBlob(data, fileId);
-    //     } else {
-    //       console.error('No file data found');
-    //     }
-    //   },
-    //   error => {
-    //     console.error('Error downloading file:', error);
-    //   }
-    // );
-    //
-    // return true;
+    if (fileIds.length === 0) {
+      console.error('No file IDs provided');
+      return false;
+    }
+
+    const url = 'http://localhost:3000/files';
+
+    this.http.post(url, fileIds, { responseType: 'blob' }).subscribe(
+      (data: Blob) => {
+        if (data) {
+          this.downloadFileByBlob(data, fileId);
+        } else {
+          console.error('No file data found');
+        }
+      },
+      error => {
+        console.error('Error downloading file:', error);
+      }
+    );
+
+    return true;
   }
 
   private downloadFileByBlob(blob: Blob, fileName: string): void {
