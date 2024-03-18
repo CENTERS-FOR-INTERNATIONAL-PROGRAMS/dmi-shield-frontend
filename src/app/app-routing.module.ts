@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/authentication',
+        redirectTo: '/dashboard',
         pathMatch: 'full',
       }, {
         path: 'dashboard',
@@ -101,12 +101,12 @@ const routes: Routes = [
           import('./pages/surveillance_data/surveillance_data.module').then((m) => m.Surveillance_dataModule),
       },{
         path: 'home',
-        canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/home/home.module').then((m) => m.HomeModule),
       },{
         path: 'resources',
-        canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/resources/resources.module').then((m) => m.ResourcesModule),
       },

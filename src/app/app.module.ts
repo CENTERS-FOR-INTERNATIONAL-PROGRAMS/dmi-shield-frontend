@@ -27,6 +27,7 @@ import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.co
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {FooterComponent} from "./layouts/full/footer/footer.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -39,24 +40,25 @@ import {FooterComponent} from "./layouts/full/footer/footer.component";
     AppNavItemComponent,
     FooterComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    TablerIconsModule.pick(TablerIcons),
-    NgScrollbarModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
-    FontAwesomeModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        TablerIconsModule.pick(TablerIcons),
+        NgScrollbarModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+        }),
+        FontAwesomeModule,
+        NgOptimizedImage,
+    ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
 })
