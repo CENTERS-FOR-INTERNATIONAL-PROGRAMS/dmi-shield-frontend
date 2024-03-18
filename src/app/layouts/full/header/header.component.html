@@ -20,8 +20,41 @@
 <!--    </div>-->
 
     <div class="navbar">
-      <a [routerLink]="['/dashboard']" [class.active]="activeRoute === '/dashboard'">Home</a>
-      <a [routerLink]="['/home/welcome']" [class.active]="activeRoute === '/home/welcome'">Dashboard</a>
+      <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
+<!--      <a [matMenuTriggerFor]="menu" [routerLink]="['/home/welcome']" [class.active]="activeRoute === '/home/welcome'">-->
+<!--        Integrated Dashboard-->
+
+<!--        <i class='bx bxs-chevron-down'></i>-->
+<!--      </a>-->
+
+      <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
+        Integrated Dashboard
+
+        <i class='bx bxs-chevron-down'></i>
+      </a>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank" style="color: inherit">
+            <span>Routine Surveillance</span>
+          </a>
+        </button>
+        <button mat-menu-item>
+          <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank" style="color: inherit">
+            <span>Event Based Surveillance</span>
+          </a>
+        </button>
+        <button mat-menu-item>
+          <span>Outbreak Response</span>
+        </button>
+        <button mat-menu-item>
+          <a [routerLink]="['/dashboard']" style="color: inherit">
+            <span>Program Dashboards</span>
+          </a>
+        </button>
+      </mat-menu>
+
+
       <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
       <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
 

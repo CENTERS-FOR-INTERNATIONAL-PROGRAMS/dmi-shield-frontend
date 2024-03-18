@@ -25,6 +25,7 @@ mat-card {
   --main-gradient: linear-gradient(180deg, #15a5ca00 0%, #15A5CA 100%);
 }
 
+
 html {
   font-size: 62.5%;
   overflow-x: hidden;
@@ -445,6 +446,10 @@ section {
   .navbar a.active {
     color: #ffffff;
   }
+
+  //mat-menu button{
+  //  font-family: Lato, sans-serif;
+  //}
 
   .card-section {
     flex-direction: column;

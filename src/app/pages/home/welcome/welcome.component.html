@@ -1,32 +1,36 @@
 <section class="frame-section">
 
-  <div class="frame-section-content">
-    <h3>SARI/ILI Dashboards
-      <a (click)="openSariIframe()">
-        <i  class='bx bx-link-external'></i>
-      </a>
-    </h3>
-    <iframe id="myIframe" title="SARI_ILI Dashboard12082022" [src]="SariIframe" frameborder="0" allowFullScreen="true"></iframe>
-  </div>
+  <mat-tab-group animationDuration="1ms">
+    <mat-tab label="SARI/ILI Dashboards">
+        <div class="frame-section-content">
+            <a (click)="openSariIframe()">
 
-  <div class="frame-section-content">
-    <h3>IFBS Dashboard
-      <a (click)="openIfbsframe()">
-        <i class='bx bx-link-external'></i>
-      </a>
-    </h3>
-    <iframe  title="SARI_ILI Dashboard12082022" [src]="IfbsIframe" frameborder="0" allowFullScreen="true"></iframe>
-  </div>
+            </a>
+          <iframe id="myIframe" title="SARI_ILI Dashboard12082022" [src]="SariIframe" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
 
-  <div class="frame-section-content">
-    <h3>Mortality Dashboard
-      <a (click)="openMortalityIframe()">
-        <i class='bx bx-link-external'></i>
-      </a>
-    </h3>
-    <iframe title="SARI_ILI Dashboard12082022" [src]="MortalityIframe" frameborder="0" allowFullScreen="true"></iframe>
-  </div>
 
+    </mat-tab>
+    <mat-tab label="AFI Dashboard">
+
+        <div class="frame-section-content">
+            <a (click)="openIfbsframe()">
+            </a>
+          <iframe  title="SARI_ILI Dashboard12082022" [src]="IfbsIframe" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+
+
+    </mat-tab>
+    <mat-tab label="COVID-19 Mortality Dashboard">
+
+        <div class="frame-section-content">
+            <a (click)="openMortalityIframe()">
+            </a>
+          <iframe title="SARI_ILI Dashboard12082022" [src]="MortalityIframe" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+
+    </mat-tab>
+  </mat-tab-group>
 
 </section>
 

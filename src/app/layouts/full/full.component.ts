@@ -50,11 +50,6 @@ export class FullComponent implements OnInit {
     const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
     const navbar = document.querySelector('.navbar a') as HTMLElement;
     const header = document.querySelector('.header') as HTMLElement;
-    // const activeNavbar = document.querySelector('.')
-
-    navbar.onclick = () => {
-      navbar.classList.add('active');
-    }
 
     menuIcon.onclick = () => {
       menuIcon.classList.toggle('bx-x');
