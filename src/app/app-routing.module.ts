@@ -12,13 +12,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/home',
         pathMatch: 'full',
-      }, {
-        path: 'dashboard',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
-        loadChildren: () =>
-          import('./pages/pages.module').then((m) => m.PagesModule),
       }, {
         path: 'ui-components',
         loadChildren: () =>
@@ -100,11 +95,17 @@ const routes: Routes = [
         loadChildren: () =>
           import('./pages/surveillance_data/surveillance_data.module').then((m) => m.Surveillance_dataModule),
       },{
-        path: 'home',
+        path: 'dashboard',
         // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/home/home.module').then((m) => m.HomeModule),
       },{
+        path: 'home',
+        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        loadChildren: () =>
+          import('./pages/pages.module').then((m) => m.PagesModule),
+      },
+      {
         path: 'resources',
         // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
