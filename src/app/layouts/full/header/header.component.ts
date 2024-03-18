@@ -1,16 +1,9 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  ViewEncapsulation,
-  OnInit,
-} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AwarenessService } from 'src/app/services/awareness.service';
-import { User } from 'src/app/models/User.model';
-import { Location } from '@angular/common';
-import {Router} from "@angular/router";
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AwarenessService} from 'src/app/services/awareness.service';
+import {User} from 'src/app/models/User.model';
+import {Location} from '@angular/common';
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -29,6 +22,7 @@ export class HeaderComponent implements OnInit {
   showFiller = false;
   UserInstance: User = new User();
   showMenu: boolean = false;
+  activeRoute: string;
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService, private location: Location) {
 
@@ -45,6 +39,16 @@ export class HeaderComponent implements OnInit {
         });
       }
     });
+
+    this.router.events.subscribe(events =>{
+      if(events instanceof NavigationEnd){
+        this.updateActiveRoute();
+      }
+    })
+  }
+
+  updateActiveRoute() : void{
+    this.activeRoute = this.router.url;
   }
 
   viewPrevious() {

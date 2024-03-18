@@ -6,14 +6,27 @@
     </a>
 
 
+<!--    <div class="navbar">-->
+<!--      <a [routerLink]="['/dashboard']" class="active">Home</a>-->
+<!--      <a [routerLink]="['/home/welcome']">Dashboard</a>-->
+<!--      <a  [routerLink]="['/surveillance/composites']">Upload Data</a>-->
+<!--      <a [routerLink]="['/resources/composites']">Resources</a>-->
+
+<!--      <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>-->
+<!--      <a class="navbar-extra" [routerLink]="['/resources/composites']">Notifications</a>-->
+<!--      <a class="navbar-extra" >Settings</a>-->
+
+<!--      <span class="active-nav"></span>-->
+<!--    </div>-->
+
     <div class="navbar">
-      <a [routerLink]="['/dashboard']" class="active">Home</a>
-      <a [routerLink]="['/home/welcome']">Dashboard</a>
-      <a  [routerLink]="['/surveillance/composites']">Upload Data</a>
-      <a [routerLink]="['/resources/composites']">Resources</a>
+      <a [routerLink]="['/dashboard']" [class.active]="activeRoute === '/dashboard'">Home</a>
+      <a [routerLink]="['/home/welcome']" [class.active]="activeRoute === '/home/welcome'">Dashboard</a>
+      <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
+      <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
 
       <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>
-      <a class="navbar-extra" [routerLink]="['/resources/composites']">Notifications</a>
+      <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
       <a class="navbar-extra" >Settings</a>
 
       <span class="active-nav"></span>
