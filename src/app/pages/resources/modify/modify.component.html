@@ -1,4 +1,4 @@
-<div class="m-l-24 m-r-24" style="margin-top: 128px">
+<div class="m-l-24 m-r-24" style="margin-top: 128px; min-height: 100vh">
   <mat-card class="composite-data">
     <mat-card-header>
       <mat-card-title>
@@ -28,16 +28,6 @@
           <mat-card-content>
             <a mat-stroked-button color="warn" class="view-button view-float--right" (click)="removeFile(i)">
               Remove
-            </a>
-
-            <a mat-stroked-button color="primary" class="view-button view-float--right"
-               *ngIf="describeFileType(File)">
-              <select  class="custom-select mb-3 view-float--right border-none" (change)="assignDocumentType($event, i)">
-                <option value="">Select File Type</option>
-                <option *ngFor="let DocumentType of DocumentTypes">
-                  {{ DocumentType }}
-                </option>
-              </select>
             </a>
 
             <p class="view-text--size-large">

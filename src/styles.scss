@@ -25,6 +25,7 @@ mat-card {
   --main-gradient: linear-gradient(180deg, #15a5ca00 0%, #15A5CA 100%);
 }
 
+
 html {
   font-size: 62.5%;
   overflow-x: hidden;
@@ -240,6 +241,14 @@ section {
   height: 5rem;
 }
 
+footer{
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f9fa; /* Adjust background color as needed */
+}
+
 .btn-box .btn {
   position: relative;
   display: inline-flex;
@@ -445,6 +454,10 @@ section {
   .navbar a.active {
     color: #ffffff;
   }
+
+  //mat-menu button{
+  //  font-family: Lato, sans-serif;
+  //}
 
   .card-section {
     flex-direction: column;
