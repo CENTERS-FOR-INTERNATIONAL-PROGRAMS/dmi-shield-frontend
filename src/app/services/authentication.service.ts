@@ -16,6 +16,21 @@ export class AuthenticationService {
     let user_authenticated = false;
 
     if (this.awareness.UserInstance._id !== '') {
+
+      route_roles.forEach(role => {
+        if (role == this.awareness.UserInstance.user_role) {
+          user_authenticated = true;
+        }
+      });
+    } else {
+      // If the user is not authenticated and the requested route is the home route, allow access
+      if (state.url === '/') {
+        user_authenticated = true;
+      }
+    }
+
+    if (this.awareness.UserInstance._id !== '') {
+
       route_roles.forEach(role => {
         if (role == this.awareness.UserInstance.user_role) {
           user_authenticated = true;

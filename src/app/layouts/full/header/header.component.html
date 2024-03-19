@@ -4,8 +4,6 @@
     <a href="#">
       <img class="logo" src="assets/images/logos/logo-moh.png" alt="">
     </a>
-
-
 <!--    <div class="navbar">-->
 <!--      <a [routerLink]="['/dashboard']" class="active">Home</a>-->
 <!--      <a [routerLink]="['/home/welcome']">Dashboard</a>-->
@@ -29,7 +27,6 @@
 
       <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
         Integrated Dashboard
-
         <i class='bx bxs-chevron-down'></i>
       </a>
 
@@ -65,7 +62,7 @@
       <span class="active-nav"></span>
     </div>
 
-    <nav class="navbar-tools">
+    <nav *ngIf="UserInstance._id; else signUpLoginButton" class="navbar-tools">
 <!--      <a *ngIf="awareness.UserInstance?._id"  href="#"><img src="assets/images/icons/circle.svg" alt="profile">-->
 <!--          {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0] : '' }}-->
 <!--        </a>-->
@@ -74,7 +71,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
-            {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0].toUpperCase() : '' }}
+            {{ UserInstance?.user_email ? UserInstance.user_email[0].toUpperCase() : '' }}
           </text>
         </svg>
       </span>
@@ -88,6 +85,15 @@
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
     </nav>
+
+    <ng-template #signUpLoginButton>
+      <div class="btn-box">
+        <a style="text-decoration: none;" [routerLink]="['/authentication/login']" class="btn">
+          Sign In
+        </a>
+      </div>
+
+    </ng-template>
 
     <div class="bx bx-menu" id="menu-icon"></div>
 

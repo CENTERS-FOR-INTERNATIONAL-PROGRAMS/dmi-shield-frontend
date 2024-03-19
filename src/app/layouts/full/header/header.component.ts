@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit(): void {
     this.awareness.awaken(() => {
-      this.UserInstance._id = this.awareness.getFocused("user");
+      this.UserInstance._id = this.awareness.getFocused("authenticated");
 
       if (this.UserInstance._id != "") {
         this.UserInstance.acquireInstance((doc: any) => {
