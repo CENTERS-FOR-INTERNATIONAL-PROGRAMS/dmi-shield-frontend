@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
   hideNav = false;
 
   showFiller = false;
-  UserInstance: User = new User();
   showMenu: boolean = false;
   activeRoute: string;
 
@@ -28,18 +27,6 @@ export class HeaderComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.awareness.awaken(() => {
-      this.UserInstance._id = this.awareness.getFocused("authenticated");
-
-      if (this.UserInstance._id != "") {
-        this.UserInstance.acquireInstance((doc: any) => {
-          this.UserInstance.parseInstance(doc);
-        }, (err: any) => {
-          // TODO! Handle errors
-        });
-      }
-    });
-
     this.router.events.subscribe(events =>{
       if(events instanceof NavigationEnd){
         this.updateActiveRoute();
@@ -67,7 +54,8 @@ export class HeaderComponent implements OnInit {
   onClick(action: any) {
     if (action == "logout") {
       this.awareness.setFocused("authenticated", "", (res: any) => {
-        this.router.navigate(['/authentication']);
+        this.awareness.UserInstance = new User();
+        this.router.navigate(['/home']);
       });
     }
   }

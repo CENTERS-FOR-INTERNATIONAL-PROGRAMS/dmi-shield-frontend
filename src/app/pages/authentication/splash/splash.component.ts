@@ -19,23 +19,7 @@ export class SplashComponent {
   ngOnInit(): void {
     this.awareness.awaken(() => {
       this.awareness.UserInstance._id = this.awareness.getFocused("authenticated");
-
-      // User authenticated
-      if (this.awareness.UserInstance._id != "") {
-        this.awareness.UserInstance.acquireInstance((doc: any) => {
-          this.awareness.UserInstance.parseInstance(doc);
-
-          this.awareness.syncFromRemote(['mforms', 'mfields', 'fforms', 'ffields']);
-          this.router.navigate(['/dashboard']);
-        }, (err: any) => {
-          // TODO! Handle errors          
-        });
-      }
-
-      // No user authenticated
-      else {
-        this.router.navigate(['/authentication/login']);
-      }
+      this.router.navigate(['/home']);
     });
   }
 }
