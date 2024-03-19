@@ -4,6 +4,7 @@ import {AwarenessService} from 'src/app/services/awareness.service';
 import {User} from 'src/app/models/User.model';
 import {Location} from '@angular/common';
 import {NavigationEnd, Router} from "@angular/router";
+import {CommunicationService} from "../../../services/communication.service";
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,8 @@ export class HeaderComponent implements OnInit {
   showMenu: boolean = false;
   activeRoute: string;
 
-  constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService, private location: Location) {
+  constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
+              private location: Location, private communication: CommunicationService) {
 
   }
   ngOnInit(): void {
@@ -62,5 +64,9 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
+  }
+
+  notificaionClicked() {
+    this.communication.showToast('No new notifications.')
   }
 }
