@@ -8,6 +8,7 @@ import {CFieldsModule} from "../cfields/cfields.module";
 import {TablerIconsModule} from "angular-tabler-icons";
 import {NgxFileDropModule} from "ngx-file-drop";
 import {ResourcesRoutes} from "./resources.routing";
+import { ModifyComponent } from './modify/modify.component';
 
 
 
@@ -24,6 +25,7 @@ import {ResourcesRoutes} from "./resources.routing";
   ],
   declarations: [
     CompositeComponent,
+    ModifyComponent,
   ]
 })
 export class ResourcesModule { }

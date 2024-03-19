@@ -4,7 +4,8 @@
     <h3>Your one stop shop for everything Disease Surveillance .</h3>
 
     <div class="btn-box">
-      <a *ngIf="!awareness.UserInstance?._id" [routerLink]="['/authentication/login']" class="btn">Sign In</a>
+      <a *ngIf="!this.awareness.getFocused('authenticated')" [routerLink]="['/authentication/login']" class="btn">Sign In</a>
+
       <a class="btn" (click)="scrollToViewMore()">
         View More
         <img class="" src="assets/images/icons/point-down.svg" alt="">

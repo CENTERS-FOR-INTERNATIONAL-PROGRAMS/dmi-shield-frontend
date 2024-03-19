@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AwarenessService} from "../../../services/awareness.service";
 import {CommunicationService} from "../../../services/communication.service";
 import {HttpClient} from "@angular/common/http";
-import {Resource} from "../../../models/Resources.model";
 import {User} from "../../../models/User.model";
+import {Resource} from "../../../models/Resource.model";
 
 @Component({
   selector: 'app-composite',
@@ -11,7 +11,7 @@ import {User} from "../../../models/User.model";
 })
 export class CompositeComponent implements OnInit{
   Resource: Resource[] = [];
-  TableHeaders: string[] = ["file_name", "actions"];
+  TableHeaders: string[] = ["file_original_name", "actions"];
   FileNames: string[] = [];
   FilterResource: Resource = new Resource();
   UserInstance : User = new User;
@@ -20,7 +20,8 @@ export class CompositeComponent implements OnInit{
 
 
   ngOnInit() {
-    this.getFileNames()
+    // this.getFileNames()
+    this.loadComposite();
     this.awaken();
   }
 
@@ -38,8 +39,16 @@ export class CompositeComponent implements OnInit{
     });
   }
   loadComposite() {
-    this.FilterResource.acquireComposite((Surveillance: Resource[]) => {
-      this.Resource = Surveillance;
+    // this.FilterResource.acquireComposite((Resource: Resource[]) => {
+    //   this.Resource = Resource;
+    //   console.log("Allll", this.Resource);
+    // }, (error: any) => {
+    //   // TODO! Handle errors
+    //   console.log("Error", error);
+    // });
+
+    this.FilterResource.acquireComposite((Resource: Resource[]) => {
+      this.Resource = Resource;
       console.log("Allll", this.Resource);
     }, (error: any) => {
       // TODO! Handle errors
@@ -47,50 +56,22 @@ export class CompositeComponent implements OnInit{
     });
   }
 
-  downloadFile(fileName: string): void {
-    const filePath = `assets/${fileName}`;
-    this.http.get(filePath, { responseType: 'blob' }).subscribe((data: Blob) => {
-      const downloadLink = document.createElement('a');
-      downloadLink.href = window.URL.createObjectURL(data);
-      downloadLink.setAttribute('download', fileName);
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    });
-  }
-
-
-  getFileNames(): void {
-    const url = 'http://localhost:3000/resources';
-
-    this.http.get<{ fileNames: string[] }>(url)
-      .subscribe(data => {
-        this.FileNames = data.fileNames;
-        console.log('Resource file names:', this.FileNames);
-        // Process the file names as needed
-      }, error => {
-        console.error('Error fetching resource file names:', error);
-        this.FileNames = ["IDSR Technical Guidelines for Kenya Final 06.09.2022-7.pdf", "ADAM MOH TRAINING updated-2.pptx"];
-      });
-  }
-
-  downloadFileStream(fileId: string){
-    const fileName = fileId;
+  downloadFile(fileId: Resource): boolean {
+    const fileName = `${fileId._id}.${fileId.file_extension}`;
+    const originalFileName = `${fileId.file_original_name}.${fileId.file_extension}`;
     const fileIds = [fileName];
-
-    // this.downloadFile(fileName);
 
     if (fileIds.length === 0) {
       console.error('No file IDs provided');
       return false;
     }
 
-    const url = 'http://localhost:3000/files';
+    const url = 'http://localhost:3000/files-resource';
 
     this.http.post(url, fileIds, { responseType: 'blob' }).subscribe(
       (data: Blob) => {
         if (data) {
-          this.downloadFileByBlob(data, fileId);
+          this.downloadFileByBlob(data, originalFileName);
         } else {
           console.error('No file data found');
         }

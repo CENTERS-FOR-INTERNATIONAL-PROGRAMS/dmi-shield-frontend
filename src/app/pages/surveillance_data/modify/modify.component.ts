@@ -16,7 +16,7 @@ import {Guid} from "guid-typescript";
 })
 export class ModifyComponent implements OnInit{
   MFieldInstance = new MField();
-  allowedFiles: string=  ".csv, .pdf, .docx, .xlsx, .xls"
+  allowedFiles: string=  ".csv, .xlsx, .xls"
   public Files: NgxFileDropEntry[] = [];
   public UploadedFiles: any;
   SurveillanceFormControl : CompositeFormControls = {}
@@ -111,11 +111,7 @@ export class ModifyComponent implements OnInit{
         console.error('error', err)
         this.communication.showFailedToast();
       });
-
     }
-
-
-
   }
 
   generateUniqueId(){
@@ -155,6 +151,43 @@ export class ModifyComponent implements OnInit{
     return true;
   }
 
+  // uploadToCloud(){
+  //
+  //   const url = '';
+  //
+  //   const requestBody: UploadRequest = {
+  //     data: {
+  //       attributes: {
+  //         filename: 'example.txt',
+  //         mime: 'text/plain',
+  //         original_filename: 'example.txt',
+  //         size: 1000,
+  //         type: 'text'
+  //       }
+  //     }
+  //   };
+  //
+  //   this.http.post(`http://localhost:3000/upload?file_id=${fileId}`, formData,
+  //     {
+  //       responseType: 'blob'
+  //     })
+  //     .subscribe(data => {
+  //       // Handle response data here if needed
+  //       console.log(data);
+  //     });
+  // }
 
 
+}
+
+interface UploadRequest {
+  data: {
+    attributes: {
+      filename: string;
+      mime: string;
+      original_filename: string;
+      size: number;
+      type: string;
+    };
+  };
 }

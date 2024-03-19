@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {CompositeComponent} from "./composite/composite.component";
+import {ModifyComponent} from "./modify/modify.component";
 
 export const ResourcesRoutes: Routes = [
   {
@@ -15,6 +16,11 @@ export const ResourcesRoutes: Routes = [
         path: 'composites',
         // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         component: CompositeComponent,
+      },
+      {
+        path: 'modify',
+        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        component: ModifyComponent,
       }
     ]
   }

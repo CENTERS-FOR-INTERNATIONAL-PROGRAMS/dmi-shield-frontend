@@ -39,6 +39,12 @@ export class WelcomeComponent implements OnInit{
   //   window.open(url.toString(), '_blank');
   // }
 
+  // loadAllFrames(){
+  //   this.openSariIframe();
+  //   this.openIfbsframe();
+  //   this.openMortalityIframe();
+  // }
+
   openSariIframe(): void {
     window.open('https://app.powerbi.com/view?r=eyJrIjoiMTBkZjU0NjYtZTRkZS00ZmUxLWIyYzItMjdjNmFiODliNWY5IiwidCI6ImE4MmQ5Y2U3LTcwZDQtNGMzOS1iMmUyLTU5ZmQwODA0NjQ1YiIsImMiOjh9', '_blank');
   }

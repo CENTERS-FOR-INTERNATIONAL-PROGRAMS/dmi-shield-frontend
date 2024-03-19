@@ -48,7 +48,7 @@ export class FullComponent implements OnInit {
 
   scrollBehavior(){
     const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
-    const navbar = document.querySelector('.navbar') as HTMLElement;
+    const navbar = document.querySelector('.navbar a') as HTMLElement;
     const header = document.querySelector('.header') as HTMLElement;
 
     menuIcon.onclick = () => {

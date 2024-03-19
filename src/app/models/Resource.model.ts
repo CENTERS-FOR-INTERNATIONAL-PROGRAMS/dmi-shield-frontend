@@ -2,7 +2,6 @@ import {IModelDatabase, IModelFilter, IModelStatus} from "../interfaces/IModel.m
 import {config} from "../config/config";
 import PouchDB from "pouchdb";
 import plugin from "pouchdb-find";
-import {v1} from "uuid";
 import {IKeyValue} from "../interfaces/IKeyValue.model";
 
 PouchDB.plugin(plugin);
@@ -31,7 +30,7 @@ export class Resource {
   }
 
   MDatabase: IModelDatabase = {
-    md_database: config.COUCHDB_ALCHEMY + "/surveillance_data"
+    md_database: config.COUCHDB_ALCHEMY + "/resource_data"
   }
 
   updateModifiedDate() {
