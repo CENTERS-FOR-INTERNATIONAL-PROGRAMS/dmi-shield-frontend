@@ -108,6 +108,7 @@ section {
 .card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   width: 366px;
   height: 522px;
@@ -295,8 +296,8 @@ footer{
 }
 
 .shield-logo {
-  width: 14.75rem;
-  height: 8.3125rem;
+  width: 15.75rem;
+  height: 9.3125rem;
   flex-shrink: 0;
 }
 
@@ -328,6 +329,7 @@ footer{
 .terms-container a{
   color: #FFFFFF;
   line-height: 3rem;
+  font-size: 1.8rem;
 }
 
 /* BREAKPOINTS */
@@ -356,6 +358,10 @@ footer{
 //}
 
 @media (max-width: 1110px) {
+
+  //#signInLoginButton{
+  //  display: none;
+  //}
 
   .composite-data{
     padding: 10rem 4% 2rem;

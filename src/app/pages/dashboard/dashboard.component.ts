@@ -41,7 +41,7 @@ export class AppDashboardComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.awareness.awaken(null);
+    // this.awareness.awaken(null);
   }
 
   scrollToTarget() {

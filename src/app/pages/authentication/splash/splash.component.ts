@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompositeFormControls } from 'src/app/models/CompositeFormControls.model';
@@ -11,7 +11,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
   templateUrl: './splash.component.html',
 })
 
-export class SplashComponent {
+export class SplashComponent implements OnInit{
 
   constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService) {
   }
