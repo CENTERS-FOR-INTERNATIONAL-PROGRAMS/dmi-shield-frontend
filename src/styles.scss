@@ -250,12 +250,12 @@ footer{
   background-color: #f8f9fa; /* Adjust background color as needed */
 }
 
-.btn1 {
+.btn {
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  //margin-left: 48px;
+  margin-right: 48px;
   width: 15rem;
   height: 100%;
   background: var(--accent-orange);
@@ -266,12 +266,12 @@ footer{
   letter-spacing: .1rem;
 }
 
-.btn {
+.btn1 {
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin-left: 48px;
+ 
   width: 15rem;
   height: 100%;
   background: var(--accent-orange);
