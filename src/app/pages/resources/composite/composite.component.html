@@ -5,13 +5,17 @@
 
       <span class="flex-1-auto"></span>
 
-      <a *ngIf="UserInstance._id" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
+      <a *ngIf="this.awareness.UserInstance._id != ''; else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
          style="background: var(--Primary-Blue, #222A69);">
         <span style="color: #FFF">
         Upload New Resource
 
         </span>
       </a>
+
+      <ng-template #spaceBetween>
+        <div style="height: 20px;"></div>
+      </ng-template>
     </mat-card-header>
 
     <mat-card-content>

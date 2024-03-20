@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompositeFormControls } from 'src/app/models/CompositeFormControls.model';
@@ -11,7 +11,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
   templateUrl: './splash.component.html',
 })
 
-export class SplashComponent {
+export class SplashComponent implements OnInit{
 
   constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService) {
   }
@@ -19,23 +19,7 @@ export class SplashComponent {
   ngOnInit(): void {
     this.awareness.awaken(() => {
       this.awareness.UserInstance._id = this.awareness.getFocused("authenticated");
-
-      // User authenticated
-      if (this.awareness.UserInstance._id != "") {
-        this.awareness.UserInstance.acquireInstance((doc: any) => {
-          this.awareness.UserInstance.parseInstance(doc);
-
-          this.awareness.syncFromRemote(['mforms', 'mfields', 'fforms', 'ffields']);
-          this.router.navigate(['/dashboard']);
-        }, (err: any) => {
-          // TODO! Handle errors          
-        });
-      }
-
-      // No user authenticated
-      else {
-        this.router.navigate(['/authentication/login']);
-      }
+      this.router.navigate(['/home']);
     });
   }
 }

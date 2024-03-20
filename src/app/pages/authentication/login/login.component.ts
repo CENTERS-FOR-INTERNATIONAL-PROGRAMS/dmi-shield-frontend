@@ -23,9 +23,7 @@ export class AppSideLoginComponent {
   }
 
   ngOnInit(): void {
-    if(!this.awareness.awake) {
-      this.router.navigate(['/authentication']);
-    }
+    this.awareness.awaken(null);
 
     this.UserFormControls["user_email"] = new FormControl('', [Validators.required]);
     this.UserFormControls["user_password"] = new FormControl('', [Validators.required]);
@@ -54,7 +52,14 @@ export class AppSideLoginComponent {
           this.user_password = "";
 
           this.awareness.setFocused("authenticated", this.AuthUser._id, (res: any) => {
-            this.router.navigate(['/authentication']);
+            this.awareness.UserInstance._id = this.AuthUser._id;
+            this.awareness.UserInstance.acquireInstance((doc: any)=>{
+                this.awareness.UserInstance.parseInstance(doc);
+                this.router.navigate(['/home']);
+            }, (err: any) =>{
+
+              }
+            )
           });
 
           this.communication.showSuccessToast();
