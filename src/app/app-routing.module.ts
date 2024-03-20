@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/authentication',
         pathMatch: 'full',
       }, {
         path: 'ui-components',
@@ -91,7 +91,7 @@ const routes: Routes = [
           import('./pages/mform_data/mform_data.module').then((m) => m.MFormDataModule),
       },{
         path: 'surveillance',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/surveillance_data/surveillance_data.module').then((m) => m.Surveillance_dataModule),
       },{

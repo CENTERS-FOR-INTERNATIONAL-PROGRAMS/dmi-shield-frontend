@@ -1,5 +1,5 @@
 import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {Component, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
+import {Component, ViewEncapsulation, ViewChild, ElementRef, OnInit} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,12 +32,16 @@ import {AwarenessService} from "../../services/awareness.service";
     NgOptimizedImage
   ],
 })
-export class AppDashboardComponent {
+export class AppDashboardComponent implements OnInit{
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   @ViewChild('viewMoreContent') targetElement: ElementRef;
 
   constructor(public awareness: AwarenessService){
 
+  }
+
+  ngOnInit() {
+    // this.awareness.awaken(null);
   }
 
   scrollToTarget() {
