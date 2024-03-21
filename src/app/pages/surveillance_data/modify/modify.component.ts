@@ -70,15 +70,18 @@ export class ModifyComponent implements OnInit{
           const parts = droppedFile.fileEntry.name.split('.');
           SurveillanceInstance.file_extension = parts[parts.length - 1];
 
-          this.uploadFile(file, SurveillanceInstance._id).subscribe(
-            (res: any) => {
-              console.log(res);
-              SurveillanceInstance.file_url = res;
-            },
-            (error: any) =>{
-              console.log(error);
-            }
-          );
+          if(this.fileUploaderUrl != ""){
+            this.uploadFile(file, SurveillanceInstance._id).subscribe(
+              (res: any) => {
+                console.log(res);
+                SurveillanceInstance.file_url = res;
+              },
+              (error: any) =>{
+                console.log(error);
+              }
+            );
+          }
+
 
           this.SurveillanceDataList.push(SurveillanceInstance);
 
