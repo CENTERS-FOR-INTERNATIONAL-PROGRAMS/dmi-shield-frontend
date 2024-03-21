@@ -18,9 +18,11 @@ export class CompositeComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadComposite()
+
   }
 
   loadComposite() {
+    this.FilterSurveillanceData.user_id = this.awareness.UserInstance._id;
     this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
       this.Surveillance = Surveillance;
       console.log("Allll", this.Surveillance);
