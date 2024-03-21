@@ -8,6 +8,8 @@ import {AwarenessService} from "../../../services/awareness.service";
 import {HttpClient} from "@angular/common/http";
 import {Guid} from "guid-typescript";
 import {IModelStatus} from "../../../interfaces/IModel.model";
+import {Observable} from "rxjs";
+import {config} from "../../../config/config";
 
 @Component({
   selector: 'app-modify',
@@ -16,7 +18,7 @@ import {IModelStatus} from "../../../interfaces/IModel.model";
 })
 export class ModifyComponent implements OnInit{
 
-  MFieldInstance = new MField();
+  ResourceInstance = new Resource();
   allowedFiles: string=  ".csv, .xlsx, .xls, .docx, .pdf"
   public Files: NgxFileDropEntry[] = [];
   public UploadedFiles: any;
@@ -24,6 +26,7 @@ export class ModifyComponent implements OnInit{
   ResourceDataList: Resource[] = [];
   ValidatedFileTypes: string[] = ["csv", "xlsx", "xls"]
   DocumentTypes: string[] = ["SARI", "CHOLERA", "POLIO"]
+  fileUploaderUrl = config.FILE_UPLOADER_URL;
 
   UIMStatus: IModelStatus = {
     ms_processing:false,
@@ -74,33 +77,38 @@ export class ModifyComponent implements OnInit{
 
           const parts = droppedFile.fileEntry.name.split('.');
           ResourceInstance.file_extension = parts[parts.length - 1];
+
+          this.uploadFile(file, ResourceInstance._id).subscribe(
+            (res: any) => {
+              console.log(res);
+              ResourceInstance.file_url = res;
+            },
+            (error: any) =>{
+              console.log(error);
+            }
+          );
+
           this.ResourceDataList.push(ResourceInstance);
-
-          this.uploadFile(file, ResourceInstance._id);
-
         });
       } else {
-        // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
         console.log(droppedFile.relativePath, fileEntry);
       }
     }
   }
 
-  uploadFile(file: File, fileId: string): boolean {
+  uploadFile(file: File, fileId: string): Observable<any> {
     const formData = new FormData();
     formData.append("file", file);
 
-    this.http.post(`http://localhost:3000/upload-resource?file_id=${fileId}`, formData,
-      {
-        responseType: 'blob'
-      })
-      .subscribe(data => {
-        // Handle response data here if needed
-        console.log(data);
-      });
+    // return this.http.post(`http://localhost:5055/Upload/UploadFile?FileId=${fileId}`, formData, {
+    //   responseType: 'text'
+    // });
 
-    return true;
+    let url = `${this.fileUploaderUrl}/Upload/UploadFile?FileId=${fileId}`;
+    return this.http.post(url, formData, {
+      responseType: 'text'
+    });
   }
 
   generateUniqueId(){
