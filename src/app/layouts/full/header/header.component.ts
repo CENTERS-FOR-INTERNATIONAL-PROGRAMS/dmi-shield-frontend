@@ -29,6 +29,8 @@ export class HeaderComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.awareness.awaken(null);
+
     this.router.events.subscribe(events =>{
       if(events instanceof NavigationEnd){
         this.updateActiveRoute();
@@ -44,9 +46,6 @@ export class HeaderComponent implements OnInit {
     this.location.back();
   }
 
-  // onScroll($event: Event) {
-  //
-  // }
 
   onScroll(event) {
     this.hideNav = this.scrollTop < event.target.scrollTop;
@@ -64,6 +63,16 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
+  }
+
+  toggleMenuIcon() {
+    const menuIcon = document.getElementById('menu-icon');
+    const navbar = document.querySelector('.navbar');
+
+    if (menuIcon && navbar) {
+      menuIcon.classList.toggle('bx-x');
+      navbar.classList.toggle('active');
+    }
   }
 
   notificaionClicked() {

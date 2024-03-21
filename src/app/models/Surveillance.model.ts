@@ -157,7 +157,8 @@ export class Surveillance {
       remote_db.find({
         selector: {
           'file_original_name': { $regex: ".*" + this.MFilter.mf_search + ".*" },
-          'deleted': false
+          'deleted': false,
+          'user_id': this.user_id
         },
         sort: [{ 'file_original_name': 'asc' }]
       }).then(res => {
