@@ -3,30 +3,31 @@
     padding-top: 10px !important;
   }
 </style>
+<div style="margin-top: 128px; min-height: 100vh; padding: 2rem 9%;">
+  <mat-card class="cardWithShadow">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>
+          {{ UserInstance.user_name }}
+        </h3>
+      </mat-card-title>
 
-<mat-card class="cardWithShadow">
-  <mat-card-header>
-    <mat-card-title>
-      <h3>
-        {{ UserInstance.user_name }}
-      </h3>
-    </mat-card-title>
+      <mat-card-subtitle>
+        <p>
+          {{ UserInstance.user_email }}
+        </p>
+      </mat-card-subtitle>
+    </mat-card-header>
 
-    <mat-card-subtitle>
-      <p>
-        {{ UserInstance.user_email }}
-      </p>
-    </mat-card-subtitle>
-  </mat-card-header>
+    <mat-divider></mat-divider>
 
-  <mat-divider></mat-divider>
-
-  <mat-card-content>
-    <div class="view-align--right view-padding-top-10">
-      <button type="button" mat-button color="primary" [routerLink]="['/users/modify']"
-        (click)="awareness.setFocused('user', UserInstance._id)">Edit Profile</button>
-      <button type="button" mat-button color="primary" [routerLink]="['/users/modify_password']"
-        (click)="awareness.setFocused('user', UserInstance._id)">Edit Password</button>
-    </div>
-  </mat-card-content>
-</mat-card>
+    <mat-card-content>
+      <div class="view-align--right view-padding-top-10">
+        <button type="button" mat-button color="primary" [routerLink]="['/users/modify']"
+                (click)="awareness.setFocused('user', UserInstance._id)">Edit Profile</button>
+        <button type="button" mat-button color="primary" [routerLink]="['/users/modify_password']"
+                (click)="awareness.setFocused('user', UserInstance._id)">Edit Password</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
