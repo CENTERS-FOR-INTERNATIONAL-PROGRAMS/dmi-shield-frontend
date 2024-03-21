@@ -233,15 +233,6 @@ section {
   word-wrap: break-word;
 }
 
-.btn-box {
-  position: relative;
-  display: flex;
-  //justify-content: space-between;
-  margin-top: 20px;
-  //width: 34.5rem;
-  height: 5rem;
-}
-
 footer{
   position: relative;
   bottom: 0;
@@ -266,12 +257,20 @@ footer{
   letter-spacing: .1rem;
 }
 
+.btn-box {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  height: 5rem;
+}
+
 .btn1 {
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
   width: 15rem;
   height: 100%;
   background: var(--accent-orange);
@@ -280,6 +279,7 @@ footer{
   font-weight: 600;
   color: var(--text-color);
   letter-spacing: .1rem;
+  text-align: center;
 }
 
 .down-arrow {
