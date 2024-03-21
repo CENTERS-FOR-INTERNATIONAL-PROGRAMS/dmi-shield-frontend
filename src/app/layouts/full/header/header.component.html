@@ -45,7 +45,7 @@
 
   <nav  class="navbar-tools">
     <div *ngIf="this.awareness.UserInstance._id != ''; else signInLoginButton">
-      <a>
+      <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
         <span style="width: 41px; height: 41px; flex-shrink: 0;">
         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
