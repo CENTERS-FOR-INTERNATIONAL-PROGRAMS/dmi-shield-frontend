@@ -1,72 +1,50 @@
+<header class="header">
+  <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">
+    <img class="logo" src="assets/images/logos/logo-moh.png" alt="">
+  </a>
 
-  <header class="header">
-    <!-- <a href="#" class="logo">Shield</a> -->
-    <a href="#">
-      <img class="logo" src="assets/images/logos/logo-moh.png" alt="">
+  <div class="navbar">
+    <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
+
+    <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
+      Dashboards
+      <i class='bx bxs-chevron-down'></i>
     </a>
-<!--    <div class="navbar">-->
-<!--      <a [routerLink]="['/dashboard']" class="active">Home</a>-->
-<!--      <a [routerLink]="['/home/welcome']">Dashboard</a>-->
-<!--      <a  [routerLink]="['/surveillance/composites']">Upload Data</a>-->
-<!--      <a [routerLink]="['/resources/composites']">Resources</a>-->
 
-<!--      <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>-->
-<!--      <a class="navbar-extra" [routerLink]="['/resources/composites']">Notifications</a>-->
-<!--      <a class="navbar-extra" >Settings</a>-->
-
-<!--      <span class="active-nav"></span>-->
-<!--    </div>-->
-
-    <div class="navbar">
-      <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
-<!--      <a [matMenuTriggerFor]="menu" [routerLink]="['/home/welcome']" [class.active]="activeRoute === '/home/welcome'">-->
-<!--        Integrated Dashboard-->
-
-<!--        <i class='bx bxs-chevron-down'></i>-->
-<!--      </a>-->
-
-      <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
-        Dashboards
-        <i class='bx bxs-chevron-down'></i>
-      </a>
-
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank" style="color: inherit">
-            <span>Routine Surveillance</span>
-          </a>
-        </button>
-        <button mat-menu-item>
-          <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank" style="color: inherit">
-            <span>Event Based Surveillance</span>
-          </a>
-        </button>
-        <button mat-menu-item>
-          <span>Outbreak Response</span>
-        </button>
-        <button mat-menu-item>
-          <a [routerLink]="['/dashboard']" style="color: inherit">
-            <span>Program Dashboards</span>
-          </a>
-        </button>
-      </mat-menu>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank" style="color: inherit">
+          <span>Routine Surveillance</span>
+        </a>
+      </button>
+      <button mat-menu-item>
+        <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank" style="color: inherit">
+          <span>Event Based Surveillance</span>
+        </a>
+      </button>
+      <button mat-menu-item>
+        <span>Outbreak Response</span>
+      </button>
+      <button mat-menu-item>
+        <a [routerLink]="['/dashboard']" style="color: inherit">
+          <span>Program Dashboards</span>
+        </a>
+      </button>
+    </mat-menu>
 
 
-      <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
-      <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
+    <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
+    <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
 
-      <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>
-      <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
-      <a class="navbar-extra" >Settings</a>
+    <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>
+    <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
+    <a class="navbar-extra" >Settings</a>
 
-      <span class="active-nav"></span>
-    </div>
+    <span class="active-nav"></span>
+  </div>
 
-    <nav *ngIf="this.awareness.UserInstance._id != ''; else signInLoginButton" class="navbar-tools">
-<!--      <a *ngIf="awareness.UserInstance?._id"  href="#"><img src="assets/images/icons/circle.svg" alt="profile">-->
-<!--          {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0] : '' }}-->
-<!--        </a>-->
-      <a>
+  <nav *ngIf="this.awareness.UserInstance._id != ''; else signInLoginButton" class="navbar-tools">
+    <a>
         <span style="width: 41px; height: 41px; flex-shrink: 0;">
         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
@@ -75,31 +53,29 @@
           </text>
         </svg>
       </span>
+    </a>
+
+    <a (click)="notificaionClicked()" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
+    <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
+
+    <mat-menu #actionsMenu="matMenu">
+      <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
+      <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
+    </mat-menu>
+
+  </nav>
+
+  <ng-template #signInLoginButton class="navbar-tools">
+    <div class="btn-box">
+      <a style="text-decoration: none;" [routerLink]="['/authentication/login']" class="btn1">
+        Sign In
       </a>
+    </div>
+  </ng-template>
 
-      <a (click)="notificaionClicked()" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
-      <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
+  <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
 
-      <mat-menu #actionsMenu="matMenu">
-        <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
-        <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
-      </mat-menu>
-    </nav>
-
-    <ng-template #signInLoginButton>
-      <div class="btn-box">
-        <a style="text-decoration: none;" [routerLink]="['/authentication/login']" class="btn1">
-          Sign In
-        </a>
-      </div>
-
-    </ng-template>
-
-    <div class="bx bx-menu" id="menu-icon"></div>
-
-
-
-  </header>
+</header>
 <!--  <mat-toolbar style="background-color:transparent;">-->
 
 <!--    <div>-->

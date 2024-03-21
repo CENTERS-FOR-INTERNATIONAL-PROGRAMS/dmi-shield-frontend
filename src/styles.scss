@@ -271,7 +271,7 @@ footer{
   display: inline-flex;
   justify-content: center;
   align-items: center;
- 
+
   width: 15rem;
   height: 100%;
   background: var(--accent-orange);
@@ -379,11 +379,6 @@ footer{
 //}
 
 @media (max-width: 1110px) {
-
-  //#signInLoginButton{
-  //  display: none;
-  //}
-
   .composite-data{
     padding: 10rem 4% 2rem;
   }
@@ -482,9 +477,6 @@ footer{
     color: #ffffff;
   }
 
-  //mat-menu button{
-  //  font-family: Lato, sans-serif;
-  //}
 
   .card-section {
     flex-direction: column;
