@@ -5,6 +5,7 @@ import {Thresholds} from "../../../models/Thresholds.model";
 import {CommunicationService} from "../../../services/communication.service";
 import {FormControl, Validators} from "@angular/forms";
 import {Guid} from "guid-typescript";
+import {config} from "../../../config/config";
 
 @Component({
   selector: 'app-modify',

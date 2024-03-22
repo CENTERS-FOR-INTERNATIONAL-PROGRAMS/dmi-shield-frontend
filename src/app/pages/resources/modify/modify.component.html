@@ -38,14 +38,14 @@
         </mat-card>
 
         <div class="view-align--right">
-          <mat-spinner *ngIf="MFieldInstance._processing" class="view-spinner--inline"></mat-spinner>
 
-          <i-tabler *ngIf="MFieldInstance._action_result" class="view-icon--inline view-color--green" name="circle-check-filled">
+            <mat-spinner *ngIf="ResourceInstance.MStatus.ms_processing" class="view-spinner--inline"></mat-spinner>
 
-          </i-tabler>
+            <i-tabler *ngIf="ResourceInstance.MStatus.ms_action_result" class="view-icon--inline view-color--green"
+                      name="circle-check-filled"></i-tabler>
 
           <button type="submit" mat-flat-button color="primary" class="view-button" (click)="SubmitInstance()">
-            {{MFieldInstance._id == '' ? 'Submit' : 'Update'}}
+            {{ResourceInstance._id == '' ? 'Submit' : 'Update'}}
           </button>
         </div>
       </form>
