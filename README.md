@@ -25,7 +25,8 @@ User management, Integrated Dashboards, Upload of documents
   ```
     export const config = {
 COUCHDB_ALCHEMY: "https://<user_name>:<password>@host",
-FILE_PATH: ""
+FILE_PATH: "",
+FILE_UPLOADER_URL:""
 };
   ```
 

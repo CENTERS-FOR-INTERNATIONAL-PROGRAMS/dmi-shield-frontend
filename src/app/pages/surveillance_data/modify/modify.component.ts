@@ -9,6 +9,8 @@ import {FormControl} from "@angular/forms";
 import {Surveillance} from "../../../models/Surveillance.model";
 import {IModelStatus} from "../../../interfaces/IModel.model";
 import {Guid} from "guid-typescript";
+import {Observable} from "rxjs";
+import {config} from "../../../config/config";
 
 @Component({
   selector: 'app-modify',
@@ -23,6 +25,8 @@ export class ModifyComponent implements OnInit{
   SurveillanceDataList: Surveillance[] = [];
   ValidatedFileTypes: string[] = ["csv", "xlsx", "xls"]
   DocumentTypes: string[] = ["SARI", "CHOLERA", "POLIO"]
+  fileUploaderUrl = config.FILE_UPLOADER_URL;
+
 
   UIMStatus: IModelStatus = {
     ms_processing:false,
@@ -47,9 +51,6 @@ export class ModifyComponent implements OnInit{
     }
   }
 
-  seedInstance(){
-    this.SurveillanceFormControl["FileType"] = new FormControl();
-  }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.Files = files;
@@ -68,9 +69,22 @@ export class ModifyComponent implements OnInit{
 
           const parts = droppedFile.fileEntry.name.split('.');
           SurveillanceInstance.file_extension = parts[parts.length - 1];
+
+          if(this.fileUploaderUrl != ""){
+            this.uploadFile(file, SurveillanceInstance._id).subscribe(
+              (res: any) => {
+                console.log(res);
+                SurveillanceInstance.file_url = res;
+              },
+              (error: any) =>{
+                console.log(error);
+              }
+            );
+          }
+
+
           this.SurveillanceDataList.push(SurveillanceInstance);
 
-          this.uploadFile(file, SurveillanceInstance._id);
 
         });
       } else {
@@ -131,25 +145,29 @@ export class ModifyComponent implements OnInit{
     if (this.ValidatedFileTypes && this.ValidatedFileTypes.includes(extension)) {
       return true;
     }
-
     return false;
   }
 
-  uploadFile(file: File, fileId: string): boolean {
+  getFileExtension(File: string): string {
+    const parts = File.split('.');
+    return  parts[parts.length - 1].toLowerCase();
+
+  }
+
+  uploadFile(file: File, fileId: string): Observable<any> {
     const formData = new FormData();
     formData.append("file", file);
 
-    this.http.post(`http://localhost:3000/upload?file_id=${fileId}`, formData,
-      {
-        responseType: 'blob'
-      })
-      .subscribe(data => {
-        // Handle response data here if needed
-        console.log(data);
-      });
+    // return this.http.post(`http://localhost:5055/Upload/UploadFile?FileId=${fileId}`, formData, {
+    //   responseType: 'text'
+    // });
 
-    return true;
+    let url = `${this.fileUploaderUrl}/Upload/UploadFile?FileId=${fileId}`;
+    return this.http.post(url, formData, {
+      responseType: 'text'
+    });
   }
+
 
   // uploadToCloud(){
   //
@@ -178,16 +196,4 @@ export class ModifyComponent implements OnInit{
   // }
 
 
-}
-
-interface UploadRequest {
-  data: {
-    attributes: {
-      filename: string;
-      mime: string;
-      original_filename: string;
-      size: number;
-      type: string;
-    };
-  };
 }

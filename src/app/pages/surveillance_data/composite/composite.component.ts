@@ -53,19 +53,11 @@ export class CompositeComponent implements OnInit{
   }
 
 
-  downloadFile(fileId: Surveillance): boolean {
-    const fileName = `${fileId._id}.${fileId.file_extension}`;
-    const originalFileName = `${fileId.file_original_name}.${fileId.file_extension}`;
-    const fileIds = [fileName];
+  downloadFile(file: Surveillance): boolean {
+    const fileName = `${file._id}.${file.file_extension}`;
+    const originalFileName = `${file.file_original_name}.${file.file_extension}`;
 
-    if (fileIds.length === 0) {
-      console.error('No file IDs provided');
-      return false;
-    }
-
-    const url = 'http://localhost:3000/files';
-
-    this.http.post(url, fileIds, { responseType: 'blob' }).subscribe(
+    this.http.get(file.file_url, { responseType: 'blob' }).subscribe(
       (data: Blob) => {
         if (data) {
           this.downloadFileByBlob(data, originalFileName);

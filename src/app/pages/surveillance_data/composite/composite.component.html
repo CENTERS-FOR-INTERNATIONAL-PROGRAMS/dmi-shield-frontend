@@ -49,7 +49,7 @@
           <td mat-cell *matCellDef="let element">
             <mat-menu #actionsMenu="matMenu">
               <button mat-menu-item (click)="deleteInstance(element)">Delete</button>
-              <button mat-menu-item (click)="downloadFile(element)">Download</button>
+              <button mat-menu-item (click)="downloadFile(element)">Delete</button>
             </mat-menu>
 
             <a mat-stroked-button color="primary" class="view-button" [matMenuTriggerFor]="actionsMenu">
