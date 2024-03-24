@@ -16,6 +16,7 @@ export class AppSideLoginComponent {
 
   hide: boolean = true;
   AuthUser: User = new User();
+  UserData: User = new User();
   UserFormControls: CompositeFormControls = {};
   user_password: string = "";
 
@@ -60,6 +61,7 @@ export class AppSideLoginComponent {
 
               }
             )
+            this.awareness.saveUserData(this.AuthUser);
           });
 
           this.communication.showSuccessToast();
@@ -72,4 +74,5 @@ export class AppSideLoginComponent {
       this.communication.showToast("Please provide username and password!");
     }
   }
+
 }
