@@ -117,6 +117,12 @@ const routes: Routes = [
         canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/thresholds/thresholds.module').then((m) => m.ThresholdsModule),
+      },
+      {
+        path: 'mohdash',
+        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        loadChildren: () =>
+          import('./pages/mohdash/mohdash.module').then((m) => m.MohdashModule),
       }
     ],
   },
