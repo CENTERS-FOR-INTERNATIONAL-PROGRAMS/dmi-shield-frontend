@@ -44,13 +44,14 @@
   </div>
 
   <nav  class="navbar-tools">
-    <div *ngIf="this.awareness.UserInstance._id != ''; else signInLoginButton">
+<!--    <div *ngIf="this.awareness.UserInstance._id != ''; else signInLoginButton">-->
+    <div *ngIf="this.UserInstance; else signInLoginButton">
       <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
         <span style="width: 41px; height: 41px; flex-shrink: 0;">
         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
-            {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0].toUpperCase() : '' }}
+            {{ this.UserInstance?.user_email ? this.UserInstance.user_email[0].toUpperCase() : '' }}
           </text>
         </svg>
       </span>

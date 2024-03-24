@@ -23,12 +23,14 @@ export class HeaderComponent implements OnInit {
   showFiller = false;
   showMenu: boolean = false;
   activeRoute: string;
+  UserInstance: User = new  User;
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
               private location: Location, private communication: CommunicationService) {
 
   }
   ngOnInit(): void {
+    this.getUser();
     this.awareness.awaken(null);
 
     this.router.events.subscribe(events =>{
@@ -36,6 +38,10 @@ export class HeaderComponent implements OnInit {
         this.updateActiveRoute();
       }
     })
+  }
+
+  getUser(){
+    this.UserInstance =  this.awareness.getUserData();
   }
 
   updateActiveRoute() : void{
@@ -54,6 +60,9 @@ export class HeaderComponent implements OnInit {
 
   onClick(action: any) {
     if (action == "logout") {
+      this.awareness.removeUserData();
+      window.location.reload();
+
       this.awareness.setFocused("authenticated", "", (res: any) => {
         this.awareness.UserInstance = new User();
         this.router.navigate(['/home']);

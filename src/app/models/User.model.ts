@@ -60,6 +60,7 @@ export class User {
     return this;
   }
 
+
   parseComposite(rows: any) {
     let CompositeUsers: User[] = [];
 
