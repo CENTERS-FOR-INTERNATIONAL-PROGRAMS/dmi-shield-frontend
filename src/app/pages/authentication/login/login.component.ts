@@ -53,7 +53,6 @@ export class AppSideLoginComponent {
           this.user_password = "";
 
           this.awareness.setFocused("authenticated", this.AuthUser._id, (res: any) => {
-            this.awareness.saveUserData(this.AuthUser);
             this.awareness.UserInstance._id = this.AuthUser._id;
             this.awareness.UserInstance.acquireInstance((doc: any)=>{
                 this.awareness.UserInstance.parseInstance(doc);
@@ -62,6 +61,7 @@ export class AppSideLoginComponent {
 
               }
             )
+            this.awareness.saveUserData(this.AuthUser);
           });
 
           this.communication.showSuccessToast();

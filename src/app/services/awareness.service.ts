@@ -31,7 +31,7 @@ export class AwarenessService {
   saveUserData(AuthUser: any): void {
     const mappedUser = {
       user_name: AuthUser.user_name,
-      userId: AuthUser._id,
+      _id: AuthUser._id,
       user_status: AuthUser.user_status,
       user_email: AuthUser.user_email,
       user_role: AuthUser.user_role,

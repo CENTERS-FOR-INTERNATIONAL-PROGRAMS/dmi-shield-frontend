@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getUser();
-    this.awareness.awaken(null);
+    // this.awareness.awaken(null);
 
     this.router.events.subscribe(events =>{
       if(events instanceof NavigationEnd){
@@ -41,7 +41,8 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser(){
-    this.UserInstance =  this.awareness.getUserData();
+    this.awareness.UserInstance =  this.awareness.getUserData();
+    console.log('working', this.awareness.UserInstance);
   }
 
   updateActiveRoute() : void{
