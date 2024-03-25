@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { AwarenessService } from './awareness.service';
 import { CommunicationService } from './communication.service';
+import {User} from "../models/User.model";
 
 @Injectable({ providedIn: 'root' })
 
@@ -16,6 +17,9 @@ export class AuthenticationService {
     let user_authenticated = false;
 
 
+    if(this.awareness.UserInstance == null){
+      this.awareness.UserInstance = new User();
+    }
     if (this.awareness.UserInstance._id !== '') {
 
       route_roles.forEach(role => {
