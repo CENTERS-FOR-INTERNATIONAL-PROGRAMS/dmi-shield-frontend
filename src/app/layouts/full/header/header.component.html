@@ -43,7 +43,7 @@
     <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
 
-    <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>
+    <a class="navbar-extra" *ngIf="this.awareness.UserInstance" [routerLink]="['/resources/composites']">Profile</a>
     <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
     <a class="navbar-extra" >Settings</a>
 
