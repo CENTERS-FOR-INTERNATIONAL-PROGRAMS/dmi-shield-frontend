@@ -5,7 +5,7 @@
 
       <span class="flex-1-auto"></span>
 
-      <a *ngIf="this.awareness.UserInstance._id != ''; else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
+      <a *ngIf="this.awareness.UserInstance != null; else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
          style="background: var(--Primary-Blue, #222A69);">
         <span style="color: #FFF">
         Upload New Resource

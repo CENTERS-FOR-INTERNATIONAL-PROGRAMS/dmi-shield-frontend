@@ -16,6 +16,7 @@ export class AppSideLoginComponent {
 
   hide: boolean = true;
   AuthUser: User = new User();
+  UserData: User = new User();
   UserFormControls: CompositeFormControls = {};
   user_password: string = "";
 
@@ -55,13 +56,15 @@ export class AppSideLoginComponent {
             this.awareness.UserInstance._id = this.AuthUser._id;
             this.awareness.UserInstance.acquireInstance((doc: any)=>{
                 this.awareness.UserInstance.parseInstance(doc);
-                this.router.navigate(['/home']);
+                // this.router.navigate(['/home']);
             }, (err: any) =>{
 
               }
             )
-          });
 
+          });
+          this.awareness.saveUserData(this.AuthUser);
+          this.router.navigate(['/home']);
           this.communication.showSuccessToast();
         }
       }, (err: any) => {
@@ -72,4 +75,5 @@ export class AppSideLoginComponent {
       this.communication.showToast("Please provide username and password!");
     }
   }
+
 }

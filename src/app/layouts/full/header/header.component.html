@@ -12,31 +12,38 @@
     </a>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank" style="color: inherit">
+      <a mat-menu-item href="https://afi.icapkenya.org/mohdash" target="_blank" style="color: inherit">
+          <span>Summarized</span>
+      </a>
+
+<!--      <a [routerLink]="['/mohdash']" style="color: inherit">-->
+<!--        <button mat-menu-item>-->
+<!--          <span>Summarized</span>-->
+<!--        </button>-->
+<!--      </a>-->
+
+      <a mat-menu-item href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank" style="color: inherit">
           <span>Routine Surveillance</span>
-        </a>
-      </button>
-      <button mat-menu-item>
-        <a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank" style="color: inherit">
+      </a>
+
+      <a mat-menu-item href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank" style="color: inherit">
           <span>Event Based Surveillance</span>
-        </a>
-      </button>
+      </a>
+
       <button mat-menu-item>
         <span>Outbreak Response</span>
       </button>
-      <button mat-menu-item>
-        <a [routerLink]="['/dashboard']" style="color: inherit">
+      <a mat-menu-item [routerLink]="['/dashboard']" style="color: inherit">
           <span>Program Dashboards</span>
-        </a>
-      </button>
+
+      </a>
     </mat-menu>
 
 
     <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
 
-    <a class="navbar-extra" *ngIf="this.awareness.UserInstance?._id" [routerLink]="['/resources/composites']">Profile</a>
+    <a class="navbar-extra" *ngIf="this.awareness.UserInstance" [routerLink]="['/resources/composites']">Profile</a>
     <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
     <a class="navbar-extra" >Settings</a>
 
@@ -44,7 +51,8 @@
   </div>
 
   <nav  class="navbar-tools">
-    <div *ngIf="this.awareness.UserInstance._id != ''; else signInLoginButton">
+    <div *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
+<!--    <div *ngIf="this.UserInstance; else signInLoginButton">-->
       <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
         <span style="width: 41px; height: 41px; flex-shrink: 0;">
         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
