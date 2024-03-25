@@ -56,14 +56,15 @@ export class AppSideLoginComponent {
             this.awareness.UserInstance._id = this.AuthUser._id;
             this.awareness.UserInstance.acquireInstance((doc: any)=>{
                 this.awareness.UserInstance.parseInstance(doc);
-                this.router.navigate(['/home']);
+                // this.router.navigate(['/home']);
             }, (err: any) =>{
 
               }
             )
-            this.awareness.saveUserData(this.AuthUser);
-          });
 
+          });
+          this.awareness.saveUserData(this.AuthUser);
+          this.router.navigate(['/home']);
           this.communication.showSuccessToast();
         }
       }, (err: any) => {
