@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-
+// MDB SCSS
+//@import "mdb-angular-ui-kit/assets/scss/mdb.scss";
 mat-card {
   border-radius: 10px; /* Adjust the value as per your preference */
 }
@@ -64,7 +65,7 @@ body {
   justify-self: center;
   align-items: center;
   margin-right: 1.5rem;
-  
+
   img {
     height: 32px;
     width: 32px;
@@ -75,7 +76,7 @@ body {
     width: 32px;
   }
 
-  
+
 }
 
 .navbar-tools-items {
