@@ -1,6 +1,15 @@
 <section class="frame-section">
 
   <mat-tab-group animationDuration="1ms">
+    <mat-tab label="IFBS Dashboard">
+
+      <div class="frame-section-content">
+          <a (click)="openIfbsframe()">
+          </a>
+        <iframe  title="SARI_ILI Dashboard12082022" [src]="IfbsIframe" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
+    </mat-tab>
+    
     <mat-tab label="SARI/ILI Dashboards">
         <div class="frame-section-content">
             <a (click)="openSariIframe()">
@@ -11,16 +20,7 @@
 
 
     </mat-tab>
-    <mat-tab label="AFI Dashboard">
-
-        <div class="frame-section-content">
-            <a (click)="openIfbsframe()">
-            </a>
-          <iframe  title="SARI_ILI Dashboard12082022" [src]="IfbsIframe" frameborder="0" allowFullScreen="true"></iframe>
-        </div>
-
-
-    </mat-tab>
+    
     <mat-tab label="COVID-19 Mortality Dashboard">
 
         <div class="frame-section-content">
