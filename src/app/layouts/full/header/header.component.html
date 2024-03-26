@@ -43,25 +43,24 @@
     <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
 
-    <a class="navbar-extra" *ngIf="this.awareness.UserInstance" [routerLink]="['/resources/composites']">Profile</a>
+    <!-- <a class="navbar-extra" *ngIf="this.awareness.UserInstance" [routerLink]="['/resources/composites']">Profile</a>
     <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
     <a class="navbar-extra" >Settings</a>
-
-    <span class="active-nav"></span>
+    <span class="active-nav"></span> -->
   </div>
 
   <nav  class="navbar-tools">
-    <div *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
+    <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
 <!--    <div *ngIf="this.UserInstance; else signInLoginButton">-->
       <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
-        <span style="width: 41px; height: 41px; flex-shrink: 0;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
+       
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
             {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0].toUpperCase() : '' }}
           </text>
         </svg>
-      </span>
+      
       </a>
 
       <a (click)="notificaionClicked()" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
@@ -71,7 +70,11 @@
         <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
+     
+      <img class="shield-logo-header" src="assets/images/logos/SHIELD-LOGO.png">
+      
     </div>
+
 
     <ng-template #signInLoginButton>
       <div class="btn-box">

@@ -40,7 +40,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   padding: 2rem 9%;
   background: transparent;
   display: flex;
@@ -48,6 +48,7 @@ body {
   align-items: center;
   z-index: 100;
 }
+
 
 .active-header {
   background: #ffffff;
@@ -59,10 +60,34 @@ body {
 }
 
 .navbar-tools a {
-  display: inline;
+  display: inline-flex;
   justify-self: center;
-  align-content: center;
-  margin-left: 2.5rem;
+  align-items: center;
+  margin-right: 1.5rem;
+  
+  img {
+    height: 32px;
+    width: 32px;
+  }
+
+  svg {
+    height: 32px;
+    width: 32px;
+  }
+
+  
+}
+
+.navbar-tools-items {
+  display: flex;
+  align-items: center;
+
+  .shield-logo-header {
+    margin-left: 16px;
+    width: 4.75rem;
+    // height: 9.3125rem;
+    flex-shrink: 0;
+  }
 }
 
 .navbar-extra {
@@ -322,6 +347,7 @@ footer{
   width: 15.75rem;
   height: 9.3125rem;
   flex-shrink: 0;
+  // transform: scale(0.7);
 }
 
 .copyright {
