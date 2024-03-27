@@ -56,9 +56,18 @@ body {
 }
 
 .logo {
-  width: 298px;
-  height: 74px;
+  width: 141px;
+  height: 118px;
+  flex-shrink: 0;
 }
+
+.nav-shield {
+  width: 94px;
+  height: 97px;
+  flex-shrink: 0;
+  margin-left: 46px;
+}
+
 
 .navbar-tools a {
   display: inline-flex;
@@ -82,13 +91,6 @@ body {
 .navbar-tools-items {
   display: flex;
   align-items: center;
-
-  .shield-logo-header {
-    margin-left: 16px;
-    width: 4.75rem;
-    // height: 9.3125rem;
-    flex-shrink: 0;
-  }
 }
 
 .navbar-extra {
@@ -222,7 +224,11 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40rem 9%;
+  // padding: 40rem 9%;
+  padding-top: 30rem;
+  padding-bottom: 20rem ;
+  padding-left: 9%;
+  padding-right: 9%;
   background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
 }
 
@@ -231,9 +237,10 @@ section {
 }
 
 .home-image {
-  width: 55rem;
-  height: auto;
+  width: 504px;
+  height: 504px;
   flex-shrink: 0;
+  margin-top: 60px;
 }
 
 .home-content {
@@ -242,29 +249,32 @@ section {
 }
 
 .home-content h1 {
-  font-size: 6.6rem;
+  font-size: 90px;
   font-weight: 700;
   color: var(--text-color);
-  margin: 20px 0 40px;
-  line-height: 7.6rem;
+  margin-top: 100px;
+  line-height: 76px;
+  width: 448px;
   /* word-wrap: break-word; */
 }
 
 
 .home-content h3 {
-  font-size: 3.2rem;
+  font-size: 24px;
   font-weight: 400;
   color: #03062C;
-  line-height: 3.6rem;
+  line-height: 32px;
+  margin-top: 35px;
   word-wrap: break-word;
 }
 
-footer{
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #f8f9fa; /* Adjust background color as needed */
+.home-content h4 {
+  font-size: 20px;
+  font-weight: 400;
+  color: #03062C;
+  line-height: 32px;
+  margin-top: 35px;
+  word-wrap: break-word;
 }
 
 .btn {
@@ -289,18 +299,18 @@ footer{
   display: flex;
   //justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 35px;
   //width: 34.5rem;
   height: 5rem;
 }
 
-.btn-box .btn1 {
+.btn1 {
   position: relative;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
+  height: 5rem;
   width: 15rem;
-  height: 100%;
   background: var(--accent-orange);
   border-radius: .8rem;
   font-size: 1.8rem;
@@ -313,6 +323,15 @@ footer{
 .down-arrow {
   margin-left: 6px;
 }
+
+footer{
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f9fa; /* Adjust background color as needed */
+}
+
 
 .footer-top {
   padding: 20px 10%;
@@ -345,10 +364,18 @@ footer{
 }
 
 .shield-logo {
-  width: 15.75rem;
-  height: 9.3125rem;
+  width: 178px;
+  height: 100px;
   flex-shrink: 0;
   // transform: scale(0.7);
+}
+
+.shield-logo-container .logo-text {
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 21px;
+  font-family: 700px;
+  width: 238px;
 }
 
 .copyright {
@@ -380,6 +407,7 @@ footer{
   color: #FFFFFF;
   line-height: 3rem;
   font-size: 1.8rem;
+  margin-top: 12px;
 }
 
 /* BREAKPOINTS */
