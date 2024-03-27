@@ -264,14 +264,6 @@ section {
   word-wrap: break-word;
 }
 
-footer{
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #f8f9fa; /* Adjust background color as needed */
-}
-
 .btn {
   position: relative;
   display: inline-flex;
@@ -319,6 +311,15 @@ footer{
   margin-left: 6px;
 }
 
+footer{
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f9fa; /* Adjust background color as needed */
+}
+
+
 .footer-top {
   padding: 20px 10%;
   background: #24ABCE;
@@ -350,10 +351,18 @@ footer{
 }
 
 .shield-logo {
-  width: 15.75rem;
-  height: 9.3125rem;
+  width: 178px;
+  height: 100px;
   flex-shrink: 0;
   // transform: scale(0.7);
+}
+
+.shield-logo-container .logo-text {
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 21px;
+  font-family: 700px;
+  width: 238px;
 }
 
 .copyright {
@@ -385,6 +394,7 @@ footer{
   color: #FFFFFF;
   line-height: 3rem;
   font-size: 1.8rem;
+  margin-top: 12px;
 }
 
 /* BREAKPOINTS */
