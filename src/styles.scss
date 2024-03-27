@@ -56,8 +56,9 @@ body {
 }
 
 .logo {
-  width: 298px;
-  height: 74px;
+  width: 141px;
+  height: 118px;
+  flex-shrink: 0;
 }
 
 .navbar-tools a {
