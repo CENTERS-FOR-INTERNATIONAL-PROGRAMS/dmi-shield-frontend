@@ -1,8 +1,45 @@
-<div class="m-l-24 m-r-24" style="margin-top: 128px; min-height: 100vh">
-  <div class="frame-section-content">
+<div style=" padding: 0 9%; margin-top: 128px; min-height: 100vh">
 
-    <iframe id="myIframe" title="SARI_ILI Dashboard12082022" [src]="SummaryDashboardsFrame" frameborder="0" allowFullScreen="true"></iframe>
+  <div class="carousel-container">
+    <div class="carousel-inner rounded-5 shadow-4-strong">
+      <mdb-carousel #carousel [interval]="0" [controls]="true" [indicators]="false"
+                    [animation]="'fade'" [dark]="true">
+        <ng-container *ngFor="let item of iframeList">
+          <mdb-carousel-item>
+            <div style="height: 80vh">
+              <iframe [src]="item.source" frameborder="0" width="100%" height="90%"></iframe>
+            </div>
+          </mdb-carousel-item>
+        </ng-container>
+      </mdb-carousel>
+    </div>
+
+    <div class="carousel-controls">
+      <div style="font-size: 3.6rem;" class="bx bx-skip-previous-circle" (click)="previousSlide()"></div>
+      <div style="font-size: 3.6rem;" class="bx bx-skip-next-circle" (click)="nextSlide()"></div>
+    </div>
   </div>
+<!--  <div class="carousel-inner rounded-5 shadow-4-strong">-->
+<!--    <mdb-carousel #carousel [interval]="0" [controls]="true" [indicators]="false"-->
+<!--                  [animation]="'fade'" [dark]="true">-->
+
+<!--      <ng-container *ngFor="let item of iframeList">-->
+<!--        <mdb-carousel-item>-->
+<!--          <div style="height: 80vh" >-->
+<!--            <iframe  [src]="item.source" frameborder="0" width="100%" height="90%"></iframe>-->
+<!--          </div>-->
+<!--        </mdb-carousel-item>-->
+<!--      </ng-container>-->
+<!--    </mdb-carousel>-->
+
+<!--    <div style="font-size: 3.6rem;" class="bx bx-skip-previous-circle" (click)="previousSlide()">  </div>-->
+<!--    <div style="font-size: 3.6rem;" class="bx bx-skip-next-circle" (click)="nextSlide()">  </div>-->
+<!--  </div>-->
+
+
+
+<!--  <div style="font-size: 3.6rem;" class="bx bx-skip-previous-circle" (click)="previousSlide()">  </div>-->
+<!--  <div style="font-size: 3.6rem;" class="bx bx-skip-next-circle" (click)="nextSlide()">  </div>-->
 
 </div>
-
+<!--[interval]="10000"-->

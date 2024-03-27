@@ -8,6 +8,7 @@ import {CFieldsModule} from "../cfields/cfields.module";
 import {TablerIconsModule} from "angular-tabler-icons";
 import {NgxFileDropModule} from "ngx-file-drop";
 import {MohdashRoutes} from "./mohdash.routing";
+import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
 
 
 
@@ -20,7 +21,8 @@ import {MohdashRoutes} from "./mohdash.routing";
     ReactiveFormsModule,
     CFieldsModule,
     TablerIconsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    MdbCarouselModule
   ],
   declarations: [
     CompositeComponent,
