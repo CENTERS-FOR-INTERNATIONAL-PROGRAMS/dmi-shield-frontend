@@ -68,6 +68,7 @@ body {
   margin-left: 46px;
 }
 
+
 .navbar-tools a {
   display: inline-flex;
   justify-self: center;
@@ -90,13 +91,6 @@ body {
 .navbar-tools-items {
   display: flex;
   align-items: center;
-
-  .shield-logo-header {
-    margin-left: 16px;
-    width: 4.75rem;
-    // height: 9.3125rem;
-    flex-shrink: 0;
-  }
 }
 
 .navbar-extra {
@@ -305,13 +299,13 @@ footer{
   height: 5rem;
 }
 
-.btn-box .btn1 {
+.btn1 {
   position: relative;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
+  height: 5rem;
   width: 15rem;
-  height: 100%;
   background: var(--accent-orange);
   border-radius: .8rem;
   font-size: 1.8rem;
