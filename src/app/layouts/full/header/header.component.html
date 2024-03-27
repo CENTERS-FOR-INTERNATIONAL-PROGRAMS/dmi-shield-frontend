@@ -1,6 +1,7 @@
 <header class="header">
   <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">
-    <img class="logo" src="assets/images/logos/logo-moh.png" alt="">
+    <img class="logo" src="assets/images/logos/logo-moh-new.png" alt="">
+    <img class="nav-shield" src="assets/images/logos/SHIELD-LOGO.png" alt="">
   </a>
 
   <div class="navbar">
@@ -29,13 +30,11 @@
       <a mat-menu-item href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank" style="color: inherit">
           <span>Event Based Surveillance</span>
       </a>
-
-      <button mat-menu-item>
+      <a mat-menu-item href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank" style="color: inherit">
         <span>Outbreak Response</span>
-      </button>
+      </a>
       <a mat-menu-item [routerLink]="['/dashboard']" style="color: inherit">
           <span>Program Dashboards</span>
-
       </a>
     </mat-menu>
 
@@ -71,13 +70,13 @@
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
 
-      <img class="shield-logo-header" src="assets/images/logos/SHIELD-LOGO.png">
+      <!-- <img class="shield-logo-header" src="assets/images/logos/SHIELD-LOGO.png"> -->
 
     </div>
 
 
     <ng-template #signInLoginButton>
-      <div class="btn-box">
+      <div class="">
         <a style="text-decoration: none;" [routerLink]="['/authentication/login']" class="btn1">
           Sign In
         </a>
