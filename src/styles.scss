@@ -239,9 +239,10 @@ section {
 }
 
 .home-image {
-  width: 55rem;
-  height: auto;
+  width: 504px;
+  height: 504px;
   flex-shrink: 0;
+  margin-top: 60px;
 }
 
 .home-content {
@@ -250,20 +251,22 @@ section {
 }
 
 .home-content h1 {
-  font-size: 6.6rem;
+  font-size: 128px;
   font-weight: 700;
   color: var(--text-color);
-  margin: 20px 0 40px;
-  line-height: 7.6rem;
+  margin-top: 100px;
+  line-height: 76px;
+  width: 448px;
   /* word-wrap: break-word; */
 }
 
 
 .home-content h3 {
-  font-size: 3.2rem;
+  font-size: 26px;
   font-weight: 400;
   color: #03062C;
-  line-height: 3.6rem;
+  line-height: 32px;
+  margin-top: 35px;
   word-wrap: break-word;
 }
 
@@ -297,7 +300,7 @@ footer{
   display: flex;
   //justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 35px;
   //width: 34.5rem;
   height: 5rem;
 }
