@@ -1,0 +1,19 @@
+@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-controls {
+  margin-top: 10px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+}
+
+.bx {
+  cursor: pointer;
+  margin: 0 10px; /* Adjust as needed */
+}

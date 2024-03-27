@@ -12,15 +12,15 @@
     </a>
 
     <mat-menu #menu="matMenu">
-      <a mat-menu-item href="https://afi.icapkenya.org/mohdash" target="_blank" style="color: inherit">
-          <span>Summarized</span>
-      </a>
-
-<!--      <a [routerLink]="['/mohdash']" style="color: inherit">-->
-<!--        <button mat-menu-item>-->
+<!--      <a mat-menu-item href="https://afi.icapkenya.org/mohdash" target="_blank" style="color: inherit">-->
 <!--          <span>Summarized</span>-->
-<!--        </button>-->
 <!--      </a>-->
+
+      <a [routerLink]="['/mohdash']" style="color: inherit">
+        <button mat-menu-item>
+          <span>Summarized</span>
+        </button>
+      </a>
 
       <a mat-menu-item href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank" style="color: inherit">
           <span>Routine Surveillance</span>
@@ -53,14 +53,14 @@
     <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
 <!--    <div *ngIf="this.UserInstance; else signInLoginButton">-->
       <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
-       
+
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
             {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0].toUpperCase() : '' }}
           </text>
         </svg>
-      
+
       </a>
 
       <a (click)="notificaionClicked()" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
@@ -70,9 +70,9 @@
         <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
-     
+
       <img class="shield-logo-header" src="assets/images/logos/SHIELD-LOGO.png">
-      
+
     </div>
 
 
