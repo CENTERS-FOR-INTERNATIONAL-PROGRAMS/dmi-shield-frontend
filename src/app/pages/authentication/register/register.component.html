@@ -1,185 +1,81 @@
-<!--<div class="blank-layout-container justify-content-center align-items-center bg-light-primary">-->
-<!--  <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">-->
-<!--    <div class="col-lg-4 d-flex align-items-center">-->
-<!--      <mat-card class="cardWithShadow boxed-auth">-->
-<!--        <mat-card-content class="">-->
-<!--          <div class="text-center">-->
-<!--            <a [routerLink]="['/home']">-->
-<!--              <img src="./assets/images/logos/logo-moh.png" class="view-logo align-middle" style="width: 100%;"-->
-<!--                   alt="logo" />-->
-<!--            </a>-->
-<!--          </div>-->
+<div class="login-page">
 
-<!--          <form class="m-t-30" name="form_user" id="form_user_register" #AuthenticateUser="ngForm"-->
-<!--                (ngSubmit)="submitInstance()">-->
-<!--            &lt;!&ndash; Name &ndash;&gt;-->
-<!--            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>-->
-<!--            <mat-form-field appearance="outline" class="w-100" color="primary">-->
-<!--              <input matInput [formControl]="UserFormControls['user_name']" type="text"-->
-<!--                     [(ngModel)]="UserInstance.user_name" />-->
+  <div class="left-half">
 
-<!--              <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">-->
-<!--                <strong>Required</strong>-->
-<!--              </mat-error>-->
-<!--            </mat-form-field>-->
-
-<!--            &lt;!&ndash; Email &ndash;&gt;-->
-<!--            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email Address</mat-label>-->
-<!--            <mat-form-field appearance="outline" class="w-100" color="primary">-->
-<!--              <input matInput [formControl]="UserFormControls['user_email']" type="email"-->
-<!--                     [(ngModel)]="UserInstance.user_email" />-->
-
-<!--              <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">-->
-<!--                <strong>Required</strong>-->
-<!--              </mat-error>-->
-
-<!--              <mat-error *ngIf="UserFormControls['user_email'].hasError('email')">-->
-<!--                <strong>Invalid email format</strong>-->
-<!--              </mat-error>-->
-<!--            </mat-form-field>-->
-
-<!--            &lt;!&ndash; Password &ndash;&gt;-->
-<!--            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>-->
-<!--            <mat-form-field appearance="outline" class="w-100" color="primary">-->
-<!--              <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"-->
-<!--                     [type]="hide ? 'password' : 'text'" />-->
-<!--              <img matSuffix (click)="hide = !hide"-->
-<!--                   src="{{hide ? 'assets/images/icons/icon-eye-invisible&#45;&#45;black.png' : 'assets/images/icons/icon-eye-visible&#45;&#45;black.png'}}"-->
-<!--                   alt="" class="view-icon&#45;&#45;image" />-->
-
-<!--              <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">-->
-<!--                <strong>Required</strong>-->
-<!--              </mat-error>-->
-<!--            </mat-form-field>-->
-
-<!--            <div class="view-align&#45;&#45;right">-->
-<!--              <button mat-button type="button" color="accent" [routerLink]="['/authentication']">-->
-<!--                Cancel-->
-<!--              </button>-->
-
-<!--              <span class="flex-1-auto"></span>-->
-
-<!--              <button type="submit" mat-raised-button color="primary">-->
-<!--                Register-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </form>-->
-<!--        </mat-card-content>-->
-<!--      </mat-card>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<div
-  class="" style="display: flex; margin: auto; max-width: 100%; background: #ffffff; padding: 10rem 9% 2rem;">
-
-  <div style=" width: 60%;  display: flex; align-items: center; flex-direction: column;">
-    <header style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-      <div
-        style="width: 408px; height: 100px; flex-shrink: 0; background-image: url('assets/images/logos/logo-moh.png');  background-position: 48%; background-size: cover; background-repeat: no-repeat;">
-      </div>
-      <p
-        style="color: var(--Primary-Cetacean-Blue, #03062C); font-family: Lato,sans-serif,sans-serif; font-size: 18px; font-style: normal; font-weight: 700; line-height: 32px; text-align: start;">
-        <a style="font-size: 18px; font-style: normal; font-weight: 700; line-height: 32px; text-decoration: none; font-size: large; color: #03062C; text-align: center; display: flex; align-items: center; justify-content: center; text-align: center;"
-           [routerLink]="['/home']">
-          <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
-            <g filter="url(#filter0_d_46_292)">
-              <circle cx="26" cy="22" r="12" fill="white" />
-            </g>
-            <path
-              d="M25.4286 29.4286L26.8386 28.0186L21.2586 22.4286H33.4286V20.4286H21.2586L26.8486 14.8486L25.4286 13.4286L17.4286 21.4286L25.4286 29.4286Z"
-              fill="#03062C" />
-            <defs>
-              <filter id="filter0_d_46_292" x="0" y="0" width="52" height="52" filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                               result="hardAlpha" />
-                <feOffset dy="4" />
-                <feGaussianBlur stdDeviation="7" />
-                <feComposite in2="hardAlpha" operator="out" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0" />
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_46_292" />
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_46_292" result="shape" />
-              </filter>
-            </defs>
-          </svg>
-          <span> Go Back </span> </a>
-      </p>
-    </header>
-    <br>
-
-    <div style="position: relative; width: 100%; height: 552px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);">
-      <form id="form_user_authenticate" style="padding: 1rem; display: grid; gap: 20px; max-width: 70rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-            (ngSubmit)="submitInstance()">
-        <h1 style="font-family: Lato,sans-serif,sans-serif; font-size: 26px; font-style: normal; font-weight: 700; line-height: 32px; border-bottom: 2px solid #FFA500; width: fit-content;">
-          Sign in to your account</h1>
-
-        <div style="display: flex; flex-direction: column;">
-          <mat-label class="form-label">User Name</mat-label>
-          <input matInput [formControl]="UserFormControls['user_name']"
-                 style="width: 100%; height: 54px; font-size: 18px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"
-                 type="text" placeholder="Your username" [(ngModel)]="UserInstance.user_name"/>
-
-          <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
-            <strong>Required</strong>
-          </mat-error>
-        </div>
-
-        <div style="display: flex; flex-direction: column;">
-          <mat-label class="form-label">Email Address</mat-label>
-          <input matInput [formControl]="UserFormControls['user_email']"
-                 style="width: 100%; height: 54px; font-size: 18px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"
-                 type="email" placeholder="Your email address" [(ngModel)]="UserInstance.user_email"/>
-
-          <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
-            <strong>Required</strong>
-          </mat-error>
-        </div>
-
-        <div style="display: flex; flex-direction: column;">
-          <mat-label class="form-label">Password</mat-label>
-
-          <div style="position: relative; width: 100%;">
-            <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"
-                   style="width: 100%; height: 54px; font-size: 18px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.20);"
-                   type="{{ hide ? 'password' : 'text' }}" placeholder="Enter your password" />
-
-            <img matSuffix (click)="hide = !hide"
-                 src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
-                 alt="" class="view-icon--image"
-                 style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; cursor: pointer;" />
-          </div>
-          <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
-            <strong>Required</strong>
-          </mat-error>
-
-        </div>
-
-
-        <input
-          style="display: flex; height: 54px; justify-content: center; align-items: center; border-radius: 8px; background: var(--Accent-Orange, #FFA500); border: 0; color: white; font-weight: 700; font-size: large; width: 100%;"
-          type="submit" value="Sign In">
-
-        <div style="display: flex; justify-content: space-between">
-<!--          <p> <a href="http://"-->
-<!--                 style="font-family: Lato,sans-serif; text-decoration: none; font-size: 14px; font-style: normal; font-weight: 400; line-height: 32px;">Forgot-->
-<!--            password?</a></p>-->
-
-          <p> <a [routerLink]="['/authentication/login']"
-                 style="font-family: Lato,sans-serif; text-decoration: none; font-size: 14px; font-style: normal; font-weight: 400; line-height: 32px;">
-            Already have an account? Login
-          </a></p>
-        </div>
-
-      </form>
+    <div class="login-top-bar">
+      <img src="assets/images/logos/logo-moh.png" style="width: 30rem;">
+      <p [routerLink]="['/authentication/login']" class='bx bx-arrow-back'>  Go Back</p>
     </div>
 
+    <mat-card class="login-card cardWithShadow" style="width: 100%">
+      <mat-card-header>
+        <mat-card-title class="card-topic text-center f-w-600 with-red-line">Sign up for an account</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form id="form_user_authenticate" (ngSubmit)="submitInstance()" class="m-t-30">
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['user_name']" type="text"
+                   [(ngModel)]="UserInstance.user_name" />
+
+            <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">User Email</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['user_email']" type="email"
+                   [(ngModel)]="UserInstance.user_email" />
+
+            <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"
+                   [type]="hide ? 'password' : 'text'" />
+            <img matSuffix (click)="hide = !hide"
+                 src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
+                 alt="" class="view-icon--image" />
+
+            <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Confirm Password</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['confirm_password']" [(ngModel)]="confirm_password" [type]="hide ? 'password' : 'text'" />
+            <mat-error *ngIf="UserFormControls['confirm_password'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+            <mat-error *ngIf="!UserFormControls['confirm_password'].hasError('required') && user_password !== confirm_password">
+              <strong>Passwords do not match</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="auth-bottom">
+
+            <a (click)="submitInstance()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
+              Sign Up
+            </a>
+
+            <p class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Already have an account?
+              <a [routerLink]="['/authentication/login']" class="text-primary">Sign In</a>
+            </p>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <!--  <aside-->
-  <!--    style="width: 30%; display: flex; align-items: center; justify-content: center; background: var(&#45;&#45;gradient-secondary-blue, linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%)); ">-->
-  <!--    <div-->
-  <!--      style="width: 492px; height: 492px; flex-shrink: 0; background-image: url('assets/images/logos/logo-dalle.png');  background-size: cover; background-repeat: no-repeat;">-->
-  <!--    </div>-->
-  <!--  </aside>-->
+
+  <div class="right-half">
+    <div class="image-container">
+      <img src="assets/images/logos/logo-dalle.png" alt="Image" width="591">
+    </div>
+  </div>
 </div>
