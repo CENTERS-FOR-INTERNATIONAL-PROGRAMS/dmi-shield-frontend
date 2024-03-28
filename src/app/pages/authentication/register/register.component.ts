@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {CompositeFormControls} from "../../../models/CompositeFormControls.model";
@@ -8,13 +8,15 @@ import {CommunicationService} from "../../../services/communication.service";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class AppSideRegisterComponent {
+export class AppSideRegisterComponent implements OnInit{
 
   hide: boolean = true;
   UserInstance: User = new User();
   UserFormControls: CompositeFormControls = {};
   user_password: string = "";
+  confirm_password: string = "";
   constructor(private router: Router, private communication: CommunicationService) { }
 
   // form = new FormGroup({
@@ -30,6 +32,14 @@ export class AppSideRegisterComponent {
     this.UserFormControls["user_name"] = new FormControl('', [Validators.required]);
     this.UserFormControls["user_email"] = new FormControl('', [Validators.required, Validators.email]);
     this.UserFormControls["user_password"] = new FormControl('', [Validators.required]);
+    this.UserFormControls["confirm_password"] = new FormControl('', [Validators.required, this.confirmPasswordValidator.bind(this)]);
+  }
+
+  confirmPasswordValidator(control: FormControl): { [s: string]: boolean } {
+    if (control.value !== this.UserFormControls['user_password'].value) {
+      return { 'passwordMismatch': true };
+    }
+    return null;
   }
 
   validateInstance(): boolean {
@@ -55,7 +65,7 @@ export class AppSideRegisterComponent {
         this.communication.showFailedToast();
       }, this.user_password, "~");
     } else {
-      this.communication.showToast("Please provide username and password!");
+      this.communication.showToast("Please fill all the required fields!");
     }
   }
 
