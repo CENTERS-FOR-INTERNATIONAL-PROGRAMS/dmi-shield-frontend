@@ -41,13 +41,18 @@ export interface UserSignOutAttributes {
   token: string;
 }
 
+export interface ResetPassAttributes {
+  email: string;
+}
+
 export type UserAuthenticationData = UserData<UserAuthenticationAttributes>;
 export type UserRegisterData = UserData<UserRegisterAttributes>;
 export type UserSignOutData = UserData<UserSignOutAttributes>;
+export type ResetPasswordData = UserData<ResetPassAttributes>;
 
 
 export interface ApiResponse{
-  errorMessage: string;
+  message: string;
   error: boolean;
   result: any;
   processing: boolean;

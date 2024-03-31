@@ -33,7 +33,7 @@ export class AppSideRegisterComponent implements OnInit{
     error: false,
     result: null,
     processing: false,
-    errorMessage: ""
+    message: ""
   }
 
   seedFormInstance(){
@@ -102,7 +102,7 @@ export class AppSideRegisterComponent implements OnInit{
         this.ApiResponseStatus.error = true;
         if (error.error.errors && error.error.errors.length > 0) {
           this.ApiResponseStatus.error = true;
-          this.ApiResponseStatus.errorMessage = error.error.errors[0].detail;
+          this.ApiResponseStatus.message = error.error.errors[0].detail;
 
         }
       }

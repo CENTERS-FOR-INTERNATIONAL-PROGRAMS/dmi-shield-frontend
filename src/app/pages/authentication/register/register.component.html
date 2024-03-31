@@ -17,7 +17,7 @@
 
       <mat-card-content>
         <div class="text-center bubble" *ngIf="this.ApiResponseStatus.error" style="margin: 2rem">
-          {{ this.ApiResponseStatus.errorMessage }}
+          {{ this.ApiResponseStatus.message }}
         </div>
 
         <form id="form_user_authenticate" (ngSubmit)="submitInstance()" class="m-t-30">

@@ -31,7 +31,7 @@ export class AppSideLoginComponent implements OnInit{
     error: false,
     result: null,
     processing: false,
-    errorMessage: ""
+    message: ""
   }
 
   ngOnInit(): void {

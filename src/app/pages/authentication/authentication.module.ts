@@ -19,6 +19,7 @@ import { AppSideLoginComponent } from './login/login.component';
 import { AppSideRegisterComponent } from './register/register.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     SplashComponent,
     AppSideLoginComponent,
     AppSideRegisterComponent,
+    ForgotPasswordComponent,
   ],
 })
 export class AuthenticationModule {}
