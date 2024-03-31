@@ -7,7 +7,15 @@ import sha256 from 'crypto-js/sha256';
 import {IKeyValue} from "../interfaces/IKeyValue.model";
 
 PouchDB.plugin(plugin);
-
+// "id": "e8d8fae1-f366-41cb-8331-e6a3395d0b4f",
+//   "name": "Elvis Otieno",
+//   "status": "active",
+//   "email": "otienoelvis8@gmail.com",
+//   "role": "guest",
+//   "updated_at": "2024-03-28T13:54:48.807795Z",
+//   "notifications": 0,
+//   "confirmed_at": null,
+//   "created_at": "2024-03-28T13:54:48.807795Z"
 export class User {
   _id: string = "";
   user_name: string = "";

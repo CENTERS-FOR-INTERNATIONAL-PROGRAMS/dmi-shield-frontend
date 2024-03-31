@@ -410,6 +410,13 @@ footer{
   margin-top: 12px;
 }
 
+.bubble {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 10px;
+  padding: 10px;
+}
+
 /* BREAKPOINTS */
 @media (max-width: 1200px) {
   html {

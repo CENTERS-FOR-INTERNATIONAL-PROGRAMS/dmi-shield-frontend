@@ -17,6 +17,8 @@ import { AuthenticationRoutes } from './authentication.routing';
 import { SplashComponent } from './splash/splash.component';
 import { AppSideLoginComponent } from './login/login.component';
 import { AppSideRegisterComponent } from './register/register.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { AppSideRegisterComponent } from './register/register.component';
     FormsModule,
     ReactiveFormsModule,
     TablerIconsModule.pick(TablerIcons),
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   declarations: [
     SplashComponent,

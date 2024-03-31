@@ -30,14 +30,16 @@ export class AwarenessService {
 
   saveUserData(AuthUser: any): void {
     const mappedUser = {
-      user_name: AuthUser.user_name,
-      _id: AuthUser._id,
-      user_status: AuthUser.user_status,
-      user_email: AuthUser.user_email,
-      user_role: AuthUser.user_role,
+      user_name: AuthUser.name,
+      _id: AuthUser.id,
+      user_status: AuthUser.status,
+      user_email: AuthUser.email,
+      user_role: AuthUser.role,
+      notifications: AuthUser.notifications,
+      confirmed_at: AuthUser.confirmed_at,
+      token: AuthUser.token,
     };
 
-    // Save mapped user
     this.saveUser(mappedUser);
   }
 
