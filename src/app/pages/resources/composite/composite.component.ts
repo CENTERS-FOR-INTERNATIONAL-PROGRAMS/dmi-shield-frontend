@@ -41,7 +41,6 @@ export class CompositeComponent implements OnInit{
         this.ApiResponseStatus.success = true;
         this.ResourceModel = res.data.map(item => item.attributes);
 
-        console.table( this.ResourceModel)
       },
       error: (error) =>{
 

@@ -21,7 +21,8 @@
 export interface UserData<T> {
   data: {
     attributes: T;
-    type: "User Authentication";
+    // type: "User Authentication";
+    type: string;
   };
 }
 
@@ -50,11 +51,20 @@ export interface ConfirmPasswordResetAttributes {
   token: string;
 }
 
+export interface CreatePreSignedUrlAttributes {
+  filename: string;
+  mime: string;
+  original_filename: string;
+  size: number;
+  type: string;
+}
+
 export type UserAuthenticationData = UserData<UserAuthenticationAttributes>;
 export type UserRegisterData = UserData<UserRegisterAttributes>;
 export type UserSignOutData = UserData<UserSignOutAttributes>;
 export type ResetPasswordData = UserData<ResetPassAttributes>;
 export type ConfirmResetPasswordData = UserData<ConfirmPasswordResetAttributes>;
+export type CreatePreSignedUrlData = UserData<CreatePreSignedUrlAttributes>;
 
 
 export interface ApiResponse{

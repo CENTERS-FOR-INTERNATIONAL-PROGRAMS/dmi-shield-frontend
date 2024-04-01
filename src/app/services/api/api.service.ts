@@ -5,13 +5,16 @@ import {Observable} from "rxjs";
 import {config} from "../../config/config";
 import {IModelStatus} from "../../interfaces/IModel.model";
 import {ApiResponse} from "../../interfaces/IAuth.model";
+import {AwarenessService} from "../awareness.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService{
 
-  constructor(private communication: CommunicationService, private http: HttpClient) {
+  constructor(private communication: CommunicationService, private http: HttpClient, private awareness: AwarenessService,
+              private router: Router) {
   }
 
 
@@ -19,7 +22,8 @@ export class ApiService{
 
     const url = config.API_ENDPOINT + endpoint;
     const headers = new HttpHeaders({
-      'Content-Type': 'application/vnd.api+json'
+      'Content-Type': 'application/vnd.api+json',
+      'Authorization': `Bearer ${this.handleGetToken()}`
     });
     return new Observable(observer => {
       this.http.post(url, data, { headers: headers }).subscribe(
@@ -34,11 +38,13 @@ export class ApiService{
     });
   }
 
-  get(endpoint: string): Observable<any> {
-    const url = config.API_ENDPOINT + endpoint;
+  putFileRequest(preSignedUrl: string, file: File): Observable<any> {
+
+    const formData: FormData = new FormData();
+    formData.append('file', file);
 
     return new Observable(observer => {
-      this.http.get(url).subscribe(
+      this.http.put(preSignedUrl, formData).subscribe(
         (response) => {
           observer.next(response);
           observer.complete();
@@ -48,5 +54,37 @@ export class ApiService{
         }
       );
     });
+  }
+
+  get(endpoint: string): Observable<any> {
+    const url = config.API_ENDPOINT + endpoint;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/vnd.api+json',
+      'Authorization': `Bearer ${this.handleGetToken()}`
+    });
+
+    return new Observable(observer => {
+      this.http.get(url, { headers: headers }).subscribe(
+        (response) => {
+          observer.next(response);
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
+  }
+
+  handleGetToken(): string {
+    const token =this.awareness.getUserData().token;
+    if(token != ''){
+      return token;
+    }
+    else {
+      this.router.navigate(['/home'])
+      return "";
+    }
   }
 }
