@@ -8,12 +8,17 @@
     </div>
 
     <mat-card class="login-card cardWithShadow" style="width: 100%">
+      <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
+      <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
+
       <mat-card-header>
         <mat-card-title class="card-topic text-center f-w-600 with-red-line">Sign in to your account</mat-card-title>
-
       </mat-card-header>
 
       <mat-card-content>
+        <div class="text-center bubble" *ngIf="wrong_cred_error" style="margin: 2rem">
+          Wrong password or username
+        </div>
         <form id="form_user_authenticate" (ngSubmit)="submitInstance()" class="m-t-30">
           <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">User Email</mat-label>
           <mat-form-field appearance="outline" class="w-100" color="primary">
@@ -39,9 +44,9 @@
           </mat-form-field>
 
           <div class="auth-bottom">
-            <a href="#" class="text-primary mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Forgot Password?</a>
+            <a [routerLink]="['/authentication/reset-password']" class="text-primary mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Forgot Password?</a>
 
-            <a (click)="submitInstance()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
+            <a *ngIf="!this.ApiResponseStatus.processing;" (click)="submitInstance()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
               Sign In
             </a>
 
