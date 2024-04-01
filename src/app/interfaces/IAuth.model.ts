@@ -45,15 +45,28 @@ export interface ResetPassAttributes {
   email: string;
 }
 
+export interface ConfirmPasswordResetAttributes {
+  password: string;
+  token: string;
+}
+
 export type UserAuthenticationData = UserData<UserAuthenticationAttributes>;
 export type UserRegisterData = UserData<UserRegisterAttributes>;
 export type UserSignOutData = UserData<UserSignOutAttributes>;
 export type ResetPasswordData = UserData<ResetPassAttributes>;
+export type ConfirmResetPasswordData = UserData<ConfirmPasswordResetAttributes>;
 
 
 export interface ApiResponse{
   message: string;
   error: boolean;
+  result: any;
+  processing: boolean;
+}
+
+export interface ApiResponseStatus{
+  message: string;
+  success: any;
   result: any;
   processing: boolean;
 }

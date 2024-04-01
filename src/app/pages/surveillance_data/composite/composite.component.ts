@@ -3,6 +3,8 @@ import {AwarenessService} from "../../../services/awareness.service";
 import {Surveillance} from "../../../models/Surveillance.model";
 import {CommunicationService} from "../../../services/communication.service";
 import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../../../services/api/api.service";
+import {ApiResponse, ApiResponseStatus} from "../../../interfaces/IAuth.model";
 
 @Component({
   selector: 'app-composites',
@@ -14,11 +16,36 @@ export class CompositeComponent implements OnInit{
 
   FilterSurveillanceData: Surveillance = new Surveillance();
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
+  }
+
+  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient,
+              private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.loadComposite()
+    // this.loadComposite();
+    this.loadComposites();
+  }
 
+  loadComposites(){
+    const url = `files/uploads/resources?page[limit]=1&page[offset]=0`;
+    this.apiService.get('files/uploads/resources',).subscribe({
+      next: (res) => {
+        this.ApiResponseStatus.success = true;
+        this.Surveillance = res.data;
+      },
+      error: (error) =>{
+
+      },
+      complete: () =>{
+        this.ApiResponseStatus.processing = false;
+        console.log(this.FilterSurveillanceData)
+      },
+    });
   }
 
   loadComposite() {
