@@ -144,13 +144,13 @@ export class ModifyComponent implements OnInit{
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
 
-          let ResourceInstance = new  Resource();
+          let resourceInstance = new  Resource();
 
-          ResourceInstance.file_original_name = droppedFile.fileEntry.name;
-          ResourceInstance.user_id = this.awareness.UserInstance._id;
+          resourceInstance.file_original_name = droppedFile.fileEntry.name;
+          resourceInstance.user_id = this.awareness.UserInstance._id;
 
           const parts = droppedFile.fileEntry.name.split('.');
-          ResourceInstance.file_extension = parts[parts.length - 1];
+          resourceInstance.file_extension = parts[parts.length - 1];
 
           this.fileData = {
             data: {
@@ -158,7 +158,7 @@ export class ModifyComponent implements OnInit{
                 filename: file.name,
                 original_filename: file.name,
                 mime: file.type,
-                type : "resource",
+                type : resourceInstance.file_type,
                 size: file.size
               },
               type: 'File CreateUpload'
@@ -188,7 +188,7 @@ export class ModifyComponent implements OnInit{
             },
           });
 
-          this.SurveillanceDataList.push(ResourceInstance);
+          this.SurveillanceDataList.push(resourceInstance);
         });
       }
     }
