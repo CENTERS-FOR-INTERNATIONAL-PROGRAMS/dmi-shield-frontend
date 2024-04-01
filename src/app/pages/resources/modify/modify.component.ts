@@ -10,6 +10,8 @@ import {Guid} from "guid-typescript";
 import {IModelStatus} from "../../../interfaces/IModel.model";
 import {Observable} from "rxjs";
 import {config} from "../../../config/config";
+import {ApiResponseStatus, CreatePreSignedUrlData, UserAuthenticationData} from 'src/app/interfaces/IAuth.model';
+import {ApiService} from "../../../services/api/api.service";
 
 @Component({
   selector: 'app-modify',
@@ -21,22 +23,24 @@ export class ModifyComponent implements OnInit{
   ResourceInstance = new Resource();
   allowedFiles: string=  ".csv, .xlsx, .xls, .docx, .pdf"
   public Files: NgxFileDropEntry[] = [];
-  public UploadedFiles: any;
-  ResourceFormControl : CompositeFormControls = {}
   ResourceDataList: Resource[] = [];
-  ValidatedFileTypes: string[] = ["csv", "xlsx", "xls"]
-  DocumentTypes: string[] = ["SARI", "CHOLERA", "POLIO"]
-  fileUploaderUrl = config.FILE_UPLOADER_URL;
+  fileData: CreatePreSignedUrlData;
 
   UIMStatus: IModelStatus = {
     ms_processing:false,
     ms_action_result: false
   }
 
-
-  constructor(private communication: CommunicationService, private awareness: AwarenessService, private http: HttpClient) {
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
   }
 
+  constructor(private communication: CommunicationService, private awareness: AwarenessService, private http: HttpClient,
+              private apiService: ApiService) {
+  }
 
   ngOnInit() {
   }
@@ -46,18 +50,7 @@ export class ModifyComponent implements OnInit{
       this.UIMStatus.ms_action_result = true;
       this.communication.showToast("Kindly add at least one file");
     }
-
-    for (const SurveillanceInstance of this.ResourceDataList) {
-      SurveillanceInstance.putInstance((res: any) =>{
-        this.communication.showSuccessToast();
-
-        SurveillanceInstance.parseComposite(SurveillanceInstance);
-
-      }, (err: any) =>{
-        console.error('error', err)
-        this.communication.showFailedToast();
-      });
-    }
+    this.uploadToApi();
   }
 
   public dropped(files: NgxFileDropEntry[]) {
@@ -78,40 +71,87 @@ export class ModifyComponent implements OnInit{
           const parts = droppedFile.fileEntry.name.split('.');
           ResourceInstance.file_extension = parts[parts.length - 1];
 
-          if(this.fileUploaderUrl != ""){
-            this.uploadFile(file, ResourceInstance._id).subscribe(
-              (res: any) => {
-                console.log(res);
-                ResourceInstance.file_url = res;
-              },
-              (error: any) =>{
-                console.log(error);
-              }
-            );
-          }
-
-
           this.ResourceDataList.push(ResourceInstance);
         });
       } else {
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
       }
     }
   }
 
-  uploadFile(file: File, fileId: string): Observable<any> {
-    const formData = new FormData();
-    formData.append("file", file);
+  uploadToApi(){
+    this.ApiResponseStatus.processing = true;
+    const totalFiles = this.Files.length;
+    let successfulUploads = 0;
 
-    // return this.http.post(`http://localhost:5055/Upload/UploadFile?FileId=${fileId}`, formData, {
-    //   responseType: 'text'
-    // });
+    for (const droppedFile of this.Files) {
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
 
-    let url = `${this.fileUploaderUrl}/Upload/UploadFile?FileId=${fileId}`;
-    return this.http.post(url, formData, {
-      responseType: 'text'
+          let resourceInstance = new  Resource();
+
+          resourceInstance.file_original_name = droppedFile.fileEntry.name;
+          resourceInstance.user_id = this.awareness.UserInstance._id;
+
+          const parts = droppedFile.fileEntry.name.split('.');
+          resourceInstance.file_extension = parts[parts.length - 1];
+
+          this.fileData = {
+            data: {
+              attributes: {
+                filename: file.name,
+                original_filename: file.name,
+                mime: file.type,
+                type : resourceInstance.file_type,
+                size: file.size
+              },
+              type: 'File CreateUpload'
+            }
+          };
+
+          this.apiService.postRequest('files/uploads/create', this.fileData).subscribe({
+            next: (response) => {
+
+              if(response.data.attributes.url != ''){
+                console.log('preSignedUrl', response.data.attributes.url);
+                this.pushToBucket(response.data.attributes.url, file);
+                successfulUploads++;
+              }
+
+              if (successfulUploads === totalFiles) {
+                this.ApiResponseStatus.processing = false;
+                this.ApiResponseStatus.success = true;
+              }
+            },
+            error: (error) =>{
+              this.ApiResponseStatus.processing = false;
+              this.ApiResponseStatus.success = false;
+              console.log(error);
+            },
+            complete: () =>{
+            },
+          });
+
+          this.ResourceDataList.push(resourceInstance);
+        });
+      }
+    }
+  }
+
+  pushToBucket(preSignedUrl: string, file: File){
+    this.apiService.putFileRequest(preSignedUrl, file).subscribe({
+      next: (response) => {
+      },
+      error: (error) =>{
+        // this.ApiResponseStatus.processing = false;
+        // this.ApiResponseStatus.success = false;
+        throw new Error(error);
+      },
+      complete: () =>{
+      },
     });
+
   }
 
   generateUniqueId(){
