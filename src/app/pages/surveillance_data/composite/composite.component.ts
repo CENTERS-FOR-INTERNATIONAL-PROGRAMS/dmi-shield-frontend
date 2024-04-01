@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../../services/api/api.service";
 import {ApiResponse, ApiResponseStatus} from "../../../interfaces/IAuth.model";
 import {ResourceModelApi} from "../../../models/Resource.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-composites',
@@ -27,7 +28,7 @@ export class CompositeComponent implements OnInit{
   }
 
   constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient,
-              private apiService: ApiService) { }
+              private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadComposites();
@@ -35,20 +36,25 @@ export class CompositeComponent implements OnInit{
 
   loadComposites(){
     this.ApiResponseStatus.processing = true;
-    const userId = this.awareness.getUserData()._id;
-    const url = `files/uploads/?user_id=${userId}`;
-    this.apiService.get(url).subscribe({
-      next: (res) => {
-        this.ApiResponseStatus.success = true;
-        this.ResourceModel = res.data.map(item => item.attributes);
+    const userData = this.awareness.getUserData();
+    if(!userData){
+      this.router.navigate(['/authentication/login'])
+    }else{
+      const url = `files/uploads/?user_id=${userData._id}`;
+      this.apiService.get(url).subscribe({
+        next: (res) => {
+          this.ApiResponseStatus.success = true;
+          this.ResourceModel = res.data.map(item => item.attributes);
 
-      },
-      error: (error) =>{
-      },
-      complete: () =>{
-        this.ApiResponseStatus.processing = false;
-      },
-    });
+        },
+        error: (error) =>{
+        },
+        complete: () =>{
+          this.ApiResponseStatus.processing = false;
+        },
+      });
+    }
+
   }
 
   loadComposite() {

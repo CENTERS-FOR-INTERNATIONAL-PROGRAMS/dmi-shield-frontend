@@ -100,7 +100,7 @@ export class AppSideLoginComponent implements OnInit{
         this.ApiResponseStatus.processing = false;
         console.error('POST Error:', error);
         this.wrong_cred_error = true;
-        this.communication.showToast("Please provide username and password!");
+        // this.communication.showToast("Please provide username and password!");
       }
     );
   }

@@ -37,7 +37,7 @@
               <select  class="custom-select mb-3 view-float--right border-none" (change)="assignDocumentType($event, i)">
                 <option value="">Select File Type</option>
                 <option *ngFor="let DocumentType of DocumentTypes">
-                  {{ DocumentType }}
+                  {{ DocumentType.toUpperCase() }}
                 </option>
               </select>
             </a>
