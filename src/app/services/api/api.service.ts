@@ -77,6 +77,26 @@ export class ApiService{
     });
   }
 
+  getAll(endpoint: string): Observable<any> {
+    const url = config.API_ENDPOINT + endpoint;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/vnd.api+json'
+    });
+
+    return new Observable(observer => {
+      this.http.get(url, { headers: headers }).subscribe(
+        (response) => {
+          observer.next(response);
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
+  }
+
   handleGetToken(): string {
     const token =this.awareness.getUserData().token;
     if(token != ''){
