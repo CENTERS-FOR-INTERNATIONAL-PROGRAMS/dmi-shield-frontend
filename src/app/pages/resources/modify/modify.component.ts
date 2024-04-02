@@ -103,7 +103,7 @@ export class ModifyComponent implements OnInit{
                 filename: file.name,
                 original_filename: file.name,
                 mime: file.type,
-                type : resourceInstance.file_type,
+                type : "resource",
                 size: file.size
               },
               type: 'File CreateUpload'
