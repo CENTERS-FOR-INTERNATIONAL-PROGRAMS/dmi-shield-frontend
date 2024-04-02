@@ -25,7 +25,7 @@ export class ModifyComponent implements OnInit{
   public Files: NgxFileDropEntry[] = [];
   SurveillanceDataList: Surveillance[] = [];
   ValidatedFileTypes: string[] = ["csv", "xlsx", "xls"]
-  DocumentTypes: string[] = ["moh505", "sari", "mdharura_linelist", "mdharura_aggregates"]
+  DocumentTypes: string[] = ["moh505", "sari"]
   fileData: CreatePreSignedUrlData;
 
 
@@ -113,7 +113,7 @@ export class ModifyComponent implements OnInit{
   }
 
   assignDocumentType(event: any, fileIndex: number): void {
-    this.SurveillanceDataList[fileIndex].file_type =  event.target.value;
+    this.SurveillanceDataList[fileIndex].file_type =  event.target.value.toLowerCase();
     console.log(this.SurveillanceDataList);
 
   }
@@ -139,7 +139,7 @@ export class ModifyComponent implements OnInit{
     const totalFiles = this.Files.length;
     let successfulUploads = 0;
 
-    for (const droppedFile of this.Files) {
+    for (const [index, droppedFile] of this.Files.entries()) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
@@ -158,7 +158,7 @@ export class ModifyComponent implements OnInit{
                 filename: file.name,
                 original_filename: file.name,
                 mime: file.type,
-                type : resourceInstance.file_type,
+                type : this.SurveillanceDataList[index].file_type,
                 size: file.size
               },
               type: 'File CreateUpload'
@@ -167,9 +167,7 @@ export class ModifyComponent implements OnInit{
 
           this.apiService.postRequest('files/uploads/create', this.fileData).subscribe({
             next: (response) => {
-
               if(response.data.attributes.url != ''){
-                console.log('preSignedUrl', response.data.attributes.url);
                 this.pushToBucket(response.data.attributes.url, file);
                 successfulUploads++;
               }
