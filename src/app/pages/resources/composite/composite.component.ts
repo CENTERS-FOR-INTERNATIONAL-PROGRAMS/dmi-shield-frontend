@@ -36,7 +36,7 @@ export class CompositeComponent implements OnInit{
 
   loadComposites(){
     this.ApiResponseStatus.processing = true;
-    this.apiService.get('files/uploads/resources',).subscribe({
+    this.apiService.getAll('files/uploads/resources').subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
         this.ResourceModel = res.data.map(item => item.attributes);
