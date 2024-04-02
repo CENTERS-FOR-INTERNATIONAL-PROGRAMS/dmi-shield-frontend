@@ -5,6 +5,8 @@ import {User} from 'src/app/models/User.model';
 import {Location} from '@angular/common';
 import {NavigationEnd, Router} from "@angular/router";
 import {CommunicationService} from "../../../services/communication.service";
+import {AuthService} from "../../../services/api/auth.service";
+import {UserSignOutData} from "../../../interfaces/IAuth.model";
 
 @Component({
   selector: 'app-header',
@@ -24,9 +26,10 @@ export class HeaderComponent implements OnInit {
   showMenu: boolean = false;
   activeRoute: string;
   UserInstance: User = new  User;
+  userData: UserSignOutData;
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
-              private location: Location, private communication: CommunicationService) {
+              private location: Location, private communication: CommunicationService, private authService: AuthService) {
 
   }
   ngOnInit(): void {
@@ -61,16 +64,39 @@ export class HeaderComponent implements OnInit {
 
   onClick(action: any) {
     if (action == "logout") {
-      // this.awareness.removeUserData();
-      // window.location.reload();
-
       this.awareness.setFocused("authenticated", "", (res: any) => {
         this.awareness.UserInstance = new User();
+        this.requestLogOut();
         this.awareness.removeUserData();
         this.router.navigate(['/home']);
         window.location.reload();
       });
     }
+  }
+
+  requestLogOut(){
+    const userToken = this.awareness.getUserData().token;
+
+    if(userToken != "" && userToken !=null){
+      this.userData = {
+        data: {
+          attributes: {
+            token: userToken
+          },
+          type: 'User Authentication'
+        }
+      };
+
+      this.authService.postRequest("auth/user/sign-out", this.userData).subscribe({
+        next: () => {
+        },
+        error: () => {
+        },
+        complete: () => {
+        }
+      });
+    }
+
   }
 
   toggleMenu() {

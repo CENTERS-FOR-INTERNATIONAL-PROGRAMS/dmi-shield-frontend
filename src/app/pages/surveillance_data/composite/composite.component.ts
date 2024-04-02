@@ -3,6 +3,10 @@ import {AwarenessService} from "../../../services/awareness.service";
 import {Surveillance} from "../../../models/Surveillance.model";
 import {CommunicationService} from "../../../services/communication.service";
 import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../../../services/api/api.service";
+import {ApiResponse, ApiResponseStatus} from "../../../interfaces/IAuth.model";
+import {ResourceModelApi} from "../../../models/Resource.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-composites',
@@ -10,14 +14,46 @@ import {HttpClient} from "@angular/common/http";
 })
 export class CompositeComponent implements OnInit{
   Surveillance: Surveillance[] = [];
-  TableHeaders: string[] = [ "file_original_name", "file_type", "validated", "createdDate", "actions"];
+  TableHeaders: string[] = [ "original_filename", "state", "type", "validated", "created_at", "actions"];
+  fileStates: string[] = [ "Pending Processing", "Validating", "Rejected", "Processing", "Validated"];
 
   FilterSurveillanceData: Surveillance = new Surveillance();
+  ResourceModel: ResourceModelApi[] = [];
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
+  }
+
+  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient,
+              private apiService: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadComposite()
+    this.loadComposites();
+  }
+
+  loadComposites(){
+    this.ApiResponseStatus.processing = true;
+    const userData = this.awareness.getUserData();
+    if(!userData){
+      this.router.navigate(['/authentication/login'])
+    }else{
+      const url = `files/uploads/?user_id=${userData._id}`;
+      this.apiService.get(url).subscribe({
+        next: (res) => {
+          this.ApiResponseStatus.success = true;
+          this.ResourceModel = res.data.map(item => item.attributes);
+
+        },
+        error: (error) =>{
+        },
+        complete: () =>{
+          this.ApiResponseStatus.processing = false;
+        },
+      });
+    }
 
   }
 
@@ -52,45 +88,11 @@ export class CompositeComponent implements OnInit{
     });
   }
 
-
-  downloadFile(file: Surveillance): boolean {
-    const fileName = `${file._id}.${file.file_extension}`;
-    const originalFileName = `${file.file_original_name}.${file.file_extension}`;
-
-    this.http.get(file.file_url, { responseType: 'blob' }).subscribe(
-      (data: Blob) => {
-        if (data) {
-          this.downloadFileByBlob(data, originalFileName);
-        } else {
-          console.error('No file data found');
-        }
-      },
-      error => {
-        console.error('Error downloading file:', error);
-      }
-    );
-
-    return true;
-  }
-
-  private downloadFileByBlob(blob: Blob, fileName: string): void {
-    const downloadUrl = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', downloadUrl);
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.URL.revokeObjectURL(downloadUrl); // Clean up
-  }
-
-
   submitInstance() {
-
   }
 
   parseDate(timestamp: number): string {
-    return new Date(timestamp).toLocaleString();
+    return new Date(timestamp).toLocaleDateString();
   }
 
   getValidityStatus(status: boolean): string{
@@ -98,5 +100,14 @@ export class CompositeComponent implements OnInit{
       return "Valid";
     }
     return "Invalid";
+  }
+
+  formatState(element: any) {
+    if (element.type === 'resource') {
+      return '-';
+    } else {
+      // Remove underscores and convert to sentence case
+      return element.state.replace(/_/g, ' ').toLowerCase().replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
+    }
   }
 }
