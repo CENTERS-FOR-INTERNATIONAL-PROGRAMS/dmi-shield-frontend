@@ -91,23 +91,19 @@ const routes: Routes = [
           import('./pages/mform_data/mform_data.module').then((m) => m.MFormDataModule),
       },{
         path: 'surveillance',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3, 'guest'] },
         loadChildren: () =>
           import('./pages/surveillance_data/surveillance_data.module').then((m) => m.Surveillance_dataModule),
       },{
         path: 'dashboard',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/home/home.module').then((m) => m.HomeModule),
       },{
         path: 'home',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/pages.module').then((m) => m.PagesModule),
       },
       {
         path: 'resources',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/resources/resources.module').then((m) => m.ResourcesModule),
       },
@@ -120,9 +116,13 @@ const routes: Routes = [
       },
       {
         path: 'mohdash',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/mohdash/mohdash.module').then((m) => m.MohdashModule),
+      },
+      {
+        path: 'about',
+        loadChildren: () =>
+          import('./pages/about/about.module').then((m) => m.AboutModule),
       }
     ],
   },
