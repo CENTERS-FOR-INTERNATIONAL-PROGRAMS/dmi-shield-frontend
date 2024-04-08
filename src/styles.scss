@@ -433,23 +433,6 @@ footer{
   }
 }
 
-//@media (max-width: 991px) {
-//  .header {
-//    padding: 2rem 4%;
-//  }
-//
-//  section {
-//    padding: 10rem 4% 2rem;
-//  }
-//
-//  .home {
-//    padding: 10rem 4% 2rem;
-//  }
-//
-//  .home-image {
-//    display: none;
-//  }
-//}
 
 @media (max-width: 1110px) {
   .composite-data{
@@ -555,12 +538,12 @@ footer{
     flex-direction: column;
     align-items: center;
     height: auto;
-    padding: 20px; /* Adjust padding as needed */
+    padding: 20px;
   }
 
   .card {
-    margin-bottom: 20px; /* Add some spacing between cards */
-    width: 100%; /* Make cards occupy full width */
+    margin-bottom: 20px;
+    width: 100%;
   }
 
 
