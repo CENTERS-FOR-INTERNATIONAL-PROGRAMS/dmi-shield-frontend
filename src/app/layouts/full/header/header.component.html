@@ -13,9 +13,6 @@
     </a>
 
     <mat-menu #menu="matMenu">
-<!--      <a mat-menu-item href="https://afi.icapkenya.org/mohdash" target="_blank" style="color: inherit">-->
-<!--          <span>Summarized</span>-->
-<!--      </a>-->
 
       <a [routerLink]="['/mohdash']" style="color: inherit">
         <button mat-menu-item>
@@ -38,19 +35,14 @@
       </a>
     </mat-menu>
 
-
     <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
+    <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
 
-    <!-- <a class="navbar-extra" *ngIf="this.awareness.UserInstance" [routerLink]="['/resources/composites']">Profile</a>
-    <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
-    <a class="navbar-extra" >Settings</a>
-    <span class="active-nav"></span> -->
   </div>
 
   <nav  class="navbar-tools">
     <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
-<!--    <div *ngIf="this.UserInstance; else signInLoginButton">-->
       <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
@@ -69,8 +61,6 @@
         <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
-
-      <!-- <img class="shield-logo-header" src="assets/images/logos/SHIELD-LOGO.png"> -->
 
     </div>
 
