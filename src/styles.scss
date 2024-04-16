@@ -2,7 +2,7 @@
 // MDB SCSS
 //@import "mdb-angular-ui-kit/assets/scss/mdb.scss";
 mat-card {
-  border-radius: 10px; /* Adjust the value as per your preference */
+  border-radius: 10px;
 }
 
 * {
@@ -329,7 +329,7 @@ footer{
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #f8f9fa; /* Adjust background color as needed */
+  background-color: #f8f9fa;
 }
 
 
@@ -459,8 +459,6 @@ footer{
   .shield-logo {
     display: none;
   }
-  //mmm
-
 
   .header {
     background: var(--main-bg-color);
