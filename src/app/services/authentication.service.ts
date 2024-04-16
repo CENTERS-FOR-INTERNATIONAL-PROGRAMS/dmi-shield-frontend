@@ -8,9 +8,9 @@ import {User} from "../models/User.model";
 
 export class AuthenticationService {
 
-    constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService) {
+  constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService) {
 
-    }
+  }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let route_roles: string[] = next.data['roles'];
@@ -36,8 +36,16 @@ export class AuthenticationService {
     return user_authenticated;
   }
 
+  getCurrentUserRole(): string {
+    if (this.awareness.UserInstance && this.awareness.UserInstance.user_role) {
+      return this.awareness.UserInstance.user_role;
+    } else {
+      return '';
+    }
+  }
+
 }
 
 export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
-    return inject(AuthenticationService).canActivate(next, state);
+  return inject(AuthenticationService).canActivate(next, state);
 }

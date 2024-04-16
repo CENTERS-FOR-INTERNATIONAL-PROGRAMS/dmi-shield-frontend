@@ -6,18 +6,18 @@ import {User} from "../../../models/User.model";
 import {Resource, ResourceModelApi} from "../../../models/Resource.model";
 import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
 import {ApiService} from "../../../services/api/api.service";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'app-composite',
   templateUrl: './composite.component.html',
 })
 export class CompositeComponent implements OnInit{
-  Resource: Resource[] = [];
   ResourceModel: ResourceModelApi[] = [];
   TableHeaders: string[] = ["original_filename", "actions"];
-  FileNames: string[] = [];
   FilterResource: Resource = new Resource();
   UserInstance : User = new User;
+  userRole: string;
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -27,11 +27,12 @@ export class CompositeComponent implements OnInit{
   }
 
   constructor(public awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient,
-              private apiService: ApiService) { }
+              private apiService: ApiService, private authService: AuthenticationService) { }
 
 
   ngOnInit() {
     this.loadComposites();
+    this.userRole = this.authService.getCurrentUserRole();
   }
 
   loadComposites(){
@@ -50,20 +51,6 @@ export class CompositeComponent implements OnInit{
       },
     });
   }
-
-  // awaken(){
-  //   this.awareness.awaken(() => {
-  //     this.UserInstance._id = this.awareness.getFocused("authenticated");
-  //
-  //     if (this.UserInstance._id != "") {
-  //       this.UserInstance.acquireInstance((doc: any) => {
-  //         this.UserInstance.parseInstance(doc);
-  //       }, (err: any) => {
-  //         //TODO! Handle errors
-  //       });
-  //     }
-  //   });
-  // }
 
 
 }

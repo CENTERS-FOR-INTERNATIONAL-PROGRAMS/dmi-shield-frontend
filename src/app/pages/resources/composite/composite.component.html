@@ -1,4 +1,4 @@
-<div  class="m-l-24 m-r-24" style="margin-top: 160px; min-height: 100vh">
+<div  class="" style="padding: 5rem 9%; margin-top: 80px; min-height: 100vh">
   <mat-card class="composite-data">
     <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
     <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
@@ -8,7 +8,7 @@
 
       <span class="flex-1-auto"></span>
 
-      <a *ngIf="this.awareness.UserInstance != null; else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
+      <a *ngIf="this.userRole === 'level3'; else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
          style="background: var(--Primary-Blue, #222A69);">
         <span style="color: #FFF">
         Upload New Resource
@@ -17,7 +17,7 @@
       </a>
 
       <ng-template #spaceBetween>
-        <div style="height: 20px;"></div>
+        <div style="height: 30px;"></div>
       </ng-template>
     </mat-card-header>
 
