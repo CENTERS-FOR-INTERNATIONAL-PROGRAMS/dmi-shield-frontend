@@ -35,9 +35,11 @@
       </a>
     </mat-menu>
 
-    <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
+    <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
     <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
+
+    <a class="hide-fullScreen">Notifications</a>
 
   </div>
 
@@ -55,26 +57,7 @@
       </a>
 
       <a [matMenuTriggerFor]="notificationMenu" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
-      <mat-menu #notificationMenu="matMenu" style="max-width: 300px;">
-        <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
-        <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
 
-        <div *ngFor="let notification of Notifications" class="p-t-10 p-l-10 p-r-10">
-          <div style="word-wrap: break-word; font-weight: 550">
-            {{ notification.title }}
-          </div>
-          <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            {{ notification.message }}
-          </div>
-
-          <div class="m-t-5 m-l-15 m-r-15" style="border-bottom: 1px solid #000;"></div>
-        </div>
-
-
-        <div style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
-          <a >View All</a>
-        </div>
-      </mat-menu>
 
       <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
 
@@ -95,7 +78,26 @@
     </ng-template>
   </nav>
 
+  <mat-menu #notificationMenu="matMenu" style="max-width: 300px;">
+    <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
+    <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
 
+    <div *ngFor="let notification of Notifications" class="p-t-10 p-l-10 p-r-10">
+      <div style="word-wrap: break-word; font-weight: 550">
+        {{ notification.title }}
+      </div>
+      <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        {{ notification.message }}
+      </div>
+
+      <div class="m-t-5 m-l-15 m-r-15" style="border-bottom: 1px solid #000;"></div>
+    </div>
+
+
+    <div style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
+      <a >View All</a>
+    </div>
+  </mat-menu>
 
   <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
 

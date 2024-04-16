@@ -426,6 +426,10 @@ footer{
   font-size: 2rem;
 }
 
+.navbar .hide-fullScreen{
+  display: none;
+}
+
 /* BREAKPOINTS */
 @media (max-width: 1200px) {
   html {
@@ -531,6 +535,9 @@ footer{
     color: #ffffff;
   }
 
+  .navbar .hide-fullScreen{
+    display: block;
+  }
 
   .card-section {
     flex-direction: column;
