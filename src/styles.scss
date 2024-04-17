@@ -430,6 +430,19 @@ footer{
   display: none;
 }
 
+.normal-text {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  line-height: 24px;
+}
+
+.normal-header-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-color);
+  line-height: 32px;
+}
+
 /* BREAKPOINTS */
 @media (max-width: 1200px) {
   html {

@@ -6,7 +6,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CompositeComponent} from "./composite/composite.component";
 import {CFieldsModule} from "../cfields/cfields.module";
 import {TablerIconsModule} from "angular-tabler-icons";
-import {NgxFileDropModule} from "ngx-file-drop";
 import {NotificationsRoutes} from "./notifications.routing";
 
 

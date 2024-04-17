@@ -60,7 +60,6 @@ export class HeaderComponent implements OnInit {
 
   getUser(){
     this.awareness.UserInstance =  this.awareness.getUserData();
-    console.log('working', this.awareness.UserInstance);
   }
 
   updateActiveRoute() : void{

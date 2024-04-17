@@ -1,1 +1,25 @@
-<p>composite works!</p>
+<div class="" style="padding: 5rem 9%; margin-top: 80px; min-height: 100vh">
+
+  <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
+  <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
+
+  <div class="m-t-16">
+    <h2>Notifications</h2>
+  </div>
+
+  <mat-card class="m-t-24" style="border-radius: 4px" *ngFor="let notification of Notifications" [ngStyle]="{'border-left': notification.status === 'unread' ? '4px solid var(--accent-orange)' : 'none'}">
+    <mat-card-header>
+      <mat-card-title>
+        <p class="normal-header-text">{{ notification.title }}</p>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="m-t-16 normal-text" style="min-height: 1rem">
+      <p>{{ notification.message }}</p>
+    </mat-card-content>
+    <mat-card-actions class="d-flex justify-content-end">
+      <button mat-flat-button class="view-button" *ngIf="notification.status === 'unread'"
+              style="background: #FFA500; font-size: inherit" >Mark as Read</button>
+    </mat-card-actions>
+  </mat-card>
+
+</div>
