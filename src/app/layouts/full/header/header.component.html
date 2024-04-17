@@ -39,7 +39,7 @@
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
     <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
 
-    <a class="hide-fullScreen">Notifications</a>
+    <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">Notifications</a>
 
   </div>
 
@@ -78,7 +78,7 @@
     </ng-template>
   </nav>
 
-  <mat-menu #notificationMenu="matMenu" style="max-width: 300px;">
+  <mat-menu #notificationMenu="matMenu" xPosition="before" style="max-width: 300px;">
     <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
     <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
 
@@ -95,7 +95,7 @@
 
 
     <div style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
-      <a >View All</a>
+      <a [routerLink]="['/notifications']">View All</a>
     </div>
   </mat-menu>
 
