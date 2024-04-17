@@ -12,8 +12,6 @@ import {MatTableDataSource} from "@angular/material/table";
 })
 export class CompositeComponent implements OnInit {
 
-  // TableHeaders: string[] = ["title", "message", "status", "type",  "sender", "updated_at", "created_at", "actions"];
-  TableHeaders: string[] = ["title", "message", "actions"];
   Notifications: NotificationModel[] = [];
   dataSource = new MatTableDataSource(this.Notifications);
 
@@ -31,7 +29,6 @@ export class CompositeComponent implements OnInit {
     this.getUser();
     this.getApiNotifications();
   }
-
 
 
   getUser(){
