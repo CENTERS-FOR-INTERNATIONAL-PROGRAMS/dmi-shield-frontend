@@ -45,7 +45,7 @@
 
   <nav  class="navbar-tools">
     <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
-      <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
+      <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance.id)">
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
@@ -61,7 +61,7 @@
 
       <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
 
-      <mat-menu #actionsMenu="matMenu">
+      <mat-menu #actionsMenu="matMenu" xPosition="before">
         <button mat-menu-item [routerLink]="['/users/']" >Manage Users</button>
         <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>

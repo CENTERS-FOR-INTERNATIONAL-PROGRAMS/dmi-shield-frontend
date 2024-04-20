@@ -27,7 +27,7 @@ export class ModifyComponent implements OnInit {
   }
 
   initialize() {
-    this.UserInstance._id = this.awareness.getFocused("user");
+    this.UserInstance.id = this.awareness.getFocused("user");
 
   }
 

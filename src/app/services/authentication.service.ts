@@ -20,7 +20,7 @@ export class AuthenticationService {
     if(this.awareness.UserInstance == null){
       this.awareness.UserInstance = new User();
     }
-    if (this.awareness.UserInstance._id !== '') {
+    if (this.awareness.UserInstance.id !== '') {
 
       route_roles.forEach(role => {
         if (role == this.awareness.UserInstance.role) {

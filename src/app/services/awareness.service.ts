@@ -31,7 +31,7 @@ export class AwarenessService {
   saveUserData(AuthUser: any): void {
     const mappedUser = {
       name: AuthUser.name,
-      _id: AuthUser.id,
+      id: AuthUser.id,
       status: AuthUser.status,
       email: AuthUser.email,
       role: AuthUser.role,
@@ -71,6 +71,7 @@ export class AwarenessService {
   }
 
   setFocused(key: string, value: string, response: any = null) {
+    console.log('Focused User', value);
     this.AwarenessInstance.focused[key] = value;
 
     this.AwarenessInstance.putInstance((res: any) => {

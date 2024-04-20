@@ -12,6 +12,7 @@ import {User} from "../../../models/User.model";
 export class CompositeComponent implements OnInit {
   Users: User[] = [];
   FilterUser: User = new User;
+  searchQuery: string = '';
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -26,22 +27,38 @@ export class CompositeComponent implements OnInit {
     this.getApiUsers();
   }
 
+  get filteredUsers() {
+    return this.Users.filter(user =>
+      user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
 
-  getApiUsers(){
-    console.log("getApiUsers", 'getApiUsers');
-    //https://kratos.icapkenya.org/api/v1/user
+  getApiUsers() {
+    this.ApiResponseStatus.processing = true;
     this.apiService.get('user').subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
-        this.Users = res.data.map(item => item.attributes);
-        console.log(this.Users);
+        this.Users = res.data.map(item => ({
+          id: item.id,
+          ...item.attributes
+        }));
       },
-      error: (error) =>{
+      error: (error) => {
         this.ApiResponseStatus.processing = false;
       },
-      complete: () =>{
+      complete: () => {
         this.ApiResponseStatus.processing = false;
       },
     });
   }
+
+  formatUserRoles(role: string): string {
+    const roleMap: { [key: string]: string } = {
+      'level1': 'Level 1',
+      'level2': 'Level 2',
+      'admin': 'Admin'
+    };
+    return roleMap[role] || 'Level 1';
+  }
+
 }
