@@ -50,7 +50,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
-            {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0].toUpperCase() : '' }}
+            {{ this.awareness.UserInstance?.email ? this.awareness.UserInstance.email[0].toUpperCase() : '' }}
           </text>
         </svg>
 
@@ -62,6 +62,7 @@
       <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
 
       <mat-menu #actionsMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/users/']" >Manage Users</button>
         <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>

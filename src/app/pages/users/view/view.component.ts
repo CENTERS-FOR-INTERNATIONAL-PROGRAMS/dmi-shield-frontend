@@ -16,13 +16,13 @@ export class ViewComponent implements OnInit {
     this.awareness.awaken(() => {
       this.UserInstance._id = this.awareness.getFocused("user");
 
-      if (this.UserInstance._id != "") {
-        this.UserInstance.acquireInstance((doc: any) => {
-          this.UserInstance.parseInstance(doc);
-        }, (err: any) => {
-          // TODO! Handle errors
-        });
-      }
+      // if (this.UserInstance._id != "") {
+      //   this.UserInstance.acquireInstance((doc: any) => {
+      //     this.UserInstance.parseInstance(doc);
+      //   }, (err: any) => {
+      //     // TODO! Handle errors
+      //   });
+      // }
     });
 
     console.log(this.UserInstance)

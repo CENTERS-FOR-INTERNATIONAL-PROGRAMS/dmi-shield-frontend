@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/User.model';
 import { AwarenessService } from 'src/app/services/awareness.service';
+import {ApiService} from "../../../services/api/api.service";
+import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
+import {User} from "../../../models/User.model";
 
 @Component({
   selector: 'composite',
@@ -11,19 +13,35 @@ export class CompositeComponent implements OnInit {
   Users: User[] = [];
   FilterUser: User = new User;
 
-  constructor(public awareness: AwarenessService) { }
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
+  }
+
+  constructor(public awareness: AwarenessService, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.loadComposite();
+    this.getApiUsers();
   }
 
-  loadComposite() {
-    this.FilterUser.acquireComposite((Users: User[]) => {
-      this.Users = Users;
-    }, (error: any) => {
-      // TODO! Handle errors
-      console.log("Error", error);
+
+  getApiUsers(){
+    console.log("getApiUsers", 'getApiUsers');
+    //https://kratos.icapkenya.org/api/v1/user
+    this.apiService.get('user').subscribe({
+      next: (res) => {
+        this.ApiResponseStatus.success = true;
+        this.Users = res.data.map(item => item.attributes);
+        console.log(this.Users);
+      },
+      error: (error) =>{
+        this.ApiResponseStatus.processing = false;
+      },
+      complete: () =>{
+        this.ApiResponseStatus.processing = false;
+      },
     });
   }
-  
 }

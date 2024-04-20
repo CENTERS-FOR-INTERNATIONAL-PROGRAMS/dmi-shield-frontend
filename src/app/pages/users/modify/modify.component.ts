@@ -29,13 +29,6 @@ export class ModifyComponent implements OnInit {
   initialize() {
     this.UserInstance._id = this.awareness.getFocused("user");
 
-    if (this.UserInstance._id != "") {
-      this.UserInstance.acquireInstance((doc: any) => {
-        this.UserInstance.parseInstance(doc);
-      }, (err: any) => {
-        // TODO! Handle errors
-      });
-    }
   }
 
   seedInstance() {
@@ -55,23 +48,6 @@ export class ModifyComponent implements OnInit {
     });
     // #endregion
 
-    // if (is_valid) {
-    //   this.UserInstance.putInstance((res: any) => {
-    //     this.communication.showSuccessToast();
-    //
-    //     if (this.UserInstance._id == this.awareness.UserInstance._id) {
-    //       this.awareness.UserInstance.acquireInstance((doc: any) => {
-    //         this.awareness.UserInstance.parseInstance(doc);
-    //       }, (err: any) => {
-    //         // TODO! Handle errors
-    //       });
-    //     }
-    //   }, (err: any) => {
-    //     this.communication.showFailedToast();
-    //   });
-    // } else {
-    //   this.communication.showToast("Kindly fill in all required fields!");
-    // }
   }
 
 }

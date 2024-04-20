@@ -14,7 +14,7 @@
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-100" color="primary">
         <mat-label>Search</mat-label>
-        <input type="string" matInput [(ngModel)]="FilterUser.MFilter.mf_search" (change)="loadComposite()" />
+        <input type="string" matInput  />
       </mat-form-field>
 
       <mat-card class="b-1 shadow-none view-card" *ngFor="let SeekUser of Users">
@@ -35,8 +35,8 @@
           </a>
 
           <p class="view-text--size-large">
-            {{ SeekUser.user_name }}
-            ({{ SeekUser.user_email }})
+            {{ SeekUser.name }}
+            ({{ SeekUser.email }})
           </p>
         </mat-card-content>
       </mat-card>

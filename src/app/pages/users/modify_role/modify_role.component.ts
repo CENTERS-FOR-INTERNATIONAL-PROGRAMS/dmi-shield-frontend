@@ -16,13 +16,13 @@ export class ModifyRoleComponent implements OnInit {
   CompositeRoles: any[] = [
     {
       name: "Level One",
-      value: 1
+      value: 'level1'
     }, {
       name: "Level Two",
-      value: 2
+      value: 'level2'
     }, {
-      name: "Level Three",
-      value: 3
+      name: "Admin",
+      value: 'admin'
     }
   ];
 
@@ -41,13 +41,13 @@ export class ModifyRoleComponent implements OnInit {
   initialize() {
     this.UserInstance._id = this.awareness.getFocused("user");
 
-    if (this.UserInstance._id != "") {
-      this.UserInstance.acquireInstance((doc: any) => {
-        this.UserInstance.parseInstance(doc);
-      }, (err: any) => {
-        // TODO! Handle errors
-      });
-    }
+    // if (this.UserInstance._id != "") {
+    //   this.UserInstance.acquireInstance((doc: any) => {
+    //     this.UserInstance.parseInstance(doc);
+    //   }, (err: any) => {
+    //     // TODO! Handle errors
+    //   });
+    // }
   }
 
   seedInstance() {
