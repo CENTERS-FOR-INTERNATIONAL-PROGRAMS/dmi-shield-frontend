@@ -44,6 +44,14 @@ export class AwarenessService {
     this.saveUser(mappedUser);
   }
 
+  refreshSaveUserData(userRole: string): void {
+    const dataString = localStorage.getItem(this.userDataKey);
+    let existingUser = JSON.parse(dataString);
+    existingUser.role = userRole;
+    this.saveUser(existingUser);
+  }
+
+
   getUserData(): any | null {
     const dataString = localStorage.getItem(this.userDataKey);
     return dataString ? JSON.parse(dataString) : null;

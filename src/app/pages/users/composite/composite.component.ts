@@ -3,6 +3,7 @@ import { AwarenessService } from 'src/app/services/awareness.service';
 import {ApiService} from "../../../services/api/api.service";
 import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
 import {User} from "../../../models/User.model";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'composite',
@@ -13,6 +14,7 @@ export class CompositeComponent implements OnInit {
   Users: User[] = [];
   FilterUser: User = new User;
   searchQuery: string = '';
+  userRole: string;
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -21,10 +23,18 @@ export class CompositeComponent implements OnInit {
     message: ""
   }
 
-  constructor(public awareness: AwarenessService, private apiService: ApiService) { }
+  constructor(public awareness: AwarenessService, private apiService: ApiService, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.getApiUsers();
+
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+        console.log('ngOnInit userRole', this.userRole);
+      },
+      error: (err) => console.error('Error fetching user role', err),
+    });
   }
 
   get filteredUsers() {

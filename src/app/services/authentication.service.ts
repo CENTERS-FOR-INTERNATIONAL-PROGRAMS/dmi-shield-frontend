@@ -3,12 +3,17 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
 import { AwarenessService } from './awareness.service';
 import { CommunicationService } from './communication.service';
 import {User} from "../models/User.model";
+import {ApiService} from "./api/api.service";
+import {map, Observable, tap} from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 
 export class AuthenticationService {
 
-  constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService) {
+  userRole: string;
+  UserInstance: User = new User();
+  constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService,
+              private apiService: ApiService) {
 
   }
 
@@ -43,6 +48,20 @@ export class AuthenticationService {
       return '';
     }
   }
+
+  getApiCurrentUserRole(): Observable<string> {
+    this.UserInstance = this.awareness.getUserData();
+    const url = `user/${this.UserInstance.id}`;
+
+    return this.apiService.get(url).pipe(
+      map((res) => res.data.attributes.role),
+      tap((role) => {
+        this.awareness.refreshSaveUserData(role);
+        this.userRole = role;
+      })
+    );
+  }
+
 
 }
 

@@ -9,11 +9,15 @@
 
       <span class="flex-1-auto"></span>
 
-      <a [routerLink]="['/surveillance/modify']" mat-flat-button class="view-button" style="background: #222A69;">
+      <a *ngIf="this.userRole === 'level2' || this.userRole === 'admin';  else spaceBetween" [routerLink]="['/surveillance/modify']" mat-flat-button class="view-button" style="background: #222A69;">
         <span style="color: white;">
           Upload New File
         </span>
       </a>
+
+      <ng-template #spaceBetween>
+        <div style="height: 30px;"></div>
+      </ng-template>
     </mat-card-header>
 
     <mat-card-content>

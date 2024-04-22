@@ -16,7 +16,7 @@ export const SurveillanceDataRoutes: Routes = [
         component: CompositeComponent,
       }, {
         path: 'modify',
-        // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        canActivate: [AuthGuard], data: { roles: ['level2', 'admin'] },
         component: ModifyComponent,
       }
     ]

@@ -27,12 +27,20 @@ export class CompositeComponent implements OnInit{
   }
 
   constructor(public awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient,
-              private apiService: ApiService, private authService: AuthenticationService) { }
+              private apiService: ApiService, private authService: AuthenticationService,
+              private authenticationService: AuthenticationService) { }
 
 
   ngOnInit() {
     this.loadComposites();
-    this.userRole = this.authService.getCurrentUserRole();
+
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+        console.log('ngOnInit userRole', this.userRole);
+      },
+      error: (err) => console.error('Error fetching user role', err),
+    });
   }
 
   loadComposites(){
