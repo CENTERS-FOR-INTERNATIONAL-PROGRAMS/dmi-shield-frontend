@@ -66,6 +66,7 @@ export interface CreatePreSignedUrlAttributes {
   original_filename: string;
   size: number;
   type: string;
+  visibility: string;
 }
 
 export interface ChangeUserRoleAttributes {

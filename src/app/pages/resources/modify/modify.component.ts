@@ -104,7 +104,8 @@ export class ModifyComponent implements OnInit{
                 original_filename: file.name,
                 mime: file.type,
                 type : "resource",
-                size: file.size
+                size: file.size,
+                visibility: 'public'
               },
               type: 'File CreateUpload'
             }
