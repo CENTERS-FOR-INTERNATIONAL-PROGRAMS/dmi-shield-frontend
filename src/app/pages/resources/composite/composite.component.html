@@ -8,7 +8,7 @@
 
       <span class="flex-1-auto"></span>
 
-      <a *ngIf="this.userRole === 'level3'; else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
+      <a *ngIf="this.userRole === 'level2' || this.userRole === 'admin';  else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
          style="background: #222A69;">
         <span style="color: #FFF">
         Upload New Resource

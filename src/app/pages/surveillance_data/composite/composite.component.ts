@@ -7,6 +7,7 @@ import {ApiService} from "../../../services/api/api.service";
 import {ApiResponse, ApiResponseStatus} from "../../../interfaces/IAuth.model";
 import {ResourceModelApi} from "../../../models/Resource.model";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'app-composites',
@@ -19,6 +20,7 @@ export class CompositeComponent implements OnInit{
 
   FilterSurveillanceData: Surveillance = new Surveillance();
   ResourceModel: ResourceModelApi[] = [];
+  userRole: string;
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -27,13 +29,24 @@ export class CompositeComponent implements OnInit{
     message: ""
   }
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient,
-              private apiService: ApiService, private router: Router) { }
+  constructor(private awareness: AwarenessService, private communication: CommunicationService,
+              private apiService: ApiService, private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+        console.log('ngOnInit userRole', this.userRole);
+      },
+      error: (err) => console.error('Error fetching user role', err),
+    });
+    console.log('surveillance', this.authenticationService.getApiCurrentUserRole());
     this.loadComposites();
   }
 
+  getUSerRole(){
+
+  }
   loadComposites(){
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();
@@ -44,7 +57,7 @@ export class CompositeComponent implements OnInit{
       this.apiService.get(url).subscribe({
         next: (res) => {
           this.ApiResponseStatus.success = true;
-          this.ResourceModel = res.data.map(item => item.attributes);
+          this.ResourceModel = res.data.map(item => item.attributes).filter(attr => attr.type !== 'resource');
 
         },
         error: (error) =>{

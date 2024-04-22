@@ -62,8 +62,8 @@
       <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
 
       <mat-menu #actionsMenu="matMenu" xPosition="before">
-        <button mat-menu-item [routerLink]="['/users/']" >Manage Users</button>
-        <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
+        <button  mat-menu-item [routerLink]="['/users/']" *ngIf="userRole === 'admin'">Manage Users</button>
+        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
 

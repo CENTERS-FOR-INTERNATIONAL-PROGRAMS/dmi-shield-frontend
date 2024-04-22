@@ -10,6 +10,7 @@ import {ApiResponseStatus, UserSignOutData} from "../../../interfaces/IAuth.mode
 import {ApiService} from "../../../services/api/api.service";
 import {ResourceModelApi} from "../../../models/Resource.model";
 import {NotificationModel} from "../../../models/Notification.model";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'app-header',
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
   UserInstance: User = new  User;
   userData: UserSignOutData;
   Notifications: NotificationModel[] = [];
+  userRole: string;
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -42,7 +44,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
               private location: Location, private communication: CommunicationService, private authService: AuthService,
-              private apiService: ApiService) {
+              private apiService: ApiService, private authenticationService: AuthenticationService) {
 
   }
   ngOnInit(): void {
@@ -55,11 +57,20 @@ export class HeaderComponent implements OnInit {
       }
     })
 
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+        console.log('ngOnInit userRole', this.userRole);
+      },
+      error: (err) => console.error('Error fetching user role', err),
+    });
+
     this.getApiNotifications();
   }
 
   getUser(){
     this.awareness.UserInstance =  this.awareness.getUserData();
+    // this.userRole = this.authenticationService.getCurrentUserRole();
   }
 
   updateActiveRoute() : void{

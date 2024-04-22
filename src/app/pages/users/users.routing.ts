@@ -17,6 +17,7 @@ export const UsersRoutes: Routes = [
         component: CompositeComponent,
       }, {
         path: 'composite',
+        canActivate: [AuthGuard], data: { roles: ['admin'] },
         component: CompositeComponent,
       }, {
         path: 'modify',
