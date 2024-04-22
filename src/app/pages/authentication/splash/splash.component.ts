@@ -18,7 +18,7 @@ export class SplashComponent implements OnInit{
 
   ngOnInit(): void {
     this.awareness.awaken(() => {
-      this.awareness.UserInstance._id = this.awareness.getFocused("authenticated");
+      this.awareness.UserInstance.id = this.awareness.getFocused("authenticated");
       this.router.navigate(['/home']);
     });
   }

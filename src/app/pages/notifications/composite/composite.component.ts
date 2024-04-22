@@ -41,7 +41,7 @@ export class CompositeComponent implements OnInit {
   }
 
   getApiNotifications(){
-    const url = `notification?user_id=${this.awareness.UserInstance._id}`;
+    const url = `notification?user_id=${this.awareness.UserInstance.id}`;
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;

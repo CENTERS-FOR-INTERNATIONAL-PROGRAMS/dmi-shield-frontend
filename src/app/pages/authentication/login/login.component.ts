@@ -77,7 +77,7 @@ export class AppSideLoginComponent implements OnInit{
     this.userData = {
       data: {
         attributes: {
-          email: this.AuthUser.user_email,
+          email: this.AuthUser.email,
           password: this.user_password
         },
         type: 'User Authentication'

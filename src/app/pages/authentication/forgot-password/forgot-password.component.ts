@@ -62,7 +62,7 @@ export class ForgotPasswordComponent implements OnInit{
       this.userData = {
         data: {
           attributes: {
-            email: this.AuthUser.user_email,
+            email: this.AuthUser.email,
             redirect_to: `${window.location.origin}/authentication/reset-password/`
           },
           type: 'User Authentication'

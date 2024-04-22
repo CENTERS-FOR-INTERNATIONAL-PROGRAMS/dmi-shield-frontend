@@ -40,7 +40,7 @@ export class CompositeComponent implements OnInit{
     if(!userData){
       this.router.navigate(['/authentication/login'])
     }else{
-      const url = `files/uploads/?user_id=${userData._id}`;
+      const url = `files/uploads/?user_id=${userData.id}`;
       this.apiService.get(url).subscribe({
         next: (res) => {
           this.ApiResponseStatus.success = true;
@@ -58,7 +58,7 @@ export class CompositeComponent implements OnInit{
   }
 
   loadComposite() {
-    this.FilterSurveillanceData.user_id = this.awareness.UserInstance._id;
+    this.FilterSurveillanceData.user_id = this.awareness.UserInstance.id;
     this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
       this.Surveillance = Surveillance;
       console.log("Allll", this.Surveillance);

@@ -3,13 +3,13 @@
     <mat-card-header>
       <mat-card-title>
         <h3>
-          {{UserInstance._id == '' ? 'User' : UserInstance.user_name}}
+          {{UserInstance.id == '' ? 'User' : UserInstance.name}}
         </h3>
       </mat-card-title>
 
       <mat-card-subtitle>
         <p>
-          {{UserInstance._id == '' ? 'Create' : 'Edit'}}
+          {{UserInstance.id == '' ? 'Create' : 'Edit'}}
         </p>
       </mat-card-subtitle>
     </mat-card-header>
@@ -18,7 +18,7 @@
       <form class="m-t-30" name="form_user" id="form_user_modify" #ModifyUser="ngForm" (ngSubmit)="submitInstance()">
         <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
         <mat-form-field appearance="outline" class="w-100" color="primary">
-          <input matInput [formControl]="UserFormControls['user_name']" [(ngModel)]="UserInstance.user_name" />
+          <input matInput [formControl]="UserFormControls['user_name']" [(ngModel)]="UserInstance.name" />
 
           <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
             <strong>Required</strong>
@@ -28,7 +28,7 @@
         <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email Adddress</mat-label>
         <mat-form-field appearance="outline" class="w-100" color="primary">
           <input matInput [formControl]="UserFormControls['user_email']" type="email"
-                 [(ngModel)]="UserInstance.user_email" />
+                 [(ngModel)]="UserInstance.email" />
 
           <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
             <strong>Required</strong>
@@ -36,13 +36,13 @@
         </mat-form-field>
 
         <div class="view-align--right">
-          <mat-spinner *ngIf="UserInstance.MStatus.ms_processing" class="view-spinner--inline"></mat-spinner>
+<!--          <mat-spinner *ngIf="UserInstance.MStatus.ms_processing" class="view-spinner&#45;&#45;inline"></mat-spinner>-->
 
-          <i-tabler *ngIf="UserInstance.MStatus.ms_action_result" class="view-icon--inline view-color--green"
-                    name="circle-check-filled"></i-tabler>
+<!--          <i-tabler *ngIf="UserInstance.MStatus.ms_action_result" class="view-icon&#45;&#45;inline view-color&#45;&#45;green"-->
+<!--                    name="circle-check-filled"></i-tabler>-->
 
           <button type="submit" mat-flat-button color="primary">
-            {{UserInstance._id == '' ? 'Create' : 'Update'}}
+            {{UserInstance.id == '' ? 'Create' : 'Update'}}
           </button>
         </div>
       </form>

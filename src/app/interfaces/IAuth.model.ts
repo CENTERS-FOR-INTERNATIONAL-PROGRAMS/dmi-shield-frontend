@@ -18,10 +18,18 @@
 //     type: "User Authentication";
 //   };
 // }
-export interface UserData<T> {
+export interface GenericPostBody<T> {
   data: {
     attributes: T;
     // type: "User Authentication";
+    type: string;
+  };
+}
+
+export interface GenericPatchBody<T> {
+  data: {
+    attributes: T;
+    id: string;
     type: string;
   };
 }
@@ -60,12 +68,19 @@ export interface CreatePreSignedUrlAttributes {
   type: string;
 }
 
-export type UserAuthenticationData = UserData<UserAuthenticationAttributes>;
-export type UserRegisterData = UserData<UserRegisterAttributes>;
-export type UserSignOutData = UserData<UserSignOutAttributes>;
-export type ResetPasswordData = UserData<ResetPassAttributes>;
-export type ConfirmResetPasswordData = UserData<ConfirmPasswordResetAttributes>;
-export type CreatePreSignedUrlData = UserData<CreatePreSignedUrlAttributes>;
+export interface ChangeUserRoleAttributes {
+  role: string;
+}
+
+
+
+export type UserAuthenticationData = GenericPostBody<UserAuthenticationAttributes>;
+export type UserRegisterData = GenericPostBody<UserRegisterAttributes>;
+export type UserSignOutData = GenericPostBody<UserSignOutAttributes>;
+export type ResetPasswordData = GenericPostBody<ResetPassAttributes>;
+export type ConfirmResetPasswordData = GenericPostBody<ConfirmPasswordResetAttributes>;
+export type CreatePreSignedUrlData = GenericPostBody<CreatePreSignedUrlAttributes>;
+export type ChangeUserRoleData = GenericPatchBody<ChangeUserRoleAttributes>;
 
 
 export interface ApiResponse{

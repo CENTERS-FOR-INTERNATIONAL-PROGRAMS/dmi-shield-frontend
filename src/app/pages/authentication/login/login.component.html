@@ -23,7 +23,7 @@
           <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">User Email</mat-label>
           <mat-form-field appearance="outline" class="w-100" color="primary">
             <input matInput [formControl]="UserFormControls['user_email']" type="email"
-                   [(ngModel)]="AuthUser.user_email" />
+                   [(ngModel)]="AuthUser.email" />
 
             <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
               <strong>Required</strong>

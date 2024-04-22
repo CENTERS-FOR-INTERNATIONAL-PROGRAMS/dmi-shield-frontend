@@ -44,7 +44,7 @@ export class CompositeComponent implements OnInit{
 
       },
       error: (error) =>{
-
+        this.ApiResponseStatus.processing = false;
       },
       complete: () =>{
         this.ApiResponseStatus.processing = false;
