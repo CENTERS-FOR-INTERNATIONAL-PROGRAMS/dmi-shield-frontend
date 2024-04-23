@@ -236,10 +236,7 @@ section {
   height: 50vh;
   display: flex;
   flex-direction: column;
-  //justify-content: space-between;
-  //align-items: center;
   padding-top: 15rem;
-  //padding-bottom: 0rem ;
   padding-left: 9%;
   padding-right: 9%;
   background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
@@ -453,6 +450,18 @@ footer{
   font-size: 1.6rem;
   color: var(--text-color);
   line-height: 24px;
+}
+
+.link-text {
+  color: inherit;
+}
+
+.link-text:hover {
+  color: var(--main-color);
+}
+
+.hover-link:hover {
+  color: var(--main-color);
 }
 
 .normal-header-text {
