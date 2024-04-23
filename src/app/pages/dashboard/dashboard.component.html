@@ -1,8 +1,8 @@
 <section class="home" id="home">
   <div class="home-content">
-    <h1>S.H.I.E.L.D</h1>
-    <h3>Surveillance Health Information Exchange and Linkage Data module</h3>
-    <h4>One stop shop for everything Disease Surveillance .</h4>
+    <h1>S.H.I.E.L.D.</h1>
+    <h3>Surveillance Health Information Exchange and Linkage Data</h3>
+    <h4>One Stop Shop For Everything Disease Surveillance .</h4>
 
     <div class="btn-box">
       <a class="btn" *ngIf="this.awareness.getUserData() ==null" [routerLink]="['/authentication/login']" class="btn">Sign In</a>
@@ -30,20 +30,20 @@
   </div>
 
   <div class="card">
+    <img class="card-image" src="assets/images/resources/upload.png" alt="Avatar">
+    <h1 style="margin-top: 15px;">Upload Data</h1>
+    <h3>Upload data into SHIELD.</h3>
+    <div class="card-button-box">
+      <a [routerLink]="['/surveillance/composites']">Upload Data</a>
+    </div>
+  </div>
+
+  <div class="card">
     <img class="card-image" src="assets/images/resources/education.png" alt="Avatar">
     <h1 style="margin-top: 15px;">Surveillance Resources</h1>
     <h3>Find Surveillance resources here...</h3>
     <div class="card-button-box">
       <a [routerLink]="['/resources/composites']">View Resources</a>
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-image" src="assets/images/resources/upload.png" alt="Avatar">
-    <h1 style="margin-top: 15px;">Upload Data</h1>
-    <h3>Upload data into SHIELD</h3>
-    <div class="card-button-box">
-      <a [routerLink]="['/surveillance/composites']">Upload Data</a>
     </div>
   </div>
 </section>
