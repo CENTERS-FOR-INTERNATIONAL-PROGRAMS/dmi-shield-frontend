@@ -4,7 +4,7 @@ import { AwarenessService } from './awareness.service';
 import { CommunicationService } from './communication.service';
 import {User} from "../models/User.model";
 import {ApiService} from "./api/api.service";
-import {map, Observable, tap} from "rxjs";
+import {map, Observable, of, tap} from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 
@@ -50,6 +50,11 @@ export class AuthenticationService {
   }
 
   getApiCurrentUserRole(): Observable<string> {
+    if (!this.UserInstance || !this.UserInstance.id) {
+      // Return an observable with "level1" as a default role
+      return of("level1");
+    }
+
     this.UserInstance = this.awareness.getUserData();
     const url = `user/${this.UserInstance.id}`;
 

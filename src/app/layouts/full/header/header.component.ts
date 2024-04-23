@@ -143,7 +143,13 @@ export class HeaderComponent implements OnInit {
   }
 
   getApiNotifications(){
+
     const url = `notification?user_id=${this.awareness.UserInstance.id}`;
+
+    if (!this.awareness.UserInstance.id || !this.awareness.UserInstance.id) {
+      this.ApiResponseStatus.processing = false;
+    }
+
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;

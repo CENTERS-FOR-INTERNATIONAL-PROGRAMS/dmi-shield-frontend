@@ -17,7 +17,7 @@ export class CompositeComponent implements OnInit{
   Surveillance: Surveillance[] = [];
   TableHeaders: string[] = [ "original_filename", "state", "type", "validated", "created_at", "actions"];
   fileStates: string[] = [ "Pending Processing", "Validating", "Rejected", "Processing", "Validated"];
-
+  searchQuery: string = '';
   FilterSurveillanceData: Surveillance = new Surveillance();
   ResourceModel: ResourceModelApi[] = [];
   userRole: string;
@@ -44,9 +44,13 @@ export class CompositeComponent implements OnInit{
     this.loadComposites();
   }
 
-  getUSerRole(){
-
+  get filteredUploadList() {
+    return this.ResourceModel.filter(user =>
+      user.original_filename.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
   }
+
+
   loadComposites(){
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();

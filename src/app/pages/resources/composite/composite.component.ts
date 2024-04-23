@@ -18,6 +18,7 @@ export class CompositeComponent implements OnInit{
   FilterResource: Resource = new Resource();
   UserInstance : User = new User;
   userRole: string;
+  searchQuery: string = '';
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -41,6 +42,12 @@ export class CompositeComponent implements OnInit{
       },
       error: (err) => console.error('Error fetching user role', err),
     });
+  }
+
+  get filteredUploadList() {
+    return this.ResourceModel.filter(user =>
+      user.original_filename.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
   }
 
   loadComposites(){
