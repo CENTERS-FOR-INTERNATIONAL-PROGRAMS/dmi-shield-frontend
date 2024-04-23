@@ -24,13 +24,13 @@
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-100" color="primary">
         <mat-label>Search</mat-label>
-        <input type="string" matInput [(ngModel)]="FilterResource.MFilter.mf_search" (change)="loadComposites()" />
+        <input type="string" matInput [(ngModel)]="searchQuery" />
       </mat-form-field>
     </mat-card-content>
 
     <mat-card-content>
 
-      <table mat-table [dataSource]="this.ResourceModel">
+      <table mat-table [dataSource]="this.filteredUploadList">
 
         <ng-container matColumnDef="original_filename">
           <th mat-header-cell *matHeaderCellDef> <b>Name</b> </th>
