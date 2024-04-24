@@ -1,19 +1,40 @@
-<div style="padding: 5rem 9%; margin-top: 128px; min-height: 100vh">
+<div class="about-top m-t-24" >
 
-  <div style="margin: 10px">
-    <h2>About SHIELD.</h2>
+<!--  <h2 class="m-b-24 m-t-24">ABOUT SHIELD</h2>-->
+  <p style="font-weight: 600; line-height: 32px; font-size: 2.3rem;" class="m-b-24 m-t-24">ABOUT SHIELD</p>
+
+  <p style="font-weight: 500; line-height: 32px; font-size: 2.3rem;">Surveillance Health Information Exchange Linkage Data (SHIELD) is a centralised data repository developed
+    by the Ministry of Health (MOH) for surveillance data and resources. </p>
+</div>
+
+<div style="padding: 1rem 9%; margin-top: 30px; min-height: 70vh">
+
+  <div>
+    <h2 class="m-b-24">Key Features:</h2>
+
+    <ul class="about-text" style="list-style-type: none; padding: 0;">
+      <li class="m-b-24"><strong>Data Integration:</strong> SHIELD seamlessly integrates diverse health data sources, including Kenya
+        Health Information System (KHIS-2), electronic health records (EMRs), laboratory Information Systems (LMIS),
+        etc., to create a comprehensive surveillance database. Data from different data sources can be ingested into
+        SHIELD using Application Programming Interfaces (APIs) or uploaded manually through the
+        <strong><a class="link-text" [routerLink]="['/surveillance/composites']" >Upload page</a></strong>.</li>
+
+      <li class="m-b-24"><strong>Analytics:</strong> The surveillance data in SHIELD is analyzed and visualized through dashboards to
+        facilitate data-driven decision-making. The dashboards available on SHIELD include the <strong>Routine Surveillance
+          dashboard, Event-Based Surveillance dashboard, Outbreak Response Dashboards</strong>, and <strong>Program dashboard</strong>.</li>
+
+      <li class="m-b-24"><strong>Real-time Monitoring:</strong> SHIELD platform offers real-time monitoring capabilities, allowing
+        health professionals to track health indicators, monitor disease prevalence, and respond promptly to emerging
+        health threats.</li>
+
+      <li class="m-b-24"><strong>Secure Exchange:</strong> SHIELD prioritizes data security and privacy, ensuring compliance with the
+        highest standards of confidentiality and data protection. Our secure exchange protocols facilitate safe and
+        efficient data sharing among authorized stakeholders.</li>
+
+      <li><strong>Resources:</strong> The SHIELD platform provides an array of resources tailored to meet the diverse
+        needs of health surveillance professionals. This includes guidelines, standard operating procedures, frameworks,
+        etc. The resources can be found on the
+        <strong><a class="link-text" [routerLink]="['/resources/composites']" >Resources Page</a></strong>.</li>
+    </ul>
   </div>
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <h3>Main Dashboards Links</h3>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <p style="margin: 10px 0"><a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank">Routine Surveillance <i class='bx bx-link-external'></i></a></p>
-      <p style="margin: 10px 0"><a href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank">Event Based Surveillance <i class='bx bx-link-external'></i></a></p>
-      <p style="margin: 10px 0"><a href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank">Outbreak Response <i class='bx bx-link-external'></i></a></p>
-    </mat-expansion-panel>
-  </mat-accordion>
-
 </div>
