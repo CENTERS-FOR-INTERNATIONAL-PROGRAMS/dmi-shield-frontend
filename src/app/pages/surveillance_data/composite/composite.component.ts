@@ -7,6 +7,7 @@ import {ApiService} from "../../../services/api/api.service";
 import {ApiResponse, ApiResponseStatus} from "../../../interfaces/IAuth.model";
 import {ResourceModelApi} from "../../../models/Resource.model";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'app-composites',
@@ -16,9 +17,10 @@ export class CompositeComponent implements OnInit{
   Surveillance: Surveillance[] = [];
   TableHeaders: string[] = [ "original_filename", "state", "type", "validated", "created_at", "actions"];
   fileStates: string[] = [ "Pending Processing", "Validating", "Rejected", "Processing", "Validated"];
-
+  searchQuery: string = '';
   FilterSurveillanceData: Surveillance = new Surveillance();
   ResourceModel: ResourceModelApi[] = [];
+  userRole: string;
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -27,12 +29,27 @@ export class CompositeComponent implements OnInit{
     message: ""
   }
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient,
-              private apiService: ApiService, private router: Router) { }
+  constructor(private awareness: AwarenessService, private communication: CommunicationService,
+              private apiService: ApiService, private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+        console.log('ngOnInit userRole', this.userRole);
+      },
+      error: (err) => console.error('Error fetching user role', err),
+    });
+    console.log('surveillance', this.authenticationService.getApiCurrentUserRole());
     this.loadComposites();
   }
+
+  get filteredUploadList() {
+    return this.ResourceModel.filter(user =>
+      user.original_filename.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+
 
   loadComposites(){
     this.ApiResponseStatus.processing = true;
@@ -40,11 +57,11 @@ export class CompositeComponent implements OnInit{
     if(!userData){
       this.router.navigate(['/authentication/login'])
     }else{
-      const url = `files/uploads/?user_id=${userData._id}`;
+      const url = `files/uploads/?user_id=${userData.id}`;
       this.apiService.get(url).subscribe({
         next: (res) => {
           this.ApiResponseStatus.success = true;
-          this.ResourceModel = res.data.map(item => item.attributes);
+          this.ResourceModel = res.data.map(item => item.attributes).filter(attr => attr.type !== 'resource');
 
         },
         error: (error) =>{
@@ -58,7 +75,7 @@ export class CompositeComponent implements OnInit{
   }
 
   loadComposite() {
-    this.FilterSurveillanceData.user_id = this.awareness.UserInstance._id;
+    this.FilterSurveillanceData.user_id = this.awareness.UserInstance.id;
     this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
       this.Surveillance = Surveillance;
       console.log("Allll", this.Surveillance);

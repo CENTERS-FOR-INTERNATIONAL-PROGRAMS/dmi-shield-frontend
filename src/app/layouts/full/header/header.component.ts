@@ -6,7 +6,11 @@ import {Location} from '@angular/common';
 import {NavigationEnd, Router} from "@angular/router";
 import {CommunicationService} from "../../../services/communication.service";
 import {AuthService} from "../../../services/api/auth.service";
-import {UserSignOutData} from "../../../interfaces/IAuth.model";
+import {ApiResponseStatus, UserSignOutData} from "../../../interfaces/IAuth.model";
+import {ApiService} from "../../../services/api/api.service";
+import {ResourceModelApi} from "../../../models/Resource.model";
+import {NotificationModel} from "../../../models/Notification.model";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'app-header',
@@ -24,12 +28,23 @@ export class HeaderComponent implements OnInit {
 
   showFiller = false;
   showMenu: boolean = false;
+  showNotificationCard: boolean = false;
   activeRoute: string;
   UserInstance: User = new  User;
   userData: UserSignOutData;
+  Notifications: NotificationModel[] = [];
+  userRole: string;
+
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
+  }
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
-              private location: Location, private communication: CommunicationService, private authService: AuthService) {
+              private location: Location, private communication: CommunicationService, private authService: AuthService,
+              private apiService: ApiService, private authenticationService: AuthenticationService) {
 
   }
   ngOnInit(): void {
@@ -41,11 +56,21 @@ export class HeaderComponent implements OnInit {
         this.updateActiveRoute();
       }
     })
+
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+        console.log('ngOnInit userRole', this.userRole);
+      },
+      error: (err) => console.error('Error fetching user role', err),
+    });
+
+    this.getApiNotifications();
   }
 
   getUser(){
     this.awareness.UserInstance =  this.awareness.getUserData();
-    console.log('working', this.awareness.UserInstance);
+    // this.userRole = this.authenticationService.getCurrentUserRole();
   }
 
   updateActiveRoute() : void{
@@ -115,5 +140,28 @@ export class HeaderComponent implements OnInit {
 
   notificaionClicked() {
     this.communication.showToast('No new notifications.')
+  }
+
+  getApiNotifications(){
+
+    const url = `notification?user_id=${this.awareness.UserInstance.id}`;
+
+    if (!this.awareness.UserInstance.id || !this.awareness.UserInstance.id) {
+      this.ApiResponseStatus.processing = false;
+    }
+
+    this.apiService.get(url).subscribe({
+      next: (res) => {
+        this.ApiResponseStatus.success = true;
+        this.Notifications = res.data.map(item => item.attributes);
+        console.log(this.Notifications);
+      },
+      error: (error) =>{
+        this.ApiResponseStatus.processing = false;
+      },
+      complete: () =>{
+        this.ApiResponseStatus.processing = false;
+      },
+    });
   }
 }

@@ -38,6 +38,26 @@ export class ApiService{
     });
   }
 
+  patchRequest(endpoint: string, data: any): Observable<any> {
+
+    const url = config.API_ENDPOINT + endpoint;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/vnd.api+json',
+      'Authorization': `Bearer ${this.handleGetToken()}`
+    });
+    return new Observable(observer => {
+      this.http.patch(url, data, { headers: headers }).subscribe(
+        (response) => {
+          observer.next(response);
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
+  }
+
   putFileRequest(preSignedUrl: string, file: File): Observable<any> {
 
     const formData: FormData = new FormData();

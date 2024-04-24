@@ -1,4 +1,4 @@
-<div  class="m-l-24 m-r-24" style="margin-top: 160px; min-height: 100vh">
+<div  class="" style="padding: 5rem 9%; margin-top: 80px; min-height: 100vh">
   <mat-card class="composite-data">
     <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
     <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
@@ -8,8 +8,8 @@
 
       <span class="flex-1-auto"></span>
 
-      <a *ngIf="this.awareness.UserInstance != null; else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
-         style="background: var(--Primary-Blue, #222A69);">
+      <a *ngIf="this.userRole === 'level2' || this.userRole === 'admin';  else spaceBetween" [routerLink]="['/resources/modify']" mat-flat-button class="view-button"
+         style="background: #222A69;">
         <span style="color: #FFF">
         Upload New Resource
 
@@ -17,20 +17,20 @@
       </a>
 
       <ng-template #spaceBetween>
-        <div style="height: 20px;"></div>
+        <div style="height: 30px;"></div>
       </ng-template>
     </mat-card-header>
 
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-100" color="primary">
         <mat-label>Search</mat-label>
-        <input type="string" matInput [(ngModel)]="FilterResource.MFilter.mf_search" (change)="loadComposites()" />
+        <input type="string" matInput [(ngModel)]="searchQuery" />
       </mat-form-field>
     </mat-card-content>
 
     <mat-card-content>
 
-      <table mat-table [dataSource]="this.ResourceModel">
+      <table mat-table [dataSource]="this.filteredUploadList">
 
         <ng-container matColumnDef="original_filename">
           <th mat-header-cell *matHeaderCellDef> <b>Name</b> </th>

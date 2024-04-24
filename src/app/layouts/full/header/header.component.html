@@ -13,9 +13,6 @@
     </a>
 
     <mat-menu #menu="matMenu">
-<!--      <a mat-menu-item href="https://afi.icapkenya.org/mohdash" target="_blank" style="color: inherit">-->
-<!--          <span>Summarized</span>-->
-<!--      </a>-->
 
       <a [routerLink]="['/mohdash']" style="color: inherit">
         <button mat-menu-item>
@@ -38,39 +35,37 @@
       </a>
     </mat-menu>
 
-
-    <a  [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
+    <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
+    <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
 
-    <!-- <a class="navbar-extra" *ngIf="this.awareness.UserInstance" [routerLink]="['/resources/composites']">Profile</a>
-    <a class="navbar-extra" [routerLink]="['/resources/composites']" >Notifications</a>
-    <a class="navbar-extra" >Settings</a>
-    <span class="active-nav"></span> -->
+    <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">Notifications</a>
+
   </div>
 
   <nav  class="navbar-tools">
     <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
-<!--    <div *ngIf="this.UserInstance; else signInLoginButton">-->
-      <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance._id)">
+      <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance.id)">
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
           <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
-            {{ this.awareness.UserInstance?.user_email ? this.awareness.UserInstance.user_email[0].toUpperCase() : '' }}
+            {{ this.awareness.UserInstance?.email ? this.awareness.UserInstance.email[0].toUpperCase() : '' }}
           </text>
         </svg>
 
       </a>
 
-      <a (click)="notificaionClicked()" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
+      <a [matMenuTriggerFor]="notificationMenu" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
+
+
       <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
 
-      <mat-menu #actionsMenu="matMenu">
-        <button mat-menu-item [routerLink]="['/thresholds/composites']" >Set Thresholds</button>
+      <mat-menu #actionsMenu="matMenu" xPosition="before">
+        <button  mat-menu-item [routerLink]="['/users/']" *ngIf="userRole === 'admin'">Manage Users</button>
+        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
-
-      <!-- <img class="shield-logo-header" src="assets/images/logos/SHIELD-LOGO.png"> -->
 
     </div>
 
@@ -84,7 +79,26 @@
     </ng-template>
   </nav>
 
+  <mat-menu #notificationMenu="matMenu" xPosition="before" style="max-width: 300px;">
+    <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
+    <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
 
+    <div *ngFor="let notification of Notifications" class="p-t-10 p-l-10 p-r-10">
+      <div style="word-wrap: break-word; font-weight: 550">
+        {{ notification.title }}
+      </div>
+      <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        {{ notification.message }}
+      </div>
+
+      <div class="m-t-5 m-l-15 m-r-15" style="border-bottom: 1px solid #000;"></div>
+    </div>
+
+
+    <div style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
+      <a [routerLink]="['/notifications']">View All</a>
+    </div>
+  </mat-menu>
 
   <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
 

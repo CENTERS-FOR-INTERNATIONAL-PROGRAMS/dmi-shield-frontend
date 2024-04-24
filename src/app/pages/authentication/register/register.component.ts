@@ -77,8 +77,8 @@ export class AppSideRegisterComponent implements OnInit{
     this.userData = {
       data: {
         attributes: {
-          email: this.UserInstance.user_email,
-          name : this.UserInstance.user_name,
+          email: this.UserInstance.email,
+          name : this.UserInstance.name,
           password: this.user_password
         },
         type: 'User Authentication'

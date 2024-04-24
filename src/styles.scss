@@ -2,7 +2,7 @@
 // MDB SCSS
 //@import "mdb-angular-ui-kit/assets/scss/mdb.scss";
 mat-card {
-  border-radius: 10px; /* Adjust the value as per your preference */
+  border-radius: 10px;
 }
 
 * {
@@ -232,6 +232,16 @@ section {
   background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
 }
 
+.about-top {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 15rem;
+  padding-left: 9%;
+  padding-right: 9%;
+  background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
+}
+
 .home-image-content {
   max-width: 50rem;
 }
@@ -329,7 +339,7 @@ footer{
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #f8f9fa; /* Adjust background color as needed */
+  background-color: #f8f9fa;
 }
 
 
@@ -426,6 +436,41 @@ footer{
   font-size: 2rem;
 }
 
+.navbar .hide-fullScreen{
+  display: none;
+}
+
+.normal-text {
+  font-size: 1.4rem;
+  color: var(--text-color);
+  line-height: 24px;
+}
+
+.about-text {
+  font-size: 1.6rem;
+  color: var(--text-color);
+  line-height: 24px;
+}
+
+.link-text {
+  color: inherit;
+}
+
+.link-text:hover {
+  color: var(--main-color);
+}
+
+.hover-link:hover {
+  color: var(--main-color);
+}
+
+.normal-header-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-color);
+  line-height: 32px;
+}
+
 /* BREAKPOINTS */
 @media (max-width: 1200px) {
   html {
@@ -433,23 +478,6 @@ footer{
   }
 }
 
-//@media (max-width: 991px) {
-//  .header {
-//    padding: 2rem 4%;
-//  }
-//
-//  section {
-//    padding: 10rem 4% 2rem;
-//  }
-//
-//  .home {
-//    padding: 10rem 4% 2rem;
-//  }
-//
-//  .home-image {
-//    display: none;
-//  }
-//}
 
 @media (max-width: 1110px) {
   .composite-data{
@@ -476,8 +504,6 @@ footer{
   .shield-logo {
     display: none;
   }
-  //mmm
-
 
   .header {
     background: var(--main-bg-color);
@@ -550,17 +576,20 @@ footer{
     color: #ffffff;
   }
 
+  .navbar .hide-fullScreen{
+    display: block;
+  }
 
   .card-section {
     flex-direction: column;
     align-items: center;
     height: auto;
-    padding: 20px; /* Adjust padding as needed */
+    padding: 20px;
   }
 
   .card {
-    margin-bottom: 20px; /* Add some spacing between cards */
-    width: 100%; /* Make cards occupy full width */
+    margin-bottom: 20px;
+    width: 100%;
   }
 
 

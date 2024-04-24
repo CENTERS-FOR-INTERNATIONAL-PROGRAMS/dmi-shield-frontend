@@ -1,42 +1,43 @@
 <div style="margin-top: 128px; min-height: 100vh; padding: 2rem 9%;">
   <mat-card class="cardWithShadow">
+    <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
+    <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
+
     <mat-card-header>
       <mat-card-title>Users</mat-card-title>
 
       <span class="flex-1-auto"></span>
 
-      <a [routerLink]="['/users/modify']" mat-flat-button color="primary" class="view-button"
-         (click)="awareness.setFocused('user', '')">
-        Create User
-      </a>
+      <div style="height: 30px;"></div>
     </mat-card-header>
 
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-100" color="primary">
         <mat-label>Search</mat-label>
-        <input type="string" matInput [(ngModel)]="FilterUser.MFilter.mf_search" (change)="loadComposite()" />
+        <input type="string" matInput [(ngModel)]="searchQuery" />
       </mat-form-field>
 
-      <mat-card class="b-1 shadow-none view-card" *ngFor="let SeekUser of Users">
+      <mat-card class="b-1 shadow-none view-card" *ngFor="let SeekUser of filteredUsers">
         <mat-card-content>
-          <a mat-stroked-button color="accent" class="view-button view-float--right" [routerLink]="['/users/modify_role']"
-             (click)="awareness.setFocused('user', SeekUser._id)">
-            Role
+          <a mat-stroked-button color="primary" class="view-button view-float--right" [routerLink]="['/users/modify_role']"
+             (click)="awareness.setFocused('user', SeekUser.id)">
+            Edit Role
           </a>
 
-          <a mat-stroked-button color="primary" class="view-button view-float--right" [routerLink]="['/users/modify']"
-             (click)="awareness.setFocused('user', SeekUser._id)">
-            Edit
-          </a>
+<!--          <a mat-stroked-button color="primary" class="view-button view-float&#45;&#45;right" [routerLink]="['/users/modify']"-->
+<!--             (click)="awareness.setFocused('user', SeekUser.id)">-->
+<!--            Edit-->
+<!--          </a>-->
 
-          <a mat-stroked-button color="primary" class="view-button view-float--right" [routerLink]="['/users/view']"
-             (click)="awareness.setFocused('user', SeekUser._id)">
-            View
-          </a>
+<!--          <a mat-stroked-button color="primary" class="view-button view-float&#45;&#45;right" [routerLink]="['/users/view']"-->
+<!--             (click)="awareness.setFocused('user', SeekUser.id)">-->
+<!--            View-->
+<!--          </a>-->
 
           <p class="view-text--size-large">
-            {{ SeekUser.user_name }}
-            ({{ SeekUser.user_email }})
+            {{ SeekUser.name }}
+            ({{ SeekUser.email }})
+            - {{ this.formatUserRoles(SeekUser.role) }}
           </p>
         </mat-card-content>
       </mat-card>

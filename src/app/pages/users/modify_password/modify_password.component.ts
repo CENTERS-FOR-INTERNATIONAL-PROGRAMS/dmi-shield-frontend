@@ -28,15 +28,15 @@ export class ModifyPasswordComponent implements OnInit {
     this.seedInstance();
 
     this.awareness.awaken(() => {
-      this.UserInstance._id = this.awareness.getFocused("user");
+      this.UserInstance.id = this.awareness.getFocused("user");
 
-      if (this.UserInstance._id != "") {
-        this.UserInstance.acquireInstance((doc: any) => {
-          this.UserInstance.parseInstance(doc);
-        }, (err: any) => {
-          // TODO! Handle errors
-        });
-      }
+      // if (this.UserInstance._id != "") {
+      //   this.UserInstance.acquireInstance((doc: any) => {
+      //     this.UserInstance.parseInstance(doc);
+      //   }, (err: any) => {
+      //     // TODO! Handle errors
+      //   });
+      // }
     });
   }
 
@@ -45,38 +45,38 @@ export class ModifyPasswordComponent implements OnInit {
     this.UserFormControls["user_password_confirm"] = new FormControl('', [Validators.required]);
   }
 
-  submitInstance(): void {
-    let is_valid = true;
-
-    // Validate required fields
-    Object.keys(this.UserFormControls).forEach(fc_key => {
-      if (!this.UserFormControls[fc_key].valid) {
-        is_valid = false;
-        return;
-      }
-    });
-
-    // Validate password
-    if (this.user_password == this.user_password_confirm) {
-      this.user_password_matched = true;
-    } else {
-      is_valid = false;
-      this.UserFormControls['user_password_confirm'].setErrors(Validators.required);
-      this.user_password_matched = false;
-    }
-
-    if (is_valid && this.user_password_matched) {
-      this.UserInstance.user_password = sha256(this.user_password + "mlg").toString()
-
-      // this.UserInstance.putInstance((res: any) => {
-      //   this.UserInstance.user_password = "~";
-      //   this.location.back();
-      //   this.communication.showSuccessToast();
-      // }, (err: any) => {
-      //   this.communication.showFailedToast();
-      // });
-    } else {
-      this.communication.showToast("Kindly fill in all required fields!");
-    }
-  }
+  // submitInstance(): void {
+  //   let is_valid = true;
+  //
+  //   // Validate required fields
+  //   Object.keys(this.UserFormControls).forEach(fc_key => {
+  //     if (!this.UserFormControls[fc_key].valid) {
+  //       is_valid = false;
+  //       return;
+  //     }
+  //   });
+  //
+  //   // Validate password
+  //   if (this.user_password == this.user_password_confirm) {
+  //     this.user_password_matched = true;
+  //   } else {
+  //     is_valid = false;
+  //     this.UserFormControls['user_password_confirm'].setErrors(Validators.required);
+  //     this.user_password_matched = false;
+  //   }
+  //
+  //   if (is_valid && this.user_password_matched) {
+  //     this.UserInstance.user_password = sha256(this.user_password + "mlg").toString()
+  //
+  //     // this.UserInstance.putInstance((res: any) => {
+  //     //   this.UserInstance.user_password = "~";
+  //     //   this.location.back();
+  //     //   this.communication.showSuccessToast();
+  //     // }, (err: any) => {
+  //     //   this.communication.showFailedToast();
+  //     // });
+  //   } else {
+  //     this.communication.showToast("Kindly fill in all required fields!");
+  //   }
+  // }
 }
