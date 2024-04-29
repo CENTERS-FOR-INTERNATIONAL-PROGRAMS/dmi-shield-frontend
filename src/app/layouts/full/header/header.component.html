@@ -6,6 +6,7 @@
 
   <div class="navbar">
     <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
+    <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
 
     <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
       Dashboards
@@ -14,14 +15,8 @@
 
     <mat-menu #menu="matMenu">
 
-      <a [routerLink]="['/mohdash']" style="color: inherit">
-        <button mat-menu-item>
-          <span>Summarized</span>
-        </button>
-      </a>
-
       <a mat-menu-item href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/shield/" target="_blank" style="color: inherit">
-          <span>Routine Surveillance</span>
+          <span>Indicator Based Surveillance</span>
       </a>
 
       <a mat-menu-item href="https://shieldtest-analytics.icapkenya.org/superset/dashboard/ebs/" target="_blank" style="color: inherit">
@@ -31,14 +26,12 @@
         <span>Outbreak Response</span>
       </a>
       <a mat-menu-item [routerLink]="['/dashboard']" style="color: inherit">
-          <span>Program Dashboards</span>
+          <span>IFBS Dashboards</span>
       </a>
     </mat-menu>
 
     <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
     <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
-    <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
-
     <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">Notifications</a>
 
   </div>
