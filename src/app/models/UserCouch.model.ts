@@ -155,8 +155,6 @@ export class UserCouch {
   async authenticateInstance(success: any, error: any) {
     let local_db = new PouchDB(this.MDatabase.md_database);
 
-    console.log(this.user_email);
-    console.log(this.user_password);
     local_db.find({
       selector: {
         user_status: {$eq: "true"},

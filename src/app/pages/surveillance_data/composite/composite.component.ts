@@ -36,11 +36,9 @@ export class CompositeComponent implements OnInit{
     this.authenticationService.getApiCurrentUserRole().subscribe({
       next: (role) => {
         this.userRole = role;
-        console.log('ngOnInit userRole', this.userRole);
       },
       error: (err) => console.error('Error fetching user role', err),
     });
-    console.log('surveillance', this.authenticationService.getApiCurrentUserRole());
     this.loadComposites();
   }
 
@@ -78,10 +76,8 @@ export class CompositeComponent implements OnInit{
     this.FilterSurveillanceData.user_id = this.awareness.UserInstance.id;
     this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
       this.Surveillance = Surveillance;
-      console.log("Allll", this.Surveillance);
     }, (error: any) => {
       // TODO! Handle errors
-      console.log("Error", error);
     });
   }
 

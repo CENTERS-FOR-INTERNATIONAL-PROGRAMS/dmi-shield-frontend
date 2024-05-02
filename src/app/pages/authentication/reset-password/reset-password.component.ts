@@ -82,7 +82,6 @@ export class ResetPasswordComponent implements OnInit{
         }
       };
 
-      console.log('userData', this.confirmResetPassData);
       this.authService.postRequest('auth/user/password/reset', this.confirmResetPassData).subscribe({
         next: (response) => {
           this.awareness.saveUserData(response.data.attributes.user);

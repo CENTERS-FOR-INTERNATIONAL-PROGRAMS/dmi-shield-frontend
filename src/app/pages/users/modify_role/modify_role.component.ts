@@ -91,7 +91,6 @@ export class ModifyRoleComponent implements OnInit {
       next: (res) => {
         this.ApiResponseStatus.success = true;
         this.ApiResponseStatus.message = 'Success';
-        console.log(res);
       },
       error: (error) =>{
         this.ApiResponseStatus.processing = false;
@@ -117,7 +116,6 @@ export class ModifyRoleComponent implements OnInit {
         this.ApiResponseStatus.processing = false;
       },
       complete: () => {
-        console.log(this.UserInstance);
         this.ApiResponseStatus.processing = false;
       },
     });

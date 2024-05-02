@@ -79,7 +79,6 @@ export class AwarenessService {
   }
 
   setFocused(key: string, value: string, response: any = null) {
-    console.log('Focused User', value);
     this.AwarenessInstance.focused[key] = value;
 
     this.AwarenessInstance.putInstance((res: any) => {

@@ -118,7 +118,6 @@ export class Thresholds {
 
         error(err);
       }).finally(() => {
-        console.log("s->", this.mapInstance(_rev))
         this.MStatus.ms_processing = false;
       });
     });
@@ -155,7 +154,6 @@ export class Thresholds {
         sort: [{ 'county': 'asc' }]
       }).then(res => {
 
-        console.log("res", res.docs)
         Surveillance = instance.parseComposite(res.docs);
         success(Surveillance);
       }).catch(err => {

@@ -45,7 +45,6 @@ export class ViewComponent implements OnInit {
         this.ApiResponseStatus.processing = false;
       },
       complete: () => {
-        console.log(this.UserInstance);
         this.ApiResponseStatus.processing = false;
       },
     });

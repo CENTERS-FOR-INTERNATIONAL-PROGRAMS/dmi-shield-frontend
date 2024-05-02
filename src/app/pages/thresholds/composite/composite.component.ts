@@ -25,7 +25,6 @@ export class CompositeComponent implements OnInit{
       console.table( this.Thresholds);
     }, (error: any) => {
       // TODO! Handle errors
-      console.log("Error", error);
     });
   }
 

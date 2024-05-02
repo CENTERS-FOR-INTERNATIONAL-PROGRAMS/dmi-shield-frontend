@@ -114,7 +114,6 @@ export class ModifyComponent implements OnInit{
 
   assignDocumentType(event: any, fileIndex: number): void {
     this.SurveillanceDataList[fileIndex].file_type =  event.target.value.toLowerCase();
-    console.log(this.SurveillanceDataList);
 
   }
 
@@ -181,7 +180,6 @@ export class ModifyComponent implements OnInit{
             error: (error) =>{
               this.ApiResponseStatus.processing = false;
               this.ApiResponseStatus.success = false;
-              console.log(error);
             },
             complete: () =>{
             },

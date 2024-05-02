@@ -26,7 +26,6 @@ export class ForgotPasswordComponent implements OnInit{
 
   ngOnInit(): void {
     const hostDomain = window.location.origin;
-    console.log('Host Domain:', hostDomain);
     this.seedFormInstance();
   }
 
