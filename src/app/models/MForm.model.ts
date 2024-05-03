@@ -117,11 +117,11 @@ export class MForm {
 
     try {
       this.form_mfields = FilterMField.parseComposite(doc['form_mfields']);
-    } catch (error) { }
+    } catch (error) { console.error(error) }
 
     try {
       this.form_mforms = FilterMForm.parseComposite(doc['form_mforms']);
-    } catch (error) { }
+    } catch (error) { console.error(error) }
 
     return this;
   }
@@ -156,7 +156,7 @@ export class MForm {
     // Create ident
     if (this._id == "") this._id = v1();
 
-    // Connect to remote 
+    // Connect to remote
     let db = new PouchDB(this.MDatabase.md_database);
 
     // Acquire instance
@@ -185,7 +185,7 @@ export class MForm {
     this._processing = true;
     let _rev: string = "";
 
-    // Connect to remote 
+    // Connect to remote
     let db = new PouchDB(this.MDatabase.md_database);
 
     // Acquire instance
@@ -454,8 +454,6 @@ export class MForm {
         }
       });
 
-      // console.log(DFormInstance.DForms[key][0]['fform_id']);
-      // console.log(this.FForms[mform_key]);
     });
   }
   // #endregion

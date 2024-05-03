@@ -164,8 +164,8 @@ export class MField {
 
     // Create ident
     if (this._id == "") this._id = v1();
-    
-    // Connect to remote 
+
+    // Connect to remote
     let db = new PouchDB(this.MDatabase.md_database);
 
     // Acquire instance
@@ -182,7 +182,6 @@ export class MField {
           });
         }).catch((err: any) => {
           // TODO! Handle errors
-          console.log("Error", err);
         }).finally(() => {
           this._processing = false;
         });
@@ -194,7 +193,7 @@ export class MField {
     this._processing = true;
     let _rev: string = "";
 
-    // Connect to remote 
+    // Connect to remote
     let db = new PouchDB(this.MDatabase.md_database);
 
     // Acquire instance

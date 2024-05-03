@@ -41,7 +41,7 @@ export class ModifyComponent implements OnInit {
     });
 
     return is_valid;
-  };
+  }
 
   submitInstance(): void {
     if (this.validateInstance()) {

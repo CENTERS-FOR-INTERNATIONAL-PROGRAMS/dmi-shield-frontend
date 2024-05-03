@@ -39,7 +39,6 @@ export class CompositeComponent implements OnInit {
     SeekDForm._id = _id;
 
     SeekDForm.removeInstance((res: any) => {
-      console.log("Removed", res);
       // TODO! Handle success
       this.loadComposite();
     }, (err: any) => {
@@ -53,7 +52,7 @@ export class CompositeComponent implements OnInit {
     this.FilterDForm.acquireComposite((DForms: DForm[]) => {
       this.DForms = DForms;
     }, (err: any) => {
-      console.log("Error", err);
+      console.error("Error", err);
       // TODO! Handle errors
     });
   }

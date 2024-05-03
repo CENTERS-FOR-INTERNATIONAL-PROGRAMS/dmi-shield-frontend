@@ -49,7 +49,6 @@ export class CompositeComponent implements OnInit {
     SeekMField._id = _id;
 
     SeekMField.removeInstance((res: any) => {
-      console.log("Removed", res);
       // TODO! Handle success
       this.loadComposite();
     }, (err: any) => {

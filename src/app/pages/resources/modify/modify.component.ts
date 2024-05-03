@@ -162,11 +162,9 @@ export class ModifyComponent implements OnInit{
   }
 
   public fileOver(event: any){
-    console.log(event);
   }
 
   public fileLeave(event: any){
-    console.log(event);
   }
 
 }
