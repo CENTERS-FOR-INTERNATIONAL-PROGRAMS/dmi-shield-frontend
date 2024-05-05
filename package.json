@@ -1,18 +1,14 @@
 {
   "name": "dmi-shield-frontend",
   "version": "0.0.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint --quiet",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
