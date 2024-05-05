@@ -31,7 +31,6 @@ export class CompositeComponent implements OnInit {
     this.authenticationService.getApiCurrentUserRole().subscribe({
       next: (role) => {
         this.userRole = role;
-        console.log('ngOnInit userRole', this.userRole);
       },
       error: (err) => console.error('Error fetching user role', err),
     });

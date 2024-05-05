@@ -22,10 +22,8 @@ export class CompositeComponent implements OnInit{
   loadComposite() {
     this.FilterThresholds.acquireComposite((Thresholds: Thresholds[]) => {
       this.Thresholds = Thresholds;
-      console.table( this.Thresholds);
     }, (error: any) => {
       // TODO! Handle errors
-      console.log("Error", error);
     });
   }
 

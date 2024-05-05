@@ -115,7 +115,6 @@ export class ModifyComponent implements OnInit{
             next: (response) => {
 
               if(response.data.attributes.url != ''){
-                console.log('preSignedUrl', response.data.attributes.url);
                 this.pushToBucket(response.data.attributes.url, file);
                 successfulUploads++;
               }
@@ -128,7 +127,6 @@ export class ModifyComponent implements OnInit{
             error: (error) =>{
               this.ApiResponseStatus.processing = false;
               this.ApiResponseStatus.success = false;
-              console.log(error);
             },
             complete: () =>{
             },
@@ -164,11 +162,9 @@ export class ModifyComponent implements OnInit{
   }
 
   public fileOver(event: any){
-    console.log(event);
   }
 
   public fileLeave(event: any){
-    console.log(event);
   }
 
 }

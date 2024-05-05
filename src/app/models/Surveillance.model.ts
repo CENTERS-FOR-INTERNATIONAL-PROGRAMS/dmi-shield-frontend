@@ -128,7 +128,6 @@ export class Surveillance {
 
         error(err);
       }).finally(() => {
-        console.log("s->", this.mapInstance(_rev))
         this.MStatus.ms_processing = false;
       });
     });
@@ -166,7 +165,6 @@ export class Surveillance {
         sort: [{ 'file_original_name': 'asc' }]
       }).then(res => {
 
-        console.log("res", res.docs)
         Surveillance = instance.parseComposite(res.docs);
         success(Surveillance);
       }).catch(err => {

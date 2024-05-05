@@ -30,7 +30,6 @@ export class ModifyComponent implements OnInit {
         this.FFormInstance.parseInstance(doc);
       }, (err: any) => {
         // TODO! Handle errors
-        console.log(err);
       });
     }
   }
@@ -45,17 +44,16 @@ export class ModifyComponent implements OnInit {
     });
 
     return is_valid;
-  };
+  }
 
   submitInstance(): void {
     if (this.validateInstance()) {
       this.FFormInstance.putInstance((res: any) => {
-        this.communication.showSuccessToast();
+        this.communication.showSuccessToast()
       }, (err: any) => {
         this.communication.showFailedToast();
       });
     } else {
-      console.log("Missing fields");
       this.communication.showMissingFieldsSnackbar();
     }
   }

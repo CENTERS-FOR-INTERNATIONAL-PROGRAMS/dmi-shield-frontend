@@ -66,7 +66,6 @@ export class ModifyComponent implements OnInit{
         return;
       }
     });
-    console.log('this.ThresholdsInstance', this.ThresholdsInstance)
     if (this.ThresholdsInstance._id == "")
     {
       this.ThresholdsInstance._id =  this.generateUniqueId();
@@ -84,8 +83,6 @@ export class ModifyComponent implements OnInit{
           // TODO! Handle errors
         });
       }, (err: any) => {
-        console.log('ThresholdsInstance', this.ThresholdsInstance)
-        console.error('submitInstance', err)
         this.communication.showFailedToast();
       });
     } else {
@@ -97,7 +94,6 @@ export class ModifyComponent implements OnInit{
 
   generateUniqueId(){
     let uui = Guid.create().toString();
-    console.log('generateUniqueId', uui)
     return uui;
   }
 

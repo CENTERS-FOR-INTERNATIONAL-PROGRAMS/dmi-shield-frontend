@@ -90,7 +90,6 @@ export class AppSideLoginComponent implements OnInit{
           this.awareness.saveUserData(response.data.attributes.user);
           this.ApiResponseStatus.processing = false;
           this.router.navigate(['/home'])
-          console.log('POST Response:', response);
         } else {
           this.ApiResponseStatus.processing = false;
           throw new Error('User data not found in response');

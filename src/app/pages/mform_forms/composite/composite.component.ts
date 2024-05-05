@@ -26,7 +26,7 @@ export class CompositeComponent implements OnInit {
       this.acquireFForms();
     }, (err: any) => {
       // TODO! Handle errors
-      console.log(err);
+      console.error(err);
     });
     // #endregion
 
@@ -36,7 +36,7 @@ export class CompositeComponent implements OnInit {
       this.MForms = data;
     }, (err: any) => {
       // TODO! Handle error
-      console.log(err);
+      console.error(err);
     });
     // #endregion
   }
