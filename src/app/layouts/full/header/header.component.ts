@@ -69,7 +69,6 @@ export class HeaderComponent implements OnInit {
 
   getUser(){
     this.awareness.UserInstance =  this.awareness.getUserData();
-    // this.userRole = this.authenticationService.getCurrentUserRole();
   }
 
   updateActiveRoute() : void{
