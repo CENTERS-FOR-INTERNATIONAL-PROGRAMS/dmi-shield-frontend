@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit {
       next: (role) => {
         this.userRole = role;
       },
-      error: (err) => console.error('Error fetching user role', err),
+      error: (err) => console.log('Error fetching user role', err),
     });
 
     this.getApiNotifications();
