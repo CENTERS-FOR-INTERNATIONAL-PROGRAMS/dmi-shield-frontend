@@ -71,7 +71,6 @@ export class AppSideLoginComponent implements OnInit{
   }
 
   loginUser(){
-    const formValues = this.UserFormControls;
     this.ApiResponseStatus.processing = true;
 
     this.userData = {
