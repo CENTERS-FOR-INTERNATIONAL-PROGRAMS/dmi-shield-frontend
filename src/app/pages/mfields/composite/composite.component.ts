@@ -40,7 +40,7 @@ export class CompositeComponent implements OnInit {
       this.CompositeMFields = data;
     }, (err: any) => {
       // TODO! Handle error
-      console.log(err);
+      console.error(err);
     });
   }
 
