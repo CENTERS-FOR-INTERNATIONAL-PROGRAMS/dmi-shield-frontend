@@ -16,8 +16,6 @@ export class ModifyPasswordComponent implements OnInit {
   UserInstance = new User();
   UserFormControls: CompositeFormControls = {};
   hide_password = true;
-  user_password = "";
-  user_password_confirm = "";
   user_password_matched: boolean = false;
 
   constructor(private location: Location, private awareness: AwarenessService, private communication: CommunicationService) {
