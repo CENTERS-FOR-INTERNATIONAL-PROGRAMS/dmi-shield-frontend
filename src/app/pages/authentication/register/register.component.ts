@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {CompositeFormControls} from "../../../models/CompositeFormControls.model";
 import {User} from "../../../models/User.model";
@@ -18,8 +18,6 @@ export class AppSideRegisterComponent implements OnInit{
   hide: boolean = true;
   UserInstance: User = new User();
   UserFormControls: CompositeFormControls = {};
-  user_password: string = "";
-  confirm_password: string = "";
   userData: UserRegisterData;
   constructor(private router: Router, private communication: CommunicationService,
               public authService: AuthService, private awareness: AwarenessService) { }
@@ -77,9 +75,9 @@ export class AppSideRegisterComponent implements OnInit{
     this.userData = {
       data: {
         attributes: {
-          email: this.UserInstance.email,
-          name : this.UserInstance.name,
-          password: this.user_password
+          email: this.UserFormControls["user_email"].value,
+          name : this.UserFormControls["user_name"].value,
+          password: this.UserFormControls["user_password"].value
         },
         type: 'User Authentication'
       }

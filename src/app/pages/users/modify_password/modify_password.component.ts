@@ -1,11 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormControl, Validators } from '@angular/forms';
 import { CompositeFormControls } from 'src/app/models/CompositeFormControls.model';
 import { User } from 'src/app/models/User.model';
 import { AwarenessService } from 'src/app/services/awareness.service';
 import { CommunicationService } from 'src/app/services/communication.service';
-import sha256 from 'crypto-js/sha256';
 
 @Component({
   selector: 'modify_password',
@@ -16,8 +15,6 @@ export class ModifyPasswordComponent implements OnInit {
   UserInstance = new User();
   UserFormControls: CompositeFormControls = {};
   hide_password = true;
-  user_password = "";
-  user_password_confirm = "";
   user_password_matched: boolean = false;
 
   constructor(private location: Location, private awareness: AwarenessService, private communication: CommunicationService) {

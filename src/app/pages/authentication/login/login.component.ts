@@ -19,7 +19,6 @@ export class AppSideLoginComponent implements OnInit{
   hide: boolean = true;
   AuthUser: User = new User();
   UserFormControls: CompositeFormControls = {};
-  user_password: string = "";
   userData: UserAuthenticationData;
   wrong_cred_error: boolean;
 
@@ -77,8 +76,8 @@ export class AppSideLoginComponent implements OnInit{
     this.userData = {
       data: {
         attributes: {
-          email: this.AuthUser.email,
-          password: this.user_password
+          email: this.UserFormControls["user_email"].value,
+          password: this.UserFormControls["user_password"].value
         },
         type: 'User Authentication'
       }

@@ -20,8 +20,6 @@ export class ResetPasswordComponent implements OnInit{
   userData: ResetPasswordData;
   confirmResetPassData: ConfirmResetPasswordData;
   showConfirmReset: boolean;
-  user_password: string = "";
-  confirm_password: string = "";
   confirmPasswordToken: string = "";
 
   constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private awareness: AwarenessService,
@@ -75,7 +73,7 @@ export class ResetPasswordComponent implements OnInit{
       this.confirmResetPassData = {
         data: {
           attributes: {
-            password: this.user_password,
+            password: this.UserFormControls["user_password"].value,
             token: this.confirmPasswordToken,
           },
           type: 'User Authentication'
