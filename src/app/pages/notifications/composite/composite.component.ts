@@ -46,7 +46,6 @@ export class CompositeComponent implements OnInit {
       next: (res) => {
         this.ApiResponseStatus.success = true;
         this.Notifications = res.data.map(item => item.attributes);
-        console.log(this.Notifications);
       },
       error: (error) =>{
         this.ApiResponseStatus.processing = false;

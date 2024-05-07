@@ -60,7 +60,6 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.getApiCurrentUserRole().subscribe({
       next: (role) => {
         this.userRole = role;
-        console.log('ngOnInit userRole', this.userRole);
       },
       error: (err) => console.error('Error fetching user role', err),
     });
@@ -70,7 +69,6 @@ export class HeaderComponent implements OnInit {
 
   getUser(){
     this.awareness.UserInstance =  this.awareness.getUserData();
-    // this.userRole = this.authenticationService.getCurrentUserRole();
   }
 
   updateActiveRoute() : void{
@@ -155,7 +153,6 @@ export class HeaderComponent implements OnInit {
         next: (res) => {
           this.ApiResponseStatus.success = true;
           this.Notifications = res.data.map(item => item.attributes);
-          console.log(this.Notifications);
         },
         error: (error) =>{
           this.ApiResponseStatus.processing = false;

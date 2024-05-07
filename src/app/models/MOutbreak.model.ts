@@ -81,7 +81,7 @@ export class MOutbreak {
     this._processing = true;
     let _rev: string = "";
 
-    // Connect to remote 
+    // Connect to remote
     let db = new PouchDB(this._database);
 
     // Acquire instance
@@ -98,7 +98,6 @@ export class MOutbreak {
           });
         }).catch((err: any) => {
           // TODO! Handle errors
-          console.log("Error", err);
         }).finally(() => {
           this._processing = false;
         });
@@ -110,7 +109,7 @@ export class MOutbreak {
     this._processing = true;
     let _rev: string = "";
 
-    // Connect to remote 
+    // Connect to remote
     let db = new PouchDB(this._database);
 
     // Acquire instance

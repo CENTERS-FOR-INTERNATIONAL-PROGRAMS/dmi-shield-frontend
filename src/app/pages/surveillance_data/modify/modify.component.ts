@@ -88,11 +88,9 @@ export class ModifyComponent implements OnInit{
 
 
   public fileOver(event: any){
-    console.log(event);
   }
 
   public fileLeave(event: any){
-    console.log(event);
   }
 
   removeFile(index: number) {
@@ -114,7 +112,6 @@ export class ModifyComponent implements OnInit{
 
   assignDocumentType(event: any, fileIndex: number): void {
     this.SurveillanceDataList[fileIndex].file_type =  event.target.value.toLowerCase();
-    console.log(this.SurveillanceDataList);
 
   }
 
@@ -181,7 +178,6 @@ export class ModifyComponent implements OnInit{
             error: (error) =>{
               this.ApiResponseStatus.processing = false;
               this.ApiResponseStatus.success = false;
-              console.log(error);
             },
             complete: () =>{
             },

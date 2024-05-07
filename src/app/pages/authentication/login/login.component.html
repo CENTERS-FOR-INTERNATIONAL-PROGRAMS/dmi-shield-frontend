@@ -32,8 +32,7 @@
 
           <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
           <mat-form-field appearance="outline" class="w-100" color="primary">
-            <input matInput [formControl]="UserFormControls['user_password']" [(ngModel)]="user_password"
-                   [type]="hide ? 'password' : 'text'" />
+            <input matInput [formControl]="UserFormControls['user_password']" [type]="hide ? 'password' : 'text'" />
             <img matSuffix (click)="hide = !hide"
                  src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
                  alt="" class="view-icon--image" />
