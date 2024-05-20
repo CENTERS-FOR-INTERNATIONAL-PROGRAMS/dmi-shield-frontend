@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationModel} from "../../../models/Notification.model";
-import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
+import {ApiResponseStatus, MarkNotificationData, UserAuthenticationData} from 'src/app/interfaces/IAuth.model';
 import {ApiService} from "../../../services/api/api.service";
 import {AwarenessService} from "../../../services/awareness.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -14,6 +14,8 @@ export class CompositeComponent implements OnInit {
 
   Notifications: NotificationModel[] = [];
   dataSource = new MatTableDataSource(this.Notifications);
+  notificationPayload: MarkNotificationData;
+  selectedNotifications: string[] = []
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -45,7 +47,11 @@ export class CompositeComponent implements OnInit {
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
-        this.Notifications = res.data.map(item => item.attributes);
+
+        this.Notifications = res.data.map(item => ({
+          id: item.id,
+          ...item.attributes
+        }));
       },
       error: (error) =>{
         this.ApiResponseStatus.processing = false;
@@ -56,4 +62,48 @@ export class CompositeComponent implements OnInit {
     });
   }
 
+
+  markNotificationsRead() {
+    this.ApiResponseStatus.processing = true;
+    const userId = this.awareness.UserInstance.id;
+
+    if (!userId) {
+      this.ApiResponseStatus.processing = false;
+      return;
+    }
+
+
+    this.selectedNotifications.forEach(notificationId => {
+      this.notificationPayload = {
+        data: {
+          attributes: {
+            status: "read"
+          },
+          id: notificationId,
+          type: 'Notifications'
+        }
+      };
+
+      this.apiService.patchRequest(`notification/${notificationId}`, this.notificationPayload).subscribe({
+        next: (patchRes) => {
+        },
+        error: (error) => {
+        },
+        complete: () => {
+        }
+      });
+    });
+
+    this.ApiResponseStatus.processing = false;
+    this.selectedNotifications = [];
+    this.getApiNotifications();
+  }
+
+  toggleSelection(id: string) {
+    if (this.selectedNotifications.includes(id)) {
+      this.selectedNotifications = this.selectedNotifications.filter(selectedId => selectedId !== id);
+    } else {
+      this.selectedNotifications.push(id);
+    }
+  }
 }

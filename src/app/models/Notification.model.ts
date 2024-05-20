@@ -1,6 +1,7 @@
 
 
 export class NotificationModel {
+  id: string;
   message: string;
   status: string;
   type: string;
