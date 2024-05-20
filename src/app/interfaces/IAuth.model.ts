@@ -73,9 +73,7 @@ export interface ChangeUserRoleAttributes {
   role: string;
 }
 
-export interface MarkNotificationAttributes{
-  status: string
-}
+
 
 export type UserAuthenticationData = GenericPostBody<UserAuthenticationAttributes>;
 export type UserRegisterData = GenericPostBody<UserRegisterAttributes>;
@@ -84,7 +82,6 @@ export type ResetPasswordData = GenericPostBody<ResetPassAttributes>;
 export type ConfirmResetPasswordData = GenericPostBody<ConfirmPasswordResetAttributes>;
 export type CreatePreSignedUrlData = GenericPostBody<CreatePreSignedUrlAttributes>;
 export type ChangeUserRoleData = GenericPatchBody<ChangeUserRoleAttributes>;
-export type MarkNotificationData = GenericPatchBody<MarkNotificationAttributes>;
 
 
 export interface ApiResponse{
