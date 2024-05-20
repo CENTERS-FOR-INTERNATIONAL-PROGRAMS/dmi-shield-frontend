@@ -41,7 +41,29 @@ export class FullComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.scrollBehavior();
+  }
+
+
+  scrollBehavior(){
+    const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
+    const navbar = document.querySelector('.navbar a') as HTMLElement;
+    const header = document.querySelector('.header') as HTMLElement;
+
+    menuIcon.onclick = () => {
+      menuIcon.classList.toggle('bx-x');
+      navbar.classList.toggle('active');
+    };
+
+    window.onscroll = () => {
+      if (window.scrollY > 50) {
+        header.classList.add('active-header');
+      } else {
+        header.classList.remove('active-header');
+      }
+    };
+  }
 
   ngOnDestroy() {
     this.layoutChangesSubscription.unsubscribe();

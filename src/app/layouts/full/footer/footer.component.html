@@ -1,22 +1,23 @@
-<div style="width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-  <div style="width: 50%; display: flex; align-items: center; justify-content: center;">
-    <div
-      style="width: 567px; height: 140px;  flex-shrink: 0; background-image: url('assets/images/logos/logo-moh.png');  background-size: contain; background-repeat: no-repeat;">
-    </div>
-  </div>
-  <div style="width: 50%; display: flex; align-items: center; justify-content: center;">
-    <div style="display: block; width: fit-content;height: fit-content;">
-      <p
-        style="color: #FFF; /* Body/bold */ font-family: Lato; font-size: 18px; font-style: normal; font-weight: 700; line-height: 32px; /* 177.778% */">
-        Help & Support</p>
-      <p
-        style="color: #FFF; /* Body/bold */ font-family: Lato; font-size: 18px; font-style: normal; font-weight: 700; line-height: 32px; /* 177.778% */">
-        Terms
-        and Conditions</p>
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo-container">
+      <img class="footer-logo" src="assets/images/logos/logo-moh.png">
+      <a href="http://www.health.go.ke/" target="_blank">https://www.health.go.ke</a>
     </div>
 
+    <div class="terms-container">
+      <a [routerLink]="['/support/']">Help & Support</a>
+      <a>Terms and Conditions</a>
+    </div>
+    <div class="shield-logo-container">
+      <img class="shield-logo" src="assets/images/logos/logo-shield-footer.png">
+      <p class="logo-text">Surveillance Health Information Exchange and Linkage Data<p>
+    </div>
   </div>
-</div>
-<div style="text-align: center; color: whitesmoke;">
-  <p>@ 2024 Division of Disease Surveillance. All rights reserved</p>
-</div>
+
+  <div class="copyright">
+    <p>
+      @ 2024 Division of Disease Surveillance and Response . All rights reserved
+    </p>
+  </div>
+</footer>

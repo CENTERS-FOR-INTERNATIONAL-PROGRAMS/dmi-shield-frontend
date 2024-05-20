@@ -1,79 +1,49 @@
-<div>
-  <section  style="" class="this-main-container this">
+<section class="home" id="home">
+  <div class="home-content">
+    <h1>S.H.I.E.L.D.</h1>
+    <h3>Surveillance Health Information Exchange and Linkage Data</h3>
+    <h4>One Stop Shop For Everything Disease Surveillance .</h4>
 
-    <div style="width: 50%;">
-      <div>
-        <h1
-          style="color: #333; /* Heading 1 */ font-family: Lato,sans-serif; font-size: 64px; font-style: normal; font-weight: 700; line-height: 76px; /* 118.75% */">
-          Surveillance Health Information Exchange and Linkage Module
-        </h1>
-      </div>
-      <p
-        style="color: var(--Primary-Cetacean-Blue, #03062C); /* Heading 3 */ font-family: Lato,sans-serif; font-size: 26px; font-style: normal; font-weight: 400; line-height: 32px; /* 123.077% */">
-        Your one stop shop for everything Disease Surveillance .</p>
-      <div style="display: flex; align-items: center; gap: 50px;">
-        <!--      <a style="text-decoration: none; cursor: pointer;"-->
-        <!--         routerLink="['/authentication/login']">-->
-        <!--        <button-->
-        <!--          style="display: flex; width: 122px; height: 39px; padding: 0px 25px;  justify-content: center; align-items: center; gap: 10px; flex-shrink: 0; border-radius: 8px; background: var(&#45;&#45;Accent-Orange, #FFA500); border: 0; color: white; font-weight: 700; font-size: large;">Sign-->
-        <!--          In</button>-->
-        <!--      </a>-->
+    <div class="btn-box">
+      <a class="btn" *ngIf="this.awareness.getUserData() ==null" [routerLink]="['/authentication/login']" class="btn">Sign In</a>
 
-        <p style="color: var(--Primary-Cetacean-Blue, #03062C); font-family: Lato,sans-serif; font-size: 18px; font-style: normal; font-weight: 700; line-height: 32px; text-align: start;">
-          <a style="font-size: 18px; font-style: normal; font-weight: 700; line-height: 32px; text-decoration: none; font-size: large; color: #03062C; text-align: center; display: flex; align-items: center;"
-             href="#" (click)="scroll(viewMoreContent)">
-            View More
-            <span style="width: 16px; height: 16px; margin-left: 5px; flex-shrink: 0; background-color: whitesmoke; padding: 2px; border-radius: 16px; display: flex; align-items: center; justify-content: center; position: relative;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
-        <path d="M0.428574 5.57141L1.83857 4.16141L8.42857 10.7514L15.0186 4.16141L16.4286 5.57141L8.42857 13.5714L0.428574 5.57141Z" fill="#03062C"/>
-      </svg>
-    </span>
-          </a>
-        </p>
-      </div>
-    </div>
-    <span style="">
-  <img  alt="Your Image"  class="right-aligned-image" src="https://s3-alpha-sig.figma.com/img/dcb9/81b1/d726f2d7900682525c135212275b46a8?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HYp3tlNTCNPRpAzVIGCS31sEYufuDSt~-jQLWJ6zPSt9yPN3wge4fauzp~anupR2f0Wp~sA7gyMCFTpFjRRW162IuVwIYiZzCXgdZG1cPdxWf7lX2DklLP0xFEMzie5gFPWZKSdXdFZmhZfUQ8SUECAo9ZWdKI1tImd3jSYS7-mX9vgKIqJBcSiLYCWQ32GK7xTR6ox2tll8QIYuagpd4Tpn6Viw1knqfEg1nKHMu599n1nMaa6JOgUzdXeiTcIR37gSQSo8Wlo7f~jnpzP1Bz2dQFt2CVVxTcHXS7y6YZvkY~9pUn7MG~27xGA15O6OcnRYZRAqFDa4AGuKyMXpNw__">
-
-  </span>
-  </section>
-
-  <section id="viewMoreContent" #viewMoreContent style="width: 100%; min-height: 30vh;">
-    <div  class="Frame27" style="width: 1440px; height: 630px; position: relative">
-      <div class="Group9" style="width: 366px; height: 522px; left: 135px; top: 54px; position: absolute">
-        <div class="Rectangle8" style="width: 366px; height: 522px; left: 0px; top: 0px; position: absolute; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid"></div>
-        <img class="Rectangle9" style="width: 313.04px; height: 248.59px; left: 25.50px; top: 29.33px; position: absolute; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid" src="assets/images/resources/laptop.png" />
-        <div class="ViewDashboardsWithSurveillanceDataForDiseasesOfPublicConcern" style="width: 314px; height: 63px; left: 34px; top: 352px; position: absolute; opacity: 0.70; color: #03062C; font-size: 18px; font-family: Lato, sans-serif; font-weight: 400; line-height: 22px; word-wrap: break-word">View dashboards with surveillance data for diseases of public concern.</div>
-        <div class="SurveillanceDashboards" style="width: 250.26px; height: 45.50px; left: 33.72px; top: 295.75px; position: absolute; color: black; font-size: 18px; font-family: Lato, sans-serif; font-weight: 700; line-height: 32px; word-wrap: break-word">Surveillance Dashboards</div>
-        <div class="Button" style="width: 320px; height: 54px; padding-left: 25px; padding-right: 25px; left: 25px; top: 431px; position: absolute; background: #FFA500; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-          <div class="Signup" style="color: white; font-size: 18px; font-family: Lato, sans-serif; font-weight: 700; line-height: 32px; word-wrap: break-word">View Dashboards</div>
-        </div>
-      </div>
-      <div class="Group12" style="width: 366px; height: 522px; left: 540px; top: 54px; position: absolute">
-        <div class="Rectangle8" style="width: 366px; height: 522px; left: 0px; top: 0px; position: absolute; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid"></div>
-        <img class="Rectangle9" style="width: 313.04px; height: 248.59px; left: 25.50px; top: 29.33px; position: absolute; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid" src="assets/images/resources/files.png" />
-        <div class="FindSurveillanceResourcesHere" style="width: 314px; height: 63px; left: 34px; top: 352px; position: absolute; opacity: 0.70; color: #03062C; font-size: 18px; font-family: Lato, sans-serif; font-weight: 400; line-height: 22px; word-wrap: break-word">Find Surveillance resources here...</div>
-        <div class="Resource" style="width: 250.26px; height: 45.50px; left: 33.72px; top: 295.75px; position: absolute; color: black; font-size: 18px; font-family: Lato, sans-serif; font-weight: 700; line-height: 32px; word-wrap: break-word">Resource</div>
-        <div class="Button" style="width: 320px; height: 54px; padding-left: 25px; padding-right: 25px; left: 25px; top: 431px; position: absolute; background: #FFA500; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-          <div class="Signup" style="color: white; font-size: 18px; font-family: Lato, sans-serif; font-weight: 700; line-height: 32px; word-wrap: break-word">View Resources</div>
-        </div>
-      </div>
-      <a [routerLink]="['/surveillance/composites']">
-      <div class="Group11" style="width: 366px; height: 522px; left: 944px; top: 54px; position: absolute">
-        <div class="Rectangle8" style="width: 366px; height: 522px; left: 0px; top: 0px; position: absolute; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid"></div>
-        <img class="Rectangle9" style="width: 313.04px; height: 248.59px; left: 25.86px; top: 29.33px; position: absolute; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid" src="assets/images/resources/upload.png" />
-        <div  class="UploadYourData" style="width: 229.47px; height: 44.69px; left: 34.36px; top: 296.08px; position: absolute; color: black; font-size: 18px; font-family: Lato, sans-serif; font-weight: 700; line-height: 32px; word-wrap: break-word">
-          Upload your data
-        </div>
-        <div class="UploadYourDataIntoShield" style="width: 314px; height: 63px; left: 35px; top: 352px; position: absolute; opacity: 0.70; color: #03062C; font-size: 18px; font-family: Lato, sans-serif; font-weight: 400; line-height: 22px; word-wrap: break-word">Upload your data into SHIELD<br/></div>
-        <div class="Button" style="width: 320px; height: 54px; padding-left: 25px; padding-right: 25px; left: 26px; top: 431px; position: absolute; background: #FFA500; border-radius: 8px; border: 1px rgba(0, 0, 0, 0.10) solid; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-          <div class="Signup" style="color: white; font-size: 18px; font-family: Lato, sans-serif; font-weight: 700; line-height: 32px; word-wrap: break-word">Upload your data</div>
-        </div>
-      </div>
+      <a class="btn" (click)="scrollToViewMore()">
+        View More
+        <img class="down-arrow" src="assets/images/icons/point-down.svg" alt="">
       </a>
-
     </div>
-  </section>
 
+  </div>
+  <div class="home-image-content">
+    <img class="home-image" src="assets/images/logos/logo-dalle.png" alt="shield logo">
+  </div>
+</section>
 
-</div>
+<section id="cards" class="card-section">
+  <div class="card">
+    <img class="card-image" src="assets/images/resources/dashboards.png" alt="Avatar">
+    <h1 style="margin-top: 15px;">Surveillance Dashboards</h1>
+    <h3>View dashboards with surveillance data for diseases of public health concern.</h3>
+    <div class="card-button-box">
+      <a [routerLink]="['/dashboard']">View Dashboards</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-image" src="assets/images/resources/upload.png" alt="Avatar">
+    <h1 style="margin-top: 15px;">Upload Data</h1>
+    <h3>Upload data into SHIELD.</h3>
+    <div class="card-button-box">
+      <a [routerLink]="['/surveillance/composites']">Upload Data</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-image" src="assets/images/resources/education.png" alt="Avatar">
+    <h1 style="margin-top: 15px;">Surveillance Resources</h1>
+    <h3>Find Surveillance resources here...</h3>
+    <div class="card-button-box">
+      <a [routerLink]="['/resources/composites']">View Resources</a>
+    </div>
+  </div>
+</section>

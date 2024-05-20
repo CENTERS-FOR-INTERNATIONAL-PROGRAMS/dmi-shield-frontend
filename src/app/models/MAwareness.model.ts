@@ -40,7 +40,7 @@ export class MAwareness {
     this._processing = true;
     let _rev: string = "";
 
-    // Connect to local 
+    // Connect to local
     let db = new PouchDB(this._database);
 
     // Acquire instance
@@ -69,37 +69,6 @@ export class MAwareness {
     });
   }
 
-  removeInstance(success: any, error: any) {
-    // Prerequisites
-    this._processing = true;
-    let _rev: string = "";
-
-    // Connect to remote 
-    let db = new PouchDB(this._database);
-
-    // Acquire instance
-    this.acquireInstance(((doc: any) => {
-      _rev = doc["_rev"];
-    }), null, () => {
-      db.remove(this._id, _rev)
-        .then(response => {
-          this._action_result = true;
-
-          // Sync to remote
-          this.syncToRemote((response: boolean) => {
-            // TODO! Handle success
-          });
-
-          success(response);
-        }).catch((err) => {
-          error(err);
-        }).finally(() => {
-          this._processing = false;
-        });
-    });
-  }
-
-  // #region Acquire
 
   async acquireInstance(success: any = null, error: any = null, finished: any = null) {
     let db = new PouchDB(this._database);
@@ -117,9 +86,7 @@ export class MAwareness {
       });
   }
 
-  // #endregion
 
-  // #region Synchronize
 
   async syncToRemote(on: any) {
     let local_db = new PouchDB(this._database);

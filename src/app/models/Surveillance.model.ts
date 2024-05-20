@@ -15,6 +15,7 @@ export class Surveillance {
   file_header_status: boolean = true;
   file_data_status: boolean = true;
   file_type: string = "";
+  file_url: string = "";
   validated: boolean = true;
   deleted: boolean = false;
   createdDate = Date.now();
@@ -49,6 +50,7 @@ export class Surveillance {
     this.file_header_status = doc['file_header_status']
     this.file_data_status = doc['file_data_status']
     this.file_type = doc['file_type']
+    this.file_url = doc['file_url']
     this.validated = doc['validated']
     this.createdDate = doc['createdDate']
     this.modifiedDate = doc['modifiedDate']
@@ -94,6 +96,7 @@ export class Surveillance {
       "file_header_status": this.file_header_status,
       "file_data_status": this.file_data_status,
       "file_type": this.file_type,
+      "file_url": this.file_url,
       "validated": this.validated,
       "deleted": this.deleted,
       "createdDate": this.createdDate,
@@ -125,7 +128,6 @@ export class Surveillance {
 
         error(err);
       }).finally(() => {
-        console.log("s->", this.mapInstance(_rev))
         this.MStatus.ms_processing = false;
       });
     });
@@ -157,12 +159,12 @@ export class Surveillance {
       remote_db.find({
         selector: {
           'file_original_name': { $regex: ".*" + this.MFilter.mf_search + ".*" },
-          'deleted': false
+          'deleted': false,
+          'user_id': this.user_id
         },
         sort: [{ 'file_original_name': 'asc' }]
       }).then(res => {
 
-        console.log("res", res.docs)
         Surveillance = instance.parseComposite(res.docs);
         success(Surveillance);
       }).catch(err => {

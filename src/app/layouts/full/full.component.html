@@ -1,38 +1,29 @@
 <mat-sidenav-container
-  class="mainWrapper blue_theme light-theme"
+  class="mainWrapper blue_theme light-theme container"
   autosize
   autoFocus
-  dir="ltr"
+  dir="ltr" style="background-color: #ffffff"
   >
 
   <mat-sidenav-content class="" >
-    <main class="maxWidth" >
+    <main class="" style="background-color: #ffffff">
 
       <app-header
         [showToggle]="!isOver"
         (toggleCollapsed)="toggleCollapsed()"
         (toggleMobileNav)="sidenav.toggle()"
       ></app-header>
-      <div class="">
 
-        <div class="m-t-30">
-          <!-- ============================================================== -->
-          <!-- Outlet -->
-          <!-- ============================================================== -->
+
+      <div>
+
           <router-outlet></router-outlet>
-        </div>
       </div>
 
-
-<!--      <section style="width: 100%; min-height: 30vh;">-->
-
-<!--      </section>-->
     </main>
 
-    <footer class="custom-footer">
-      <app-footer>
-      </app-footer>
-    </footer>
+    <app-footer>
+    </app-footer>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

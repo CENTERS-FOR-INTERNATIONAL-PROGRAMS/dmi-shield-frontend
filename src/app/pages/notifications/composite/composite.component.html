@@ -1,0 +1,34 @@
+<div class="" style="padding: 5rem 9%; margin-top: 80px; min-height: 100vh">
+
+  <div style="display: flex; align-items: center; justify-content: space-between" class="m-t-16">
+
+    <h2>Notifications</h2>
+
+    <button style="background-color: #FFA500" type="submit" mat-flat-button class="view-button"
+            [disabled]="selectedNotifications.length < 1" (click)="markNotificationsRead()">
+      Mark as Read
+    </button>
+  </div>
+
+  <mat-card class="m-t-24" style="border-radius: 4px" *ngFor="let notification of Notifications" [ngStyle]="{'border-left': notification.status === 'unread' ? '4px solid var(--accent-orange)' : 'none'}">
+
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <mat-checkbox class="custom-checkbox example-margin"
+                    [ngModel]="this.selectedNotifications.includes(notification.id)"
+                    (change)="toggleSelection(notification.id)"/>
+
+      <div>
+        <mat-card-header>
+          <mat-card-title>
+            <p class="normal-header-text">{{ notification.title }}</p>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="m-t-16 normal-text" style="min-height: 1rem">
+          <p>{{ notification.message }}</p>
+        </mat-card-content>
+      </div>
+    </div>
+
+  </mat-card>
+
+</div>

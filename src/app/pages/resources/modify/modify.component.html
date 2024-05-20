@@ -1,0 +1,55 @@
+<div class="m-l-24 m-r-24" style="margin-top: 128px; min-height: 100vh">
+  <mat-card class="composite-data">
+    <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
+    <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
+
+    <mat-card-header>
+      <mat-card-title>
+        <h3>File</h3>
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        <p>{{'Upload'}}</p>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="m-t-30" name="form_surveillance" id="form_surveillance_modify" #ModifyMField="ngForm">
+
+
+        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+                       (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" [multiple]=true
+                       [accept]="allowedFiles">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <a (click)="openFileSelector()">
+              Click or drop a file here to upload - {{allowedFiles}}
+            </a>
+          </ng-template>
+        </ngx-file-drop>
+
+        <mat-card class="b-1 shadow-none view-card" *ngFor="let File of Files; let i=index">
+          <mat-card-content>
+            <a mat-stroked-button color="warn" class="view-button view-float--right" (click)="removeFile(i)">
+              Remove
+            </a>
+
+            <p class="view-text--size-large">
+              {{ File.fileEntry.name }}
+            </p>
+
+          </mat-card-content>
+        </mat-card>
+
+        <div class="view-align--right">
+            <i-tabler *ngIf="this.ApiResponseStatus.success === true" class="view-icon--inline view-color--green"
+                      name="circle-check-filled"></i-tabler>
+
+          <button type="submit" mat-flat-button color="primary" class="view-button" (click)="SubmitInstance()">
+            Upload
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>

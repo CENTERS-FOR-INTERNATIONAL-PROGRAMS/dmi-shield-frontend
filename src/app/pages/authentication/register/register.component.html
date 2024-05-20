@@ -1,62 +1,89 @@
-<div class="blank-layout-container justify-content-center align-items-center bg-light-primary">
-  <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">
-    <div class="col-lg-4 d-flex align-items-center">
-      <mat-card class="cardWithShadow boxed-auth">
-        <mat-card-content class="p-32">
-          <div class="text-center">
-            <a [routerLink]="['/dashboard']">
-              <img src="./assets/images/logos/dark-logo.svg" class="align-middle m-2" alt="logo" />
-            </a>
-          </div>
+<div class="login-page">
 
-          <div class="row m-t-24 custom-row">
-            <div class="col-12 col-sm-6">
-              <button mat-stroked-button class="w-100">
-                <div class="d-flex align-items-center">
-                  <img src="/assets/images/svgs/google-icon.svg" alt="google" width="16" class="m-r-8" />
-                  Sign in with Google
-                </div>
-              </button>
-            </div>
-            <div class="col-12 col-sm-6">
-              <button mat-stroked-button class="w-100 d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                  <img src="/assets/images/svgs/facebook-icon.svg" alt="facebook" width="40" class="m-r-4" />
-                  Sign in with FB
-                </div>
-              </button>
-            </div>
-          </div>
+  <div class="left-half">
 
-          <div class="or-border m-t-30">or sign up with</div>
+    <div class="login-top-bar">
+      <img src="assets/images/logos/logo-moh.png" style="width: 30rem;">
+      <p [routerLink]="['/authentication/login']" class='bx bx-arrow-back'>  Go Back</p>
+    </div>
 
-          <form class="m-t-30">
-            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput />
-            </mat-form-field>
-            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email Adddress</mat-label>
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput type="email" />
-            </mat-form-field>
-            <!-- password -->
-            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput type="password" />
-            </mat-form-field>
+    <mat-card class="login-card cardWithShadow" style="width: 100%">
+      <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
+      <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
 
-            <a [routerLink]="['/']" mat-flat-button color="primary" class="w-100">
+      <mat-card-header>
+        <mat-card-title class="card-topic text-center f-w-600 with-red-line">Sign up for an account</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="text-center bubble" *ngIf="this.ApiResponseStatus.error" style="margin: 2rem">
+          {{ this.ApiResponseStatus.message }}
+        </div>
+
+        <form id="form_user_authenticate" (ngSubmit)="submitInstance()" class="m-t-30">
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['user_name']" type="text"
+                   [(ngModel)]="UserInstance.name" />
+
+            <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">User Email</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['user_email']" type="email"
+                   [(ngModel)]="UserInstance.email" />
+
+            <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['user_password']"
+                   [type]="hide ? 'password' : 'text'" />
+            <img matSuffix (click)="hide = !hide"
+                 src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
+                 alt="" class="view-icon--image" />
+
+            <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Confirm Password</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput [formControl]="UserFormControls['confirm_password']" [type]="hide ? 'password' : 'text'" />
+            <mat-error *ngIf="UserFormControls['confirm_password'].hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+
+            <mat-error *ngIf="UserFormControls['confirm_password'].hasError('passwordMismatch')">
+              <strong>Passwords do not match</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="auth-bottom">
+
+            <a (click)="submitInstance()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
               Sign Up
             </a>
-            <!-- input -->
-          </form>
-          <span class="d-block f-w-500 text-center m-t-24">Already have an Account?
 
-            <a [routerLink]="['/authentication/login']" class="text-decoration-none text-primary f-w-500 f-s-14">
-              Sign In</a>
-          </span>
-        </mat-card-content>
-      </mat-card>
+            <p class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Already have an account?
+              <a [routerLink]="['/authentication/login']" class="text-primary">Sign In</a>
+            </p>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="right-half">
+    <div class="image-container">
+      <img src="assets/images/logos/logo-dalle.png" alt="Image" width="591">
     </div>
   </div>
 </div>

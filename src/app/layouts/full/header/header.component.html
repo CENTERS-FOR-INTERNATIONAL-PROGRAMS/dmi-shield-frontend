@@ -1,33 +1,98 @@
-<mat-toolbar style="background-color:transparent;">
+<header class="header">
+  <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">
+    <img class="logo" src="assets/images/logos/logo-moh-new.png" alt="">
+    <img class="nav-shield" src="assets/images/logos/SHIELD-LOGO.png" alt="">
+  </a>
 
-  <span >
-    <img style="display: flex; align-items: center; justify-content: space-between;width: 150px; margin: auto;" src="https://s3-alpha-sig.figma.com/img/ec93/783c/5a1a8d55aa830eeb2fcdd9a93353c4d0?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UxwpxaOfSzSr6oPsgzy50L4oS3cK4kvk5cmcsPMzRE7MRKU~sLZAnv8UuDwvvCrIAJdIoBLW6oouZ46HPXBShRHkjgNSnK5gZazjApqZ6VV7v4CXLDB1nK04oiDXk7lqPqCQ3hhn4rdaEMWcyOoNsjU5kjLsqT9qrasUc3J8TS0HNidzx3vdENHd62a2F8S-7AFHTaqFbF0YY1I5~UFfw31n9UkC3XHgkUyOwttcB2s0-gPuKZBUVXItljPwX8M7iF9aDEdXu9KGzshtk3ildf~fkxmVjcsf~zWTrtfnjZ0JrIw85ysaJ1VOVp1y9inQ8-H8UIgshc5nWOEu~KVrTw__" alt="Shield Logo">
-  </span>
+  <div class="navbar">
+    <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
+    <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
 
-  <div style="display: flex; align-items: center; justify-content: space-between; min-width: 30%;">
-    <span class="toolbar-text">Home</span>
-    <span class="toolbar-text">Dashboard</span>
-    <span class="toolbar-text">Resources</span>
-  </div>
-
-<!--  <div *ngIf="UserInstance._id; else signUpLoginButton">-->
-<!--  <div >-->
-<!--    <a style="text-decoration: none;" [routerLink]="['/authentication/login']">-->
-<!--      <button               class="toolbar-sign-button">Sign-->
-<!--        In</button>-->
-<!--    </a>-->
-<!--  </div>-->
-  <div >
-    <a style="text-decoration: none;" [routerLink]="['/surveillance/composites']">
-      <button               class="toolbar-sign-button">Sign
-        In</button>
+    <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
+      Dashboards
+      <i class='bx bxs-chevron-down'></i>
     </a>
+
+    <mat-menu #menu="matMenu">
+
+      <a mat-menu-item href="https://shield-analytics.health.go.ke/superset/dashboard/shield/" target="_blank" style="color: inherit">
+          <span>Indicator Based Surveillance</span>
+      </a>
+
+      <a mat-menu-item href="https://shield-analytics.health.go.ke/superset/dashboard/ebs/" target="_blank" style="color: inherit">
+          <span>Event Based Surveillance</span>
+      </a>
+      <a mat-menu-item href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank" style="color: inherit">
+        <span>Outbreak Response</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/dashboard']" style="color: inherit">
+          <span>IFBS Dashboards</span>
+      </a>
+    </mat-menu>
+
+    <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
+    <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
+    <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">Notifications</a>
+
   </div>
 
-<!--  <ng-template #signUpLoginButton>-->
-<!--    <div class="E" style="color: black; font-size: 20px; font-family: Lato, sans-serif; font-weight: 800; line-height: 32px; word-wrap: break-word">E</div>-->
+  <nav  class="navbar-tools">
+    <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
+      <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance.id)">
 
-<!--  </ng-template>-->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
+          <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
+          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
+            {{ this.awareness.UserInstance?.email ? this.awareness.UserInstance.email[0].toUpperCase() : '' }}
+          </text>
+        </svg>
 
-</mat-toolbar>
+      </a>
 
+      <a [matMenuTriggerFor]="notificationMenu" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
+
+
+      <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
+
+      <mat-menu #actionsMenu="matMenu" xPosition="before">
+        <button  mat-menu-item [routerLink]="['/users/']" *ngIf="userRole === 'admin'">Manage Users</button>
+        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>
+        <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
+      </mat-menu>
+
+    </div>
+
+
+    <ng-template #signInLoginButton>
+      <div class="">
+        <a style="text-decoration: none;" [routerLink]="['/authentication/login']" class="btn1">
+          Sign In
+        </a>
+      </div>
+    </ng-template>
+  </nav>
+
+  <mat-menu #notificationMenu="matMenu" xPosition="before" style="max-width: 300px;">
+    <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
+    <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
+
+    <div *ngFor="let notification of Notifications | slice:0:4" class="p-t-10 p-l-10 p-r-10">
+      <div style="word-wrap: break-word; font-weight: 550">
+        {{ notification.title }}
+      </div>
+      <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        {{ notification.message }}
+      </div>
+
+      <div class="m-t-5 m-l-15 m-r-15" style="border-bottom: 1px solid #000;"></div>
+    </div>
+
+
+    <div style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
+      <a [routerLink]="['/notifications']">View All</a>
+    </div>
+  </mat-menu>
+
+  <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
+
+</header>

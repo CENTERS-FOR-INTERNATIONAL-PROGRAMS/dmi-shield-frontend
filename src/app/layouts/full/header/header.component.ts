@@ -1,16 +1,16 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  ViewEncapsulation,
-  OnInit,
-} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AwarenessService } from 'src/app/services/awareness.service';
-import { User } from 'src/app/models/User.model';
-import { Location } from '@angular/common';
-import {Router} from "@angular/router";
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AwarenessService} from 'src/app/services/awareness.service';
+import {User} from 'src/app/models/User.model';
+import {Location} from '@angular/common';
+import {NavigationEnd, Router} from "@angular/router";
+import {CommunicationService} from "../../../services/communication.service";
+import {AuthService} from "../../../services/api/auth.service";
+import {ApiResponseStatus, UserSignOutData} from "../../../interfaces/IAuth.model";
+import {ApiService} from "../../../services/api/api.service";
+import {ResourceModelApi} from "../../../models/Resource.model";
+import {NotificationModel} from "../../../models/Notification.model";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'app-header',
@@ -27,32 +27,58 @@ export class HeaderComponent implements OnInit {
   hideNav = false;
 
   showFiller = false;
-  UserInstance: User = new User();
+  showMenu: boolean = false;
+  showNotificationCard: boolean = false;
+  activeRoute: string;
+  UserInstance: User = new  User;
+  userData: UserSignOutData;
+  Notifications: NotificationModel[] = [];
+  userRole: string;
 
-  constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService, private location: Location) {
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
+  }
+
+  constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
+              private location: Location, private communication: CommunicationService, private authService: AuthService,
+              private apiService: ApiService, private authenticationService: AuthenticationService) {
 
   }
   ngOnInit(): void {
-    this.awareness.awaken(() => {
-      this.UserInstance._id = this.awareness.getFocused("user");
+    this.getUser();
+    // this.awareness.awaken(null);
 
-      if (this.UserInstance._id != "") {
-        this.UserInstance.acquireInstance((doc: any) => {
-          this.UserInstance.parseInstance(doc);
-        }, (err: any) => {
-          // TODO! Handle errors
-        });
+    this.router.events.subscribe(events =>{
+      if(events instanceof NavigationEnd){
+        this.updateActiveRoute();
       }
+    })
+
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+      },
+      error: (err) => console.error('Error fetching user role', err),
     });
+
+    this.getApiNotifications();
+  }
+
+  getUser(){
+    this.awareness.UserInstance =  this.awareness.getUserData();
+  }
+
+  updateActiveRoute() : void{
+    this.activeRoute = this.router.url;
   }
 
   viewPrevious() {
     this.location.back();
   }
 
-  // onScroll($event: Event) {
-  //
-  // }
 
   onScroll(event) {
     this.hideNav = this.scrollTop < event.target.scrollTop;
@@ -62,8 +88,83 @@ export class HeaderComponent implements OnInit {
   onClick(action: any) {
     if (action == "logout") {
       this.awareness.setFocused("authenticated", "", (res: any) => {
-        this.router.navigate(['/authentication']);
+        this.awareness.UserInstance = new User();
+        this.requestLogOut();
+        this.awareness.removeUserData();
+        this.router.navigate(['/home']);
+        window.location.reload();
       });
     }
+  }
+
+  requestLogOut(){
+    const userToken = this.awareness.getUserData().token;
+
+    if(userToken != "" && userToken !=null){
+      this.userData = {
+        data: {
+          attributes: {
+            token: userToken
+          },
+          type: 'User Authentication'
+        }
+      };
+
+      this.authService.postRequest("auth/user/sign-out", this.userData).subscribe({
+        next: () => {
+        },
+        error: () => {
+        },
+        complete: () => {
+        }
+      });
+    }
+
+  }
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+  }
+
+  toggleMenuIcon() {
+    const menuIcon = document.getElementById('menu-icon');
+    const navbar = document.querySelector('.navbar');
+
+    if (menuIcon && navbar) {
+      menuIcon.classList.toggle('bx-x');
+      navbar.classList.toggle('active');
+    }
+  }
+
+  notificaionClicked() {
+    this.communication.showToast('No new notifications.')
+  }
+
+  getApiNotifications(){
+
+
+    if (!this.awareness.UserInstance.id || !this.awareness.UserInstance.id) {
+      this.ApiResponseStatus.processing = false;
+      return;
+    }else{
+      const url = `notification?user_id=${this.awareness.UserInstance.id}`;
+
+      this.apiService.get(url).subscribe({
+        next: (res) => {
+          this.ApiResponseStatus.success = true;
+          this.Notifications = res.data
+            .map(item => item.attributes)
+            .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        },
+        error: (error) =>{
+          this.ApiResponseStatus.processing = false;
+        },
+        complete: () =>{
+          this.ApiResponseStatus.processing = false;
+        },
+      });
+    }
+
+
   }
 }

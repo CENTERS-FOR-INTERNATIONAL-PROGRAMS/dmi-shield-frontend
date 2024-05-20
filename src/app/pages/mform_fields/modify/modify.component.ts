@@ -33,7 +33,7 @@ export class ModifyComponent implements OnInit {
     this.FocusedFField.acquireInstance((doc: any) => {
       this.FocusedFField.parseInstance(doc);
     }, (err: any) => {
-      console.log("Err", err);
+      console.error("Err", err);
       // TODO! Handle errors
     });
   }
@@ -48,7 +48,7 @@ export class ModifyComponent implements OnInit {
     });
 
     return is_valid;
-  };
+  }
 
   submitInstance(): void {
     if (this.validateInstance()) {

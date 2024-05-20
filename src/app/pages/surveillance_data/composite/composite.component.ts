@@ -3,6 +3,11 @@ import {AwarenessService} from "../../../services/awareness.service";
 import {Surveillance} from "../../../models/Surveillance.model";
 import {CommunicationService} from "../../../services/communication.service";
 import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../../../services/api/api.service";
+import {ApiResponse, ApiResponseStatus} from "../../../interfaces/IAuth.model";
+import {ResourceModelApi} from "../../../models/Resource.model";
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'app-composites',
@@ -10,24 +15,69 @@ import {HttpClient} from "@angular/common/http";
 })
 export class CompositeComponent implements OnInit{
   Surveillance: Surveillance[] = [];
-  TableHeaders: string[] = [ "file_original_name", "file_type", "validated", "createdDate", "actions"];
-  SurveillanceInstance: Surveillance;
-  FilesIdList: string[] = [];
+  TableHeaders: string[] = [ "original_filename", "state", "type", "validated", "created_at", "actions"];
+  fileStates: string[] = [ "Pending Processing", "Validating", "Rejected", "Processing", "Validated"];
+  searchQuery: string = '';
   FilterSurveillanceData: Surveillance = new Surveillance();
+  ResourceModel: ResourceModelApi[] = [];
+  userRole: string;
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService, private http: HttpClient) { }
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
+  }
+
+  constructor(private awareness: AwarenessService, private communication: CommunicationService,
+              private apiService: ApiService, private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.loadComposite()
+    this.authenticationService.getApiCurrentUserRole().subscribe({
+      next: (role) => {
+        this.userRole = role;
+      },
+      error: (err) => console.error('Error fetching user role', err),
+    });
+    this.loadComposites();
+  }
+
+  get filteredUploadList() {
+    return this.ResourceModel.filter(user =>
+      user.original_filename.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+
+
+  loadComposites(){
+    this.ApiResponseStatus.processing = true;
+    const userData = this.awareness.getUserData();
+    if(!userData){
+      this.router.navigate(['/authentication/login'])
+    }else{
+      const url = `files/uploads/?user_id=${userData.id}`;
+      this.apiService.get(url).subscribe({
+        next: (res) => {
+          this.ApiResponseStatus.success = true;
+          this.ResourceModel = res.data.map(item => item.attributes).filter(attr => attr.type !== 'resource');
+
+        },
+        error: (error) =>{
+        },
+        complete: () =>{
+          this.ApiResponseStatus.processing = false;
+        },
+      });
+    }
+
   }
 
   loadComposite() {
+    this.FilterSurveillanceData.user_id = this.awareness.UserInstance.id;
     this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
       this.Surveillance = Surveillance;
-      console.log("Allll", this.Surveillance);
     }, (error: any) => {
       // TODO! Handle errors
-      console.log("Error", error);
     });
   }
 
@@ -51,53 +101,11 @@ export class CompositeComponent implements OnInit{
     });
   }
 
-
-  downloadFile(fileId: Surveillance): boolean {
-    const fileName = `${fileId._id}.${fileId.file_extension}`;
-    const originalFileName = `${fileId.file_original_name}.${fileId.file_extension}`;
-    const fileIds = [fileName];
-
-    if (fileIds.length === 0) {
-      console.error('No file IDs provided');
-      return false;
-    }
-
-    const url = 'http://localhost:3000/files';
-
-    this.http.post(url, fileIds, { responseType: 'blob' }).subscribe(
-      (data: Blob) => {
-        if (data) {
-          this.downloadFileByBlob(data, originalFileName);
-        } else {
-          console.error('No file data found');
-        }
-      },
-      error => {
-        console.error('Error downloading file:', error);
-      }
-    );
-
-    return true;
-  }
-
-  private downloadFileByBlob(blob: Blob, fileName: string): void {
-    const downloadUrl = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', downloadUrl);
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.URL.revokeObjectURL(downloadUrl); // Clean up
-  }
-
-
   submitInstance() {
-
   }
 
   parseDate(timestamp: number): string {
-    return new Date(timestamp).toLocaleString();
+    return new Date(timestamp).toLocaleDateString();
   }
 
   getValidityStatus(status: boolean): string{
@@ -105,5 +113,14 @@ export class CompositeComponent implements OnInit{
       return "Valid";
     }
     return "Invalid";
+  }
+
+  formatState(element: any) {
+    if (element.type === 'resource') {
+      return '-';
+    } else {
+      // Remove underscores and convert to sentence case
+      return element.state.replace(/_/g, ' ').toLowerCase().replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
+    }
   }
 }

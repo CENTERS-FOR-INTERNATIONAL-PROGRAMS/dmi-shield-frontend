@@ -9,6 +9,11 @@ import {FormControl} from "@angular/forms";
 import {Surveillance} from "../../../models/Surveillance.model";
 import {IModelStatus} from "../../../interfaces/IModel.model";
 import {Guid} from "guid-typescript";
+import {Observable} from "rxjs";
+import {config} from "../../../config/config";
+import {ApiService} from "../../../services/api/api.service";
+import {ApiResponseStatus, CreatePreSignedUrlData} from 'src/app/interfaces/IAuth.model';
+import {Resource} from "../../../models/Resource.model";
 
 @Component({
   selector: 'app-modify',
@@ -16,26 +21,31 @@ import {Guid} from "guid-typescript";
 })
 export class ModifyComponent implements OnInit{
   MFieldInstance = new MField();
-  allowedFiles: string=  ".csv, .pdf, .docx, .xlsx, .xls"
+  allowedFiles: string=  ".csv, .xlsx, .xls"
   public Files: NgxFileDropEntry[] = [];
-  public UploadedFiles: any;
-  SurveillanceFormControl : CompositeFormControls = {}
   SurveillanceDataList: Surveillance[] = [];
   ValidatedFileTypes: string[] = ["csv", "xlsx", "xls"]
-  DocumentTypes: string[] = ["SARI", "CHOLERA", "POLIO"]
+  DocumentTypes: string[] = ["moh505", "sari"]
+  fileData: CreatePreSignedUrlData;
+
 
   UIMStatus: IModelStatus = {
     ms_processing:false,
     ms_action_result: false
   }
 
-  constructor(private communication: CommunicationService, private awareness: AwarenessService, private http: HttpClient)
-  {
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: ""
+  }
+
+  constructor(private communication: CommunicationService, private awareness: AwarenessService, private http: HttpClient,
+              private apiService: ApiService) {
   }
 
   ngOnInit(): void {
-    // this.seedInstance();
-
     this.MFieldInstance._id = this.awareness.getFocused("mfield");
 
     if (this.MFieldInstance._id != "") {
@@ -47,9 +57,6 @@ export class ModifyComponent implements OnInit{
     }
   }
 
-  seedInstance(){
-    this.SurveillanceFormControl["FileType"] = new FormControl();
-  }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.Files = files;
@@ -64,31 +71,26 @@ export class ModifyComponent implements OnInit{
             SurveillanceInstance._id =  this.generateUniqueId();
           }
           SurveillanceInstance.file_original_name = droppedFile.fileEntry.name;
-          SurveillanceInstance.user_id = this.awareness.UserInstance._id;
+          SurveillanceInstance.user_id = this.awareness.UserInstance.id;
 
           const parts = droppedFile.fileEntry.name.split('.');
           SurveillanceInstance.file_extension = parts[parts.length - 1];
+
           this.SurveillanceDataList.push(SurveillanceInstance);
 
-          this.uploadFile(file, SurveillanceInstance._id);
 
         });
       } else {
-        // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
       }
     }
   }
 
 
-
   public fileOver(event: any){
-    console.log(event);
   }
 
   public fileLeave(event: any){
-    console.log(event);
   }
 
   removeFile(index: number) {
@@ -101,21 +103,7 @@ export class ModifyComponent implements OnInit{
       this.communication.showToast("Kindly add at least one file");
     }
 
-    for (const SurveillanceInstance of this.SurveillanceDataList) {
-      SurveillanceInstance.putInstance((res: any) =>{
-        this.communication.showSuccessToast();
-
-        SurveillanceInstance.parseComposite(SurveillanceInstance);
-
-      }, (err: any) =>{
-        console.error('error', err)
-        this.communication.showFailedToast();
-      });
-
-    }
-
-
-
+    this.uploadToApi();
   }
 
   generateUniqueId(){
@@ -123,8 +111,7 @@ export class ModifyComponent implements OnInit{
   }
 
   assignDocumentType(event: any, fileIndex: number): void {
-    this.SurveillanceDataList[fileIndex].file_type =  event.target.value;
-    console.log(this.SurveillanceDataList);
+    this.SurveillanceDataList[fileIndex].file_type =  event.target.value.toLowerCase();
 
   }
 
@@ -135,24 +122,86 @@ export class ModifyComponent implements OnInit{
     if (this.ValidatedFileTypes && this.ValidatedFileTypes.includes(extension)) {
       return true;
     }
-
     return false;
   }
 
-  uploadFile(file: File, fileId: string): boolean {
-    const formData = new FormData();
-    formData.append("file", file);
+  getFileExtension(File: string): string {
+    const parts = File.split('.');
+    return  parts[parts.length - 1].toLowerCase();
 
-    this.http.post(`http://localhost:3000/upload?file_id=${fileId}`, formData,
-      {
-        responseType: 'blob'
-      })
-      .subscribe(data => {
-        // Handle response data here if needed
-        console.log(data);
-      });
+  }
 
-    return true;
+  uploadToApi(){
+    this.ApiResponseStatus.processing = true;
+    const totalFiles = this.Files.length;
+    let successfulUploads = 0;
+
+    for (const [index, droppedFile] of this.Files.entries()) {
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+
+          let resourceInstance = new  Resource();
+
+          resourceInstance.file_original_name = droppedFile.fileEntry.name;
+          resourceInstance.user_id = this.awareness.UserInstance.id;
+
+          const parts = droppedFile.fileEntry.name.split('.');
+          resourceInstance.file_extension = parts[parts.length - 1];
+
+          this.fileData = {
+            data: {
+              attributes: {
+                filename: file.name,
+                original_filename: file.name,
+                mime: file.type,
+                type : this.SurveillanceDataList[index].file_type,
+                size: file.size,
+                visibility: 'public'
+              },
+              type: 'File CreateUpload'
+            }
+          };
+
+          this.apiService.postRequest('files/uploads/create', this.fileData).subscribe({
+            next: (response) => {
+              if(response.data.attributes.url != ''){
+                this.pushToBucket(response.data.attributes.url, file);
+                successfulUploads++;
+              }
+
+              if (successfulUploads === totalFiles) {
+                this.ApiResponseStatus.processing = false;
+                this.ApiResponseStatus.success = true;
+              }
+            },
+            error: (error) =>{
+              this.ApiResponseStatus.processing = false;
+              this.ApiResponseStatus.success = false;
+            },
+            complete: () =>{
+            },
+          });
+
+          this.SurveillanceDataList.push(resourceInstance);
+        });
+      }
+    }
+  }
+
+  pushToBucket(preSignedUrl: string, file: File){
+    this.apiService.putFileRequest(preSignedUrl, file).subscribe({
+      next: (response) => {
+      },
+      error: (error) =>{
+        // this.ApiResponseStatus.processing = false;
+        // this.ApiResponseStatus.success = false;
+        throw new Error(error);
+      },
+      complete: () =>{
+      },
+    });
+
   }
 
 

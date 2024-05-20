@@ -1,66 +1,108 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompositeFormControls } from 'src/app/models/CompositeFormControls.model';
 import { User } from 'src/app/models/User.model';
 import { AwarenessService } from 'src/app/services/awareness.service';
 import { CommunicationService } from 'src/app/services/communication.service';
+import {AuthService} from "../../../services/api/auth.service";
+import {ApiResponse, UserAuthenticationData} from "../../../interfaces/IAuth.model";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 
-export class AppSideLoginComponent {
+export class AppSideLoginComponent implements OnInit{
 
   hide: boolean = true;
-  UserInstance: User = new User();
+  AuthUser: User = new User();
   UserFormControls: CompositeFormControls = {};
-  user_password: string = "";
+  userData: UserAuthenticationData;
+  wrong_cred_error: boolean;
 
-  constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService) {
+  constructor(private router: Router, private awareness: AwarenessService,
+              private communication: CommunicationService, public authService: AuthService) {
+  }
+
+  ApiResponseStatus: ApiResponse = {
+    error: false,
+    result: null,
+    processing: false,
+    message: ""
   }
 
   ngOnInit(): void {
-    if(!this.awareness.awake) {
-      this.router.navigate(['/authentication']);
-    }
 
+    const userDataStr = this.awareness.getUserData();
+    if (userDataStr) {
+      this.router.navigate(['/home']);
+    }
+    this.awareness.awaken(null);
+    this.seedForm();
+
+  }
+
+  seedForm(){
     this.UserFormControls["user_email"] = new FormControl('', [Validators.required]);
     this.UserFormControls["user_password"] = new FormControl('', [Validators.required]);
   }
 
-  resetPassword() {
-    console.log("Reset password");
-  }
-
-  submitInstance(): void {
+  validateInstance(): boolean {
     let is_valid = true;
 
-    // Validate required fields
     Object.keys(this.UserFormControls).forEach(fc_key => {
-      if (this.UserFormControls[fc_key].hasError("required")) {
+      if (this.UserFormControls[fc_key].hasError("required") ||
+        this.UserFormControls[fc_key].hasError("email")) {
         is_valid = false;
       }
     });
 
-    if (is_valid) {
-      this.UserInstance.user_password = this.user_password;
-      this.UserInstance.authenticateInstance((res: any) => {
-        if (res) {
-          this.user_password = "";
+    return is_valid;
+  }
 
-          this.awareness.setFocused("authenticated", this.UserInstance._id, (res: any) => {
-            this.router.navigate(['/authentication']);
-          });
-
-          this.communication.showSuccessToast();
-        }
-      }, (err: any) => {
-        this.communication.showToast("Failed! Check your credentials and try again.");
-      });
+  submitInstance(): void {
+    if (this.validateInstance()) {
+      this.loginUser();
     } else {
       this.communication.showToast("Please provide username and password!");
     }
   }
+
+  loginUser(){
+    this.ApiResponseStatus.processing = true;
+
+    this.userData = {
+      data: {
+        attributes: {
+          email: this.UserFormControls["user_email"].value,
+          password: this.UserFormControls["user_password"].value
+        },
+        type: 'User Authentication'
+      }
+    };
+    this.authService.postRequest('auth/user/password/sign-in', this.userData).subscribe(
+      (response) => {
+        if (response && response.data && response.data.attributes && response.data.attributes.user && response.data.attributes.token) {
+          response.data.attributes.user.token = response.data.attributes.token;
+          this.awareness.saveUserData(response.data.attributes.user);
+          this.ApiResponseStatus.processing = false;
+          this.router.navigate(['/home'])
+        } else {
+          this.ApiResponseStatus.processing = false;
+          throw new Error('User data not found in response');
+        }
+      },
+      (error) => {
+        this.ApiResponseStatus.processing = false;
+        console.error('POST Error:', error);
+        this.wrong_cred_error = true;
+        // this.communication.showToast("Please provide username and password!");
+      }
+    );
+  }
+
 }
+
+

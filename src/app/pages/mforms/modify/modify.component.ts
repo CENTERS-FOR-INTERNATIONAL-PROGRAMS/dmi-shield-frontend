@@ -34,7 +34,7 @@ export class ModifyComponent implements OnInit {
         this.MFormInstance.parseInstance(doc);
       }, (err: any) => {
         // TODO! Handle errors
-        console.log(err);
+        console.error(err);
       });
     }
   }
@@ -49,7 +49,7 @@ export class ModifyComponent implements OnInit {
     });
 
     return is_valid;
-  };
+  }
 
   submitInstance(): void {
     if (this.validateInstance()) {
