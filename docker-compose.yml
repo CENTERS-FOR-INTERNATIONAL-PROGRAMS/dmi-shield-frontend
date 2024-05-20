@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  shield-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shield-app
+    ports:
+      - "7070:4200" 
+    restart: unless-stopped
+

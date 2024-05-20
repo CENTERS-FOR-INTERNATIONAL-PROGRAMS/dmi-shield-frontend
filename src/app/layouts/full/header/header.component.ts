@@ -152,7 +152,9 @@ export class HeaderComponent implements OnInit {
       this.apiService.get(url).subscribe({
         next: (res) => {
           this.ApiResponseStatus.success = true;
-          this.Notifications = res.data.map(item => item.attributes);
+          this.Notifications = res.data
+            .map(item => item.attributes)
+            .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         },
         error: (error) =>{
           this.ApiResponseStatus.processing = false;

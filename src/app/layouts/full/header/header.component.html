@@ -76,7 +76,7 @@
     <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
     <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
 
-    <div *ngFor="let notification of Notifications" class="p-t-10 p-l-10 p-r-10">
+    <div *ngFor="let notification of Notifications | slice:0:4" class="p-t-10 p-l-10 p-r-10">
       <div style="word-wrap: break-word; font-weight: 550">
         {{ notification.title }}
       </div>
