@@ -15,12 +15,6 @@ const routes: Routes = [
         redirectTo: '/authentication',
         pathMatch: 'full',
       }, {
-        path: 'ui-components',
-        loadChildren: () =>
-          import('./pages/ui-components/ui-components.module').then(
-            (m) => m.UicomponentsModule
-          ),
-      },  {
         path: 'outbreaks',
         canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
         loadChildren: () =>
@@ -44,36 +38,6 @@ const routes: Routes = [
         canActivate: [AuthGuard], data: { roles: ['admin'] },
         loadChildren: () =>
           import('./pages/users/users.module').then((m) => m.UsersModule),
-      }, {
-        path: 'fields',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/mfields/mfields.module').then((m) => m.MFieldsModule),
-      }, {
-        path: 'mfield_options',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/mfield_options/mfield_options.module').then((m) => m.MFieldOptionsModule),
-      }, {
-        path: 'mforms',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/mforms/mforms.module').then((m) => m.MFormsModule),
-      }, {
-        path: 'mform_fields',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/mform_fields/mform_fields.module').then((m) => m.MFormFieldsModule),
-      }, {
-        path: 'mform_forms',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/mform_forms/mform_forms.module').then((m) => m.MFormFormsModule),
-      }, {
-        path: 'mform_data',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/mform_data/mform_data.module').then((m) => m.MFormDataModule),
       },{
         path: 'surveillance',
         loadChildren: () =>
