@@ -16,17 +16,10 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo cp -rf /etc/deploy_shield_frontend/* /tmp/dmi-shield-frontend-backup/
-          cd /var/lib/shield_workflows/dmi-shield-frontend
+          cd /var/lib/shield_prod/dmi-shield-frontend
           sudo git switch main
-          sudo rm -rf dist
-          sudo rm package-lock.json
-          sudo rm -rf node_modules
-          sudo git stash
           sudo git pull
-          sudo npm install
-          sudo cp -rf /var/lib/shield_workflows/config_files/* src/app/
-          sudo ng build --configuration production
-          sudo rm -rf /etc/deploy_shield_frontend/*
-          sudo cp -rf dist/* /etc/deploy_shield_frontend/
+          sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
+          sudo docker compose up -d
+          sudo systemctl restart nginx
           echo "S.H.I.E.L.D is now LIVE!!"
