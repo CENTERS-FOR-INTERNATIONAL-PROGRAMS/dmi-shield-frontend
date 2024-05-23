@@ -10,19 +10,16 @@ User management, Integrated Dashboards, Upload of documents
     ```sh
     git clone git@github.com:CENTERS-FOR-INTERNATIONAL-PROGRAMS/dmi-shield-frontend.git
     ```
-2. Install NPM packages
+2. Create `config` directory in src/app directory
+3. Create `config.ts` file in config directory
+4. Create a .env file to reference the port. Refer to the .env.example
+4. Install Docker and Run the application
     ```sh
-    npm install
-    ```
-3. Create `config` directory in src/app directory
-4. Create `config.ts` file in config directory
-5. Run the application
-    ```sh
-    ng serve
+    docker compose up
     ```
 
 # Config.ts Example
-  ```
+  ```sh
     export const config = {
       COUCHDB_ALCHEMY: "https://<user_name>:<password>@host",
       FILE_PATH: "",
