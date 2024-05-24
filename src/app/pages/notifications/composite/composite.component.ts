@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationModel} from "../../../models/Notification.model";
-import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
+import {ApiResponseStatus, MarkNotificationData, UserAuthenticationData} from 'src/app/interfaces/IAuth.model';
 import {ApiService} from "../../../services/api/api.service";
 import {AwarenessService} from "../../../services/awareness.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -14,6 +14,8 @@ export class CompositeComponent implements OnInit {
 
   Notifications: NotificationModel[] = [];
   dataSource = new MatTableDataSource(this.Notifications);
+  notificationPayload: MarkNotificationData;
+  selectedNotifications: string[] = []
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -45,7 +47,12 @@ export class CompositeComponent implements OnInit {
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
-        this.Notifications = res.data.map(item => item.attributes);
+
+        this.Notifications = res.data.map(item => ({
+          id: item.id,
+          ...item.attributes
+        })).filter(item => item.status !== "read")
+          .sort((a, b) => b.created_at - a.created_at);
       },
       error: (error) =>{
         this.ApiResponseStatus.processing = false;
@@ -56,4 +63,51 @@ export class CompositeComponent implements OnInit {
     });
   }
 
+
+  markNotificationsRead() {
+    this.ApiResponseStatus.processing = true;
+    const userId = this.awareness.UserInstance.id;
+
+    if (!userId) {
+      this.ApiResponseStatus.processing = false;
+      return;
+    }
+
+    const updatePromises = this.selectedNotifications.map(notificationId => {
+      const notificationPayload = {
+        data: {
+          attributes: {
+            status: "read"
+          },
+          id: notificationId,
+          type: 'Notifications'
+        }
+      };
+
+      return this.apiService.patchRequest(`notification/${notificationId}`, notificationPayload).toPromise();
+    });
+
+
+    Promise.all(updatePromises)
+      .then(() => {
+        this.ApiResponseStatus.processing = false;
+        this.selectedNotifications = [];
+        this.getApiNotifications();
+      })
+      .catch((error) => {
+        this.ApiResponseStatus.processing = false;
+        console.error("Error updating notifications:", error);
+      });
+    this.ApiResponseStatus.processing = false;
+    this.selectedNotifications = [];
+    this.getApiNotifications();
+  }
+
+  toggleSelection(id: string) {
+    if (this.selectedNotifications.includes(id)) {
+      this.selectedNotifications = this.selectedNotifications.filter(selectedId => selectedId !== id);
+    } else {
+      this.selectedNotifications.push(id);
+    }
+  }
 }
