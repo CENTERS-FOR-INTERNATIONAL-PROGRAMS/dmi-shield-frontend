@@ -58,12 +58,6 @@ const routes: Routes = [
       },
       { path: 'assets/:fileName', component: AssetsComponent },
       {
-        path: 'thresholds',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/thresholds/thresholds.module').then((m) => m.ThresholdsModule),
-      },
-      {
         path: 'mohdash',
         loadChildren: () =>
           import('./pages/mohdash/mohdash.module').then((m) => m.MohdashModule),
