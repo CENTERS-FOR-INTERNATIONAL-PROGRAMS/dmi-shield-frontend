@@ -72,14 +72,14 @@ export class CompositeComponent implements OnInit{
 
   }
 
-  loadComposite() {
-    this.FilterSurveillanceData.user_id = this.awareness.UserInstance.id;
-    this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
-      this.Surveillance = Surveillance;
-    }, (error: any) => {
-      // TODO! Handle errors
-    });
-  }
+  // loadComposite() {
+  //   this.FilterSurveillanceData.user_id = this.awareness.UserInstance.id;
+  //   this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
+  //     this.Surveillance = Surveillance;
+  //   }, (error: any) => {
+  //     // TODO! Handle errors
+  //   });
+  // }
 
   deleteInstance(doc: any){
     let SurveillanceInstance = new  Surveillance();
@@ -88,17 +88,17 @@ export class CompositeComponent implements OnInit{
     SurveillanceInstance.deleted = true;
     SurveillanceInstance.modifiedDate = SurveillanceInstance.updateModifiedDate();
 
-    SurveillanceInstance.putInstance((res: any) =>{
-      this.communication.showSuccessToast();
-
-      SurveillanceInstance.parseComposite(SurveillanceInstance);
-
-      this.loadComposite();
-
-    }, (err: any) =>{
-      console.error('error', err)
-      this.communication.showFailedToast();
-    });
+    // SurveillanceInstance.putInstance((res: any) =>{
+    //   this.communication.showSuccessToast();
+    //
+    //   SurveillanceInstance.parseComposite(SurveillanceInstance);
+    //
+    //   this.loadComposite();
+    //
+    // }, (err: any) =>{
+    //   console.error('error', err)
+    //   this.communication.showFailedToast();
+    // });
   }
 
   submitInstance() {
