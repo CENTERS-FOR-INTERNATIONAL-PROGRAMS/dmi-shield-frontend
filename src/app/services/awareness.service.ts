@@ -102,18 +102,4 @@ export class AwarenessService {
     return focused_value;
   }
 
-  async syncFromRemote(databases: string[]) {
-    databases.forEach((database_name: string) => {
-      let local_db = new PouchDB(database_name);
-      let remote_db = new PouchDB(config.COUCHDB_ALCHEMY + "/" + database_name);
-
-      remote_db.replicate.to(local_db)
-        .on('complete', function () {
-          // TODO! Handle success
-        })
-        .on('error', function (error) {
-          // TODO! Handle errors
-        });
-    });
-  }
 }
