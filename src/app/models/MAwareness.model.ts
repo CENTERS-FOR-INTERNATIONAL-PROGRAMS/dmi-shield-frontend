@@ -1,4 +1,3 @@
-import { config } from "../config/config";
 
 import { KeyValue } from "./KeyValue.model";
 

@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { KeyValue } from '../models/KeyValue.model';
 import { MAwareness } from '../models/MAwareness.model';
-import PouchDB from 'pouchdb';
-import { config } from "../config/config";
-import plugin from "pouchdb-find";
 import { User } from '../models/User.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-PouchDB.plugin(plugin);
 
 @Injectable({ providedIn: 'root' })
 
