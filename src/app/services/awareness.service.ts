@@ -64,15 +64,7 @@ export class AwarenessService {
 
   async awaken(awake: any) {
     if (!this.awake) {
-      this.AwarenessInstance.acquireInstance((doc: any) => {
-        this.AwarenessInstance.parseInstance(doc);
-        this.awake = true;
 
-        if (awake) awake();
-      }, (err: any) => {
-        this.awake = true;
-        if (awake) awake();
-      });
     } else {
       if (awake) awake();
     }
@@ -81,11 +73,6 @@ export class AwarenessService {
   setFocused(key: string, value: string, response: any = null) {
     this.AwarenessInstance.focused[key] = value;
 
-    this.AwarenessInstance.putInstance((res: any) => {
-      if(response) response(true);
-    }, (err: any) => {
-      // TODO! Handle error
-    });
 
     return value;
   }
