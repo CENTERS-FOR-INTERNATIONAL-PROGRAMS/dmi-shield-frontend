@@ -87,13 +87,11 @@ export class HeaderComponent implements OnInit {
 
   onClick(action: any) {
     if (action == "logout") {
-      this.awareness.setFocused("authenticated", "", (res: any) => {
-        this.awareness.UserInstance = new User();
-        this.requestLogOut();
-        this.awareness.removeUserData();
-        this.router.navigate(['/home']);
-        window.location.reload();
-      });
+      this.awareness.UserInstance = new User();
+      this.requestLogOut();
+      this.awareness.removeUserData();
+      this.router.navigate(['/home']);
+      window.location.reload();
     }
   }
 

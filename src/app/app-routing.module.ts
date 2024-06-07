@@ -35,7 +35,7 @@ const routes: Routes = [
           import('./pages/settings/settings.module').then((m) => m.SettingsModule),
       }, {
         path: 'users',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
+        canActivate: [AuthGuard], data: { roles: ['level1','level2', 'admin'] },
         loadChildren: () =>
           import('./pages/users/users.module').then((m) => m.UsersModule),
       },{
