@@ -40,6 +40,7 @@ User management, Integrated Dashboards, Upload of documents
         USER_GUEST: {
             USERNAME: "guest",
         },
+        DASHBOARDS: [],
       }
 };
   ```
