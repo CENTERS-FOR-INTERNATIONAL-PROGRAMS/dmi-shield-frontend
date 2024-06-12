@@ -53,6 +53,9 @@
           <i-tabler *ngIf="this.ApiResponseStatus.success === true" class="view-icon--inline view-color--green"
                     name="circle-check-filled"></i-tabler>
 
+          <i-tabler *ngIf="this.ApiResponseStatus.success === false" class="view-icon--inline view-color--red"
+                    name="progress-alert"></i-tabler>
+
           <button type="submit" mat-flat-button color="primary" class="view-button" (click)="SubmitInstance()">
             Upload
           </button>
