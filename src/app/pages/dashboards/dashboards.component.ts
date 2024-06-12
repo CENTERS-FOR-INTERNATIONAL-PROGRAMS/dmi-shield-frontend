@@ -6,11 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-page',
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.scss']
+  templateUrl: './dashboards.component.html',
+  styleUrls: ['./dashboards.component.scss']
 })
 
-export class PageComponent implements OnInit {
+export class DashboardsComponent implements OnInit {
 
   constructor(
     private superset: SupersetService,

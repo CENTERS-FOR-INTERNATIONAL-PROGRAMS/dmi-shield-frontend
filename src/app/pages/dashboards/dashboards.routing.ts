@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {PageComponent} from "./page/page.component";
+import {DashboardsComponent} from "./dashboards.component";
 
 export const DashboardsRoutes: Routes = [
   {
@@ -7,11 +7,11 @@ export const DashboardsRoutes: Routes = [
     children: [
       {
         path: '',
-        component: PageComponent,
+        component: DashboardsComponent,
       },
       {
         path: ':id',
-        component: PageComponent,
+        component: DashboardsComponent,
       }
     ]
   }
