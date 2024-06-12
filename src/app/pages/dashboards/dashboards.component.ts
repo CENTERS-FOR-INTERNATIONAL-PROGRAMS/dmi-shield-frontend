@@ -5,7 +5,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-page',
+  selector: 'app-dashboards',
   templateUrl: './dashboards.component.html',
   styleUrls: ['./dashboards.component.scss']
 })
