@@ -7,19 +7,15 @@
   <div class="navbar">
     <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
     <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
-
     <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
       Dashboards
       <i class='bx bxs-chevron-down'></i>
     </a>
-
     <mat-menu #menu="matMenu">
-
-      <a mat-menu-item href="https://shield-analytics.health.go.ke/superset/dashboard/shield/" target="_blank" style="color: inherit">
+      <a mat-menu-item [routerLink]="['/dashboards/' + (dashboards && dashboards.length ? dashboards[0] : '')]" [class.active]="activeRoute === '/dashboards/' + (dashboards && dashboards.length ? dashboards[0] : '')]" style="color: inherit">
           <span>Indicator Based Surveillance</span>
       </a>
-
-      <a mat-menu-item href="https://shield-analytics.health.go.ke/superset/dashboard/ebs/" target="_blank" style="color: inherit">
+      <a mat-menu-item [routerLink]="['/dashboards/' + (dashboards && dashboards.length && dashboards[1] ? dashboards[1] : '')]" [class.active]="activeRoute === '/dashboards/' + (dashboards && dashboards.length && dashboards[1] ? dashboards[1] : '')]" style="color: inherit">
           <span>Event Based Surveillance</span>
       </a>
       <a mat-menu-item href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank" style="color: inherit">

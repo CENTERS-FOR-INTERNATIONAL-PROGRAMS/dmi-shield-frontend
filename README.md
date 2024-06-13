@@ -29,6 +29,19 @@ User management, Integrated Dashboards, Upload of documents
         IFBS: "",
         MORTAlITY: "",
       },
+      SUPERSET: {
+        DOMAIN: '<Superset Domain>',
+        API_ENDPOINT: "<Superset API Endpoint>",
+        API_PROVIDER: "db",
+        USER_ADMINISTRATOR: {
+            USERNAME: "",
+            PASSWORD: ""
+        },
+        USER_GUEST: {
+            USERNAME: "guest",
+        },
+        DASHBOARDS: [],
+      }
 };
   ```
 

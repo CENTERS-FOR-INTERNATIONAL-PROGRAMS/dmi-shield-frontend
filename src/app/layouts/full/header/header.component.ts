@@ -11,6 +11,7 @@ import {ApiService} from "../../../services/api/api.service";
 import {ResourceModelApi} from "../../../models/Resource.model";
 import {NotificationModel} from "../../../models/Notification.model";
 import {AuthenticationService} from "../../../services/authentication.service";
+import { config } from '../../../config/config';
 
 @Component({
   selector: 'app-header',
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit {
     processing: false,
     message: ""
   }
+  dashboards: string[];
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
               private location: Location, private communication: CommunicationService, private authService: AuthService,
@@ -48,6 +50,7 @@ export class HeaderComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.dashboards = config.SUPERSET.DASHBOARDS;
     this.getUser();
     // this.awareness.awaken(null);
 

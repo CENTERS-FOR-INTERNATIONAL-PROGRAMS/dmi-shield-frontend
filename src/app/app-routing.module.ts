@@ -68,6 +68,11 @@ const routes: Routes = [
           import('./pages/about/about.module').then((m) => m.AboutModule),
       },
       {
+        path: 'dashboards',
+        loadChildren: () =>
+          import('./pages/dashboards/dashboards.module').then((m) => m.DashboardsModule),
+      },
+      {
         path: 'notifications',
         loadChildren: () =>
           import('./pages/notifications/notifications.module').then((m) => m.NotificationsModule),
