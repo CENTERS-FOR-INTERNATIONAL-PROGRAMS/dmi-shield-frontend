@@ -20,6 +20,6 @@ jobs:
           sudo git switch main
           sudo git pull
           sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
-          sudo docker compose up -d
+          sudo docker compose up -d --build --force-recreate --no-deps
           sudo systemctl restart nginx
           echo "S.H.I.E.L.D is now LIVE!!"
