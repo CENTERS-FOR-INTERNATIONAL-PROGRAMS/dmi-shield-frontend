@@ -21,7 +21,6 @@ User management, Integrated Dashboards, Upload of documents
 # Config.ts Example
   ```sh
     export const config = {
-      COUCHDB_ALCHEMY: "https://<user_name>:<password>@host",
       FILE_PATH: "",
       API_ENDPOINT: "https://localhost/api/v1/",
       SUMMARIZED_IFRAME_SOURCES: [],
@@ -30,6 +29,19 @@ User management, Integrated Dashboards, Upload of documents
         IFBS: "",
         MORTAlITY: "",
       },
+      SUPERSET: {
+        DOMAIN: '<Superset Domain>',
+        API_ENDPOINT: "<Superset API Endpoint>",
+        API_PROVIDER: "db",
+        USER_ADMINISTRATOR: {
+            USERNAME: "",
+            PASSWORD: ""
+        },
+        USER_GUEST: {
+            USERNAME: "guest",
+        },
+        DASHBOARDS: [],
+      }
 };
   ```
 

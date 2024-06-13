@@ -1,15 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {MField} from "../../../models/MField.model";
 import {NgxFileDropEntry} from "ngx-file-drop";
-import {CompositeFormControls} from "../../../models/CompositeFormControls.model";
 import {Resource} from "../../../models/Resource.model";
 import {CommunicationService} from "../../../services/communication.service";
 import {AwarenessService} from "../../../services/awareness.service";
 import {HttpClient} from "@angular/common/http";
 import {Guid} from "guid-typescript";
 import {IModelStatus} from "../../../interfaces/IModel.model";
-import {Observable} from "rxjs";
-import {config} from "../../../config/config";
 import {ApiResponseStatus, CreatePreSignedUrlData, UserAuthenticationData} from 'src/app/interfaces/IAuth.model';
 import {ApiService} from "../../../services/api/api.service";
 
@@ -127,6 +123,7 @@ export class ModifyComponent implements OnInit{
             error: (error) =>{
               this.ApiResponseStatus.processing = false;
               this.ApiResponseStatus.success = false;
+              this.communication.showToast("File upload failed. Kindly try again.");
             },
             complete: () =>{
             },

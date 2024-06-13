@@ -3,28 +3,27 @@ import { CommonModule } from '@angular/common';
 import {RouterModule} from "@angular/router";
 import {MaterialModule} from "../../material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CompositeComponent} from "./composite/composite.component";
-import {ModifyComponent} from "./modify/modify.component";
 import {CFieldsModule} from "../cfields/cfields.module";
 import {TablerIconsModule} from "angular-tabler-icons";
-import {ThresholdsRoutes} from "./thresholds.routing";
-import {MatTableModule} from '@angular/material/table';
-
+import {NgxFileDropModule} from "ngx-file-drop";
+import {DashboardsComponent} from './dashboards.component';
+import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
+import {DashboardsRoutes} from "./dashboards.routing";
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(ThresholdsRoutes),
+    RouterModule.forChild(DashboardsRoutes),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     CFieldsModule,
     TablerIconsModule,
-    MatTableModule
+    NgxFileDropModule,
+    MdbCarouselModule
   ],
   declarations: [
-    CompositeComponent,
-    ModifyComponent
+    DashboardsComponent
   ]
 })
-export class ThresholdsModule { }
+export class DashboardsModule { }

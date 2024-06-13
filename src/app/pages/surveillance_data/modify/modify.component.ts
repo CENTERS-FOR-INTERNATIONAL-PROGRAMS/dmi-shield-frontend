@@ -1,16 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {MField} from "../../../models/MField.model";
 import {CommunicationService} from "../../../services/communication.service";
 import {AwarenessService} from "../../../services/awareness.service";
 import {HttpClient} from "@angular/common/http";
 import {NgxFileDropEntry} from "ngx-file-drop";
-import {CompositeFormControls} from "../../../models/CompositeFormControls.model";
-import {FormControl} from "@angular/forms";
 import {Surveillance} from "../../../models/Surveillance.model";
 import {IModelStatus} from "../../../interfaces/IModel.model";
 import {Guid} from "guid-typescript";
-import {Observable} from "rxjs";
-import {config} from "../../../config/config";
 import {ApiService} from "../../../services/api/api.service";
 import {ApiResponseStatus, CreatePreSignedUrlData} from 'src/app/interfaces/IAuth.model';
 import {Resource} from "../../../models/Resource.model";
@@ -20,7 +15,6 @@ import {Resource} from "../../../models/Resource.model";
   templateUrl: './modify.component.html'
 })
 export class ModifyComponent implements OnInit{
-  MFieldInstance = new MField();
   allowedFiles: string=  ".csv, .xlsx, .xls"
   public Files: NgxFileDropEntry[] = [];
   SurveillanceDataList: Surveillance[] = [];
@@ -46,15 +40,7 @@ export class ModifyComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.MFieldInstance._id = this.awareness.getFocused("mfield");
 
-    if (this.MFieldInstance._id != "") {
-      this.MFieldInstance.acquireInstance((doc: any) => {
-        this.MFieldInstance.parseInstance(doc);
-      }, (err: any) => {
-        // TODO! Handle errors
-      });
-    }
   }
 
 
@@ -178,6 +164,7 @@ export class ModifyComponent implements OnInit{
             error: (error) =>{
               this.ApiResponseStatus.processing = false;
               this.ApiResponseStatus.success = false;
+              this.communication.showToast("File upload failed. Kindly try again.");
             },
             complete: () =>{
             },

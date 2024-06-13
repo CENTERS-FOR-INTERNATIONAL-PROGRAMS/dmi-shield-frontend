@@ -11,6 +11,7 @@ import {ApiService} from "../../../services/api/api.service";
 import {ResourceModelApi} from "../../../models/Resource.model";
 import {NotificationModel} from "../../../models/Notification.model";
 import {AuthenticationService} from "../../../services/authentication.service";
+import { config } from '../../../config/config';
 
 @Component({
   selector: 'app-header',
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit {
     processing: false,
     message: ""
   }
+  dashboards: string[];
 
   constructor(private router: Router, public dialog: MatDialog, public awareness: AwarenessService,
               private location: Location, private communication: CommunicationService, private authService: AuthService,
@@ -48,6 +50,7 @@ export class HeaderComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.dashboards = config.SUPERSET.DASHBOARDS;
     this.getUser();
     // this.awareness.awaken(null);
 
@@ -87,13 +90,11 @@ export class HeaderComponent implements OnInit {
 
   onClick(action: any) {
     if (action == "logout") {
-      this.awareness.setFocused("authenticated", "", (res: any) => {
-        this.awareness.UserInstance = new User();
-        this.requestLogOut();
-        this.awareness.removeUserData();
-        this.router.navigate(['/home']);
-        window.location.reload();
-      });
+      this.awareness.UserInstance = new User();
+      this.requestLogOut();
+      this.awareness.removeUserData();
+      this.router.navigate(['/home']);
+      window.location.reload();
     }
   }
 
@@ -152,7 +153,11 @@ export class HeaderComponent implements OnInit {
       this.apiService.get(url).subscribe({
         next: (res) => {
           this.ApiResponseStatus.success = true;
-          this.Notifications = res.data.map(item => item.attributes);
+          this.Notifications = res.data.map(item => ({
+            id: item.id,
+            ...item.attributes
+          })).filter(item => item.status !== "read")
+            .sort((a, b) => b.created_at - a.created_at);
         },
         error: (error) =>{
           this.ApiResponseStatus.processing = false;

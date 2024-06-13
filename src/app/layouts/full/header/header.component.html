@@ -7,19 +7,22 @@
   <div class="navbar">
     <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
     <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
-
     <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
       Dashboards
       <i class='bx bxs-chevron-down'></i>
     </a>
-
     <mat-menu #menu="matMenu">
-
-      <a mat-menu-item href="https://shield-analytics.health.go.ke/superset/dashboard/shield/" target="_blank" style="color: inherit">
-          <span>Indicator Based Surveillance</span>
-      </a>
-
-      <a mat-menu-item href="https://shield-analytics.health.go.ke/superset/dashboard/ebs/" target="_blank" style="color: inherit">
+      <a mat-menu-item 
+      [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']" 
+      [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[0] : ''))" 
+      style="color: inherit">
+     <span>Indicator Based Surveillance</span>
+   </a>
+   
+      <a mat-menu-item 
+      [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']" 
+      [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))" 
+      style="color: inherit">
           <span>Event Based Surveillance</span>
       </a>
       <a mat-menu-item href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank" style="color: inherit">
@@ -47,6 +50,7 @@
           </text>
         </svg>
 
+
       </a>
 
       <a [matMenuTriggerFor]="notificationMenu" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
@@ -56,7 +60,7 @@
 
       <mat-menu #actionsMenu="matMenu" xPosition="before">
         <button  mat-menu-item [routerLink]="['/users/']" *ngIf="userRole === 'admin'">Manage Users</button>
-        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>
+<!--        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>-->
         <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
       </mat-menu>
 
@@ -76,7 +80,7 @@
     <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
     <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
 
-    <div *ngFor="let notification of Notifications" class="p-t-10 p-l-10 p-r-10">
+    <div *ngFor="let notification of Notifications | slice:0:4" class="p-t-10 p-l-10 p-r-10">
       <div style="word-wrap: break-word; font-weight: 550">
         {{ notification.title }}
       </div>
@@ -88,7 +92,7 @@
     </div>
 
 
-    <div style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
+    <div class="m-t-4" style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
       <a [routerLink]="['/notifications']">View All</a>
     </div>
   </mat-menu>
