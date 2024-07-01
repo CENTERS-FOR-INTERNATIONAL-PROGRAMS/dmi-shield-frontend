@@ -123,6 +123,7 @@ export class ModifyComponent implements OnInit{
             error: (error) =>{
               this.ApiResponseStatus.processing = false;
               this.ApiResponseStatus.success = false;
+              this.communication.showToast("File upload failed. Kindly try again.");
             },
             complete: () =>{
             },
