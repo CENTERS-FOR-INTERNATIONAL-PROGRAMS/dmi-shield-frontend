@@ -43,10 +43,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./pages/surveillance_data/surveillance_data.module').then((m) => m.Surveillance_dataModule),
       },{
-        path: 'dashboard',
-        loadChildren: () =>
-          import('./pages/home/home.module').then((m) => m.HomeModule),
-      },{
         path: 'home',
         loadChildren: () =>
           import('./pages/pages.module').then((m) => m.PagesModule),
