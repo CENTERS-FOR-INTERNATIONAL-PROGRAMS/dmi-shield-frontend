@@ -24,11 +24,6 @@ User management, Integrated Dashboards, Upload of documents
       FILE_PATH: "",
       API_ENDPOINT: "https://localhost/api/v1/",
       SUMMARIZED_IFRAME_SOURCES: [],
-      IFBS_IFRAME_SOURCES: {
-        SARI: "",
-        IFBS: "",
-        MORTAlITY: "",
-      },
       SUPERSET: {
         DOMAIN: '<Superset Domain>',
         API_ENDPOINT: "<Superset API Endpoint>",
