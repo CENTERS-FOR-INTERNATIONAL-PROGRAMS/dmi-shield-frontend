@@ -13,12 +13,29 @@
     </a>
     <mat-menu #menu="matMenu">
       <a mat-menu-item 
-      [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']" 
-      [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[0] : ''))" 
-      style="color: inherit">
-     <span>Indicator Based Surveillance</span>
-   </a>
-   
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']" 
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[0] : ''))" 
+        style="color: inherit">
+        <span>Indicator Based Surveillance</span>
+      </a>
+      <a mat-menu-item 
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[2]] : ['/dashboards']" 
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[2] : ''))" 
+        style="color: inherit">
+        <span>Integrated Facility-Based Surveillance</span>
+      </a>
+      <a mat-menu-item 
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[3]] : ['/dashboards']" 
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[3] : ''))" 
+        style="color: inherit">
+        <span>SARI/ILI Surveillance</span>
+      </a>
+      <a mat-menu-item 
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[4]] : ['/dashboards']" 
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[4] : ''))" 
+        style="color: inherit">
+        <span>COVID-19 Mortality Surveillance</span>
+      </a>
       <a mat-menu-item 
       [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']" 
       [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))" 
