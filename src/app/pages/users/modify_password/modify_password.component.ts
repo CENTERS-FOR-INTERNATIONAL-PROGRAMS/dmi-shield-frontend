@@ -23,9 +23,9 @@ export class ModifyPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.seedInstance();
+    this.UserInstance.id = this.awareness.getFocused("user");
 
     this.awareness.awaken(() => {
-      this.UserInstance.id = this.awareness.getFocused("user");
 
       // if (this.UserInstance._id != "") {
       //   this.UserInstance.acquireInstance((doc: any) => {

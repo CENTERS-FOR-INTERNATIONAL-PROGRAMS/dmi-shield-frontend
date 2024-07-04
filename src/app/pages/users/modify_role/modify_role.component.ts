@@ -42,10 +42,11 @@ export class ModifyRoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.seedInstance();
+    this.initialize();
+    this.getApiUser();
 
     this.awareness.awaken(() => {
-      this.initialize();
-      this.getApiUser();
+
     });
   }
 

@@ -20,9 +20,9 @@ export class ModifyComponent implements OnInit {
 
   ngOnInit(): void {
     this.seedInstance();
+    this.initialize();
 
     this.awareness.awaken(() => {
-      this.initialize();
     });
   }
 
