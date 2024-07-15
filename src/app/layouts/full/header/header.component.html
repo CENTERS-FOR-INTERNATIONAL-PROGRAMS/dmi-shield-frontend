@@ -1,7 +1,11 @@
 <header class="header">
+
+  <div class="top-header">
+
+  </div>
+
   <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">
-    <img class="logo" src="assets/images/logos/logo-moh-new.png" alt="">
-    <img class="nav-shield" src="assets/images/logos/SHIELD-LOGO.png" alt="">
+    <img class="nav-shield" src="assets/images/logos/logo-moh.png" alt="">
   </a>
 
   <div class="navbar">
@@ -12,33 +16,33 @@
       <i class='bx bxs-chevron-down'></i>
     </a>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item 
-        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']" 
-        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[0] : ''))" 
+      <a mat-menu-item
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']"
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[0] : ''))"
         style="color: inherit">
         <span>Indicator Based Surveillance</span>
       </a>
-      <a mat-menu-item 
-        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[2]] : ['/dashboards']" 
-        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[2] : ''))" 
+      <a mat-menu-item
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[2]] : ['/dashboards']"
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[2] : ''))"
         style="color: inherit">
         <span>Integrated Facility-Based Surveillance</span>
       </a>
-      <a mat-menu-item 
-        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[3]] : ['/dashboards']" 
-        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[3] : ''))" 
+      <a mat-menu-item
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[3]] : ['/dashboards']"
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[3] : ''))"
         style="color: inherit">
         <span>SARI/ILI Surveillance</span>
       </a>
-      <a mat-menu-item 
-        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[4]] : ['/dashboards']" 
-        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[4] : ''))" 
+      <a mat-menu-item
+        [routerLink]="dashboards?.length ? ['/dashboards', dashboards[4]] : ['/dashboards']"
+        [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[4] : ''))"
         style="color: inherit">
         <span>COVID-19 Mortality Surveillance</span>
       </a>
-      <a mat-menu-item 
-      [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']" 
-      [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))" 
+      <a mat-menu-item
+      [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']"
+      [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))"
       style="color: inherit">
           <span>Event Based Surveillance</span>
       </a>
@@ -55,22 +59,35 @@
 
   <nav  class="navbar-tools">
     <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
+
       <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance.id)">
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
-          <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
-          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
-            {{ this.awareness.UserInstance?.email ? this.awareness.UserInstance.email[0].toUpperCase() : '' }}
-          </text>
-        </svg>
+        <div class="icon-container">
+          <i class="fa-solid fa-user"></i>
+        </div>
+
+
+        <!--        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">-->
+<!--          <circle cx="21.5" cy="21.5" r="20" stroke="#FFFFFF" stroke-width="3" />-->
+<!--          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#FFFFFF" font-size="20px" font-weight="bold">-->
+<!--            {{ this.awareness.UserInstance?.email ? this.awareness.UserInstance.email[0].toUpperCase() : '' }}-->
+<!--          </text>-->
+<!--        </svg>-->
 
 
       </a>
 
-      <a [matMenuTriggerFor]="notificationMenu" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
+      <a [matMenuTriggerFor]="notificationMenu">
+        <div class="icon-container">
+          <i class='bx bxs-bell-ring'></i>
+        </div>
+      </a>
 
-
-      <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
+      <a  [matMenuTriggerFor]="actionsMenu">
+        <div class="icon-container">
+          <i class="fa-solid fa-gear"></i>
+        </div>
+      </a>
 
       <mat-menu #actionsMenu="matMenu" xPosition="before">
         <button  mat-menu-item [routerLink]="['/users/']" *ngIf="userRole === 'admin'">Manage Users</button>

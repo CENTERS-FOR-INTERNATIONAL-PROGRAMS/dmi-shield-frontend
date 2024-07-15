@@ -23,7 +23,9 @@ mat-card {
   --main-color: #24ABCE;
   --main-bg-color: #ffffff;
   --accent-orange: #FFA500;
-  --main-gradient: linear-gradient(180deg, #15a5ca00 0%, #15A5CA 100%);
+  --main-blue: #16428D;
+  --main-gradient: var(--main-color);
+  --main-gradient-color: #E5F2FD;
 }
 
 
@@ -43,7 +45,7 @@ body {
   left: 0;
   width: 100vw;
   padding: 2rem 9%;
-  background: transparent;
+  background: var(--main-blue);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,7 +54,7 @@ body {
 
 
 .active-header {
-  background: #ffffff;
+  background: #16428D;
 }
 
 .logo {
@@ -62,10 +64,11 @@ body {
 }
 
 .nav-shield {
-  width: 80px;
+  width: 500px;
   height: 80px;
   flex-shrink: 0;
   margin-left: 46px;
+  background: white;
 }
 
 
@@ -99,10 +102,10 @@ body {
 
 .navbar a {
   font-size: 1.7rem;
-  color: var(--text-color);
+  color: var(--main-bg-color);
   text-decoration: none;
   font-weight: 700;
-  margin-left: 3.5rem;
+  margin-left: 8.5rem;
   transition: .3s;
 }
 
@@ -117,6 +120,21 @@ body {
   color: var(--main-color);
   cursor: pointer;
   display: none;
+}
+
+.icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  padding: 4px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.icon-container i {
+  color: #ffffff;
+  font-size: 18px;
 }
 
 section {
@@ -265,11 +283,12 @@ section {
   justify-content: space-between;
   align-items: center;
   // padding: 40rem 9%;
-  padding-top: 30rem;
-  padding-bottom: 20rem ;
+  padding-top: 10rem;
+  padding-bottom: 10rem ;
   padding-left: 9%;
   padding-right: 9%;
-  background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
+  background:  var(--main-gradient-color);
+
 }
 
 .about-top {
@@ -544,7 +563,7 @@ footer{
   }
 
   .header {
-    background: var(--main-bg-color);
+    background: var(--main-blue);
   }
 
   #menu-icon {
@@ -580,6 +599,7 @@ footer{
   .navbar a {
     display: block;
     font-size: 2rem;
+    color: white;
     margin: 3rem 0;
     transform: translateX(-20rem);
     transition: .25s ease;
