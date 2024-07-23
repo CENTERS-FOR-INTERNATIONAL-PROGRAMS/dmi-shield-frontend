@@ -70,14 +70,14 @@ export class ConfirmOtpComponent implements OnInit {
 
       this.authService.postRequest('auth/user/2fa/verify', this.userData).subscribe({
         next: (response) => {
-          this.ApiResponseStatus.error = true;
           this.ApiResponseStatus.processing = false;
           response.data.attributes.user.token = response.data.attributes.token;
           this.awareness.saveUserData(response.data.attributes.user);
         },
         error: (error) =>{
+          this.ApiResponseStatus.error = true;
           this.ApiResponseStatus.processing = false;
-          this.ApiResponseStatus.message = "Something went wrong. Try again later.";
+          this.ApiResponseStatus.message = "Expired on invalid pass code";
         },
         complete: () =>{
           this.ApiResponseStatus.processing = false;

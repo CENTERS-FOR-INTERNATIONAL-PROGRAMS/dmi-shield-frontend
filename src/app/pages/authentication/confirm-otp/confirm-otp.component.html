@@ -16,7 +16,7 @@
       </mat-card-header>
 
       <mat-card-content>
-        <div class="text-center bubble-success" *ngIf="this.ApiResponseStatus.error" style="margin: 2rem">
+        <div class="text-center bubble" *ngIf="this.ApiResponseStatus.error" style="margin: 2rem">
           {{ this.ApiResponseStatus.message }}
         </div>
 
