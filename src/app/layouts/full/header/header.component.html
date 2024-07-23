@@ -1,14 +1,15 @@
+
+<div class="top-header" style="height: auto; position: fixed; top: 0; left: 0; width: 100vw; background-color: white; color: black;">
+  <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'" style="padding-left: 9%;">
+    <img style="width: auto; padding: 10px" class="nav-shield" src="assets/images/logos/logo-moh.png" alt="moh logo">
+  </a>
+</div>
 <header class="header">
 
-  <div class="top-header">
-
-  </div>
-
-  <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">
-    <img class="nav-shield" src="assets/images/logos/logo-moh.png" alt="">
-  </a>
-
   <div class="navbar">
+    <a>
+      <img style="width: 36px" src="assets/images/new_logo/shield_new_logo.png" alt="shield logo">
+    </a>
     <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
     <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
     <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
@@ -65,16 +66,6 @@
         <div class="icon-container">
           <i class="fa-solid fa-user"></i>
         </div>
-
-
-        <!--        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">-->
-<!--          <circle cx="21.5" cy="21.5" r="20" stroke="#FFFFFF" stroke-width="3" />-->
-<!--          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#FFFFFF" font-size="20px" font-weight="bold">-->
-<!--            {{ this.awareness.UserInstance?.email ? this.awareness.UserInstance.email[0].toUpperCase() : '' }}-->
-<!--          </text>-->
-<!--        </svg>-->
-
-
       </a>
 
       <a [matMenuTriggerFor]="notificationMenu">
@@ -131,3 +122,4 @@
   <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
 
 </header>
+
