@@ -86,7 +86,7 @@ export class AppSideLoginComponent implements OnInit{
       (response) => {
         if (response && response.data && response.data.attributes && response.data.attributes.user && response.data.attributes.token) {
           response.data.attributes.user.token = response.data.attributes.token;
-          this.awareness.saveUserData(response.data.attributes.user);
+          // this.awareness.saveUserData(response.data.attributes.user);
           this.ApiResponseStatus.processing = false;
           // this.router.navigate(['/home'])
           this.router.navigate(['/authentication/confirm-otp'])
