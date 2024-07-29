@@ -11,7 +11,7 @@ import {ApiService} from "../../../services/api/api.service";
 import {ResourceModelApi} from "../../../models/Resource.model";
 import {NotificationModel} from "../../../models/Notification.model";
 import {AuthenticationService} from "../../../services/authentication.service";
-import { config } from '../../../config/config';
+import {config} from '../../../config/config';
 
 @Component({
   selector: 'app-header',
@@ -26,12 +26,13 @@ export class HeaderComponent implements OnInit {
   @Output() toggleCollapsed = new EventEmitter<void>();
   scrollTop = 0;
   hideNav = false;
+  headerFixed = true;
 
   showFiller = false;
   showMenu: boolean = false;
   showNotificationCard: boolean = false;
   activeRoute: string;
-  UserInstance: User = new  User;
+  UserInstance: User = new User;
   userData: UserSignOutData;
   Notifications: NotificationModel[] = [];
   userRole: string;
@@ -49,13 +50,14 @@ export class HeaderComponent implements OnInit {
               private apiService: ApiService, private authenticationService: AuthenticationService) {
 
   }
+
   ngOnInit(): void {
     this.dashboards = config.SUPERSET.DASHBOARDS;
     this.getUser();
     // this.awareness.awaken(null);
 
-    this.router.events.subscribe(events =>{
-      if(events instanceof NavigationEnd){
+    this.router.events.subscribe(events => {
+      if (events instanceof NavigationEnd) {
         this.updateActiveRoute();
       }
     })
@@ -70,11 +72,11 @@ export class HeaderComponent implements OnInit {
     this.getApiNotifications();
   }
 
-  getUser(){
-    this.awareness.UserInstance =  this.awareness.getUserData();
+  getUser() {
+    this.awareness.UserInstance = this.awareness.getUserData();
   }
 
-  updateActiveRoute() : void{
+  updateActiveRoute(): void {
     this.activeRoute = this.router.url;
   }
 
@@ -83,9 +85,37 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  onScroll(event) {
-    this.hideNav = this.scrollTop < event.target.scrollTop;
-    this.scrollTop = event.target.scrollTop;
+  // onScroll(event) {
+  //   this.hideNav = this.scrollTop < event.target.scrollTop;
+  //   this.scrollTop = event.target.scrollTop;
+  // }
+
+  onScroll(event: any) {
+    const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+
+    if (currentScrollTop > this.scrollTop) {
+      // Scrolling down
+      if (currentScrollTop > 0) {
+        this.hideNav = true;
+      }
+    } else {
+      // Scrolling up
+      if (currentScrollTop < this.scrollTop) {
+        this.hideNav = false;
+        this.headerFixed = true; // Keep the header fixed when scrolling up
+      }
+    }
+
+    // Update scrollTop
+    this.scrollTop = currentScrollTop;
+
+    // Logic to keep header fixed only when top-header is about to reappear
+    const topHeaderHeight = document.querySelector('.top-header')?.clientHeight || 0;
+    if (currentScrollTop > topHeaderHeight) {
+      this.headerFixed = true;
+    } else {
+      this.headerFixed = false;
+    }
   }
 
   onClick(action: any) {
@@ -98,10 +128,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  requestLogOut(){
+  requestLogOut() {
     const userToken = this.awareness.getUserData().token;
 
-    if(userToken != "" && userToken !=null){
+    if (userToken != "" && userToken != null) {
       this.userData = {
         data: {
           attributes: {
@@ -141,13 +171,13 @@ export class HeaderComponent implements OnInit {
     this.communication.showToast('No new notifications.')
   }
 
-  getApiNotifications(){
+  getApiNotifications() {
 
 
     if (!this.awareness.UserInstance.id || !this.awareness.UserInstance.id) {
       this.ApiResponseStatus.processing = false;
       return;
-    }else{
+    } else {
       const url = `notification?user_id=${this.awareness.UserInstance.id}`;
 
       this.apiService.get(url).subscribe({
@@ -159,10 +189,10 @@ export class HeaderComponent implements OnInit {
           })).filter(item => item.status !== "read")
             .sort((a, b) => b.created_at - a.created_at);
         },
-        error: (error) =>{
+        error: (error) => {
           this.ApiResponseStatus.processing = false;
         },
-        complete: () =>{
+        complete: () => {
           this.ApiResponseStatus.processing = false;
         },
       });
@@ -170,4 +200,6 @@ export class HeaderComponent implements OnInit {
 
 
   }
+
+
 }
