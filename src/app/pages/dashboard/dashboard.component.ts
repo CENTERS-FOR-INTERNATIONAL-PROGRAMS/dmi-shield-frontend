@@ -35,6 +35,8 @@ import {AwarenessService} from "../../services/awareness.service";
 export class AppDashboardComponent implements OnInit{
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   @ViewChild('viewMoreContent') targetElement: ElementRef;
+  @ViewChild('cardContainer') cardContainer!: ElementRef;
+  activeCardIndex = 0;
 
   constructor(public awareness: AwarenessService){
 
@@ -62,6 +64,20 @@ export class AppDashboardComponent implements OnInit{
       viewMoreContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+  scrollLeft() {
+    this.cardContainer.nativeElement.scrollLeft -= 360;
+  }
 
+  scrollRight() {
+    this.cardContainer.nativeElement.scrollLeft += 360;
+  }
+
+  scrollToCard(index: number) {
+    if (this.cardContainer && this.cardContainer.nativeElement) {
+      const cardWidth = this.cardContainer.nativeElement.offsetWidth;
+      this.cardContainer.nativeElement.scrollLeft = index * cardWidth;
+      this.activeCardIndex = index;
+    }
+  }
 
 }

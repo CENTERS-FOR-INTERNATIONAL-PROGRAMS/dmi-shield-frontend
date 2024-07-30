@@ -81,6 +81,7 @@ body {
 .header.fixed {
   top: 0;
 }
+
 //Banner and Navbar css end
 
 .bottom-header {
@@ -195,15 +196,7 @@ section {
   padding: 10rem 9% 2rem;
 }
 
-.card-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 5%; /*to increase padding between the cards*/
-  margin-top: 54px;
-  margin-bottom: 54px;
-  height: 522px;
-}
+
 
 .help-icon-box {
   //border: yellow 2px solid;
@@ -235,14 +228,101 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 41px;
   height: 41px;
   background: linear-gradient(180deg, rgba(21, 165, 202, 0) 0%, #15A5CA 100%);
   box-shadow: 0 4px 10px #222A69;
   border-radius: 9999px;
-
   font-size: 2rem;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 5% 2rem;
+  position: relative;
+}
+
+.cards-data {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  justify-content: space-between;
+  align-items: center;
+  width: 92%;
+  flex-grow: 1;
+  scrollbar-width: none; /*Hide scrollbar*/
+  -ms-overflow-style: none; /*Hide scrollbar*/
+}
+.card-container::-webkit-scrollbar {
+  //Hide scrollbar
+  display: none;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  //background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+  color: var(--main-color);
+  background-color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 0 10px;
+}
+
+.scroll-button.left {
+  left: 10px;
+}
+
+.scroll-button.right {
+  right: 10px;
+}
+
+.scroll-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.card-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.first-indicator{
+  width: 30px;
+  height: 10px;
+  border-radius: 16px;
+  background-color: var(--button-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .card {
@@ -250,12 +330,13 @@ section {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 366px;
+  width: 360px;
   height: 522px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 16px;
   padding: 25px;
+  margin: 5px 32px
 }
 
 .card-image {
@@ -768,7 +849,7 @@ footer {
     display: block;
   }
 
-  .card-section {
+  .cards-data {
     flex-direction: column;
     align-items: center;
     height: auto;
@@ -778,6 +859,14 @@ footer {
   .card {
     margin-bottom: 20px;
     width: 100%;
+  }
+
+  .scroll-button {
+    display: none;
+  }
+
+  .card-indicators {
+    display: none;
   }
 
   .help-icon-box .gradient-box {
@@ -809,4 +898,6 @@ footer {
     top: 0;
     z-index: 1000;
   }
+
+
 }
