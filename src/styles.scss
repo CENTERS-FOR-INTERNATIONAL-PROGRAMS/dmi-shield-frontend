@@ -81,6 +81,7 @@ body {
 .header.fixed {
   top: 0;
 }
+
 //Banner and Navbar css end
 
 .bottom-header {
@@ -195,15 +196,7 @@ section {
   padding: 10rem 9% 2rem;
 }
 
-.card-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 10%;
-  margin-top: 54px;
-  margin-bottom: 54px;
-  height: 522px;
-}
+
 
 .help-icon-box {
   //border: yellow 2px solid;
@@ -235,14 +228,101 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 41px;
   height: 41px;
   background: linear-gradient(180deg, rgba(21, 165, 202, 0) 0%, #15A5CA 100%);
   box-shadow: 0 4px 10px #222A69;
   border-radius: 9999px;
-
   font-size: 2rem;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 5% 2rem;
+  position: relative;
+}
+
+.cards-data {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  justify-content: space-between;
+  align-items: center;
+  width: 92%;
+  flex-grow: 1;
+  scrollbar-width: none; /*Hide scrollbar*/
+  -ms-overflow-style: none; /*Hide scrollbar*/
+}
+.card-container::-webkit-scrollbar {
+  //Hide scrollbar
+  display: none;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  //background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+  color: var(--main-color);
+  background-color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 0 10px;
+}
+
+.scroll-button.left {
+  left: 10px;
+}
+
+.scroll-button.right {
+  right: 10px;
+}
+
+.scroll-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.card-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.first-indicator{
+  width: 30px;
+  height: 10px;
+  border-radius: 16px;
+  background-color: var(--button-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .card {
@@ -250,12 +330,13 @@ section {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 366px;
+  width: 360px;
   height: 522px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 16px;
   padding: 25px;
+  margin: 5px 32px
 }
 
 .card-image {
@@ -446,7 +527,6 @@ section {
   letter-spacing: .1rem;
 }
 
-
 .down-arrow {
   margin-left: 6px;
 }
@@ -457,37 +537,89 @@ footer {
   left: 0;
   width: 100%;
   background-color: #f8f9fa;
+  padding: 2rem 0;
 }
 
-
 .footer-top {
-  padding: 20px 10%;
   background: var(--main-blue);
-  height: 246px;
+  min-height: 224px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  padding: 2rem 9%;
+}
+
+.footer-section {
+  flex: 1;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  //margin-top: 2px;
+}
+
+//for the vertical lines after each div on the footer
+.footer-section:not(:last-child) {
+  border-bottom: none;
+  border-right: 2px solid #FFFFFF;
+  padding-right: 1rem;
+  margin-bottom: 1rem;
+  //margin-top: 2rem;
 }
 
 .footer-logo-container {
-  position: relative;
-  display: inline-block;
-  justify-content: space-between;
-  align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.footer-logo-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .footer-logo {
-  width: 35.4375rem;
-  height: 8.75rem;
+  width: 83.2px;
+  height: 60.83px;
+  padding-top: 1rem;
 }
 
 .footer-logo-container a {
-  position: absolute;
+  //position: absolute;
   top: 70%;
   left: 32%;
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 30px;
   font-weight: 700;
   color: #ffffff;
+}
+
+//for responsiveness
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+  }
+  .footer-section {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .footer-logo-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-logo {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  .footer-section:not(:last-child) {
+    border-right: none;
+    border-bottom: 2px solid #FFFFFF;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .shield-logo {
@@ -507,7 +639,7 @@ footer {
 
 .copyright {
   width: 100%;
-  height: 56px;
+  height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -528,13 +660,32 @@ footer {
 .terms-container {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .terms-container a {
   color: #FFFFFF;
   line-height: 3rem;
   font-size: 1.8rem;
-  margin-top: 12px;
+  //margin-top: 12px;
+}
+
+.terms-container span {
+  font-weight: normal;
+  color: #FFFFFF;
+  line-height: 3rem;
+  font-size: 1.8rem;
+  //margin-top: 12px;
+}
+
+.quick {
+  color: #FFFFFF;
+  line-height: 3rem;
+  font-size: 1.8rem;
+  //margin-top: 12px;
+  text-decoration: underline;
+  text-decoration-color: #20C997;
+  text-decoration-thickness: 2px;
 }
 
 .bubble {
@@ -698,7 +849,7 @@ footer {
     display: block;
   }
 
-  .card-section {
+  .cards-data {
     flex-direction: column;
     align-items: center;
     height: auto;
@@ -708,6 +859,14 @@ footer {
   .card {
     margin-bottom: 20px;
     width: 100%;
+  }
+
+  .scroll-button {
+    display: none;
+  }
+
+  .card-indicators {
+    display: none;
   }
 
   .help-icon-box .gradient-box {
@@ -739,4 +898,6 @@ footer {
     top: 0;
     z-index: 1000;
   }
+
+
 }
