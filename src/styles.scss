@@ -197,7 +197,6 @@ section {
 }
 
 
-
 .help-icon-box {
   //border: yellow 2px solid;
   display: flex;
@@ -301,7 +300,7 @@ section {
   width: 100%;
 }
 
-.first-indicator{
+.first-indicator {
   width: 30px;
   height: 10px;
   border-radius: 16px;
@@ -595,6 +594,15 @@ footer {
   color: #ffffff;
 }
 
+//make footer logo responsive
+.footer-logo-container p {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 6px;
+}
+
 //for responsiveness
 @media (max-width: 768px) {
   .footer-top {
@@ -739,6 +747,12 @@ footer {
   line-height: 32px;
 }
 
+.header-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 /* BREAKPOINTS */
 @media (max-width: 1200px) {
   html {
@@ -786,7 +800,7 @@ footer {
     top: 100%;
     left: -100%;
     width: 100%;
-    padding: 1rem 4%;
+    padding: 1rem 1%;
     background: #ffffff;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
     z-index: 1;
@@ -799,27 +813,36 @@ footer {
   }
 
   .navbar img {
-    display: none;
+    //display: none;
   }
 
   .navbar.active {
     left: 0;
     transition-delay: 0s;
+    margin-top: 1px;
+    width: 100%;
   }
 
   .navbar a {
     display: block;
     font-size: 2rem;
-    color: white;
-    margin: 3rem 0;
-    transform: translateX(-20rem);
-    transition: .25s ease;
+    color: black;
+    margin: 2rem 0;
+    //transform: translateX(-20rem);
     transition-delay: 0s;
+    overflow: hidden;
+    width: 100%;
+    //padding: 1rem;
   }
 
   .navbar.active a {
+    display: flex;
+    flex-direction: column;
     transform: translateX(0);
     transition-delay: .25s;
+    transition: transform .25s ease-in-out, opacity 0.25s ease-in-out, max-width 0.25s ease-in-out;
+    width: 100%;
+    padding: 0 2rem;
   }
 
   .navbar .active-nav {
@@ -831,7 +854,7 @@ footer {
     background: var(--main-color);
     border-top: .1rem solid rgba(0, 0, 0, .2);
     z-index: -1;
-    transition: .25s ease;
+    transition: left .25s ease;
     transition-delay: 0s;
   }
 
@@ -842,7 +865,7 @@ footer {
 
   .navbar a:hover,
   .navbar a.active {
-    color: #ffffff;
+    color: var(--accent-green);
   }
 
   .navbar .hide-fullScreen {
@@ -891,12 +914,6 @@ footer {
     padding-left: 9%;
     padding-right: 9%;
     background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
-  }
-
-  .header-container {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
   }
 
 

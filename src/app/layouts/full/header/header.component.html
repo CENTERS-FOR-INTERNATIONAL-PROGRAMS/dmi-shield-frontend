@@ -11,7 +11,8 @@
       </a>
       <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
       <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
-      <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
+      <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'"
+         style="display: flex; align-items: center; justify-content: center; flex-direction: row">
         Dashboards
         <i class='bx bxs-chevron-down'></i>
       </a>
@@ -55,8 +56,9 @@
       <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload
         Data</a>
       <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
-      <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">Notifications</a>
-
+      <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">
+        <img src="assets/images/icons/notifications-bell.svg" style="height: 30px;">
+      </a>
     </div>
 
     <nav class="navbar-tools">
