@@ -1,32 +1,23 @@
 name: Deploy SH.I.E.L.D
 on:
   push:
-    branches: [ main ]
+    branches: [ v2 ]
 jobs:
 
   build:
-    name: Deploy S.H.I.E.L.D
+    name: Deploy S.H.I.E.L.D version 2
     runs-on: ubuntu-latest
     steps:
-    - name: updating and deploying S.H.I.E.L.D
+    - name: updating and deploying S.H.I.E.L.D v2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
+        host: ${{ secrets.HOST_V2 }}
+        username: ${{ secrets.USERNAME_V2 }}
+        key: ${{ secrets.PRIVATE_KEY_V2 }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo cp -rf /etc/deploy_shield_frontend/* /tmp/dmi-shield-frontend-backup/
-          cd /var/lib/shield_workflows/dmi-shield-frontend
-          sudo git switch main
-          sudo rm -rf dist
-          sudo rm package-lock.json
-          sudo rm -rf node_modules
-          sudo git stash
+          cd /var/lib/shield_v2/dmi-shield-frontend/
           sudo git pull
-          sudo npm install
-          sudo cp -rf /var/lib/shield_workflows/config_files/* src/app/
-          sudo ng build --configuration production
-          sudo rm -rf /etc/deploy_shield_frontend/*
-          sudo cp -rf dist/* /etc/deploy_shield_frontend/
-          echo "S.H.I.E.L.D is now LIVE!!"
+          sudo docker compose up -d --build --force-recreate --no-deps
+          sudo systemctl restart nginx
+          echo "S.H.I.E.L.D 2 is now LIVE!!"
