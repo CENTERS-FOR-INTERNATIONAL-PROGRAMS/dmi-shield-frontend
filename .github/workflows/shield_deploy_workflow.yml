@@ -1,32 +1,54 @@
-name: Deploy SH.I.E.L.D
+name: Deploy SHIELD
 on:
   push:
-    branches: [ main ]
-jobs:
+    branches:
+      - main
+      - dev
 
-  build:
-    name: Deploy S.H.I.E.L.D
+jobs:
+  deploy:
+    name: Deploy SHIELD
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        branch: [main, dev]
+
     steps:
-    - name: updating and deploying S.H.I.E.L.D
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          sudo cp -rf /etc/deploy_shield_frontend/* /tmp/dmi-shield-frontend-backup/
-          cd /var/lib/shield_workflows/dmi-shield-frontend
-          sudo git switch main
-          sudo rm -rf dist
-          sudo rm package-lock.json
-          sudo rm -rf node_modules
-          sudo git stash
-          sudo git pull
-          sudo npm install
-          sudo cp -rf /var/lib/shield_workflows/config_files/* src/app/
-          sudo ng build --configuration production
-          sudo rm -rf /etc/deploy_shield_frontend/*
-          sudo cp -rf dist/* /etc/deploy_shield_frontend/
-          echo "S.H.I.E.L.D is now LIVE!!"
+      - name: Checkout Prod
+        uses: actions/checkout@v1
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/lib/shield_prod/dmi-shield-frontend
+            sudo git switch main
+            sudo git pull
+            sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
+            sudo docker compose up -d --build --force-recreate --no-deps
+            sudo systemctl restart nginx
+            echo "S.H.I.E.L.D prod is now LIVE!!"
+
+      - name: Checkout Dev
+        uses: actions/checkout@v1
+      - name: Deploy to Dev
+        if: github.ref == 'refs/heads/dev'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DEV }}
+          username: ${{ secrets.USERNAME_DEV }}
+          key: ${{ secrets.PRIVATE_KEY_DEV }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /etc/shield_dev_env/dmi-shield-frontend
+            sudo git switch dev
+            sudo git pull
+            sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
+            sudo docker compose up -d --build --force-recreate --no-deps
+            sudo systemctl restart nginx
+            echo "S.H.I.E.L.D dev is now LIVE!!"

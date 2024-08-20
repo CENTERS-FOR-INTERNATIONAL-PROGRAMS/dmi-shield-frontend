@@ -52,7 +52,6 @@ export interface UserSignOutAttributes {
 
 export interface ResetPassAttributes {
   email: string;
-  redirect_to: string;
 }
 
 export interface ConfirmPasswordResetAttributes {
@@ -77,6 +76,12 @@ export interface MarkNotificationAttributes{
   status: string
 }
 
+export interface VerifyOtpAttributes{
+  code: string,
+  id: string,
+  token: string,
+}
+
 export type UserAuthenticationData = GenericPostBody<UserAuthenticationAttributes>;
 export type UserRegisterData = GenericPostBody<UserRegisterAttributes>;
 export type UserSignOutData = GenericPostBody<UserSignOutAttributes>;
@@ -85,6 +90,7 @@ export type ConfirmResetPasswordData = GenericPostBody<ConfirmPasswordResetAttri
 export type CreatePreSignedUrlData = GenericPostBody<CreatePreSignedUrlAttributes>;
 export type ChangeUserRoleData = GenericPatchBody<ChangeUserRoleAttributes>;
 export type MarkNotificationData = GenericPatchBody<MarkNotificationAttributes>;
+export type VerifyOtpData = GenericPostBody<VerifyOtpAttributes>;
 
 
 export interface ApiResponse{

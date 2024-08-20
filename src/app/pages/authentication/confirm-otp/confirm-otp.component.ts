@@ -1,24 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
 import {CompositeFormControls} from "../../../models/CompositeFormControls.model";
-import { ApiResponse, ConfirmResetPasswordData, ResetPasswordData} from "../../../interfaces/IAuth.model";
 import {User} from "../../../models/User.model";
+import {ApiResponse, ResetPasswordData, VerifyOtpData} from "../../../interfaces/IAuth.model";
 import {AuthService} from "../../../services/api/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {AwarenessService} from "../../../services/awareness.service";
+import {Router} from "@angular/router";
 import {CommunicationService} from "../../../services/communication.service";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  selector: 'app-confirm-otp',
+  templateUrl: './confirm-otp.component.html',
+  styleUrls: ['./confirm-otp.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit{
+export class ConfirmOtpComponent implements OnInit {
 
   hide: boolean = true;
   UserFormControls: CompositeFormControls = {};
-  AuthUser: User = new User();
-  userData: ResetPasswordData;
+  // AuthUser: User = new User();
+  userData: VerifyOtpData;
 
   constructor(private authService: AuthService, private awareness: AwarenessService,
               private router: Router,private communication: CommunicationService) {
@@ -37,16 +37,15 @@ export class ForgotPasswordComponent implements OnInit{
   }
 
   seedFormInstance(){
-    this.UserFormControls["user_email"] = new FormControl('', [Validators.required]);
+    this.UserFormControls["one_time_pass"] = new FormControl('', [Validators.required]);
   }
-
 
   validateInstance(): boolean {
     let is_valid = true;
 
     Object.keys(this.UserFormControls).forEach(fc_key => {
       if (this.UserFormControls[fc_key].hasError("required") ||
-        this.UserFormControls[fc_key].hasError("email")) {
+        this.UserFormControls[fc_key].hasError("one_time_pass")) {
         is_valid = false;
       }
     });
@@ -61,25 +60,53 @@ export class ForgotPasswordComponent implements OnInit{
       this.userData = {
         data: {
           attributes: {
-            email: this.AuthUser.email
+            code: this.UserFormControls["one_time_pass"].value,
+            id: this.getUserId(),
+            token: this.handleGetToken()
           },
           type: 'User Authentication'
         }
       };
 
-      this.authService.postRequest('auth/user/password/request-reset', this.userData).subscribe({
-        next: (res) => {
-          this.ApiResponseStatus.error = true;
-          this.ApiResponseStatus.message = "A password reset link has been sent to your email";
+      this.authService.postRequest('auth/user/2fa/verify', this.userData).subscribe({
+        next: (response) => {
           this.ApiResponseStatus.processing = false;
+          response.data.attributes.user.token = response.data.attributes.token;
+          this.awareness.saveUserData(response.data.attributes.user);
         },
         error: (error) =>{
+          this.ApiResponseStatus.error = true;
           this.ApiResponseStatus.processing = false;
+          this.ApiResponseStatus.message = "Expired on invalid pass code";
         },
         complete: () =>{
           this.ApiResponseStatus.processing = false;
+          this.router.navigate(['/home'])
         },
       });
+    }
+  }
+
+
+  handleGetToken(): string {
+    const token =this.awareness.getUserData().token;
+    if(token != ''){
+      return token;
+    }
+    else {
+      this.router.navigate(['/home'])
+      return "";
+    }
+  }
+
+  getUserId(): string {
+    const token =this.awareness.getUserData().id;
+    if(token != ''){
+      return token;
+    }
+    else {
+      this.router.navigate(['/home'])
+      return "";
     }
   }
 }
