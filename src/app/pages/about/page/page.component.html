@@ -1,39 +1,76 @@
-<div class="about-top m-t-24" >
+<div class="about-top ">
+  <p style="font-weight: 300; line-height: 44px; font-size: 36px; color: #35459C">
+    Welcome to the Surveillance Health Information Exchange Linkage Data (SHIELD) Module!
+  </p>
 
-  <p style="font-weight: 600; line-height: 32px; font-size: 2.3rem;" class="m-b-24 m-t-24">ABOUT SHIELD</p>
+  <p style="font-weight: 600; line-height: 28px; font-size: 22px; margin-top: 2rem;">
+    The Surveillance Health Information Exchange Linkage Data (SHIELD) system is a centralized data repository developed
+    by the Ministry of Health (MOH)
+    to facilitate easy access to disease surveillance data and to enhance public health planning and response.
+  </p>
+</div>
 
-  <p style="font-weight: 500; line-height: 32px; font-size: 2.3rem;">Surveillance Health Information Exchange Linkage Data (SHIELD) is a centralised data repository developed
-    by the Ministry of Health (MOH) for surveillance data and resources. </p>
+<div class="content">
+  <div class="content-left">
+    <div style="padding: 0 1%;">
+      <h5 style="font-weight: 700; font-size: 28px; line-height: 30px; color: #35459C; margin: 1rem 0;">Overview</h5>
+      <p style="font-weight: 300; line-height: 22px; font-size: 18px;">
+        SHIELD aims to seamlessly integrate multiple
+        heterogeneous health data sources, such as the Kenya Health
+        Information System (KHIS-2), Electronic Health Records (EHRs), and Laboratory Information Management Systems
+        (LIMS), to create a comprehensive platform for accessing surveillance data on prioritized diseases and syndromes
+        according to the Kenya Disease Surveillance Guidelines.
+      </p>
+    </div>
+    <div>
+      <img src="/assets/images/backgrounds/about.png" alt="" class="content-image"/>
+    </div>
+  </div>
+  <div class="content-right">
+    <div>
+      <h5 style="font-weight: 700; font-size: 28px; line-height: 30px; color: #35459C; margin: 1rem 0;">Data-driven</h5>
+      <p style="font-weight: 300; line-height: 22px; font-size: 18px;">
+        To support timely and effective data use, the
+        data analyzed in SHIELD is visualized through dashboards for routine surveillance, event-based surveillance,
+        outbreak response, and program management, enabling data-driven decision-making. Additionally, SHIELD supports
+        and enables real-time disease monitoring capabilities.
+      </p>
+    </div>
+    <div style="margin-top: 5rem">
+      <h5 style="font-weight: 700; font-size: 28px; line-height: 30px; color: #35459C; margin: 1rem 0;">Objective</h5>
+      <p style="font-weight: 300; line-height: 22px; font-size: 18px; padding: 2% 0;">
+        SHIELD aims to centralize all data of surveillance value into a unified data resource, allowing public health
+        officials to monitor all health data proactively to facilitate early disease detection, understand the magnitude
+        of health threats, and help guide responses to emerging and re-emerging disease outbreaks.
+      </p>
+    </div>
+  </div>
 </div>
 
 <div style="padding: 1rem 9%; margin-top: 30px; min-height: 70vh">
-
   <div>
     <h2 class="m-b-24">Key Features:</h2>
-
-    <ul class="about-text" style="list-style-type: none; padding: 0;">
-      <li class="m-b-24"><strong>Data Integration:</strong> SHIELD seamlessly integrates diverse health data sources, including Kenya
-        Health Information System (KHIS-2), electronic health records (EMRs), laboratory Information Systems (LMIS),
-        etc., to create a comprehensive surveillance database. Data from different data sources can be ingested into
-        SHIELD using Application Programming Interfaces (APIs) or uploaded manually through the
-        <strong><a class="link-text" [routerLink]="['/surveillance/composites']" >Upload page</a></strong>.</li>
-
-      <li class="m-b-24"><strong>Analytics:</strong> The surveillance data in SHIELD is analyzed and visualized through dashboards to
-        facilitate data-driven decision-making. The dashboards available on SHIELD include the <strong>Routine Surveillance
-          dashboard, Event-Based Surveillance dashboard, Outbreak Response Dashboards</strong>, and <strong>Program dashboard</strong>.</li>
-
-      <li class="m-b-24"><strong>Real-time Monitoring:</strong> SHIELD platform offers real-time monitoring capabilities, allowing
-        health professionals to track health indicators, monitor disease prevalence, and respond promptly to emerging
-        health threats.</li>
-
-      <li class="m-b-24"><strong>Secure Exchange:</strong> SHIELD prioritizes data security and privacy, ensuring compliance with the
-        highest standards of confidentiality and data protection. Our secure exchange protocols facilitate safe and
-        efficient data sharing among authorized stakeholders.</li>
-
-      <li><strong>Resources:</strong> The SHIELD platform provides an array of resources tailored to meet the diverse
-        needs of health surveillance professionals. This includes guidelines, standard operating procedures, frameworks,
-        etc. The resources can be found on the
-        <strong><a class="link-text" [routerLink]="['/resources/composites']" >Resources Page</a></strong>.</li>
-    </ul>
+    <div *ngFor="let data of accordionData">
+      <mat-accordion class="accordion-container">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header class="accordion-header">
+            <mat-panel-title class="accordion-title">
+              <img
+                style="height: 60px; width: 60px; margin-right: 2rem"
+                src={{data.icon}}
+                alt=""
+              />
+              {{ data.title }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="accordion-content">
+            {{ data.content }}
+          </p>
+          <p [routerLink]="data.routeLink" class="route">
+            {{ data.routeName }}
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
   </div>
 </div>
