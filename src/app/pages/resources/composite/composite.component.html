@@ -37,7 +37,9 @@
       <div class="card" *ngFor="let data of filteredUploadList">
         <img class="cardimage" src="/assets/images/resources/anthraxcontrol.png" alt=""/>
         <div class="content">
-          <p>{{ data.original_filename.toUpperCase() }}</p>
+          <p [matTooltip]="data.original_filename?.toUpperCase()">
+            {{ concatenate(data.original_filename?.toUpperCase(), 30) }}
+          </p>
           <a [href]="data.url" target="_blank">
             <button>Download</button>
           </a>

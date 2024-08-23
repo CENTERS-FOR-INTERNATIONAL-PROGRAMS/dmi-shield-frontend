@@ -12,6 +12,7 @@
   width: 300px;
   height: 400px;
   padding: 25px;
+  margin: 1rem;
   background-color: #F0F2F5;
 }
 
@@ -47,21 +48,26 @@
   height: 34px;
   width: 117px;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 @media (max-width: 599px) {
   .cards {
     grid-template-columns: 1fr;
   }
+
+  .card{
+    width: 100%;
+  }
 }
 
-@media (min-width: 600px) and (max-width: 959px) {
+@media (min-width: 768px) {
   .cards {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1110px) {
   .cards {
     grid-template-columns: repeat(4, 1fr);
   }

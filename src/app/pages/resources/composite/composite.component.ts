@@ -50,6 +50,12 @@ export class CompositeComponent implements OnInit{
     );
   }
 
+  concatenate(text, limit){
+    if(text){
+      return text.length > limit ? `${text.slice(0, limit)}...` : text;
+    }
+  }
+
   loadComposites(){
     this.ApiResponseStatus.processing = true;
     this.apiService.getAll('files/uploads/resources').subscribe({
