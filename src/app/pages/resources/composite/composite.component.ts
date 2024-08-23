@@ -11,6 +11,7 @@ import {AuthenticationService} from "../../../services/authentication.service";
 @Component({
   selector: 'app-composite',
   templateUrl: './composite.component.html',
+  styleUrls: ['./composite.component.scss']
 })
 export class CompositeComponent implements OnInit{
   ResourceModel: ResourceModelApi[] = [];
