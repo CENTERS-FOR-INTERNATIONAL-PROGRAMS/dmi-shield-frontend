@@ -6,17 +6,25 @@
 
 .login-page {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .left-half{
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: start;
-  //justify-content: center;
-  background: #FFFFFF;
+  align-items: center;
+  justify-content: center;
   padding: 5rem 4%;
+  width: 50%;
+  flex: 1;
+}
+
+.left-content {
+  display: flex;
+  align-items: center;
+  padding: 0 4%;
+  width: 20%;
+  height: 100%;
+  flex: 1;
 }
 
 .right-half {
@@ -57,7 +65,7 @@
 }
 
 
-.login-card{
+.login-card {
   border-radius: 8px;
   margin-top: 4rem;
   padding: 3rem 6%;
@@ -70,7 +78,7 @@
   align-items: center;
   height: 5rem;
   width: 100%;
-  background: var(--accent-orange);
+  background: var(--accent-green);
   border-radius: .8rem;
   font-size: 1.8rem;
   font-weight: 600;
@@ -79,7 +87,7 @@
   cursor: pointer;
 }
 
-.auth-bottom{
+.auth-bottom {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -97,12 +105,16 @@
 }
 
 
-.card-topic{
+.card-topic {
   font-size: x-large;
 }
 
 @media (max-width: 1110px) {
-  .right-half{
+  .right-half {
+    display: none;
+  }
+
+  .left-content{
     display: none;
   }
 }
