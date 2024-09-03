@@ -52,7 +52,6 @@ export interface UserSignOutAttributes {
 
 export interface ResetPassAttributes {
   email: string;
-  redirect_to: string;
 }
 
 export interface ConfirmPasswordResetAttributes {
