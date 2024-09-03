@@ -1,102 +1,130 @@
-<header class="header">
-  <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">
-    <img class="logo" src="assets/images/logos/logo-moh-new.png" alt="">
-    <img class="nav-shield" src="assets/images/logos/SHIELD-LOGO.png" alt="">
-  </a>
-
-  <div class="navbar">
-    <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
-    <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
-    <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">
-      Dashboards
-      <i class='bx bxs-chevron-down'></i>
+<div class="header-container" (window:scroll)="onScroll($event)">
+  <div class="top-header" [class.hidden]="hideNav" #topHeader>
+    <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'" style="padding-left: 9%;">
+      <img style="width: auto; padding: 10px" class="nav-shield" src="assets/images/logos/logo-moh.png" alt="moh logo">
     </a>
-    <mat-menu #menu="matMenu">
-      <a mat-menu-item 
-      [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']" 
-      [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[0] : ''))" 
-      style="color: inherit">
-     <span>Indicator Based Surveillance</span>
-   </a>
-   
-      <a mat-menu-item 
-      [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']" 
-      [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))" 
-      style="color: inherit">
-          <span>Event Based Surveillance</span>
-      </a>
-      <a mat-menu-item href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank" style="color: inherit">
-        <span>Outbreak Response</span>
-      </a>
-      <a mat-menu-item [routerLink]="['/dashboard']" style="color: inherit">
-          <span>IFBS Dashboards</span>
-      </a>
-    </mat-menu>
-
-    <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload Data</a>
-    <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
-    <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">Notifications</a>
-
   </div>
-
-  <nav  class="navbar-tools">
-    <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
-      <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance.id)">
-
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" fill="none">
-          <circle cx="21.5" cy="21.5" r="20" stroke="#222A69" stroke-width="3" />
-          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#222A69" font-size="20px" font-weight="bold">
-            {{ this.awareness.UserInstance?.email ? this.awareness.UserInstance.email[0].toUpperCase() : '' }}
-          </text>
-        </svg>
-
-
+  <header class="header" [class.fixed]="headerFixed">
+    <div class="navbar">
+      <a>
+        <img style="width: 36px" src="assets/images/new_logo/shield_new_logo.png" alt="shield logo">
       </a>
-
-      <a [matMenuTriggerFor]="notificationMenu" ><img src="assets/images/icons/notifications-bell.svg" alt="notifications"></a>
-
-
-      <a  [matMenuTriggerFor]="actionsMenu"><img src="assets/images/icons/gear.svg" alt="setting"></a>
-
-      <mat-menu #actionsMenu="matMenu" xPosition="before">
-        <button  mat-menu-item [routerLink]="['/users/']" *ngIf="userRole === 'admin'">Manage Users</button>
-<!--        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>-->
-        <button mat-menu-item (click)="onClick('logout')" >Sign Out</button>
+      <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'">Home</a>
+      <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'">About</a>
+      <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'"
+         style="display: flex; align-items: center; justify-content: center; flex-direction: row">
+        Dashboards
+        <i class='bx bxs-chevron-down'></i>
+      </a>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[0] : ''))"
+           style="color: inherit">
+          <span>Indicator Based Surveillance</span>
+        </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))"
+           style="color: inherit">
+          <span>Integrated Facility-Based Surveillance</span>
+        </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[2]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[2] : ''))"
+           style="color: inherit">
+          <span>SARI/ILI Surveillance</span>
+        </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[3]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[3] : ''))"
+           style="color: inherit">
+          <span>COVID-19 Mortality Surveillance</span>
+        </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[4]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[4] : ''))"
+           style="color: inherit">
+          <span>Event Based Surveillance</span>
+        </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[5]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[5] : ''))"
+           style="color: inherit">
+          <span>Outbreak Response</span>
+        </a>
       </mat-menu>
 
+      <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload
+        Data</a>
+      <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
+      <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">
+        <img src="assets/images/icons/notifications-bell.svg" style="height: 30px;">
+      </a>
     </div>
 
+    <nav class="navbar-tools">
+      <div class="navbar-tools-items" *ngIf="this.awareness.UserInstance != null; else signInLoginButton">
 
-    <ng-template #signInLoginButton>
-      <div class="">
-        <a style="text-decoration: none;" [routerLink]="['/authentication/login']" class="btn1">
-          Sign In
+        <a [routerLink]="['/users/view']" (click)="awareness.setFocused('user', this.awareness.UserInstance.id)">
+
+          <div class="icon-container">
+            <i class="fa-solid fa-user"></i>
+          </div>
         </a>
+
+        <a [matMenuTriggerFor]="notificationMenu">
+          <div class="icon-container">
+            <i class='bx bxs-bell-ring'></i>
+          </div>
+        </a>
+
+        <a [matMenuTriggerFor]="actionsMenu">
+          <div class="icon-container">
+            <i class="fa-solid fa-gear"></i>
+          </div>
+        </a>
+
+        <mat-menu #actionsMenu="matMenu" xPosition="before">
+          <button mat-menu-item [routerLink]="['/users/']" *ngIf="userRole === 'admin'">Manage Users</button>
+          <!--        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>-->
+          <button mat-menu-item (click)="onClick('logout')">Sign Out</button>
+        </mat-menu>
+
       </div>
-    </ng-template>
-  </nav>
 
-  <mat-menu #notificationMenu="matMenu" xPosition="before" style="max-width: 300px;">
-    <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
-    <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
 
-    <div *ngFor="let notification of Notifications | slice:0:4" class="p-t-10 p-l-10 p-r-10">
-      <div style="word-wrap: break-word; font-weight: 550">
-        {{ notification.title }}
+      <ng-template #signInLoginButton>
+        <div class="">
+          <a style="text-decoration: none;" [routerLink]="['/authentication/login']" class="btn1">
+            Sign In
+          </a>
+        </div>
+      </ng-template>
+    </nav>
+
+    <mat-menu #notificationMenu="matMenu" xPosition="before" style="max-width: 300px;">
+      <div class="m-t-10 m-l-10" style="font-weight: bold;">Notifications</div>
+      <div class="m-t-5 m-l-10 m-r-10" style="border-bottom: 1px solid #000;"></div>
+
+      <div *ngFor="let notification of Notifications | slice:0:4" class="p-t-10 p-l-10 p-r-10">
+        <div style="word-wrap: break-word; font-weight: 550">
+          {{ notification.title }}
+        </div>
+        <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          {{ notification.message }}
+        </div>
+
+        <div class="m-t-5 m-l-15 m-r-15" style="border-bottom: 1px solid #000;"></div>
       </div>
-      <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        {{ notification.message }}
+
+
+      <div class="m-t-4" style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
+        <a [routerLink]="['/notifications']">View All</a>
       </div>
+    </mat-menu>
 
-      <div class="m-t-5 m-l-15 m-r-15" style="border-bottom: 1px solid #000;"></div>
-    </div>
+    <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
 
-
-    <div class="m-t-4" style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
-      <a [routerLink]="['/notifications']">View All</a>
-    </div>
-  </mat-menu>
-
-  <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
-
-</header>
+  </header>
+</div>

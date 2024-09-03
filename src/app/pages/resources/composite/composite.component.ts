@@ -11,6 +11,7 @@ import {AuthenticationService} from "../../../services/authentication.service";
 @Component({
   selector: 'app-composite',
   templateUrl: './composite.component.html',
+  styleUrls: ['./composite.component.scss']
 })
 export class CompositeComponent implements OnInit{
   ResourceModel: ResourceModelApi[] = [];
@@ -47,6 +48,12 @@ export class CompositeComponent implements OnInit{
     return this.ResourceModel.filter(user =>
       user.original_filename.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
+  }
+
+  concatenate(text, limit){
+    if(text){
+      return text.length > limit ? `${text.slice(0, limit)}...` : text;
+    }
   }
 
   loadComposites(){

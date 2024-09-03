@@ -1,18 +1,29 @@
 <footer>
   <div class="footer-top">
-    <div class="footer-logo-container">
-      <img class="footer-logo" src="assets/images/logos/logo-moh.png">
-      <a href="http://www.health.go.ke/" target="_blank">https://www.health.go.ke</a>
+    <div class="footer-section footer-logo-container">
+      <img class="footer-logo" src="assets/images/logos/moh-logo-emblem-only.png" alt="">
+      <div>
+        <p>MINISTRY OF HEALTH</p>
+        <a href="https://www.health.go.ke/" target="_blank">www.health.go.ke</a>
+      </div>
     </div>
 
-    <div class="terms-container">
-      <a [routerLink]="['/support/']">Help & Support</a>
+    <div class="footer-section terms-container">
+      <p><span class="quick">Quick</span>&nbsp;<span>Links</span></p>
+      <a>FAQs</a>
       <a>Terms and Conditions</a>
     </div>
-    <div class="shield-logo-container">
-      <img class="shield-logo" src="assets/images/logos/logo-shield-footer.png">
-      <p class="logo-text">Surveillance Health Information Exchange and Linkage Data<p>
+    <div class="footer-section terms-container">
+      <a [routerLink]="['/support/']"><span class="quick">Help</span>&nbsp;<span> & Support</span></a>
+      <a>020-00000</a>
+      <a>support@shield.health.go.ke</a>
+      <a>MINISTRY OF HEALTH, Afya House, <br/>Cathedral Road</a>
     </div>
+    <!--    <div class="shield-logo-container">-->
+    <!--      <img class="shield-logo" src="assets/images/logos/logo-shield-footer.png">-->
+    <!--      <p class="logo-text">Surveillance Health Information Exchange and Linkage Data-->
+    <!--      <p>-->
+    <!--    </div>-->
   </div>
 
   <div class="copyright">

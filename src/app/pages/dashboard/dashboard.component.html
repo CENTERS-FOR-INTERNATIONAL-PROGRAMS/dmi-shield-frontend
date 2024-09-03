@@ -1,11 +1,14 @@
 <section class="home" id="home">
   <div class="home-content">
-    <h1>S.H.I.E.L.D.</h1>
+    <p style="font-weight: 300; line-height: 44px; font-size: 36px; color: #FFFFFF">WELCOME TO</p>
+    <p style="font-weight: 900; line-height: 64px; font-size: 96px; color: #FFFFFF">SHIELD</p>
     <h3>Surveillance Health Information Exchange and Linkage Data</h3>
     <h4>One Stop Shop For Everything Disease Surveillance .</h4>
 
     <div class="btn-box">
-      <a class="btn" *ngIf="this.awareness.getUserData() ==null" [routerLink]="['/authentication/login']" class="btn">Sign In</a>
+      <a class="btn" *ngIf="this.awareness.getUserData() ==null" [routerLink]="['/authentication/login']">
+        Sign In
+      </a>
 
       <a class="btn" (click)="scrollToViewMore()">
         View More
@@ -15,35 +18,52 @@
 
   </div>
   <div class="home-image-content">
-    <img class="home-image" src="assets/images/logos/logo-dalle.png" alt="shield logo">
+    <img style="width: auto; " class="home-image" src="assets/images/new_logo/shield_new_logo.png" alt="shield logo">
   </div>
 </section>
 
-<section id="cards" class="card-section">
-  <div class="card">
-    <img class="card-image" src="assets/images/resources/dashboards.png" alt="Avatar">
-    <h1 style="margin-top: 15px;">Surveillance Dashboards</h1>
-    <h3>View dashboards with surveillance data for diseases of public health concern.</h3>
-    <div class="card-button-box">
-      <a [routerLink]="['/dashboard']">View Dashboards</a>
+<div class="card-container">
+  <button class="scroll-button left" (click)="scrollLeft()">&#10094;</button>
+  <div class="cards-data" #cardContainer>
+    <div class="card">
+      <img class="card-image" src="assets/images/resources/dashboards-one.png" alt="Avatar">
+      <h1 style="margin-top: 15px;">Surveillance Dashboards</h1>
+      <h3>View dashboards with surveillance data for diseases of public health concern.</h3>
+      <div class="card-button-box">
+        <a [routerLink]="['/dashboard']">View Dashboards</a>
+      </div>
     </div>
-  </div>
+    <div class="card">
+      <img class="card-image" src="assets/images/resources/upload-data2.png" alt="Avatar">
+      <h1 style="margin-top: 15px;">Upload Data</h1>
+      <h3>Upload data into SHIELD.</h3>
+      <div class="card-button-box">
+        <a [routerLink]="['/surveillance/composites']">Upload Data</a>
+      </div>
+    </div>
 
-  <div class="card">
-    <img class="card-image" src="assets/images/resources/upload.png" alt="Avatar">
-    <h1 style="margin-top: 15px;">Upload Data</h1>
-    <h3>Upload data into SHIELD.</h3>
-    <div class="card-button-box">
-      <a [routerLink]="['/surveillance/composites']">Upload Data</a>
+    <div class="card">
+      <img class="card-image" src="assets/images/resources/surveillance3.png" alt="Avatar">
+      <h1 style="margin-top: 15px;">Surveillance Resources</h1>
+      <h3>Find Surveillance resources here...</h3>
+      <div class="card-button-box">
+        <a [routerLink]="['/resources/composites']">View Resources</a>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-image" src="assets/images/new_logo/card_ebrige.png" alt="Avatar">
+      <h1 style="margin-top: 15px;">E-Bridge</h1>
+      <h3>Find predictive data analytic models for disease outbreaks here</h3>
+      <div class="card-button-box">
+        <a [routerLink]="['/resources/composites']">View Dashboards</a>
+      </div>
     </div>
   </div>
-
-  <div class="card">
-    <img class="card-image" src="assets/images/resources/education.png" alt="Avatar">
-    <h1 style="margin-top: 15px;">Surveillance Resources</h1>
-    <h3>Find Surveillance resources here...</h3>
-    <div class="card-button-box">
-      <a [routerLink]="['/resources/composites']">View Resources</a>
-    </div>
+  <button class="scroll-button right" (click)="scrollRight()">&#10095;</button>
+  <div class="card-indicators">
+    <div class="first-indicator"></div>
+    <div class="indicator"></div>
+    <div class="indicator"></div>
+    <div class="indicator"></div>
   </div>
-</section>
+</div>
