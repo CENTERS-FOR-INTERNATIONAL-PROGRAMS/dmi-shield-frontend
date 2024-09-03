@@ -16,6 +16,87 @@ mat-card {
   font-family: 'Lato', sans-serif;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :root {
   --bg-color: #081b29;
   --second-bg-color: #112e42;
@@ -381,7 +462,6 @@ section {
 }
 
 .frame-section {
-  height: 57vh;
   padding: 15rem 9%;
 }
 
@@ -428,6 +508,16 @@ section {
   background-size: cover;
   background-position: center;
 
+}
+
+.about-top {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 15rem;
+  padding-left: 9%;
+  padding-right: 9%;
+  background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
 }
 
 .home-image-content {
@@ -561,7 +651,6 @@ footer {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  min-height: 200px;
 }
 
 .footer-logo-container > div {
@@ -661,7 +750,6 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 200px;
 }
 
 .terms-container a {
@@ -770,7 +858,6 @@ footer {
 
   .frame-section {
     padding: 15rem 9% 2rem;
-    height: 57vh;
   }
 
   .home-image {
@@ -900,7 +987,15 @@ footer {
     margin-top: 4px;
   }
 
-
+  .about-top {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15rem;
+    padding-left: 9%;
+    padding-right: 9%;
+    background: linear-gradient(180deg, rgba(21, 165, 202, 0.00) 0%, #15A5CA 100%);
+  }
 
 
 }
