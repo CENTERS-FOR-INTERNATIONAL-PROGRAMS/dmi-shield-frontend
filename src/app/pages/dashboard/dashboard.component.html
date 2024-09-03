@@ -10,7 +10,7 @@
         Sign In
       </a>
 
-      <a class="btn" (click)="scrollToViewMore()">
+      <a class="btn" (click)="scrollToViewMore()" style="cursor: pointer">
         View More
         <img class="down-arrow" src="assets/images/icons/point-down.svg" alt="">
       </a>
@@ -22,7 +22,7 @@
   </div>
 </section>
 
-<div class="card-container">
+<div class="card-container"  id="cards">
   <button class="scroll-button left" (click)="scrollLeft()">&#10094;</button>
   <div class="cards-data" #cardContainer>
     <div class="card">
@@ -52,7 +52,7 @@
     </div>
     <div class="card">
       <img class="card-image" src="assets/images/new_logo/card_ebrige.png" alt="Avatar">
-      <h1 style="margin-top: 15px;">E-Bridge</h1>
+      <h1 style="margin-top: 15px;">Surveillance Resources</h1>
       <h3>Find predictive data analytic models for disease outbreaks here</h3>
       <div class="card-button-box">
         <a [routerLink]="['/resources/composites']">View Dashboards</a>
