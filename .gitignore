@@ -43,3 +43,4 @@ Thumbs.db
 docs
 src/app/config
 .env
+shield_deploy_workflow.yml
