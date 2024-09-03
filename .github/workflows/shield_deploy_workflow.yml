@@ -1,23 +1,25 @@
 name: Deploy SH.I.E.L.D
 on:
   push:
-    branches: [ v2 ]
+    branches: [ main ]
 jobs:
 
   build:
-    name: Deploy S.H.I.E.L.D version 2
+    name: Deploy S.H.I.E.L.D
     runs-on: ubuntu-latest
     steps:
-    - name: updating and deploying S.H.I.E.L.D v2
+    - name: updating and deploying S.H.I.E.L.D
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST_V2 }}
-        username: ${{ secrets.USERNAME_V2 }}
-        key: ${{ secrets.PRIVATE_KEY_V2 }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd /var/lib/shield_v2/dmi-shield-frontend/
+          cd /var/lib/shield_prod/dmi-shield-frontend
+          sudo git switch main
           sudo git pull
+          sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
           sudo docker compose up -d --build --force-recreate --no-deps
           sudo systemctl restart nginx
-          echo "S.H.I.E.L.D 2 is now LIVE!!"
+          echo "S.H.I.E.L.D is now LIVE!!"
