@@ -9,20 +9,28 @@
   height: 100vh;
 }
 
-.left-half{
+.left-half {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5rem 4%;
-  width: 50%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5rem 7%;
+  min-width: 70%;
   flex: 1;
+  height: auto;
+  overflow-y: hidden;
 }
 
 .left-content {
   display: flex;
   align-items: center;
-  padding: 0 4%;
-  width: 20%;
+  //justify-content: center;
+  padding: 0 9%;
+  width: 30%;
   height: 100%;
   flex: 1;
 }
@@ -66,9 +74,9 @@
 
 
 .login-card {
-  border-radius: 8px;
-  margin-top: 4rem;
+  border-radius: 16px 0 0 16px;
   padding: 3rem 6%;
+  background-color: white;
 }
 
 .auth-button {
@@ -76,10 +84,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 5rem;
-  width: 100%;
+  height: 36px;
+  width: 148px;
   background: var(--accent-green);
-  border-radius: .8rem;
+  border-radius: 20px;
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--main-bg-color);
@@ -91,30 +99,70 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: start;
+  align-items: end;
 }
 
+.button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  width: 148px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  cursor: pointer;
+  border: 2px solid var(--accent-green);
+}
 
 .with-red-line::after {
   content: '';
   display: block;
   width: 100%;
   height: 2px;
-  background-color: var(--accent-orange);
+  //background-color: var(--accent-green);
   margin-top: 7px; /* Adjust as needed */
 }
 
 
 .card-topic {
-  font-size: x-large;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
 }
+
+.second-card {
+  width: 100%;
+  height: inherit;
+  background-color: #F0F2F5;
+  border-radius: 0 16px 16px 0;
+  margin-left: 0;
+  padding: 20px;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 0;
+}
+
+.support-content {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
 
 @media (max-width: 1110px) {
   .right-half {
     display: none;
   }
-
-  .left-content{
+  .left-content {
     display: none;
   }
 }
