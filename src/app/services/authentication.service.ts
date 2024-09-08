@@ -12,21 +12,45 @@ export class AuthenticationService {
 
   userRole: string;
   UserInstance: User = new User();
+  private redirectUrl: string | null = null;
+
   constructor(private router: Router, private awareness: AwarenessService, private communication: CommunicationService,
               private apiService: ApiService) {
 
   }
 
+  // canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  //   let route_roles: string[] = next.data['roles'];
+  //   let user_authenticated = false;
+
+
+  //   if(this.awareness.UserInstance == null){
+  //     this.awareness.UserInstance = new User();
+  //   }
+  //   if (this.awareness.UserInstance.id !== '') {
+
+  //     route_roles.forEach(role => {
+  //       if (role == this.awareness.UserInstance.role) {
+  //         user_authenticated = true;
+  //       }
+  //     });
+  //   }
+
+  //   if (!user_authenticated) {
+  //     this.router.navigate(['/authentication/login']);
+  //   }
+
+  //   return user_authenticated;
+  // }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let route_roles: string[] = next.data['roles'];
     let user_authenticated = false;
 
-
-    if(this.awareness.UserInstance == null){
+    if (this.awareness.UserInstance == null) {
       this.awareness.UserInstance = new User();
     }
-    if (this.awareness.UserInstance.id !== '') {
 
+    if (this.awareness.UserInstance.id !== '') {
       route_roles.forEach(role => {
         if (role == this.awareness.UserInstance.role) {
           user_authenticated = true;
@@ -35,6 +59,8 @@ export class AuthenticationService {
     }
 
     if (!user_authenticated) {
+      // Store the intended URL before redirecting
+      this.redirectUrl = state.url;
       this.router.navigate(['/authentication/login']);
     }
 
@@ -66,6 +92,15 @@ export class AuthenticationService {
         this.userRole = role;
       })
     );
+  }
+
+  navigateAfterLogin() {
+    if (this.redirectUrl) {
+      this.router.navigateByUrl(this.redirectUrl);
+      this.redirectUrl = null;
+    } else {
+      this.router.navigate(['/dashboard']); // or any default route
+    }
   }
 
 
