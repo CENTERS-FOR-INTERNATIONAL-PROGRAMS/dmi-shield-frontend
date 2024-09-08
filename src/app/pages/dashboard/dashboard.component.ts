@@ -12,7 +12,7 @@ import {
 } from 'ng-apexcharts';
 import {RouterModule} from "@angular/router";
 import {AwarenessService} from "../../services/awareness.service";
-
+import {config} from '../../config/config';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,13 +37,14 @@ export class AppDashboardComponent implements OnInit{
   @ViewChild('viewMoreContent') targetElement: ElementRef;
   @ViewChild('cardContainer') cardContainer!: ElementRef;
   activeCardIndex = 0;
+  dashboards: string[];
 
   constructor(public awareness: AwarenessService){
 
   }
 
   ngOnInit() {
-    // this.awareness.awaken(null);
+    this.dashboards = config.SUPERSET.DASHBOARDS;
   }
 
   scrollToTarget() {

@@ -55,7 +55,7 @@
       <h1 style="margin-top: 15px;">E-Bridge</h1>
       <h3>Find predictive data analytic models for disease outbreaks here</h3>
       <div class="card-button-box">
-        <a [routerLink]="['/resources/composites']">View Dashboards</a>
+        <a [routerLink]="dashboards?.length ? ['/dashboards', dashboards[6]] : ['/dashboards']">View Dashboards</a>
       </div>
     </div>
   </div>
