@@ -5,6 +5,7 @@ import { AppSideLoginComponent } from './login/login.component';
 import { AppSideRegisterComponent } from './register/register.component';
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import {ConfirmOtpComponent} from "./confirm-otp/confirm-otp.component";
 
 export const AuthenticationRoutes: Routes = [
   {
@@ -25,6 +26,10 @@ export const AuthenticationRoutes: Routes = [
       }, {
         path: 'forgot-password',
         component: ForgotPasswordComponent,
+      },
+      {
+        path: 'confirm-otp',
+        component: ConfirmOtpComponent,
       },
       { path: 'reset-password/:token', component: ResetPasswordComponent },
     ],

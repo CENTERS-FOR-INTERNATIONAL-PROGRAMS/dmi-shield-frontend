@@ -88,7 +88,9 @@ export class AppSideLoginComponent implements OnInit{
           response.data.attributes.user.token = response.data.attributes.token;
           this.awareness.saveUserData(response.data.attributes.user);
           this.ApiResponseStatus.processing = false;
-          this.router.navigate(['/home'])
+          // this.router.navigate(['/home'])
+          this.router.navigate(['/authentication/confirm-otp'])
+
         } else {
           this.ApiResponseStatus.processing = false;
           throw new Error('User data not found in response');
