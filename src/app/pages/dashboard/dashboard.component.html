@@ -30,7 +30,7 @@
       <h1 style="margin-top: 15px;">Surveillance Dashboards</h1>
       <h3>View dashboards with surveillance data for diseases of public health concern.</h3>
       <div class="card-button-box">
-        <a [routerLink]="['/dashboard']">View Dashboards</a>
+        <a [routerLink]="dashboards?.length ? ['/dashboards', dashboards[0]] : ['/dashboards']">View Dashboards</a>
       </div>
     </div>
     <div class="card">

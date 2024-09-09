@@ -85,11 +85,6 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  // onScroll(event) {
-  //   this.hideNav = this.scrollTop < event.target.scrollTop;
-  //   this.scrollTop = event.target.scrollTop;
-  // }
-
   onScroll(event: any) {
     const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 

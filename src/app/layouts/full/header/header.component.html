@@ -53,6 +53,12 @@
            style="color: inherit">
           <span>Outbreak Response</span>
         </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[6]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[6] : ''))"
+           style="color: inherit">
+          <span>E - Bridge</span>
+        </a>
       </mat-menu>
 
       <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload
