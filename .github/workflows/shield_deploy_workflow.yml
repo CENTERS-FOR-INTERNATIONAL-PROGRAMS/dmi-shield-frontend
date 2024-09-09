@@ -17,8 +17,9 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd /var/lib/shield_v2/dmi-shield-frontend/
-          sudo git switch v2
+          sudo git checkout v2
           sudo git pull
+          sudo docker compose down --rmi all
           sudo docker compose up -d --build --force-recreate --no-deps
           sudo systemctl restart nginx
           echo "S.H.I.E.L.D 2 is now LIVE!!"
