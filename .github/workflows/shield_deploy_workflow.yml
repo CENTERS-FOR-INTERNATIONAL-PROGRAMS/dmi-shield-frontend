@@ -18,6 +18,7 @@ jobs:
         script: |
           cd /var/lib/shield_v2/dmi-shield-frontend/
           sudo git checkout v2
+          git reset --hard origin/v2
           sudo git pull
           sudo docker compose down --rmi all
           sudo docker compose up -d --build --force-recreate --no-deps
