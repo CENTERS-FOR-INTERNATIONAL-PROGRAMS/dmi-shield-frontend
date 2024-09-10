@@ -82,6 +82,7 @@ export class ResetPasswordComponent implements OnInit{
 
       this.authService.postRequest('auth/user/password/reset', this.confirmResetPassData).subscribe({
         next: (response) => {
+          response.data.attributes.user.token = response.data.attributes.token;
           this.awareness.savePresSignUserData(response.data.attributes.user);
           this.ApiResponseStatus.error = true;
           this.ApiResponseStatus.message = "Password reset successful";
