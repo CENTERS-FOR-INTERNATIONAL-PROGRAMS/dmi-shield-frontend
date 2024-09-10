@@ -82,11 +82,12 @@ export class AppSideLoginComponent implements OnInit{
         type: 'User Authentication'
       }
     };
-    this.authService.postRequest('auth/user/password/sign-in', this.userData).subscribe(
+
+    this.authService.postRequest('auth/user/2fa/password/sign-in', this.userData).subscribe(
       (response) => {
         if (response && response.data && response.data.attributes && response.data.attributes.user && response.data.attributes.token) {
           response.data.attributes.user.token = response.data.attributes.token;
-          this.awareness.saveUserData(response.data.attributes.user);
+          this.awareness.savePresSignUserData(response.data.attributes.user);
           this.ApiResponseStatus.processing = false;
           // this.router.navigate(['/home'])
           this.router.navigate(['/authentication/confirm-otp'])
