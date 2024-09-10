@@ -82,7 +82,8 @@ export class AppSideLoginComponent implements OnInit{
         type: 'User Authentication'
       }
     };
-    this.authService.postRequest('auth/user/password/sign-in', this.userData).subscribe(
+
+    this.authService.postRequest('auth/user/2fa/password/sign-in', this.userData).subscribe(
       (response) => {
         if (response && response.data && response.data.attributes && response.data.attributes.user && response.data.attributes.token) {
           response.data.attributes.user.token = response.data.attributes.token;
