@@ -13,14 +13,15 @@ export class AwarenessService {
   focused: KeyValue = {};
   awake: boolean = false;
   private userDataKey = 'userData';
+  private preSignUserDataKey = 'preSignInData';
 
   constructor(private snackbar_instance: MatSnackBar) {
 
   }
 
-  saveUser(data: any): void {
-    localStorage.removeItem(this.userDataKey);
-    localStorage.setItem(this.userDataKey, JSON.stringify(data));
+  saveUser(dataKey: string, data: any): void {
+    localStorage.removeItem(dataKey);
+    localStorage.setItem(dataKey, JSON.stringify(data));
 
   }
 
@@ -37,14 +38,31 @@ export class AwarenessService {
       token: AuthUser.token,
     };
 
-    this.saveUser(mappedUser);
+    this.saveUser(this.userDataKey, mappedUser);
+  }
+
+  savePresSignUserData(AuthUser: any): void {
+    const mappedUser = {
+      name: AuthUser.name,
+      id: AuthUser.id,
+      status: AuthUser.status,
+      email: AuthUser.email,
+      role: AuthUser.role,
+      notifications: AuthUser.notifications,
+      confirmed_at: AuthUser.confirmed_at,
+      updated_at: AuthUser.updated_at,
+      token: AuthUser.token,
+    };
+
+    this.removeUserDataByKey('preSignInData');
+    this.saveUser('preSignInData', mappedUser);
   }
 
   refreshSaveUserData(userRole: string): void {
     const dataString = localStorage.getItem(this.userDataKey);
     let existingUser = JSON.parse(dataString);
     existingUser.role = userRole;
-    this.saveUser(existingUser);
+    this.saveUser(this.userDataKey, existingUser);
   }
 
 
@@ -52,9 +70,17 @@ export class AwarenessService {
     const dataString = localStorage.getItem(this.userDataKey);
     return dataString ? JSON.parse(dataString) : null;
   }
+  getPreSignUserData(): any | null {
+    const dataString = localStorage.getItem(this.preSignUserDataKey);
+    return dataString ? JSON.parse(dataString) : null;
+  }
 
   removeUserData(): void {
     localStorage.removeItem(this.userDataKey);
+  }
+
+  removeUserDataByKey(key: string): void {
+    localStorage.removeItem(key);
   }
 
 
