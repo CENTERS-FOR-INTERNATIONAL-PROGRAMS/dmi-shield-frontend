@@ -8,7 +8,6 @@ import {CommunicationService} from "../../../services/communication.service";
 import {AuthService} from "../../../services/api/auth.service";
 import {ApiResponseStatus, UserSignOutData} from "../../../interfaces/IAuth.model";
 import {ApiService} from "../../../services/api/api.service";
-import {ResourceModelApi} from "../../../models/Resource.model";
 import {NotificationModel} from "../../../models/Notification.model";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {config} from '../../../config/config';
@@ -27,6 +26,7 @@ export class HeaderComponent implements OnInit {
   scrollTop = 0;
   hideNav = false;
   headerFixed = true;
+  navbarOpen = false;
 
   showFiller = false;
   showMenu: boolean = false;
@@ -84,6 +84,11 @@ export class HeaderComponent implements OnInit {
     this.location.back();
   }
 
+
+  // onScroll(event) {
+  //   this.hideNav = this.scrollTop < event.target.scrollTop;
+  //   this.scrollTop = event.target.scrollTop;
+  // }
 
   onScroll(event: any) {
     const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -154,11 +159,12 @@ export class HeaderComponent implements OnInit {
 
   toggleMenuIcon() {
     const menuIcon = document.getElementById('menu-icon');
-    const navbar = document.querySelector('.navbar');
+    const sideDrawer = document.querySelector('.side-drawer');
+    this.navbarOpen = !this.navbarOpen;
 
-    if (menuIcon && navbar) {
+    if (menuIcon && sideDrawer) {
       menuIcon.classList.toggle('bx-x');
-      navbar.classList.toggle('active');
+      sideDrawer.classList.toggle('open');
     }
   }
 

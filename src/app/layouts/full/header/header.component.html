@@ -24,48 +24,41 @@
           <span>Indicator Based Surveillance</span>
         </a>
         <a mat-menu-item
-           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']"
-           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))"
-           style="color: inherit">
-          <span>Integrated Facility-Based Surveillance</span>
-        </a>
-        <a mat-menu-item
            [routerLink]="dashboards?.length ? ['/dashboards', dashboards[2]] : ['/dashboards']"
            [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[2] : ''))"
            style="color: inherit">
-          <span>SARI/ILI Surveillance</span>
+          <span>Integrated Facility-Based Surveillance</span>
         </a>
         <a mat-menu-item
            [routerLink]="dashboards?.length ? ['/dashboards', dashboards[3]] : ['/dashboards']"
            [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[3] : ''))"
            style="color: inherit">
-          <span>COVID-19 Mortality Surveillance</span>
+          <span>SARI/ILI Surveillance</span>
         </a>
         <a mat-menu-item
            [routerLink]="dashboards?.length ? ['/dashboards', dashboards[4]] : ['/dashboards']"
            [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[4] : ''))"
            style="color: inherit">
+          <span>COVID-19 Mortality Surveillance</span>
+        </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[1]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[1] : ''))"
+           style="color: inherit">
           <span>Event Based Surveillance</span>
         </a>
-        <a mat-menu-item
-           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[5]] : ['/dashboards']"
-           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[5] : ''))"
+        <a mat-menu-item href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank"
            style="color: inherit">
           <span>Outbreak Response</span>
-        </a>
-        <a mat-menu-item
-           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[6]] : ['/dashboards']"
-           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[6] : ''))"
-           style="color: inherit">
-          <span>E - Bridge</span>
         </a>
       </mat-menu>
 
       <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'">Upload
         Data</a>
-      <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'">Resources</a>
+      <a [routerLink]="['/resources/composites']"
+         [class.active]="activeRoute === '/resources/composites'">Resources</a>
       <a class="hide-fullScreen" [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'">
-        <img src="assets/images/icons/notifications-bell.svg" style="height: 30px;">
+        <img src="assets/images/icons/notifications-bell.svg" style="height: 30px;" alt="">
       </a>
     </div>
 
@@ -125,12 +118,29 @@
       </div>
 
 
-      <div class="m-t-4" style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
+      <div class="m-t-4"
+           style="text-align: center; font-weight: bold; color: var(--text-color); text-decoration: none">
         <a [routerLink]="['/notifications']">View All</a>
       </div>
     </mat-menu>
 
     <div class="bx bx-menu" id="menu-icon" (click)="toggleMenuIcon()"></div>
-
   </header>
+</div>
+
+<div class="side-drawer" [class.open]="navbarOpen">
+  <div class="drawer-header">
+    <img src="assets/images/new_logo/shield_new_logo.png" alt="shield logo" style="width: 36px;">
+    <span class="close-drawer" (click)="toggleMenuIcon()">&times;</span>
+  </div>
+  <div class="drawer-content">
+    <a [routerLink]="['/home']" [class.active]="activeRoute === '/home'" (click)="toggleMenuIcon()">Home</a>
+    <a [routerLink]="['/about']" [class.active]="activeRoute === '/about'" (click)="toggleMenuIcon()">About</a>
+    <a [matMenuTriggerFor]="menu" [class.active]="activeRoute === '/dashboard'">Dashboards</a>
+    <a [routerLink]="['/surveillance/composites']" [class.active]="activeRoute === '/surveillance/composites'"
+       (click)="toggleMenuIcon()">Upload Data</a>
+    <a [routerLink]="['/resources/composites']" [class.active]="activeRoute === '/resources/composites'"
+       (click)="toggleMenuIcon()">Resources</a>
+    <a [routerLink]="['/notifications']" [class.active]="activeRoute === '/notifications'" (click)="toggleMenuIcon()">Notifications</a>
+  </div>
 </div>
