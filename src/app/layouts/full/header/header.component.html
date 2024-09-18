@@ -47,6 +47,12 @@
            style="color: inherit">
           <span>Event Based Surveillance</span>
         </a>
+        <a mat-menu-item
+           [routerLink]="dashboards?.length ? ['/dashboards', dashboards[6]] : ['/dashboards']"
+           [class.active]="activeRoute === ('/dashboards/' + (dashboards?.length ? dashboards[6] : ''))"
+           style="color: inherit">
+          <span>E-Bridge</span>
+        </a>
         <a mat-menu-item href="https://adam-analytics.health.go.ke/dashboard/list/" target="_blank"
            style="color: inherit">
           <span>Outbreak Response</span>
