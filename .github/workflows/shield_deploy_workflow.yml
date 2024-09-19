@@ -65,7 +65,7 @@ jobs:
           script: |
             cd /var/lib/shield_v2/dmi-shield-frontend/
             docker-compose down --rmi all
-            sudo git switch v2
+            git switch v2
             git remote update
             git checkout dev
             git pull
