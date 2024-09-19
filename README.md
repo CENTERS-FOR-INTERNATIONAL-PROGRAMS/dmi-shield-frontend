@@ -12,12 +12,16 @@ User management, Integrated Dashboards, Upload of documents
     ```
 2. Create `config` directory in src/app directory
 3. Create `config.ts` file in config directory
-4. Create a .env file to reference the port. Refer to the .env.example
+4. Create a .env.test file to reference the port. Refer to the environment/.env.example
 4. Install Docker and Run the application
+ For Test Environment
     ```sh
-    docker compose up
+     docker compose -p test --env-file .\environment\.env.test up -d
     ```
-
+ For Production Environment
+     ```sh
+     docker compose -p prod --env-file .\environment\.env.prod up -d
+    ```
 # Config.ts Example
   ```sh
     export const config = {
