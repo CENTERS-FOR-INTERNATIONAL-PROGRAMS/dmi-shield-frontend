@@ -29,7 +29,7 @@ jobs:
             sudo git checkout main
             sudo git stash
             sudo git pull
-            sudo cp -rf /var/lib/shield_prod/environment .
+            sudo cp -rf /var/lib/shield_prod/* environment/
             sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
             sudo docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
             sudo systemctl restart nginx
@@ -50,7 +50,7 @@ jobs:
             sudo git checkout dev
             sudo git stash
             sudo git pull
-            sudo cp -rf /etc/shield_dev_env/environment/ .
+            sudo cp -rf /etc/shield_dev_env/environment/* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "Deploying to Demo"
             sudo docker-compose -p demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
