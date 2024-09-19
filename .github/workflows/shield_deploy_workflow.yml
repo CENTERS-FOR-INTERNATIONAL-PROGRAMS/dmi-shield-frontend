@@ -67,9 +67,8 @@ jobs:
             docker stop shield_app
             docker rm shield_app
             docker-compose down --rmi all
-            sudo git switch v2
             sudo git remote update
-            sudo git checkout dev
+            sudo git checkout v2
             sudo git pull
             sudo docker-compose up -d
             sudo systemctl restart nginx
