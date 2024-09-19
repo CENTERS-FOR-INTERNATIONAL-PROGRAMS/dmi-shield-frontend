@@ -47,7 +47,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /etc/shield_dev_env/dmi-shield-frontend
-            sudo git chekout dev
+            sudo git checkout dev
             sudo git stash
             sudo git pull
             sudo cp -rf /etc/shield_dev_env/environment/ .
