@@ -9,6 +9,7 @@ import {Guid} from "guid-typescript";
 import {ApiService} from "../../../services/api/api.service";
 import {ApiResponseStatus, CreatePreSignedUrlData} from 'src/app/interfaces/IAuth.model';
 import {Resource} from "../../../models/Resource.model";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-modify',
@@ -19,7 +20,7 @@ export class ModifyComponent implements OnInit{
   public Files: NgxFileDropEntry[] = [];
   SurveillanceDataList: Surveillance[] = [];
   ValidatedFileTypes: string[] = ["csv", "xlsx", "xls"]
-  DocumentTypes: string[] = ["moh505", "sari", 'mortality', 'cbs', 'jitenge']
+  DocumentTypes: string[] = ["moh505", "sari", "afi", "cbs"]
   fileData: CreatePreSignedUrlData;
 
 
@@ -36,7 +37,7 @@ export class ModifyComponent implements OnInit{
   }
 
   constructor(private communication: CommunicationService, private awareness: AwarenessService, private http: HttpClient,
-              private apiService: ApiService) {
+              private apiService: ApiService,  private router: Router) {
   }
 
   ngOnInit(): void {
@@ -159,6 +160,7 @@ export class ModifyComponent implements OnInit{
               if (successfulUploads === totalFiles) {
                 this.ApiResponseStatus.processing = false;
                 this.ApiResponseStatus.success = true;
+                this.router.navigate(['/surveillance/composites'])
               }
             },
             error: (error) =>{

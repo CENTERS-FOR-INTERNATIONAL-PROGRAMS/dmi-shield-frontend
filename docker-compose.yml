@@ -1,14 +1,12 @@
 version: '3.8'
 
 services:
-  shield-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: shield-app
-    ports:
-      - ${SHIELD_PORT}:4200 
-    restart: unless-stopped
-    env_file:
-      - .env
-
+  dmi_shield_app:
+   build:
+    context: .
+    dockerfile: Dockerfile
+   ports:
+    - "${SHIELD_PORT}:4200"
+   restart: unless-stopped
+   env_file:
+    - ./environment/.env.${ENVIRONMENT} 

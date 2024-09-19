@@ -82,10 +82,11 @@ export class ResetPasswordComponent implements OnInit{
 
       this.authService.postRequest('auth/user/password/reset', this.confirmResetPassData).subscribe({
         next: (response) => {
-          this.awareness.saveUserData(response.data.attributes.user);
+          response.data.attributes.user.token = response.data.attributes.token;
+          this.awareness.savePresSignUserData(response.data.attributes.user);
           this.ApiResponseStatus.error = true;
           this.ApiResponseStatus.message = "Password reset successful";
-          this.router.navigate(['/home'])
+          this.router.navigate(['/authentication/login']);
           this.communication.showToast("Password reset successful");
         },
         error: (error) =>{

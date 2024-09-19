@@ -89,7 +89,7 @@ export class ConfirmOtpComponent implements OnInit {
 
 
   handleGetToken(): string {
-    const token =this.awareness.getUserData().token;
+    const token =this.awareness.getPreSignUserData().token;
     if(token != ''){
       return token;
     }
@@ -100,7 +100,7 @@ export class ConfirmOtpComponent implements OnInit {
   }
 
   getUserId(): string {
-    const token =this.awareness.getUserData().id;
+    const token =this.awareness.getPreSignUserData().id;
     if(token != ''){
       return token;
     }

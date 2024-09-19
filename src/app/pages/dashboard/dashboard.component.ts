@@ -12,7 +12,7 @@ import {
 } from 'ng-apexcharts';
 import {RouterModule} from "@angular/router";
 import {AwarenessService} from "../../services/awareness.service";
-
+import {config} from '../../config/config';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,13 +35,16 @@ import {AwarenessService} from "../../services/awareness.service";
 export class AppDashboardComponent implements OnInit{
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   @ViewChild('viewMoreContent') targetElement: ElementRef;
+  @ViewChild('cardContainer') cardContainer!: ElementRef;
+  activeCardIndex = 0;
+  dashboards: string[];
 
   constructor(public awareness: AwarenessService){
 
   }
 
   ngOnInit() {
-    // this.awareness.awaken(null);
+    this.dashboards = config.SUPERSET.DASHBOARDS;
   }
 
   scrollToTarget() {
@@ -62,6 +65,20 @@ export class AppDashboardComponent implements OnInit{
       viewMoreContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+  scrollLeft() {
+    this.cardContainer.nativeElement.scrollLeft -= 360;
+  }
 
+  scrollRight() {
+    this.cardContainer.nativeElement.scrollLeft += 360;
+  }
+
+  scrollToCard(index: number) {
+    if (this.cardContainer && this.cardContainer.nativeElement) {
+      const cardWidth = this.cardContainer.nativeElement.offsetWidth;
+      this.cardContainer.nativeElement.scrollLeft = index * cardWidth;
+      this.activeCardIndex = index;
+    }
+  }
 
 }

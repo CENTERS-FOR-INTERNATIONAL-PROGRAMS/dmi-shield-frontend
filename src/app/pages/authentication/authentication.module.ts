@@ -21,7 +21,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ConfirmOtpComponent } from './confirm-otp/confirm-otp.component';
+import {ConfirmOtpComponent} from "./confirm-otp/confirm-otp.component";
 
 @NgModule({
   imports: [

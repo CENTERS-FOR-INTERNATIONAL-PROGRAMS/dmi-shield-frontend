@@ -1,89 +1,129 @@
-<div class="login-page">
-
-  <div class="left-half">
-
-    <div class="login-top-bar">
-      <img src="assets/images/logos/logo-moh.png" style="width: 30rem;">
-      <p [routerLink]="['/authentication/login']" class='bx bx-arrow-back'>  Go Back</p>
+<div class="login-page" style="
+  background-image: url('assets/images/backgrounds/hero-bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+">
+  <div class="left-content">
+    <div class="home-content">
+      <p style="font-weight: 300; line-height: 44px; font-size: 36px; color: #FFFFFF">WELCOME TO</p>
+      <p style="font-weight: 900; line-height: 64px; font-size: 96px; color: #FFFFFF">SHIELD</p>
+      <h3>Surveillance Health Information Exchange and Linkage Data</h3>
+      <h4>One Stop Shop For Everything Disease Surveillance .</h4>
     </div>
-
-    <mat-card class="login-card cardWithShadow" style="width: 100%">
-      <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate" style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
-      <div *ngIf="this.ApiResponseStatus.processing;" style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
-
-      <mat-card-header>
-        <mat-card-title class="card-topic text-center f-w-600 with-red-line">Sign up for an account</mat-card-title>
-      </mat-card-header>
-
-      <mat-card-content>
-        <div class="text-center bubble" *ngIf="this.ApiResponseStatus.error" style="margin: 2rem">
-          {{ this.ApiResponseStatus.message }}
+  </div>
+  <div class="left-half">
+    <div class="container">
+      <div class="login-card cardWithShadow" style="width: 100%; height: 100%">
+        <div class="login-top-bar">
+          <p [routerLink]="['/authentication/login']" class='bx bx-arrow-back'> Go Back</p>
         </div>
 
-        <form id="form_user_authenticate" (ngSubmit)="submitInstance()" class="m-t-30">
-          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
-          <mat-form-field appearance="outline" class="w-100" color="primary">
-            <input matInput [formControl]="UserFormControls['user_name']" type="text"
-                   [(ngModel)]="UserInstance.name" />
+        <mat-progress-bar *ngIf="this.ApiResponseStatus.processing;" mode="indeterminate"
+                          style="position: absolute; top: 0; left: 0; right: 0;"></mat-progress-bar>
+        <div *ngIf="this.ApiResponseStatus.processing;"
+             style="position: absolute; top: 3%; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 2;"></div>
 
-            <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
-              <strong>Required</strong>
-            </mat-error>
-          </mat-form-field>
+        <mat-card-header>
+          <mat-card-title class="card-topic text-center f-w-600 with-red-line">Sign up for an account</mat-card-title>
+        </mat-card-header>
 
-          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">User Email</mat-label>
-          <mat-form-field appearance="outline" class="w-100" color="primary">
-            <input matInput [formControl]="UserFormControls['user_email']" type="email"
-                   [(ngModel)]="UserInstance.email" />
-
-            <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
-              <strong>Required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
-          <mat-form-field appearance="outline" class="w-100" color="primary">
-            <input matInput [formControl]="UserFormControls['user_password']"
-                   [type]="hide ? 'password' : 'text'" />
-            <img matSuffix (click)="hide = !hide"
-                 src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
-                 alt="" class="view-icon--image" />
-
-            <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
-              <strong>Required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Confirm Password</mat-label>
-          <mat-form-field appearance="outline" class="w-100" color="primary">
-            <input matInput [formControl]="UserFormControls['confirm_password']" [type]="hide ? 'password' : 'text'" />
-            <mat-error *ngIf="UserFormControls['confirm_password'].hasError('required')">
-              <strong>Required</strong>
-            </mat-error>
-
-            <mat-error *ngIf="UserFormControls['confirm_password'].hasError('passwordMismatch')">
-              <strong>Passwords do not match</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <div class="auth-bottom">
-
-            <a (click)="submitInstance()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
-              Sign Up
-            </a>
-
-            <p class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Already have an account?
-              <a [routerLink]="['/authentication/login']" class="text-primary">Sign In</a>
-            </p>
+        <mat-card-content>
+          <div class="text-center bubble" *ngIf="this.ApiResponseStatus.error" style="margin: 2rem">
+            {{ this.ApiResponseStatus.message }}
           </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
 
-  <div class="right-half">
-    <div class="image-container">
-      <img src="assets/images/logos/logo-dalle.png" alt="Image" width="591">
+          <form id="form_user_authenticate" (ngSubmit)="submitInstance()" class="m-t-30">
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <i class='bx bx-user' matPrefix style="font-size: 22px; padding: 0 6px;"></i>
+              <input matInput [formControl]="UserFormControls['user_name']" type="text"
+                     [(ngModel)]="UserInstance.name"/>
+
+              <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">User Email</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <i class='bx bx-envelope' matPrefix style="font-size: 22px; padding: 0 6px;"></i>
+              <input matInput [formControl]="UserFormControls['user_email']" type="email"
+                     [(ngModel)]="UserInstance.email"/>
+
+              <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <i class='bx bx-lock' matPrefix style="font-size: 24px; padding: 0 4px;"></i>
+              <input matInput [formControl]="UserFormControls['user_password']"
+                     [type]="hide ? 'password' : 'text'"/>
+              <img matSuffix (click)="hide = !hide"
+                   src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
+                   alt="" class="view-icon--image"/>
+
+              <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Confirm Password</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <i class='bx bx-lock' matPrefix style="font-size: 24px; padding: 0 4px;"></i>
+              <input matInput [formControl]="UserFormControls['confirm_password']" [type]="hide ? 'password' : 'text'"/>
+              <mat-error *ngIf="UserFormControls['confirm_password'].hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+
+              <mat-error *ngIf="UserFormControls['confirm_password'].hasError('passwordMismatch')">
+                <strong>Passwords do not match</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div class="auth-bottom">
+
+              <a (click)="submitInstance()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
+                Sign Up
+              </a>
+            </div>
+          </form>
+        </mat-card-content>
+      </div>
+      <div class="second-card">
+        <div class="login-top-bar">
+          <p></p>
+        </div>
+        <mat-card-header>
+          <mat-card-title class="card-topic text-center with-red-line" style="">Already have an account?
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="margin-top: 2rem" class="button-container">
+            <p style="font-weight: 400; font-size:14px; line-height: 18px;">Login now for special access to SHIELD's specialized features.</p>
+            <button class="button m-t-16 m-b-16" [routerLink]="['/authentication/login']">
+              Login
+            </button>
+          </div>
+          <div class="button-container">
+            <p style="font-weight: 400; font-size:14px; line-height: 18px;">Having trouble with registration or login?
+              Contact our support centre or email us.</p>
+            <button class="button m-t-16 m-b-16">
+              Email Us
+            </button>
+          </div>
+          <div>
+            <mat-card-title class="card-topic text-center with-red-line" style="">Contact Us</mat-card-title>
+            <div class="support-content">
+              <p>Fixed telephone: 020-000000</p>
+              <p> Mobile number: 0780 000000</p>
+              <p>Email: support@shield.health.go.ke</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </div>
     </div>
   </div>
 </div>

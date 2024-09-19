@@ -13,10 +13,9 @@ jobs:
     strategy:
       matrix:
         branch: [main, dev]
-
     steps:
       - name: Checkout Prod
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         uses: appleboy/ssh-action@master
@@ -27,16 +26,18 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/lib/shield_prod/dmi-shield-frontend
-            sudo git switch main
+            sudo git checkout main
+            sudo git stash
             sudo git pull
+            sudo cp -rf /var/lib/shield_prod/environment .
             sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
-            sudo docker compose up -d --build --force-recreate --no-deps
+            sudo docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
             sudo systemctl restart nginx
-            echo "S.H.I.E.L.D prod is now LIVE!!"
+            echo "S.H.I.E.L.D Prod is now LIVE!!"
 
       - name: Checkout Dev
-        uses: actions/checkout@v1
-      - name: Deploy to Dev
+        uses: actions/checkout@v3
+      - name: Deploy to Demo and Test
         if: github.ref == 'refs/heads/dev'
         uses: appleboy/ssh-action@master
         with:
@@ -46,9 +47,18 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /etc/shield_dev_env/dmi-shield-frontend
-            sudo git switch dev
+            sudo git chekout dev
+            sudo git stash
             sudo git pull
+            sudo cp -rf /etc/shield_dev_env/environment/ .
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
-            sudo docker compose up -d --build --force-recreate --no-deps
+            echo "Deploying to Demo"
+            sudo docker-compose -p demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
             sudo systemctl restart nginx
-            echo "S.H.I.E.L.D dev is now LIVE!!"
+            echo "S.H.I.E.L.D Demo is now LIVE!!"
+            echo "Deploying to Test"
+            sudo docker-compose -p test --env-file environment/.env.test up -d  --build --force-recreate --no-deps
+            sudo systemctl restart nginx
+            echo "S.H.I.E.L.D Test is now LIVE!!"
+        
+    
