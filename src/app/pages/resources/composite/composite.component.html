@@ -38,9 +38,14 @@
           <p [matTooltip]="data.original_filename?.toUpperCase()">
             {{ concatenate(data.original_filename?.toUpperCase(), 30) }}
           </p>
-          <a [href]="data.url" target="_blank">
-            <button>Download</button>
-          </a>
+<!--          <a *ngIf="this.awareness.UserInstance.role === null || this.awareness.UserInstance.role === 'level1'" [href]="data.url" target="_blank">-->
+<!--            <button>Download</button>-->
+<!--          </a>-->
+
+          <button
+            (click)="openUrl(data.url)">
+            Download
+          </button>
         </div>
       </div>
     </div>
