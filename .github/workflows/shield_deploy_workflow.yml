@@ -4,7 +4,7 @@ on:
     branches:
       - main
       - dev
-      - v2
+
 jobs:
   deploy:
     name: Deploy SHIELD
@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        branch: [main, dev, v2]
+        branch: [main, dev]
     steps:
       - name: Checkout Prod
         uses: actions/checkout@v3
@@ -27,15 +27,17 @@ jobs:
           script: |
             cd /var/lib/shield_prod/dmi-shield-frontend
             sudo git switch main
+            sudo git stash
             sudo git pull
+            sudo cp -rf /var/lib/shield_prod/environment .
             sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
-            sudo docker compose up -d --build --force-recreate --no-deps
+            sudo docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
             sudo systemctl restart nginx
             echo "S.H.I.E.L.D Prod is now LIVE!!"
 
       - name: Checkout Dev
         uses: actions/checkout@v3
-      - name: Deploy to Dev
+      - name: Deploy to Demo and Test
         if: github.ref == 'refs/heads/dev'
         uses: appleboy/ssh-action@master
         with:
@@ -47,29 +49,15 @@ jobs:
             cd /etc/shield_dev_env/dmi-shield-frontend
             sudo git switch dev
             sudo git pull
+            sudo cp -rf /etc/shield_dev_env/environment/ .
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
-            sudo docker compose up -d --build --force-recreate --no-deps
-            sudo systemctl restart nginx
-            echo "S.H.I.E.L.D dev is now LIVE!!"
-        
-      - name: Checkout Demo
-        uses: actions/checkout@v3
-      - name: Deploy to Demo
-        if: github.ref == 'refs/heads/v2'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_V2 }}
-          username: ${{ secrets.USERNAME_V2 }}
-          key: ${{ secrets.PRIVATE_KEY_V2 }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /var/lib/shield_v2/dmi-shield-frontend/
-            docker stop shield_app
-            docker rm shield_app
-            docker-compose down --rmi all
-            sudo git remote update
-            sudo git checkout v2
-            sudo git pull
-            sudo docker-compose up -d
+            echo "Deploying to Demo"
+            sudo docker-compose -p demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
             sudo systemctl restart nginx
             echo "S.H.I.E.L.D Demo is now LIVE!!"
+            echo "Deploying to Test"
+            sudo docker-compose -p test --env-file environment/.env.test up -d  --build --force-recreate --no-deps
+            sudo systemctl restart nginx
+            echo "S.H.I.E.L.D Test is now LIVE!!"
+        
+    
