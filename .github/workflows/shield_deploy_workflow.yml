@@ -47,6 +47,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY_DEV }}
           port: ${{ secrets.PORT }}
           script: |
+            echo "---Deploy to Test----"
             cd /etc/shield_dev_env/dmi-shield-frontend
             git checkout dev
             git stash
@@ -56,11 +57,18 @@ jobs:
             docker-compose down --rmi all
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
-            echo "Deploying to Demo"
-            docker-compose -p demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
-            echo "S.H.I.E.L.D Demo is now LIVE!!"
-            echo "Deploying to Test"
+            echo "--------Deploying to Test--------"
             docker-compose -p test --env-file environment/.env.test up -d  --build --force-recreate --no-deps
             echo "S.H.I.E.L.D Test is now LIVE!!"
+            echo "--------Deploy to Demo--------"
+            cd /var/lib/shield_demo/dmi-shield-frontend
+            git checkout dev
+            git stash
+            git pull
+            sudo cp -rf /var/lib/shield_demo/environment/.env.demo environment/
+            sudo cp -rf /var/lib/shield_demo/config_files/* src/app/
+            echo "------Deploying to Demo---------"
+            docker-compose -p shield_demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
+            echo "S.H.I.E.L.D Demo is now LIVE!!"
         
     
