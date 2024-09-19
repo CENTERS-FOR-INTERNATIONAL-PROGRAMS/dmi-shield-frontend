@@ -106,6 +106,15 @@ export class AuthenticationService {
 
 }
 
+
 export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
-  return inject(AuthenticationService).canActivate(next, state);
+  const authService = inject(AuthenticationService);
+  const isAuthorized = authService.canActivate(next, state);
+  const communicationService = inject(CommunicationService);
+  if (!isAuthorized) {
+    communicationService.showToast('Sorry, you are not authorised to perform this action.');
+
+  }
+
+  return isAuthorized;
 }
