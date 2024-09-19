@@ -32,7 +32,6 @@ jobs:
             sudo cp -rf /var/lib/shield_prod/* environment/
             sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
             sudo docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
-            sudo systemctl restart nginx
             echo "S.H.I.E.L.D Prod is now LIVE!!"
 
       - name: Checkout Dev
@@ -54,11 +53,9 @@ jobs:
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "Deploying to Demo"
             docker-compose -p demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
-            sudo systemctl restart nginx
             echo "S.H.I.E.L.D Demo is now LIVE!!"
             echo "Deploying to Test"
             docker-compose -p test --env-file environment/.env.test up -d  --build --force-recreate --no-deps
-            sudo systemctl restart nginx
             echo "S.H.I.E.L.D Test is now LIVE!!"
         
     
