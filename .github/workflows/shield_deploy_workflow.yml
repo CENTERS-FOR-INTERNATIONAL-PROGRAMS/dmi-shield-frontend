@@ -47,17 +47,17 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /etc/shield_dev_env/dmi-shield-frontend
-            sudo git checkout dev
-            sudo git stash
-            sudo git pull
-            sudo cp -rf /etc/shield_dev_env/environment/* environment/
+            git checkout dev
+            git stash
+            git pull
+            sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "Deploying to Demo"
-            sudo docker-compose -p demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
+            docker-compose -p demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
             sudo systemctl restart nginx
             echo "S.H.I.E.L.D Demo is now LIVE!!"
             echo "Deploying to Test"
-            sudo docker-compose -p test --env-file environment/.env.test up -d  --build --force-recreate --no-deps
+            docker-compose -p test --env-file environment/.env.test up -d  --build --force-recreate --no-deps
             sudo systemctl restart nginx
             echo "S.H.I.E.L.D Test is now LIVE!!"
         
