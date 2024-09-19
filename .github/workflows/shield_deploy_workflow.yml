@@ -64,11 +64,13 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/lib/shield_v2/dmi-shield-frontend/
+            docker stop shield_app
+            docker rm shield_app
             docker-compose down --rmi all
             git switch v2
             git remote update
             git checkout dev
             git pull
-            docker-compose up -d --build --force-recreate --no-deps
+            docker-compose up -d
             sudo systemctl restart nginx
             echo "S.H.I.E.L.D Demo is now LIVE!!"
