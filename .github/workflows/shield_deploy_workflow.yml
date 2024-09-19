@@ -29,6 +29,8 @@ jobs:
             sudo git checkout main
             sudo git stash
             sudo git pull
+            docker rm prod-dmi_shield_app-1
+            docker-compose down --rmi all
             sudo cp -rf /var/lib/shield_prod/environment/.env.* environment/
             sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
             sudo docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
@@ -49,6 +51,9 @@ jobs:
             git checkout dev
             git stash
             git pull
+            docker stop test-dmi_shield_app-1 demo-dmi_shield_app-1
+            docker rm test-dmi_shield_app-1 demo-dmi_shield_app-1
+            docker-compose down --rmi all
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "Deploying to Demo"
