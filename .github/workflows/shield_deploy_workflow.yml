@@ -29,7 +29,7 @@ jobs:
             sudo git checkout main
             sudo git stash
             sudo git pull
-            sudo cp -rf /var/lib/shield_prod/* environment/
+            sudo cp -rf /var/lib/shield_prod/environment/.env.* environment/
             sudo cp -rf /var/lib/shield_prod/config_files/* src/app/
             sudo docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
             echo "S.H.I.E.L.D Prod is now LIVE!!"
