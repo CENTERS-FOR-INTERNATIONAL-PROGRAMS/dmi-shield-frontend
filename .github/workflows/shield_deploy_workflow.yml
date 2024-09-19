@@ -26,7 +26,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/lib/shield_prod/dmi-shield-frontend
-            sudo git switch main
+            sudo git checkout main
             sudo git stash
             sudo git pull
             sudo cp -rf /var/lib/shield_prod/environment .
@@ -47,7 +47,8 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /etc/shield_dev_env/dmi-shield-frontend
-            sudo git switch dev
+            sudo git chekout dev
+            sudo git stash
             sudo git pull
             sudo cp -rf /etc/shield_dev_env/environment/ .
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
