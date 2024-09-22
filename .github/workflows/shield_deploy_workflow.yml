@@ -26,7 +26,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/lib/shield_prod/dmi-shield-frontend
-            docker-compose down --rmi all
+            docker-compose -p prod --env-file environment/.env.prod down --rmi all
             git checkout main
             git stash
             git reset --hard origin/main
