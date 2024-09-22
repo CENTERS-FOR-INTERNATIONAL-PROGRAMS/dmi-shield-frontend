@@ -27,6 +27,7 @@ export const UsersRoutes: Routes = [
         component: ModifyPasswordComponent
       }, {
         path: 'modify_role',
+        canActivate: [AuthGuard], data: { roles: ['admin'] },
         component: ModifyRoleComponent
       }, {
         path: 'view',
