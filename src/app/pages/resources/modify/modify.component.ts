@@ -8,6 +8,7 @@ import {Guid} from "guid-typescript";
 import {IModelStatus} from "../../../interfaces/IModel.model";
 import {ApiResponseStatus, CreatePreSignedUrlData, UserAuthenticationData} from 'src/app/interfaces/IAuth.model';
 import {ApiService} from "../../../services/api/api.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-modify',
@@ -35,7 +36,7 @@ export class ModifyComponent implements OnInit{
   }
 
   constructor(private communication: CommunicationService, private awareness: AwarenessService, private http: HttpClient,
-              private apiService: ApiService) {
+              private apiService: ApiService, private router: Router) {
   }
 
   ngOnInit() {
@@ -118,6 +119,7 @@ export class ModifyComponent implements OnInit{
               if (successfulUploads === totalFiles) {
                 this.ApiResponseStatus.processing = false;
                 this.ApiResponseStatus.success = true;
+                this.router.navigate(['/resources/composites'])
               }
             },
             error: (error) =>{

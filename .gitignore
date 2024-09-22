@@ -36,6 +36,7 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+/tests
 
 # System files
 .DS_Store
@@ -44,3 +45,7 @@ docs
 src/app/config
 .env
 shield_deploy_workflow.yml
+environment/.env.demo
+environment/.env.prod
+environment/.env.test
+

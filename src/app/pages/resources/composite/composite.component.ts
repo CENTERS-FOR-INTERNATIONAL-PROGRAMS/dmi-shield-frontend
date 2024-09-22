@@ -34,6 +34,7 @@ export class CompositeComponent implements OnInit{
 
 
   ngOnInit() {
+    this.getUser();
     this.loadComposites();
 
     this.authenticationService.getApiCurrentUserRole().subscribe({
@@ -42,6 +43,18 @@ export class CompositeComponent implements OnInit{
       },
       error: (err) => console.error('Error fetching user role', err),
     });
+  }
+
+  getUser() {
+    this.awareness.UserInstance = this.awareness.getUserData();
+  }
+
+  openUrl(url: string) {
+    if (!this.awareness.UserInstance?.role || this.awareness.UserInstance?.role === 'level1') {
+      this.communication.showToast('Sorry, you are not authorised to download the file.');
+      return;
+    }
+    window.open(url, '_blank');
   }
 
   get filteredUploadList() {
