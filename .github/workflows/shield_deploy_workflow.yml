@@ -26,13 +26,14 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/lib/shield_prod/dmi-shield-frontend
-            sudo git checkout main
-            sudo git stash
-            sudo git pull
-            docker-compose down --rmi all
-            sudo cp -rf /var/lib/shield_prod/config_files/.env.* environment/
-            sudo cp -rf /var/lib/shield_prod/config_files/config/ src/app/
-            sudo docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
+            docker-compose -p prod --env-file environment/.env.prod down --rmi all
+            git checkout main
+            git stash
+            git reset --hard origin/main
+            git pull
+            cp -rf /var/lib/shield_prod/config_files/.env.* environment/
+            cp -rf /var/lib/shield_prod/config_files/config/ src/app/
+            docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
             echo "S.H.I.E.L.D Prod is now LIVE!!"
 
       - name: Checkout Dev
