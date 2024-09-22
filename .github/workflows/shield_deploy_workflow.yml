@@ -26,10 +26,11 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/lib/shield_prod/dmi-shield-frontend
+            docker-compose down --rmi all
             git checkout main
             git stash
+            git reset --hard origin/main
             git pull
-            docker-compose down --rmi all
             cp -rf /var/lib/shield_prod/config_files/.env.* environment/
             cp -rf /var/lib/shield_prod/config_files/config/ src/app/
             docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
