@@ -49,7 +49,8 @@ jobs:
           script: |
             echo "---Deploy to Test----"
             cd /etc/shield_dev_env/dmi-shield-frontend
-            docker-compose --env-file environment/.env.test down --rmi all
+            docker stop test-dmi_shield_app-1 &&  docker rm test-dmi_shield_app-1
+            docker rmi test-dmi_shield_app
             git checkout dev
             git stash
             git pull
@@ -60,7 +61,8 @@ jobs:
             echo "S.H.I.E.L.D Test is now LIVE!!"
             echo "--------Deploy to Demo--------"
             cd /var/lib/shield_demo/dmi-shield-frontend
-            docker-compose --env-file environment/.env.demo down --rmi all
+            docker stop shield_demo-dmi_shield_app-1 &&  docker rm shield_demo-dmi_shield_app-1
+            docker rmi shield_demo-dmi_shield_app
             git checkout dev
             git stash
             git pull
