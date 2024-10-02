@@ -50,7 +50,8 @@ export class CompositeComponent implements OnInit{
   }
 
   openUrl(url: string) {
-    if (!this.awareness.UserInstance?.role || this.awareness.UserInstance?.role === 'level1') {
+    if (!this.awareness.UserInstance?.role ||
+      this.awareness.UserInstance?.role === 'level1' || this.awareness.UserInstance?.role === 'guest') {
       this.communication.showToast('Sorry, you are not authorised to download the file.');
       return;
     }
