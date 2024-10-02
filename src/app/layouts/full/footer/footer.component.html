@@ -14,10 +14,25 @@
       <a>Terms and Conditions</a>
     </div>
     <div class="footer-section terms-container">
-      <a [routerLink]="['/support/']"><span class="quick">Help</span>&nbsp;<span> & Support</span></a>
-      <a>020-00000</a>
-      <a>support@shield.health.go.ke</a>
-      <a>MINISTRY OF HEALTH, Afya House, <br/>Cathedral Road</a>
+      <a><span class="quick">Help</span>&nbsp;<span> & Support</span></a>
+      <div class="footerItems">
+        <i class='bx bx-help-circle footerIcons'></i>
+        <a [routerLink]="['/support/']">Go to help page</a>
+      </div>
+      <div class="footerItems">
+        <i class='bx bx-mobile footerIcons'></i>
+        <a>020-00000</a>
+      </div>
+      <div class="footerItems">
+        <i class='bx bxs-envelope footerIcons'></i>
+        <a href="mailto:support@shield.health.go.ke">support@shield.health.go.ke</a>
+      </div>
+      <div class="footerItems">
+        <i class='bx bx-home footerIcons'></i>
+        <div>
+          <a>MINISTRY OF HEALTH, Afya House, Cathedral Road</a>
+        </div>
+      </div>
     </div>
     <!--    <div class="shield-logo-container">-->
     <!--      <img class="shield-logo" src="assets/images/logos/logo-shield-footer.png">-->
@@ -28,7 +43,7 @@
 
   <div class="copyright">
     <p>
-      @ 2024 Division of Disease Surveillance and Response . All rights reserved
+      @ {{ currentYear }} Division of Disease Surveillance and Response . All rights reserved
     </p>
   </div>
 </footer>

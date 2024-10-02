@@ -49,26 +49,27 @@ jobs:
           script: |
             echo "---Deploy to Test----"
             cd /etc/shield_dev_env/dmi-shield-frontend
+            docker stop test-dmi_shield_app-1 &&  docker rm test-dmi_shield_app-1
+            docker rmi test-dmi_shield_app
             git checkout dev
             git stash
             git pull
-            docker stop test-dmi_shield_app-1 demo-dmi_shield_app-1
-            docker rm test-dmi_shield_app-1 demo-dmi_shield_app-1
-            docker-compose down --rmi all
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "--------Deploying to Test--------"
-            docker-compose -p test --env-file environment/.env.test up -d  --build --force-recreate --no-deps
+            docker-compose -p test --env-file environment/.env.test up -d  --force-recreate
             echo "S.H.I.E.L.D Test is now LIVE!!"
             echo "--------Deploy to Demo--------"
             cd /var/lib/shield_demo/dmi-shield-frontend
+            docker stop shield_demo-dmi_shield_app-1 &&  docker rm shield_demo-dmi_shield_app-1
+            docker rmi shield_demo-dmi_shield_app
             git checkout dev
             git stash
             git pull
             sudo cp -rf /var/lib/shield_demo/environment/.env.demo environment/
             sudo cp -rf /var/lib/shield_demo/config_files/* src/app/
             echo "------Deploying to Demo---------"
-            docker-compose -p shield_demo --env-file environment/.env.demo up -d  --build --force-recreate --no-deps
+            docker-compose -p shield_demo --env-file environment/.env.demo up -d  --force-recreate
             echo "S.H.I.E.L.D Demo is now LIVE!!"
         
     
