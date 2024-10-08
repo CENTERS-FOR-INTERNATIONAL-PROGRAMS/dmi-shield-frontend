@@ -20,7 +20,7 @@ export class ModifyComponent implements OnInit{
   public Files: NgxFileDropEntry[] = [];
   SurveillanceDataList: Surveillance[] = [];
   ValidatedFileTypes: string[] = ["csv", "xlsx", "xls"]
-  DocumentTypes: string[] = ["moh505", "sari", "afi", "cbs"]
+  DocumentTypes: string[] = ["moh505", "sari", "afi", "cbs", "mdharura"]
   fileData: CreatePreSignedUrlData;
 
 
