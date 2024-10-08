@@ -15,7 +15,8 @@ import {AuthenticationService} from "../../../services/authentication.service";
 })
 export class CompositeComponent implements OnInit{
   Surveillance: Surveillance[] = [];
-  TableHeaders: string[] = [ "original_filename", "state", "type", "validated", "created_at", "actions"];
+  TableHeaders: string[] = [ "original_filename", "state", "type", "created_at", "actions"];
+  // TableHeaders: string[] = [ "original_filename", "state", "type", "validated", "created_at", "actions"];
   fileStates: string[] = [ "Pending Processing", "Validating", "Rejected", "Processing", "Validated"];
   searchQuery: string = '';
   FilterSurveillanceData: Surveillance = new Surveillance();
