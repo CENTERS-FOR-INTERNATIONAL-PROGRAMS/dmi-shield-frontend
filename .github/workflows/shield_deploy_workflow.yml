@@ -61,7 +61,7 @@ jobs:
             echo "S.H.I.E.L.D Test is now LIVE!!"
             echo "--------Deploy to Demo--------"
             cd /var/lib/shield_demo/dmi-shield-frontend
-            docker stop shield_demo-dmi_shield_app-1 &&  docker rm shield_demo-dmi_shield_app-1
+            docker stop shield_demo-dmi_shield_app-1 &&  docker rm -f shield_demo-dmi_shield_app-1
             docker rmi shield_demo-dmi_shield_app
             git checkout dev
             git stash
