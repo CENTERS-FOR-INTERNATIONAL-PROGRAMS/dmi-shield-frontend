@@ -33,12 +33,12 @@ jobs:
             git pull
             cp -rf /var/lib/shield_prod/config_files/.env.* environment/
             cp -rf /var/lib/shield_prod/config_files/config/ src/app/
-            docker-compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
+            docker compose -p prod --env-file environment/.env.prod up -d  --build --force-recreate --no-deps
             echo "S.H.I.E.L.D Prod is now LIVE!!"
 
       - name: Checkout Dev
         uses: actions/checkout@v3
-      - name: Deploy to Demo and Test
+      - name: Deploy to Test
         if: github.ref == 'refs/heads/dev'
         uses: appleboy/ssh-action@master
         with:
@@ -49,7 +49,7 @@ jobs:
           script: |
             echo "---Deploy to Test----"
             cd /etc/shield_dev_env/dmi-shield-frontend
-            docker stop test-dmi_shield_app-1 &&  docker rm test-dmi_shield_app-1
+            docker stop test-dmi_shield_app-1 &&  docker rm -f test-dmi_shield_app-1
             docker rmi test-dmi_shield_app
             git checkout dev
             git stash
@@ -57,8 +57,20 @@ jobs:
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "--------Deploying to Test--------"
-            docker-compose -p test --env-file environment/.env.test up -d  --force-recreate
+            docker compose -p test --env-file environment/.env.test up -d --force-recreate
             echo "S.H.I.E.L.D Test is now LIVE!!"
+
+      - name: Checkout Dev
+        uses: actions/checkout@v3
+      - name: Deploy to Demo
+        if: github.ref == 'refs/heads/dev'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DEMO }}
+          username: ${{ secrets.USERNAME_DEMO }}
+          key: ${{ secrets.PRIVATE_KEY_DEMO }}
+          port: ${{ secrets.PORT }}
+          script: |
             echo "--------Deploy to Demo--------"
             cd /var/lib/shield_demo/dmi-shield-frontend
             docker stop shield_demo-dmi_shield_app-1 &&  docker rm -f shield_demo-dmi_shield_app-1
@@ -69,7 +81,6 @@ jobs:
             sudo cp -rf /var/lib/shield_demo/environment/.env.demo environment/
             sudo cp -rf /var/lib/shield_demo/config_files/* src/app/
             echo "------Deploying to Demo---------"
-            docker-compose -p shield_demo --env-file environment/.env.demo up -d  --force-recreate
+            docker compose -p shield_demo --env-file environment/.env.demo up -d --force-recreate
             echo "S.H.I.E.L.D Demo is now LIVE!!"
         
-    
