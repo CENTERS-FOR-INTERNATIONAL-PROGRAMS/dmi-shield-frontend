@@ -1,5 +1,5 @@
 # Use official Node.js image as the base image
-FROM node:latest AS builder
+FROM node:22.3.0-bookworm AS builder
 
 # Set the working directory
 WORKDIR /app
