@@ -1,18 +1,21 @@
-import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {Component, ViewEncapsulation, ViewChild, ElementRef, OnInit} from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import {
+  Component,
+  ViewEncapsulation,
+  ViewChild,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import {
-  ChartComponent,
-  NgApexchartsModule,
-} from 'ng-apexcharts';
-import {RouterModule} from "@angular/router";
-import {AwarenessService} from "../../services/awareness.service";
-import {config} from '../../config/config';
+import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
+import { RouterModule } from '@angular/router';
+import { AwarenessService } from '../../services/awareness.service';
+import { config } from '../../config/config';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,30 +32,31 @@ import {config} from '../../config/config';
     MatTableModule,
     CommonModule,
     RouterModule,
-    NgOptimizedImage
+    NgOptimizedImage,
   ],
 })
-export class AppDashboardComponent implements OnInit{
+export class AppDashboardComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   @ViewChild('viewMoreContent') targetElement: ElementRef;
   @ViewChild('cardContainer') cardContainer!: ElementRef;
   activeCardIndex = 0;
   dashboards: string[];
 
-  constructor(public awareness: AwarenessService){
-
-  }
+  constructor(public awareness: AwarenessService) {}
 
   ngOnInit() {
     this.dashboards = config.SUPERSET.DASHBOARDS;
   }
 
   scrollToTarget() {
-    this.targetElement.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.targetElement.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 
   scroll(el: HTMLElement) {
-    el.scrollIntoView({behavior: 'smooth'});
+    el.scrollIntoView({ behavior: 'smooth' });
   }
 
   scrollToViewMore() {
@@ -80,5 +84,4 @@ export class AppDashboardComponent implements OnInit{
       this.activeCardIndex = index;
     }
   }
-
 }

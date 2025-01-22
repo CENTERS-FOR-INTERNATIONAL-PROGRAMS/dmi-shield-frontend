@@ -1,23 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {AwarenessService} from "../../../services/awareness.service";
-import {Surveillance} from "../../../models/Surveillance.model";
-import {CommunicationService} from "../../../services/communication.service";
-import {HttpClient} from "@angular/common/http";
-import {ApiService} from "../../../services/api/api.service";
-import {ApiResponse, ApiResponseStatus} from "../../../interfaces/IAuth.model";
-import {ResourceModelApi} from "../../../models/Resource.model";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "../../../services/authentication.service";
+import { Component, OnInit } from '@angular/core';
+import { AwarenessService } from '../../../services/awareness.service';
+import { Surveillance } from '../../../models/Surveillance.model';
+import { CommunicationService } from '../../../services/communication.service';
+import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../../services/api/api.service';
+import {
+  ApiResponse,
+  ApiResponseStatus,
+} from '../../../interfaces/IAuth.model';
+import { ResourceModelApi } from '../../../models/Resource.model';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-composites',
-  templateUrl: './composite.component.html'
+  templateUrl: './composite.component.html',
 })
-export class CompositeComponent implements OnInit{
+export class CompositeComponent implements OnInit {
   Surveillance: Surveillance[] = [];
-  TableHeaders: string[] = [ "original_filename", "state", "type", "created_at", "actions"];
+  TableHeaders: string[] = [
+    'original_filename',
+    'state',
+    'type',
+    'created_at',
+    'actions',
+  ];
   // TableHeaders: string[] = [ "original_filename", "state", "type", "validated", "created_at", "actions"];
-  fileStates: string[] = [ "Pending Processing", "Validating", "Rejected", "Processing", "Validated"];
+  fileStates: string[] = [
+    'Pending Processing',
+    'Validating',
+    'Rejected',
+    'Processing',
+    'Validated',
+  ];
   searchQuery: string = '';
   FilterSurveillanceData: Surveillance = new Surveillance();
   ResourceModel: ResourceModelApi[] = [];
@@ -27,11 +42,16 @@ export class CompositeComponent implements OnInit{
     success: null,
     result: null,
     processing: false,
-    message: ""
-  }
+    message: '',
+  };
 
-  constructor(private awareness: AwarenessService, private communication: CommunicationService,
-              private apiService: ApiService, private router: Router, private authenticationService: AuthenticationService) { }
+  constructor(
+    private awareness: AwarenessService,
+    private communication: CommunicationService,
+    private apiService: ApiService,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     this.authenticationService.getApiCurrentUserRole().subscribe({
@@ -44,50 +64,43 @@ export class CompositeComponent implements OnInit{
   }
 
   get filteredUploadList() {
-    return this.ResourceModel.filter(user =>
-      user.original_filename.toLowerCase().includes(this.searchQuery.toLowerCase())
+    return this.ResourceModel.filter((user) =>
+      user.original_filename
+        .toLowerCase()
+        .includes(this.searchQuery.toLowerCase())
     );
   }
 
-
-  loadComposites(){
+  loadComposites() {
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();
-    if(!userData){
-      this.router.navigate(['/authentication/login'])
-    }else{
-      const url = `files/uploads/?user_id=${userData.id}`;
+    if (!userData) {
+      this.router.navigate(['/authentication/login']);
+    } else {
+      const url = `files/uploads/?user_id=${userData.id}&limit=50&sort=-created_at`;
       this.apiService.get(url).subscribe({
         next: (res) => {
           this.ApiResponseStatus.success = true;
-          this.ResourceModel = res.data.map(item => item.attributes).filter(attr => attr.type !== 'resource');
 
+          this.ResourceModel = res.data
+            .map((item) => item.attributes)
+            .filter((attr) => attr.type !== 'resource');
         },
-        error: (error) =>{
-        },
-        complete: () =>{
+        error: (error) => {},
+        complete: () => {
           this.ApiResponseStatus.processing = false;
         },
       });
     }
-
   }
 
-  // loadComposite() {
-  //   this.FilterSurveillanceData.user_id = this.awareness.UserInstance.id;
-  //   this.FilterSurveillanceData.acquireComposite((Surveillance: Surveillance[]) => {
-  //     this.Surveillance = Surveillance;
-  //   }, (error: any) => {
-  //     // TODO! Handle errors
-  //   });
-  // }
-
-  deleteInstance(doc: any){
-    let SurveillanceInstance = new  Surveillance();
+  deleteInstance(doc: any) {
+    let SurveillanceInstance = new Surveillance();
 
     SurveillanceInstance = doc;
     SurveillanceInstance.deleted = true;
-    SurveillanceInstance.modifiedDate = SurveillanceInstance.updateModifiedDate();
+    SurveillanceInstance.modifiedDate =
+      SurveillanceInstance.updateModifiedDate();
 
     // SurveillanceInstance.putInstance((res: any) =>{
     //   this.communication.showSuccessToast();
@@ -102,18 +115,17 @@ export class CompositeComponent implements OnInit{
     // });
   }
 
-  submitInstance() {
-  }
+  submitInstance() {}
 
   parseDate(timestamp: number): string {
     return new Date(timestamp).toLocaleDateString();
   }
 
-  getValidityStatus(status: boolean): string{
-    if(status === true){
-      return "Valid";
+  getValidityStatus(status: boolean): string {
+    if (status === true) {
+      return 'Valid';
     }
-    return "Invalid";
+    return 'Invalid';
   }
 
   formatState(element: any) {
@@ -121,7 +133,10 @@ export class CompositeComponent implements OnInit{
       return '-';
     } else {
       // Remove underscores and convert to sentence case
-      return element.state.replace(/_/g, ' ').toLowerCase().replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
+      return element.state
+        .replace(/_/g, ' ')
+        .toLowerCase()
+        .replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
     }
   }
 }
