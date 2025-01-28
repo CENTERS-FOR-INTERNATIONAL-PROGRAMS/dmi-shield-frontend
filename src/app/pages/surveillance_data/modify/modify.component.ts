@@ -33,6 +33,17 @@ export class ModifyComponent implements OnInit {
     'mdharura_aggregates',
     'sari',
   ];
+
+  DocumentMap = {
+    afi: 'AFI',
+    cbs: 'REDCROSS CBS',
+    moh505: 'MOH 505',
+    moh705: 'MOH 705',
+    mortality: 'MORTALITY',
+    mdharura: 'm-DHARURA LINELIST',
+    mdharura_aggregates: 'm-DHARURA AGGREGATES',
+    sari: 'SARI ILI',
+  };
   fileData: CreatePreSignedUrlData;
 
   UIMStatus: IModelStatus = {
@@ -103,8 +114,8 @@ export class ModifyComponent implements OnInit {
   }
 
   assignDocumentType(event: any, fileIndex: number): void {
-    this.SurveillanceDataList[fileIndex].file_type =
-      event.target.value.toLowerCase();
+    const type = this.getKeyByValue(this.DocumentMap, event.target.value);
+    this.SurveillanceDataList[fileIndex].file_type = type;
   }
 
   describeFileType(File: any): boolean {
@@ -123,6 +134,10 @@ export class ModifyComponent implements OnInit {
   getFileExtension(File: string): string {
     const parts = File.split('.');
     return parts[parts.length - 1].toLowerCase();
+  }
+
+  getKeyByValue(object: any, value: string) {
+    return Object.keys(object).find((key) => object[key] === value);
   }
 
   uploadToApi() {
