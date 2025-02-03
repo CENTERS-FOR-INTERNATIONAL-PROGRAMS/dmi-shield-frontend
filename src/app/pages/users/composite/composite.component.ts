@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { AwarenessService } from 'src/app/services/awareness.service';
-import {ApiService} from "../../../services/api/api.service";
+import { ApiService } from '../../../services/api/api.service';
 import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
-import {User} from "../../../models/User.model";
-import {AuthenticationService} from "../../../services/authentication.service";
+import { User } from '../../../models/User.model';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'composite',
-  templateUrl: './composite.component.html'
+  templateUrl: './composite.component.html',
 })
-
 export class CompositeComponent implements OnInit {
   Users: User[] = [];
-  FilterUser: User = new User;
+  FilterUser: User = new User();
   searchQuery: string = '';
   userRole: string;
 
@@ -20,10 +19,14 @@ export class CompositeComponent implements OnInit {
     success: null,
     result: null,
     processing: false,
-    message: ""
-  }
+    message: '',
+  };
 
-  constructor(public awareness: AwarenessService, private apiService: ApiService, private authenticationService: AuthenticationService) { }
+  constructor(
+    public awareness: AwarenessService,
+    private apiService: ApiService,
+    private authenticationService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     this.getApiUsers();
@@ -37,19 +40,19 @@ export class CompositeComponent implements OnInit {
   }
 
   get filteredUsers() {
-    return this.Users.filter(user =>
+    return this.Users.filter((user) =>
       user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
 
   getApiUsers() {
     this.ApiResponseStatus.processing = true;
-    this.apiService.get('user').subscribe({
+    this.apiService.get('user?limit=100&sort=-created_at').subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
-        this.Users = res.data.map(item => ({
+        this.Users = res.data.map((item) => ({
           id: item.id,
-          ...item.attributes
+          ...item.attributes,
         }));
       },
       error: (error) => {
@@ -63,11 +66,10 @@ export class CompositeComponent implements OnInit {
 
   formatUserRoles(role: string): string {
     const roleMap: { [key: string]: string } = {
-      'level1': 'Level 1',
-      'level2': 'Level 2',
-      'admin': 'Admin'
+      level1: 'Level 1',
+      level2: 'Level 2',
+      admin: 'Admin',
     };
     return roleMap[role] || 'Level 1';
   }
-
 }

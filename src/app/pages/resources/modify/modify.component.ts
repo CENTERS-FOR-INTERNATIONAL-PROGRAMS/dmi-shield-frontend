@@ -1,51 +1,57 @@
-import {Component, OnInit} from '@angular/core';
-import {NgxFileDropEntry} from "ngx-file-drop";
-import {Resource} from "../../../models/Resource.model";
-import {CommunicationService} from "../../../services/communication.service";
-import {AwarenessService} from "../../../services/awareness.service";
-import {HttpClient} from "@angular/common/http";
-import {Guid} from "guid-typescript";
-import {IModelStatus} from "../../../interfaces/IModel.model";
-import {ApiResponseStatus, CreatePreSignedUrlData, UserAuthenticationData} from 'src/app/interfaces/IAuth.model';
-import {ApiService} from "../../../services/api/api.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { NgxFileDropEntry } from 'ngx-file-drop';
+import { Resource } from '../../../models/Resource.model';
+import { CommunicationService } from '../../../services/communication.service';
+import { AwarenessService } from '../../../services/awareness.service';
+import { HttpClient } from '@angular/common/http';
+import { Guid } from 'guid-typescript';
+import { IModelStatus } from '../../../interfaces/IModel.model';
+import {
+  ApiResponseStatus,
+  CreatePreSignedUrlData,
+  UserAuthenticationData,
+} from 'src/app/interfaces/IAuth.model';
+import { ApiService } from '../../../services/api/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modify',
   templateUrl: './modify.component.html',
-  styleUrls: ['./modify.component.scss']
+  styleUrls: ['./modify.component.scss'],
 })
-export class ModifyComponent implements OnInit{
-
+export class ModifyComponent implements OnInit {
   ResourceInstance = new Resource();
-  allowedFiles: string=  ".csv, .xlsx, .xls, .docx, .pdf"
+  allowedFiles: string = '.csv, .xlsx, .xls, .docx, .pdf';
   public Files: NgxFileDropEntry[] = [];
   ResourceDataList: Resource[] = [];
   fileData: CreatePreSignedUrlData;
 
   UIMStatus: IModelStatus = {
-    ms_processing:false,
-    ms_action_result: false
-  }
+    ms_processing: false,
+    ms_action_result: false,
+  };
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
     result: null,
     processing: false,
-    message: ""
-  }
+    message: '',
+  };
 
-  constructor(private communication: CommunicationService, private awareness: AwarenessService, private http: HttpClient,
-              private apiService: ApiService, private router: Router) {
-  }
+  constructor(
+    private communication: CommunicationService,
+    private awareness: AwarenessService,
+    private http: HttpClient,
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  SubmitInstance(){
-    if(this.Files.length < 1){
+  SubmitInstance() {
+    if (this.Files.length < 1) {
       this.UIMStatus.ms_action_result = true;
-      this.communication.showToast("Kindly add at least one file");
+      this.communication.showToast('Kindly add at least one file');
     }
     this.uploadToApi();
   }
@@ -56,11 +62,9 @@ export class ModifyComponent implements OnInit{
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-
-          let ResourceInstance = new  Resource();
-          if (ResourceInstance._id == "")
-          {
-            ResourceInstance._id =  this.generateUniqueId();
+          let ResourceInstance = new Resource();
+          if (ResourceInstance._id == '') {
+            ResourceInstance._id = this.generateUniqueId();
           }
           ResourceInstance.file_original_name = droppedFile.fileEntry.name;
           ResourceInstance.user_id = this.awareness.UserInstance.id;
@@ -76,7 +80,7 @@ export class ModifyComponent implements OnInit{
     }
   }
 
-  uploadToApi(){
+  uploadToApi() {
     this.ApiResponseStatus.processing = true;
     const totalFiles = this.Files.length;
     let successfulUploads = 0;
@@ -85,8 +89,7 @@ export class ModifyComponent implements OnInit{
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-
-          let resourceInstance = new  Resource();
+          let resourceInstance = new Resource();
 
           resourceInstance.file_original_name = droppedFile.fileEntry.name;
           resourceInstance.user_id = this.awareness.UserInstance.id;
@@ -100,36 +103,56 @@ export class ModifyComponent implements OnInit{
                 filename: file.name,
                 original_filename: file.name,
                 mime: file.type,
-                type : "resource",
+                type: 'resource',
                 size: file.size,
-                visibility: 'public'
+                visibility: 'public',
               },
-              type: 'File CreateUpload'
-            }
+              type: 'File CreateUpload',
+            },
           };
 
-          this.apiService.postRequest('files/uploads/create', this.fileData).subscribe({
-            next: (response) => {
+          this.apiService
+            .postRequest('files/uploads/create', this.fileData)
+            .subscribe({
+              next: (response) => {
+                if (response.data.attributes.url != '') {
+                  this.apiService
+                    .putFileRequest(response.data.attributes.url, file)
+                    .subscribe({
+                      next: (_) => {
+                        successfulUploads++;
 
-              if(response.data.attributes.url != ''){
-                this.pushToBucket(response.data.attributes.url, file);
-                successfulUploads++;
-              }
+                        this.communication.showToast(
+                          'File uploaded succesfully.'
+                        );
 
-              if (successfulUploads === totalFiles) {
+                        if (successfulUploads === totalFiles) {
+                          this.ApiResponseStatus.processing = false;
+                          this.ApiResponseStatus.success = true;
+                          this.router.navigate(['/resources/composites']);
+                        }
+                      },
+                      error: (error) => {
+                        this.ApiResponseStatus.processing = false;
+                        this.ApiResponseStatus.success = false;
+                        this.communication.showToast(
+                          'File upload failed. Kindly try again.'
+                        );
+                        throw new Error(error);
+                      },
+                      complete: () => {},
+                    });
+                }
+              },
+              error: (error) => {
                 this.ApiResponseStatus.processing = false;
-                this.ApiResponseStatus.success = true;
-                this.router.navigate(['/resources/composites'])
-              }
-            },
-            error: (error) =>{
-              this.ApiResponseStatus.processing = false;
-              this.ApiResponseStatus.success = false;
-              this.communication.showToast("File upload failed. Kindly try again.");
-            },
-            complete: () =>{
-            },
-          });
+                this.ApiResponseStatus.success = false;
+                this.communication.showToast(
+                  'File upload failed. Kindly try again.'
+                );
+              },
+              complete: () => {},
+            });
 
           this.ResourceDataList.push(resourceInstance);
         });
@@ -137,22 +160,7 @@ export class ModifyComponent implements OnInit{
     }
   }
 
-  pushToBucket(preSignedUrl: string, file: File){
-    this.apiService.putFileRequest(preSignedUrl, file).subscribe({
-      next: (response) => {
-      },
-      error: (error) =>{
-        // this.ApiResponseStatus.processing = false;
-        // this.ApiResponseStatus.success = false;
-        throw new Error(error);
-      },
-      complete: () =>{
-      },
-    });
-
-  }
-
-  generateUniqueId(){
+  generateUniqueId() {
     return Guid.create().toString();
   }
 
@@ -160,10 +168,7 @@ export class ModifyComponent implements OnInit{
     this.Files.splice(index, 1);
   }
 
-  public fileOver(event: any){
-  }
+  public fileOver(event: any) {}
 
-  public fileLeave(event: any){
-  }
-
+  public fileLeave(event: any) {}
 }
