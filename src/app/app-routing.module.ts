@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AuthGuard } from './services/authentication.service';
-import {AssetsComponent} from "./pages/assets_data/assets/assets.component";
+import { AssetsComponent } from './pages/assets_data/assets/assets.component';
 
 const routes: Routes = [
   {
@@ -14,35 +14,54 @@ const routes: Routes = [
         path: '',
         redirectTo: '/authentication',
         pathMatch: 'full',
-      }, {
+      },
+      {
         path: 'outbreaks',
-        canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        canActivate: [AuthGuard],
+        data: { roles: [1, 2, 3] },
         loadChildren: () =>
-          import('./pages/outbreaks/outbreaks.module').then((m) => m.OutbreaksModule),
-      }, {
+          import('./pages/outbreaks/outbreaks.module').then(
+            (m) => m.OutbreaksModule
+          ),
+      },
+      {
         path: 'cases',
-        canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
+        canActivate: [AuthGuard],
+        data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/cases/cases.module').then((m) => m.CasesModule),
-      }, {
+      },
+      {
         path: 'analytics',
         loadChildren: () =>
-          import('./pages/analytics/analytics.module').then((m) => m.AnalyticsModule),
-      }, {
+          import('./pages/analytics/analytics.module').then(
+            (m) => m.AnalyticsModule
+          ),
+      },
+      {
         path: 'settings',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] },
         loadChildren: () =>
-          import('./pages/settings/settings.module').then((m) => m.SettingsModule),
-      }, {
+          import('./pages/settings/settings.module').then(
+            (m) => m.SettingsModule
+          ),
+      },
+      {
         path: 'users',
-        canActivate: [AuthGuard], data: { roles: ['level1','level2', 'admin', 'guest'] },
+        canActivate: [AuthGuard],
+        data: { roles: ['level1', 'level2', 'admin', 'guest'] },
         loadChildren: () =>
           import('./pages/users/users.module').then((m) => m.UsersModule),
-      },{
+      },
+      {
         path: 'surveillance',
         loadChildren: () =>
-          import('./pages/surveillance_data/surveillance_data.module').then((m) => m.Surveillance_dataModule),
-      },{
+          import('./pages/surveillance_data/surveillance_data.module').then(
+            (m) => m.Surveillance_dataModule
+          ),
+      },
+      {
         path: 'home',
         loadChildren: () =>
           import('./pages/pages.module').then((m) => m.PagesModule),
@@ -50,7 +69,9 @@ const routes: Routes = [
       {
         path: 'resources',
         loadChildren: () =>
-          import('./pages/resources/resources.module').then((m) => m.ResourcesModule),
+          import('./pages/resources/resources.module').then(
+            (m) => m.ResourcesModule
+          ),
       },
       { path: 'assets/:fileName', component: AssetsComponent },
       {
@@ -66,18 +87,30 @@ const routes: Routes = [
       {
         path: 'dashboards',
         loadChildren: () =>
-          import('./pages/dashboards/dashboards.module').then((m) => m.DashboardsModule),
+          import('./pages/dashboards/dashboards.module').then(
+            (m) => m.DashboardsModule
+          ),
       },
       {
         path: 'notifications',
         loadChildren: () =>
-          import('./pages/notifications/notifications.module').then((m) => m.NotificationsModule),
+          import('./pages/notifications/notifications.module').then(
+            (m) => m.NotificationsModule
+          ),
       },
       {
         path: 'support',
         loadChildren: () =>
           import('./pages/support/support.module').then((m) => m.SupportModule),
-      }
+      },
+
+      {
+        path: 'thresholds',
+        loadChildren: () =>
+          import('./pages/thresholds/thresholds.module').then(
+            (m) => m.ThresholdsModule
+          ),
+      },
     ],
   },
   {
@@ -96,10 +129,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: "enabled"
-  })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+    }),
+  ],
   exports: [RouterModule],
 })
-
-export class AppRoutingModule { }
+export class AppRoutingModule {}

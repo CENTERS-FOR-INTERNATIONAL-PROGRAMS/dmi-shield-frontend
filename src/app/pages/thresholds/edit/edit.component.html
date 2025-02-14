@@ -1,0 +1,320 @@
+<div
+  class="m-l-24 m-r-24"
+  style="margin-top: 160px; min-height: 100vh; padding: 2rem 9%"
+>
+  <mat-card class="composite-data">
+    <mat-progress-bar
+      *ngIf="this.ApiResponseStatus.processing"
+      mode="indeterminate"
+      style="position: absolute; top: 0; left: 0; right: 0"
+    ></mat-progress-bar>
+    <div
+      *ngIf="this.ApiResponseStatus.processing"
+      style="
+        position: absolute;
+        top: 3%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        z-index: 2;
+      "
+    ></div>
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Thresholds</h3>
+      </mat-card-title>
+
+      <mat-card-subtitle style="margin-top: 8px">
+        <p>{{ "Edit Threshold" }}</p>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <threshold-form
+        [datasources]="datasources"
+        [threshold]="threshold"
+        (formSubmit)="updateThreshold($event)"
+        (showLoader)="showLoader($event)"
+        buttonLabel="Update"
+      ></threshold-form>
+
+      <!-- <form [formGroup]="thresholdForm" (ngSubmit)="updateThreshold()">
+        <div>
+          <div style="margin-top: 32px">
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Select Datasource</mat-label
+            >
+
+            <mat-form-field>
+              <mat-label>Datasource</mat-label>
+              <mat-select formControlName="datasource">
+                <mat-option
+                  [value]="datasource"
+                  *ngFor="let datasource of datasources"
+                  >{{ datasource.domain }}</mat-option
+                >
+              </mat-select>
+
+              <mat-error
+                *ngIf="thresholdForm.get('datasource').hasError('required')"
+              >
+                Required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div style="margin-top: 24px; margin-bottom: 24px; display: flex">
+            <div style="flex: 1 1 0%">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Select Column</mat-label
+              >
+
+              <mat-form-field>
+                <mat-label>Columns</mat-label>
+                <mat-select formControlName="column">
+                  <mat-option
+                    [value]="column"
+                    *ngFor="let column of selectedDatasource?.columns"
+                    >{{ column.name }}</mat-option
+                  >
+                </mat-select>
+
+                <mat-error
+                  *ngIf="thresholdForm.get('column').hasError('required')"
+                >
+                  Required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div style="flex: 1 1 0%">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Select Method</mat-label
+              >
+
+              <mat-form-field>
+                <mat-label>Methods</mat-label>
+                <mat-select formControlName="method">
+                  <mat-option [value]="method" *ngFor="let method of methods">{{
+                    method
+                  }}</mat-option>
+                </mat-select>
+
+                <mat-error
+                  *ngIf="thresholdForm.get('method').hasError('required')"
+                >
+                  Required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div style="flex: 1 1 0%">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                >Select Operator</mat-label
+              >
+
+              <mat-form-field>
+                <mat-label>Operators</mat-label>
+                <mat-select formControlName="operator">
+                  <mat-option
+                    [value]="operator"
+                    *ngFor="let operator of selectedBaseColumn?.operators"
+                    >{{ operator.name }}</mat-option
+                  >
+                </mat-select>
+
+                <mat-error
+                  *ngIf="thresholdForm.get('operator').hasError('required')"
+                >
+                  Required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div>
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Threshold Value</mat-label
+            >
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Value</mat-label>
+
+              <input matInput placeholder="" formControlName="thresholdValue" />
+
+              <mat-error
+                *ngIf="thresholdForm.get('thresholdValue').hasError('required')"
+              >
+                Required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div formArrayName="filters" class="m-b-16">
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Filters</mat-label
+            >
+
+            <div
+              style="
+                margin: 24px 16px;
+                padding: 12px 16px;
+                background-color: #f7f7f7;
+                border-radius: 8px;
+              "
+              *ngFor="
+                let filter of thresholdForm.get('filters')['controls'];
+                let i = index
+              "
+              [formGroupName]="i"
+            >
+              <div style="display: flex">
+                <div style="flex: 1 1 0%">
+                  <mat-label
+                    class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                    >Filter By Column</mat-label
+                  >
+
+                  <mat-form-field>
+                    <mat-label>Columns</mat-label>
+                    <mat-select formControlName="column_name">
+                      <mat-option
+                        [value]="column"
+                        *ngFor="let column of selectedDatasource?.columns"
+                        >{{ column.name }}</mat-option
+                      >
+                    </mat-select>
+
+                    <mat-error
+                      *ngIf="
+                        filter.get('column_name').hasError('required') &&
+                        (filter.get('column_name').touched ||
+                          filter.get('column_name').dirty)
+                      "
+                    >
+                      Required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div style="flex: 1 1 0%">
+                  <mat-label
+                    class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                    >Filter By Operator</mat-label
+                  >
+
+                  <mat-form-field>
+                    <mat-label>Operators</mat-label>
+                    <mat-select formControlName="operator">
+                      <mat-option
+                        [value]="operator"
+                        *ngFor="
+                          let operator of filter.get('column_name')?.value
+                            .operators
+                        "
+                        >{{ operator.name }}</mat-option
+                      >
+                    </mat-select>
+
+                    <mat-error
+                      *ngIf="
+                        filter.get('operator').hasError('required') &&
+                        (filter.get('operator').touched ||
+                          filter.get('operator').dirty)
+                      "
+                    >
+                      Required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div>
+                <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                  >Filter By Value</mat-label
+                >
+                <mat-form-field
+                  appearance="outline"
+                  class="w-100"
+                  color="primary"
+                >
+                  <mat-label
+                    class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+                    >Value</mat-label
+                  >
+
+                  <input matInput placeholder="" formControlName="value" />
+                  <mat-error
+                    *ngIf="
+                      thresholdForm.controls['filters'].controls[i]
+                        .get('value')
+                        .hasError('required')
+                    "
+                  >
+                    Required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  justify-items: flex-end;
+                  justify-content: flex-end;
+                "
+              >
+                <button
+                  (click)="removeFilter(i)"
+                  type="buttton"
+                  mat-flat-button
+                  color="warn"
+                  class="view-button"
+                  style="float: right"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" (click)="addFilter()" mat-stroked-button>
+            + Add Filter
+          </button>
+
+          <div class="m-t-16">
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Filters Combine As</mat-label
+            >
+
+            <mat-form-field>
+              <mat-label>Combinators</mat-label>
+              <mat-select formControlName="combinator">
+                <mat-option
+                  [value]="combinator"
+                  *ngFor="let combinator of combinators"
+                  >{{ combinator }}</mat-option
+                >
+              </mat-select>
+
+              <mat-error
+                *ngIf="thresholdForm.get('combinator').hasError('required')"
+              >
+                Required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end">
+            <button
+              type="submit"
+              mat-flat-button
+              color="primary"
+              class="view-button"
+            >
+              Update Threshold
+            </button>
+          </div>
+        </div>
+      </form> -->
+    </mat-card-content>
+  </mat-card>
+</div>
