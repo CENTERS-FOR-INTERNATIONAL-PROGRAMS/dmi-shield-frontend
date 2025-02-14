@@ -14,8 +14,6 @@
 
     <mat-card-content>
       <form class="m-t-30" name="form_surveillance" id="form_surveillance_modify" #ModifyMField="ngForm">
-
-
         <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
                        (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" [multiple]=true
                        [accept]="allowedFiles">
@@ -37,7 +35,6 @@
               <select  class="custom-select mb-3 view-float--right border-none" (change)="assignDocumentType($event, i)">
                 <option value="">Select File Type</option>
                 <option *ngFor="let DocumentType of DocumentTypes">
-
                   {{ DocumentMap[DocumentType] }}
                 </option>
               </select>

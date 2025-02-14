@@ -2,27 +2,28 @@ import { Injectable } from '@angular/core';
 import { KeyValue } from '../models/KeyValue.model';
 import { MAwareness } from '../models/MAwareness.model';
 import { User } from '../models/User.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
 
 @Injectable({ providedIn: 'root' })
-
 export class AwarenessService {
-  AwarenessInstance: MAwareness = new MAwareness("morlig_awareness");
+  AwarenessInstance: MAwareness = new MAwareness('morlig_awareness');
   UserInstance: User = new User();
   focused: KeyValue = {};
   awake: boolean = false;
   private userDataKey = 'userData';
   private preSignUserDataKey = 'preSignInData';
 
-  constructor(private snackbar_instance: MatSnackBar) {
+  constructor() {
+    let user = this.getUserData();
 
+    if (user) {
+      this.UserInstance = user as User;
+      this.AwarenessInstance.focused['user'] = this.UserInstance.id;
+    }
   }
 
   saveUser(dataKey: string, data: any): void {
     localStorage.removeItem(dataKey);
     localStorage.setItem(dataKey, JSON.stringify(data));
-
   }
 
   saveUserData(AuthUser: any): void {
@@ -65,7 +66,6 @@ export class AwarenessService {
     this.saveUser(this.userDataKey, existingUser);
   }
 
-
   getUserData(): any | null {
     const dataString = localStorage.getItem(this.userDataKey);
     return dataString ? JSON.parse(dataString) : null;
@@ -83,10 +83,8 @@ export class AwarenessService {
     localStorage.removeItem(key);
   }
 
-
   async awaken(awake: any) {
     if (!this.awake) {
-
     } else {
       if (awake) awake();
     }
@@ -95,14 +93,13 @@ export class AwarenessService {
   setFocused(key: string, value: string, response: any = null) {
     this.AwarenessInstance.focused[key] = value;
 
-
     return value;
   }
 
   getFocused(key: string): string {
-    let focused_value = "";
+    let focused_value = '';
 
-    Object.keys(this.AwarenessInstance.focused).forEach(seek_key => {
+    Object.keys(this.AwarenessInstance.focused).forEach((seek_key) => {
       if (seek_key == key) {
         focused_value = this.AwarenessInstance.focused[seek_key];
       }
@@ -110,5 +107,4 @@ export class AwarenessService {
 
     return focused_value;
   }
-
 }
