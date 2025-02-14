@@ -36,13 +36,13 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   selectedBaseColumn: ThresholdColumn | null = null;
   selectedBaseColumnOperator: ThresholdColumnOperator = null;
   selectedFiltersCombinator: string = 'and';
-  thresholdValue: Number | null | string = null;
+  thresholdValue: number | null | string = null;
   thresholdFilter: ThresholdFilter | null = null;
   thresholdForm!: FormGroup;
 
   @Input() datasources: ThresholdDatasource[] = [];
   @Input() threshold: Threshold | null;
-  @Input() buttonLabel: String = 'Create';
+  @Input() buttonLabel: string = 'Create';
 
   @Output() formSubmit = new EventEmitter<Threshold>();
   @Output() showLoader = new EventEmitter<boolean>();

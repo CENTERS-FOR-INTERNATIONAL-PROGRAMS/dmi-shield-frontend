@@ -32,7 +32,7 @@ export type ThresholdFilter = {
     | 'like'
     | 'ilike'
     | 'has';
-  value: string | Number | boolean;
+  value: string | number | boolean;
 };
 
 export type Threshold = {
@@ -43,7 +43,7 @@ export type Threshold = {
   resource: string;
   method: 'sum' | 'avg' | 'max' | 'min' | 'count' | 'mean';
   default: ThresholdFilter;
-  threshold?: string | Number;
+  threshold?: string | number;
   filters_combine_by: 'and' | 'or';
   filters: ThresholdFilter[];
   user_id?: string;
