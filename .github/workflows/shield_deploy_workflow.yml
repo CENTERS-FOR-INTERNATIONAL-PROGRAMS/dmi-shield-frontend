@@ -31,9 +31,8 @@ jobs:
             docker volume rm shield_volume
             git checkout main
             git stash
-            rm /var/lib/shield_launch/dmi-shield-frontend/.git/index.lock
+            git fetch origin
             git reset --hard origin/main
-            git pull
             cp -rf /var/lib/shield_launch/config_files/.env.* environment/
             cp -rf /var/lib/shield_launch/config_files/config/ src/app/
             docker volume create shield_volume
@@ -58,8 +57,8 @@ jobs:
             docker volume rm shield_volume
             git checkout dev
             git stash
-            rm /etc/shield_dev_env/dmi-shield-frontend/.git/index.lock
-            git pull
+            git fetch origin
+            git reset --hard origin/dev
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "--------Deploying to Test--------"
@@ -85,8 +84,8 @@ jobs:
             docker volume rm shield_volume
             git checkout dev
             git stash
-            rm /var/lib/shield_demo/dmi-shield-frontend/.git/index.lock
-            git pull
+            git fetch origin
+            git reset --hard origin/dev
             sudo cp -rf /var/lib/shield_demo/environment/.env.demo environment/
             sudo cp -rf /var/lib/shield_demo/config_files/* src/app/
             echo "------Deploying to Demo---------"
