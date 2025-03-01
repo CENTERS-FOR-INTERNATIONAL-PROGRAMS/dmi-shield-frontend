@@ -16,7 +16,7 @@ User management, Integrated Dashboards, Upload of documents
 5. Create a shareable docker volume for static files
  For Test Environment
     ```sh
-     docker compose volume create shield_volume
+     docker volume create shield_volume
     ```
 6. Install Docker and Run the application
  For Test Environment
