@@ -3,7 +3,7 @@
     padding-top: 10px !important;
   }
 </style>
-<div style="margin-top: 128px; min-height: 100vh; padding: 2rem 9%;">
+<div style="margin-top: 128px; min-height: 100vh; padding: 2rem 9%">
   <mat-card class="cardWithShadow">
     <mat-card-header>
       <mat-card-title>
@@ -12,7 +12,7 @@
         </h3>
       </mat-card-title>
 
-      <mat-card-subtitle>
+      <mat-card-subtitle style="margin-top: 8px">
         <p>
           {{ UserInstance.email }}
         </p>
@@ -23,10 +23,24 @@
 
     <mat-card-content>
       <div class="view-align--right view-padding-top-10">
-        <button type="button" mat-button color="primary" [routerLink]="['/users/modify']"
-                (click)="awareness.setFocused('user', UserInstance.id)">Edit Profile</button>
-        <button type="button" mat-button color="primary" [routerLink]="['/users/modify_password']"
-                (click)="awareness.setFocused('user', UserInstance.id)">Edit Password</button>
+        <button
+          type="button"
+          mat-button
+          color="primary"
+          [routerLink]="['/users/modify']"
+          (click)="awareness.setFocused('user', UserInstance.id)"
+        >
+          Edit Profile
+        </button>
+        <button
+          type="button"
+          mat-button
+          color="primary"
+          [routerLink]="['/users/modify_password']"
+          (click)="awareness.setFocused('user', UserInstance.id)"
+        >
+          Edit Password
+        </button>
       </div>
     </mat-card-content>
   </mat-card>
