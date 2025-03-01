@@ -52,16 +52,16 @@ jobs:
           script: |
             echo "---Deploy to Test----"
             cd /etc/shield_dev_env/dmi-shield-frontend
-            docker compose -p test --env-file environment/.env.test down --rmi all -v
+            docker-compose -p test --env-file environment/.env.test down --rmi all -v
             echo "remove shareable volume..."
-            docker compose volume rm shield_volume
+            docker-compose volume rm shield_volume
             git checkout dev
             git stash
             git pull
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "--------Deploying to Test--------"
-            docker compose volume create shield_volume
+            docker-compose volume create shield_volume
             docker-compose -p test --env-file environment/.env.test up -d
             echo "S.H.I.E.L.D Test is now LIVE!!"
 
