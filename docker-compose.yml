@@ -1,12 +1,36 @@
 version: '3.8'
 
 services:
-  dmi_shield_app:
+  shield_build:
    build:
     context: .
     dockerfile: Dockerfile
+   container_name: shield_build
+   volumes:
+    - shield_volume:/app/dist/
+   networks:
+    - shield_net
+
+  shield_app:
+   image: nginx:latest
+   container_name: shield_app
+   volumes:
+    - shield_volume:/usr/share/nginx/html
+    - ./nginx/app/nginx.conf:/etc/nginx/nginx.conf
    ports:
-    - "${SHIELD_PORT}:4200"
+    - "${SHIELD_PORT}:80"
    restart: always
+   depends_on:
+    - shield_build
    env_file:
     - ./environment/.env.${ENVIRONMENT} 
+   networks:
+    - shield_net
+
+networks:
+  shield_net:
+    driver: bridge
+
+volumes:
+  shield_volume:
+   external: true

@@ -13,7 +13,12 @@ User management, Integrated Dashboards, Upload of documents
 2. Create `config` directory in src/app directory
 3. Create `config.ts` file in config directory
 4. Create a .env.test file to reference the port. Refer to the environment/.env.example
-4. Install Docker and Run the application
+5. Create a shareable docker volume for static files
+ For Test Environment
+    ```sh
+     docker volume create shield_volume
+    ```
+6. Install Docker and Run the application
  For Test Environment
     ```sh
      docker compose -p test --env-file .\environment\.env.test up -d
