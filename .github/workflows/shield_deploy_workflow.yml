@@ -26,13 +26,17 @@ jobs:
           port: ${{ secrets.PORT_PROD }}
           script: |
             cd /var/lib/shield_launch/dmi-shield-frontend
-            docker-compose -p prod --env-file environment/.env.prod down --rmi all -v
+            docker compose -p prod --env-file environment/.env.prod down --rmi all -v
+            rm -rf node_modules/* && rm package-lock.json
+            echo "remove shareable volume..."
+            docker volume rm shield_volume
             git checkout main
             git stash
-            git reset --hard origin/main
-            git pull
+            git fetch origin
+            git pull --ff-only
             cp -rf /var/lib/shield_launch/config_files/.env.* environment/
             cp -rf /var/lib/shield_launch/config_files/config/ src/app/
+            docker volume create shield_volume
             docker compose -p prod --env-file environment/.env.prod up -d
             echo "S.H.I.E.L.D Prod is now LIVE!!"
 
@@ -50,12 +54,17 @@ jobs:
             echo "---Deploy to Test----"
             cd /etc/shield_dev_env/dmi-shield-frontend
             docker-compose -p test --env-file environment/.env.test down --rmi all -v
+            rm -rf node_modules/* && rm package-lock.json
+            echo "remove shareable volume..."
+            docker volume rm shield_volume
             git checkout dev
             git stash
-            git pull
+            git fetch origin
+            git pull --ff-only
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "--------Deploying to Test--------"
+            docker volume create shield_volume
             docker-compose -p test --env-file environment/.env.test up -d
             echo "S.H.I.E.L.D Test is now LIVE!!"
 
@@ -73,12 +82,17 @@ jobs:
             echo "--------Deploy to Demo--------"
             cd /var/lib/shield_demo/dmi-shield-frontend
             docker compose -p shield_demo --env-file environment/.env.demo down --rmi all -v
+            rm -rf node_modules/* && rm package-lock.json
+            echo "remove shareable volume..."
+            docker volume rm shield_volume
             git checkout dev
             git stash
-            git pull
+            git fetch origin
+            git pull --ff-only
             sudo cp -rf /var/lib/shield_demo/environment/.env.demo environment/
             sudo cp -rf /var/lib/shield_demo/config_files/* src/app/
             echo "------Deploying to Demo---------"
+            docker volume create shield_volume
             docker compose -p shield_demo --env-file environment/.env.demo up -d
             echo "S.H.I.E.L.D Demo is now LIVE!!"
         
