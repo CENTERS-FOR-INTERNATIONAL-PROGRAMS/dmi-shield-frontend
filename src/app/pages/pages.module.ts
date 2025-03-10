@@ -21,6 +21,4 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
   ],
   exports: [TablerIconsModule],
 })
-export class PagesModule {
-  
-}
+export class PagesModule {}

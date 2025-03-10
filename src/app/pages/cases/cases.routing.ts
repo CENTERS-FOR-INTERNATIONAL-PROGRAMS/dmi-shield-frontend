@@ -11,10 +11,11 @@ export const CasesRoutes: Routes = [
       {
         path: 'composite',
         component: CompositeComponent,
-      }, {
+      },
+      {
         path: 'modify',
         component: ModifyComponent,
-      }
+      },
     ],
   },
 ];

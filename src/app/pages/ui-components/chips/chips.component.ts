@@ -1,7 +1,7 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component } from '@angular/core';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import {ThemePalette} from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 export interface ChipColor {
@@ -33,15 +33,14 @@ export class AppChipsComponent {
     { name: 'cherry' },
   ];
 
-    // 
-    // Stacked
-    // 
-    availableColors: ChipColor[] = [
-      {name: 'Primary', color: 'primary'},
-      {name: 'Accent', color: 'accent'},
-      {name: 'Warn', color: 'warn'},
-    ];
-
+  //
+  // Stacked
+  //
+  availableColors: ChipColor[] = [
+    { name: 'Primary', color: 'primary' },
+    { name: 'Accent', color: 'accent' },
+    { name: 'Warn', color: 'warn' },
+  ];
 
   drop(event: Event) {
     if (isDragDrop(event)) {
@@ -49,9 +48,9 @@ export class AppChipsComponent {
     }
   }
 
-  // 
+  //
   //  chips with input
-  // 
+  //
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   fruits: Fruit[] = [{ name: 'Lemon' }, { name: 'Lime' }, { name: 'Apple' }];
@@ -90,8 +89,6 @@ export class AppChipsComponent {
     if (index >= 0) {
       this.fruits[index].name = value;
     }
-
-  
   }
 }
 function isDragDrop(object: any): object is CdkDragDrop<string[]> {

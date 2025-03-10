@@ -1,18 +1,14 @@
-import { KeyValue } from "./KeyValue.model";
+import { KeyValue } from './KeyValue.model';
 
 export class DField {
-
-  df_ffield_id: string = "";
-  df_label: string = "";
-  df_name: string = "";
+  df_ffield_id: string = '';
+  df_label: string = '';
+  df_name: string = '';
   df_value: any = null;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   parseInstance(doc: any) {
-
     this.df_ffield_id = doc['df_ffield_id'];
     this.df_label = doc['df_label'];
     this.df_name = doc['df_name'];
@@ -26,7 +22,7 @@ export class DField {
 
     docs.forEach((doc: any) => {
       let TempInstance = new DField();
-      CompositeInstances.push(TempInstance.parseInstance(doc))
+      CompositeInstances.push(TempInstance.parseInstance(doc));
     });
 
     return CompositeInstances;

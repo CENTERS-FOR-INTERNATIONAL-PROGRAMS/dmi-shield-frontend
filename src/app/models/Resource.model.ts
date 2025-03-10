@@ -1,5 +1,4 @@
-import {IModelFilter, IModelStatus} from "../interfaces/IModel.model";
-
+import { IModelFilter, IModelStatus } from '../interfaces/IModel.model';
 
 export class ResourceModelApi {
   error: string | null;
@@ -15,9 +14,19 @@ export class ResourceModelApi {
   error_state: string | null;
   original_filename: string;
 
-  constructor(error: string | null, size: number, type: string, filename: string, state: string, mime: string,
-              ext: string | null, url: string, updated_at: string, created_at: string, error_state: string | null,
-              original_filename: string
+  constructor(
+    error: string | null,
+    size: number,
+    type: string,
+    filename: string,
+    state: string,
+    mime: string,
+    ext: string | null,
+    url: string,
+    updated_at: string,
+    created_at: string,
+    error_state: string | null,
+    original_filename: string,
   ) {
     this.error = error;
     this.size = size;
@@ -35,36 +44,32 @@ export class ResourceModelApi {
 }
 
 export class Resource {
-  _id: string = "";
-  user_id: string = "";
-  file_original_name: string = "";
-  original_filename: string = "";
-  file_extension: string = "";
+  _id: string = '';
+  user_id: string = '';
+  file_original_name: string = '';
+  original_filename: string = '';
+  file_extension: string = '';
   file_header_status: boolean = true;
   file_data_status: boolean = true;
-  file_type: string = "";
-  file_url: string = "";
+  file_type: string = '';
+  file_url: string = '';
   validated: boolean = true;
   deleted: boolean = false;
   createdDate = Date.now();
   modifiedDate: Date | null = null;
 
   MStatus: IModelStatus = {
-    ms_processing:false,
-    ms_action_result: false
-  }
+    ms_processing: false,
+    ms_action_result: false,
+  };
 
   MFilter: IModelFilter = {
-    mf_search: "",
-    mf_tag: ""
-  }
-
+    mf_search: '',
+    mf_tag: '',
+  };
 
   updateModifiedDate() {
-    return this.modifiedDate = new Date();
+    return (this.modifiedDate = new Date());
   }
-  constructor() {
-  }
-
-
+  constructor() {}
 }

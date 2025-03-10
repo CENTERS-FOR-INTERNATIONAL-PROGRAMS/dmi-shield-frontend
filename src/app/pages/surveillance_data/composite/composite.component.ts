@@ -50,7 +50,7 @@ export class CompositeComponent implements OnInit {
     private communication: CommunicationService,
     private apiService: ApiService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class CompositeComponent implements OnInit {
     return this.ResourceModel.filter((user) =>
       user.original_filename
         .toLowerCase()
-        .includes(this.searchQuery.toLowerCase())
+        .includes(this.searchQuery.toLowerCase()),
     );
   }
 

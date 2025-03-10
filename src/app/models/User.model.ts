@@ -9,9 +9,5 @@ export class User {
   confirmedAt?: Date;
   createdAt: Date;
 
-
-  constructor() {
-  }
-
-
+  constructor() {}
 }

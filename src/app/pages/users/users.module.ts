@@ -23,15 +23,14 @@ import { ViewComponent } from './view/view.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    TablerIconsModule.pick(TablerIcons)
+    TablerIconsModule.pick(TablerIcons),
   ],
   declarations: [
     CompositeComponent,
     ModifyComponent,
     ModifyPasswordComponent,
     ModifyRoleComponent,
-    ViewComponent
-  ]
+    ViewComponent,
+  ],
 })
-export class UsersModule {
-}
+export class UsersModule {}

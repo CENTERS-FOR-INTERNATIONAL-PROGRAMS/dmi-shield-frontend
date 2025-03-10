@@ -1,40 +1,44 @@
-import {Component, OnInit} from '@angular/core';
-import {NotificationModel} from "../../../models/Notification.model";
-import {ApiResponseStatus, MarkNotificationData, UserAuthenticationData} from 'src/app/interfaces/IAuth.model';
-import {ApiService} from "../../../services/api/api.service";
-import {AwarenessService} from "../../../services/awareness.service";
-import {MatTableDataSource} from "@angular/material/table";
+import { Component, OnInit } from '@angular/core';
+import { NotificationModel } from '../../../models/Notification.model';
+import {
+  ApiResponseStatus,
+  MarkNotificationData,
+  UserAuthenticationData,
+} from 'src/app/interfaces/IAuth.model';
+import { ApiService } from '../../../services/api/api.service';
+import { AwarenessService } from '../../../services/awareness.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-composite',
   templateUrl: './composite.component.html',
-  styleUrls: ['./composite.component.scss']
+  styleUrls: ['./composite.component.scss'],
 })
 export class CompositeComponent implements OnInit {
-
   Notifications: NotificationModel[] = [];
   dataSource = new MatTableDataSource(this.Notifications);
   notificationPayload: MarkNotificationData;
-  selectedNotifications: string[] = []
+  selectedNotifications: string[] = [];
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
     result: null,
     processing: false,
-    message: ""
-  }
+    message: '',
+  };
 
-  constructor(private apiService: ApiService, public awareness: AwarenessService) {
-  }
+  constructor(
+    private apiService: ApiService,
+    public awareness: AwarenessService,
+  ) {}
 
   ngOnInit(): void {
     this.getUser();
     this.getApiNotifications();
   }
 
-
-  getUser(){
-    this.awareness.UserInstance =  this.awareness.getUserData();
+  getUser() {
+    this.awareness.UserInstance = this.awareness.getUserData();
   }
 
   applyFilter(event: Event) {
@@ -42,27 +46,35 @@ export class CompositeComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getApiNotifications(){
+  getApiNotifications() {
+    const userId = this.awareness.UserInstance.id;
+
+    if (!userId) {
+      this.ApiResponseStatus.processing = false;
+      return;
+    }
+
     const url = `notification?user_id=${this.awareness.UserInstance.id}`;
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
 
-        this.Notifications = res.data.map(item => ({
-          id: item.id,
-          ...item.attributes
-        })).filter(item => item.status !== "read")
+        this.Notifications = res.data
+          .map((item) => ({
+            id: item.id,
+            ...item.attributes,
+          }))
+          .filter((item) => item.status !== 'read')
           .sort((a, b) => b.created_at - a.created_at);
       },
-      error: (error) =>{
+      error: (error) => {
         this.ApiResponseStatus.processing = false;
       },
-      complete: () =>{
+      complete: () => {
         this.ApiResponseStatus.processing = false;
       },
     });
   }
-
 
   markNotificationsRead() {
     this.ApiResponseStatus.processing = true;
@@ -73,20 +85,21 @@ export class CompositeComponent implements OnInit {
       return;
     }
 
-    const updatePromises = this.selectedNotifications.map(notificationId => {
+    const updatePromises = this.selectedNotifications.map((notificationId) => {
       const notificationPayload = {
         data: {
           attributes: {
-            status: "read"
+            status: 'read',
           },
           id: notificationId,
-          type: 'Notifications'
-        }
+          type: 'Notifications',
+        },
       };
 
-      return this.apiService.patchRequest(`notification/${notificationId}`, notificationPayload).toPromise();
+      return this.apiService
+        .patchRequest(`notification/${notificationId}`, notificationPayload)
+        .toPromise();
     });
-
 
     Promise.all(updatePromises)
       .then(() => {
@@ -96,7 +109,7 @@ export class CompositeComponent implements OnInit {
       })
       .catch((error) => {
         this.ApiResponseStatus.processing = false;
-        console.error("Error updating notifications:", error);
+        console.error('Error updating notifications:', error);
       });
     this.ApiResponseStatus.processing = false;
     this.selectedNotifications = [];
@@ -105,7 +118,9 @@ export class CompositeComponent implements OnInit {
 
   toggleSelection(id: string) {
     if (this.selectedNotifications.includes(id)) {
-      this.selectedNotifications = this.selectedNotifications.filter(selectedId => selectedId !== id);
+      this.selectedNotifications = this.selectedNotifications.filter(
+        (selectedId) => selectedId !== id,
+      );
     } else {
       this.selectedNotifications.push(id);
     }

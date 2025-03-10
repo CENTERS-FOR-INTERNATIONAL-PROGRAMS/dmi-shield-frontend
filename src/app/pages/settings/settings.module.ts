@@ -11,7 +11,6 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
 import { SettingsRoutes } from './settings.routing';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -21,8 +20,6 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
     ReactiveFormsModule,
     TablerIconsModule.pick(TablerIcons),
   ],
-  declarations: [
-    ConfigurationsComponent
-  ]
+  declarations: [ConfigurationsComponent],
 })
-export class SettingsModule { }
+export class SettingsModule {}

@@ -16,8 +16,27 @@ export class ApiService {
     private communication: CommunicationService,
     private http: HttpClient,
     private awareness: AwarenessService,
-    private router: Router
+    private router: Router,
   ) {}
+
+  deleteRequest(endpoint: string): Observable<any> {
+    const url = config.API_ENDPOINT + endpoint;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/vnd.api+json',
+      Authorization: `Bearer ${this.handleGetToken()}`,
+    });
+    return new Observable((observer) => {
+      this.http.delete(url, { headers: headers }).subscribe(
+        (response) => {
+          observer.next(response);
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        },
+      );
+    });
+  }
 
   postRequest(endpoint: string, data: any): Observable<any> {
     const url = config.API_ENDPOINT + endpoint;
@@ -33,7 +52,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -52,7 +71,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -69,7 +88,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -90,7 +109,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -110,7 +129,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }

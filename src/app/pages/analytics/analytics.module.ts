@@ -12,7 +12,6 @@ import { AnalyticsRoutes } from './analytics.routing';
 import { AdvancedComponent } from './advanced/advanced.component';
 import { SimpleComponent } from './simple/simple.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -22,9 +21,6 @@ import { SimpleComponent } from './simple/simple.component';
     ReactiveFormsModule,
     TablerIconsModule.pick(TablerIcons),
   ],
-  declarations: [
-    AdvancedComponent,
-    SimpleComponent
-  ]
+  declarations: [AdvancedComponent, SimpleComponent],
 })
-export class AnalyticsModule { }
+export class AnalyticsModule {}

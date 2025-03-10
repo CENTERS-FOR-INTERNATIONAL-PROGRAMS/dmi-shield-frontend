@@ -1,12 +1,11 @@
-
-import { KeyValue } from "./KeyValue.model";
+import { KeyValue } from './KeyValue.model';
 
 export class MAwareness {
   _id: string;
   focused: KeyValue = {};
 
   _doc: any = null;
-  _action: string = "create";
+  _action: string = 'create';
   _processing: boolean = false;
   _action_result: boolean = false;
 
@@ -23,16 +22,11 @@ export class MAwareness {
 
   mapInstance(_rev: string) {
     let doc = {
-      "_id": this._id,
-      "_rev": _rev,
-      "focused": this.focused
-    }
+      _id: this._id,
+      _rev: _rev,
+      focused: this.focused,
+    };
 
     return doc;
   }
-
-
-
-
-
 }

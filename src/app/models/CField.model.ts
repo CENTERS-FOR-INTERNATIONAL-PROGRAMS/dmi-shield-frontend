@@ -1,10 +1,14 @@
-import { FormControl, Validators } from "@angular/forms";
-import { KeyValue } from "./KeyValue.model";
-import { IKeyCField, IKeyValue, IKeysCFields } from "../interfaces/IKeyValue.model";
+import { FormControl, Validators } from '@angular/forms';
+import { KeyValue } from './KeyValue.model';
+import {
+  IKeyCField,
+  IKeyValue,
+  IKeysCFields,
+} from '../interfaces/IKeyValue.model';
 
 export class CField {
-  field_name: string = "";
-  field_label: string = "";
+  field_name: string = '';
+  field_label: string = '';
   field_value: any = null;
   field_required: boolean = false;
   field_type: any = {};
@@ -48,7 +52,7 @@ export class CField {
   parseComposite(docs: any) {
     let CFields: IKeysCFields = {
       values: {},
-      keys: []
+      keys: [],
     };
 
     // Seed values

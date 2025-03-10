@@ -9,18 +9,14 @@ import { CasesRoutes } from './cases.routing';
 import { CompositeComponent } from './composite/composite.component';
 import { ModifyComponent } from './modify/modify.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(CasesRoutes),
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [
-    CompositeComponent,
-    ModifyComponent
-  ]
+  declarations: [CompositeComponent, ModifyComponent],
 })
-export class CasesModule { }
+export class CasesModule {}

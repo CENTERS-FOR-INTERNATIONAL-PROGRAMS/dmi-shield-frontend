@@ -34,7 +34,7 @@ export class CompositeComponent implements OnInit {
     private http: HttpClient,
     private apiService: ApiService,
     private authService: AuthenticationService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class CompositeComponent implements OnInit {
       this.awareness.UserInstance?.role === 'guest'
     ) {
       this.communication.showToast(
-        'Sorry, you are not authorised to download the file.'
+        'Sorry, you are not authorised to download the file.',
       );
       return;
     }
@@ -71,7 +71,7 @@ export class CompositeComponent implements OnInit {
     return this.ResourceModel.filter((user) =>
       user.original_filename
         .toLowerCase()
-        .includes(this.searchQuery.toLowerCase())
+        .includes(this.searchQuery.toLowerCase()),
     );
   }
 

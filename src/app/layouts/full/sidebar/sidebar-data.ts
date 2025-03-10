@@ -41,7 +41,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Advanced',
     iconImage: 'icon-dashboard-black.png',
-    route: '/analytics/advanced'
+    route: '/analytics/advanced',
   },
   // {
   //   navCap: 'Notifications',
@@ -62,7 +62,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Configurations',
     iconImage: 'icon-settings-black.png',
-    route: '/settings/configurations'
+    route: '/settings/configurations',
   },
   {
     navCap: 'Profile',
@@ -70,11 +70,11 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Profile',
     iconImage: 'icon-user--black.png',
-    route: '/users/view'
+    route: '/users/view',
   },
   {
     displayName: 'Logout',
     iconImage: 'icon-exit--black.png',
-    action: 'logout'
-  }
+    action: 'logout',
+  },
 ];
