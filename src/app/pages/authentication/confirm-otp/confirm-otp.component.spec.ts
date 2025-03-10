@@ -8,7 +8,7 @@ describe('ConfirmOtpComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ConfirmOtpComponent]
+      declarations: [ConfirmOtpComponent],
     });
     fixture = TestBed.createComponent(ConfirmOtpComponent);
     component = fixture.componentInstance;

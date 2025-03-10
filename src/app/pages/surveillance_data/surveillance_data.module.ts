@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterModule} from "@angular/router";
-import {MaterialModule} from "../../material.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SurveillanceDataRoutes} from "./surveillance_data.routing";
-import {CompositeComponent} from "./composite/composite.component";
-import {ModifyComponent} from "./modify/modify.component";
-import {CFieldsModule} from "../cfields/cfields.module";
-import {TablerIconsModule} from "angular-tabler-icons";
-import {NgxFileDropModule} from "ngx-file-drop";
-
-
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SurveillanceDataRoutes } from './surveillance_data.routing';
+import { CompositeComponent } from './composite/composite.component';
+import { ModifyComponent } from './modify/modify.component';
+import { TablerIconsModule } from 'angular-tabler-icons';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   imports: [
@@ -19,13 +16,9 @@ import {NgxFileDropModule} from "ngx-file-drop";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CFieldsModule,
     TablerIconsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
   ],
-  declarations: [
-    CompositeComponent,
-    ModifyComponent
-  ]
+  declarations: [CompositeComponent, ModifyComponent],
 })
-export class Surveillance_dataModule { }
+export class Surveillance_dataModule {}

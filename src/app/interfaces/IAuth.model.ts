@@ -73,35 +73,37 @@ export interface ChangeUserRoleAttributes {
   role: string;
 }
 
-export interface MarkNotificationAttributes{
-  status: string
+export interface MarkNotificationAttributes {
+  status: string;
 }
 
-export interface VerifyOtpAttributes{
-  code: string,
-  id: string,
-  token: string,
+export interface VerifyOtpAttributes {
+  code: string;
+  id: string;
+  token: string;
 }
 
-export type UserAuthenticationData = GenericPostBody<UserAuthenticationAttributes>;
+export type UserAuthenticationData =
+  GenericPostBody<UserAuthenticationAttributes>;
 export type UserRegisterData = GenericPostBody<UserRegisterAttributes>;
 export type UserSignOutData = GenericPostBody<UserSignOutAttributes>;
 export type ResetPasswordData = GenericPostBody<ResetPassAttributes>;
-export type ConfirmResetPasswordData = GenericPostBody<ConfirmPasswordResetAttributes>;
-export type CreatePreSignedUrlData = GenericPostBody<CreatePreSignedUrlAttributes>;
+export type ConfirmResetPasswordData =
+  GenericPostBody<ConfirmPasswordResetAttributes>;
+export type CreatePreSignedUrlData =
+  GenericPostBody<CreatePreSignedUrlAttributes>;
 export type ChangeUserRoleData = GenericPatchBody<ChangeUserRoleAttributes>;
 export type MarkNotificationData = GenericPatchBody<MarkNotificationAttributes>;
 export type VerifyOtpData = GenericPostBody<VerifyOtpAttributes>;
 
-
-export interface ApiResponse{
+export interface ApiResponse {
   message: string;
   error: boolean;
   result: any;
   processing: boolean;
 }
 
-export interface ApiResponseStatus{
+export interface ApiResponseStatus {
   message: string;
   success: any;
   result: any;

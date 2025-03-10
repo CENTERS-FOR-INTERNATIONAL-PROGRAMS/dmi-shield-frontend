@@ -1,14 +1,9 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*",
-    "**/*.html"
-  ],
+  "ignorePatterns": ["projects/**/*", "**/*.html"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -21,34 +16,32 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@angular-eslint/no-empty-lifecycle-method": "off",
+        "@typescript-eslint/no-unexpected-multiline": "off",
         "@typescript-eslint/no-this-alias": "off",
         "prefer-const": "off",
-        "no-empty": "off"
-//        "@angular-eslint/directive-selector": [
-//          "error",
-//          {
-//            "type": "attribute",
-//            "prefix": "app",
-//            "style": "camelCase"
-//          }
-//        ],
-//        "@angular-eslint/component-selector": [
-//          "error",
-//          {
-//            "type": "element",
-//            "prefix": "app",
-//            "style": "kebab-case"
-//          }
-//        ]
+        "no-empty": "off",
+        "no-unexpected-multiline": "off"
+        //        "@angular-eslint/directive-selector": [
+        //          "error",
+        //          {
+        //            "type": "attribute",
+        //            "prefix": "app",
+        //            "style": "camelCase"
+        //          }
+        //        ],
+        //        "@angular-eslint/component-selector": [
+        //          "error",
+        //          {
+        //            "type": "element",
+        //            "prefix": "app",
+        //            "style": "kebab-case"
+        //          }
+        //        ]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-
-      ],
+      "files": ["*.html"],
+      "extends": [],
       "rules": {}
     }
   ]

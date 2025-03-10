@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterModule} from "@angular/router";
-import {MaterialModule} from "../../material.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CFieldsModule} from "../cfields/cfields.module";
-import {TablerIconsModule} from "angular-tabler-icons";
-import {NgxFileDropModule} from "ngx-file-drop";
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TablerIconsModule } from 'angular-tabler-icons';
+import { NgxFileDropModule } from 'ngx-file-drop';
 import { PageComponent } from './page/page.component';
-import {MdbCarouselModule} from "mdb-angular-ui-kit/carousel";
-import {SupportRoutes} from "./support.routing";
-
-
+import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import { SupportRoutes } from './support.routing';
 
 @NgModule({
   imports: [
@@ -19,13 +16,10 @@ import {SupportRoutes} from "./support.routing";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CFieldsModule,
     TablerIconsModule,
     NgxFileDropModule,
-    MdbCarouselModule
+    MdbCarouselModule,
   ],
-  declarations: [
-    PageComponent
-  ]
+  declarations: [PageComponent],
 })
-export class SupportModule { }
+export class SupportModule {}

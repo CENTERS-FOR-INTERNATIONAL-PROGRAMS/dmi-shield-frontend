@@ -12,7 +12,7 @@ import { ApiResponse } from '../../interfaces/IAuth.model';
 export class AuthService {
   constructor(
     private communication: CommunicationService,
-    private http: HttpClient
+    private http: HttpClient,
   ) {}
 
   postRequest(endpoint: string, data: any): Observable<any> {
@@ -28,7 +28,7 @@ export class AuthService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
