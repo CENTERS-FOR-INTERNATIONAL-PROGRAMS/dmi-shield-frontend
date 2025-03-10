@@ -27,7 +27,7 @@ export class ModifyComponent implements OnInit {
     private communication: CommunicationService,
     private awareness: AwarenessService,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {}
@@ -56,7 +56,7 @@ export class ModifyComponent implements OnInit {
         this.ApiResponseStatus.success = false;
 
         this.communication.showToast(
-          'Threshold creation failed. Kindly try again.'
+          'Threshold creation failed. Kindly try again.',
         );
       },
       complete: () => {},

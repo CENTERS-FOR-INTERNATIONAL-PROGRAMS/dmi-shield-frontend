@@ -9,18 +9,14 @@ import { OutbreaksRoutes } from './outbreaks.routing';
 import { CompositeComponent } from './composite/composite.component';
 import { ModifyComponent } from './modify/modify.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(OutbreaksRoutes),
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [
-    CompositeComponent,
-    ModifyComponent
-  ]
+  declarations: [CompositeComponent, ModifyComponent],
 })
-export class OutbreaksModule { }
+export class OutbreaksModule {}

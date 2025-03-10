@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {CompositeComponent} from "./composite/composite.component";
+import { CompositeComponent } from './composite/composite.component';
 
 export const MohdashRoutes: Routes = [
   {
@@ -16,6 +16,6 @@ export const MohdashRoutes: Routes = [
       //   // canActivate: [AuthGuard], data: { roles: [1, 2, 3] },
       //   component: CompositeComponent,
       // }
-    ]
-  }
-]
+    ],
+  },
+];

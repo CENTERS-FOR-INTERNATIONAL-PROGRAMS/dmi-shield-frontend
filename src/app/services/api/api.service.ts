@@ -16,7 +16,7 @@ export class ApiService {
     private communication: CommunicationService,
     private http: HttpClient,
     private awareness: AwarenessService,
-    private router: Router
+    private router: Router,
   ) {}
 
   deleteRequest(endpoint: string): Observable<any> {
@@ -33,7 +33,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -52,7 +52,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -71,7 +71,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -88,7 +88,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -109,7 +109,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }
@@ -129,7 +129,7 @@ export class ApiService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }

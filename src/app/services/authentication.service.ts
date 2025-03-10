@@ -21,12 +21,12 @@ export class AuthenticationService {
     private router: Router,
     private awareness: AwarenessService,
     private communication: CommunicationService,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): boolean {
     let route_roles: string[] = next.data['roles'];
     let user_authenticated = false;
@@ -74,7 +74,7 @@ export class AuthenticationService {
       tap((role) => {
         this.awareness.refreshSaveUserData(role);
         this.userRole = role;
-      })
+      }),
     );
   }
 
@@ -90,14 +90,14 @@ export class AuthenticationService {
 
 export const AuthGuard: CanActivateFn = (
   next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  state: RouterStateSnapshot,
 ): boolean => {
   const authService = inject(AuthenticationService);
   const isAuthorized = authService.canActivate(next, state);
   const communicationService = inject(CommunicationService);
   if (!isAuthorized) {
     communicationService.showToast(
-      'Sorry, you are not authorised to perform this action.'
+      'Sorry, you are not authorised to perform this action.',
     );
   }
 

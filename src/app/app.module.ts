@@ -26,8 +26,8 @@ import { BrandingComponent } from './layouts/full/sidebar/branding.component';
 import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {FooterComponent} from "./layouts/full/footer/footer.component";
-import {NgOptimizedImage} from "@angular/common";
+import { FooterComponent } from './layouts/full/footer/footer.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -38,27 +38,27 @@ import {NgOptimizedImage} from "@angular/common";
     HeaderComponent,
     BrandingComponent,
     AppNavItemComponent,
-    FooterComponent
+    FooterComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        TablerIconsModule.pick(TablerIcons),
-        NgScrollbarModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            // Register the ServiceWorker as soon as the application is stable
-            // or after 30 seconds (whichever comes first).
-            registrationStrategy: 'registerWhenStable:30000'
-        }),
-        FontAwesomeModule,
-        NgOptimizedImage,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    TablerIconsModule.pick(TablerIcons),
+    NgScrollbarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+    FontAwesomeModule,
+    NgOptimizedImage,
+  ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
 })

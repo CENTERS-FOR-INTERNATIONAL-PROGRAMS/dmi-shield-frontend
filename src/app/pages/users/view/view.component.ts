@@ -20,7 +20,7 @@ export class ViewComponent implements OnInit {
 
   constructor(
     public awareness: AwarenessService,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {

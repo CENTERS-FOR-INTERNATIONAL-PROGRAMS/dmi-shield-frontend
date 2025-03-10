@@ -1,4 +1,4 @@
-import { CField } from "../models/CField.model";
+import { CField } from '../models/CField.model';
 
 export interface KeyValue {
   [key: string]: any;
@@ -28,6 +28,5 @@ export class IKeyArray {
   [key: string]: any[];
   ka_keys: string[] = [];
 
-  constructor() { }
-
+  constructor() {}
 }

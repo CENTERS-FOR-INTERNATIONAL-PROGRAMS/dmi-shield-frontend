@@ -1,5 +1,3 @@
-
-
 export class NotificationModel {
   id: string;
   message: string;
@@ -20,4 +18,3 @@ export class NotificationModel {
     this.created_at = data.created_at ? new Date(data.created_at) : new Date();
   }
 }
-

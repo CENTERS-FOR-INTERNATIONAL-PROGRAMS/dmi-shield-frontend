@@ -30,7 +30,7 @@ export class ResetPasswordComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private awareness: AwarenessService,
     private router: Router,
-    private communication: CommunicationService
+    private communication: CommunicationService,
   ) {}
 
   ngOnInit(): void {

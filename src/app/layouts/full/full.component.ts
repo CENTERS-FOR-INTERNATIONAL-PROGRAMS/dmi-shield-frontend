@@ -13,7 +13,6 @@ const MONITOR_VIEW = 'screen and (min-width: 1024px)';
   styleUrls: [],
 })
 export class FullComponent implements OnInit {
-
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav | any;
 
@@ -45,8 +44,7 @@ export class FullComponent implements OnInit {
     this.scrollBehavior();
   }
 
-
-  scrollBehavior(){
+  scrollBehavior() {
     const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
     const navbar = document.querySelector('.navbar a') as HTMLElement;
     const header = document.querySelector('.header') as HTMLElement;

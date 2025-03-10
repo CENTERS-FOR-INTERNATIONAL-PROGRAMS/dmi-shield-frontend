@@ -29,7 +29,7 @@ export class CompositeComponent implements OnInit {
     private communication: CommunicationService,
 
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +84,7 @@ export class CompositeComponent implements OnInit {
         this.ApiResponseStatus.success = false;
 
         this.communication.showToast(
-          'Failed to delete threshold. Kindly try again.'
+          'Failed to delete threshold. Kindly try again.',
         );
       },
       complete: () => {

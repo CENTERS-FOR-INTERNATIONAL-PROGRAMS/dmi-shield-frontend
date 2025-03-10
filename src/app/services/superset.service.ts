@@ -37,11 +37,9 @@ export class SupersetService {
     };
 
     return this.http
-      .post<any[]>(
-        `${config.SUPERSET.API_ENDPOINT}/login`,
-        com_payload,
-        com_options
-      )
+      .post<
+        any[]
+      >(`${config.SUPERSET.API_ENDPOINT}/login`, com_payload, com_options)
       .pipe(retry(1), catchError(this.handleError));
   }
 
@@ -51,7 +49,7 @@ export class SupersetService {
    */
   private fetchGuestToken(
     accessToken: any,
-    dashboard_id: string
+    dashboard_id: string,
   ): Observable<any> {
     const body = {
       resources: [
@@ -77,7 +75,7 @@ export class SupersetService {
     return this.http.post<any>(
       `${config.SUPERSET.API_ENDPOINT}/guest_token/`,
       body,
-      { headers }
+      { headers },
     );
   }
   /**
@@ -89,8 +87,8 @@ export class SupersetService {
         return error;
       }),
       switchMap((accessToken: any) =>
-        this.fetchGuestToken(accessToken, dashboard_id)
-      )
+        this.fetchGuestToken(accessToken, dashboard_id),
+      ),
     );
   }
   /**
@@ -116,7 +114,7 @@ export class SupersetService {
         },
         (error) => {
           observer.error(error);
-        }
+        },
       );
     });
   }

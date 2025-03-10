@@ -8,25 +8,25 @@ import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'modify_password',
-  templateUrl: './modify_password.component.html'
+  templateUrl: './modify_password.component.html',
 })
-
 export class ModifyPasswordComponent implements OnInit {
   UserInstance = new User();
   UserFormControls: CompositeFormControls = {};
   hide_password = true;
   user_password_matched: boolean = false;
 
-  constructor(private location: Location, private awareness: AwarenessService, private communication: CommunicationService) {
-
-  }
+  constructor(
+    private location: Location,
+    private awareness: AwarenessService,
+    private communication: CommunicationService,
+  ) {}
 
   ngOnInit(): void {
     this.seedInstance();
-    this.UserInstance.id = this.awareness.getFocused("user");
+    this.UserInstance.id = this.awareness.getFocused('user');
 
     this.awareness.awaken(() => {
-
       // if (this.UserInstance._id != "") {
       //   this.UserInstance.acquireInstance((doc: any) => {
       //     this.UserInstance.parseInstance(doc);
@@ -38,8 +38,15 @@ export class ModifyPasswordComponent implements OnInit {
   }
 
   seedInstance() {
-    this.UserFormControls["user_password"] = new FormControl('', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]);
-    this.UserFormControls["user_password_confirm"] = new FormControl('', [Validators.required]);
+    this.UserFormControls['user_password'] = new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/,
+      ),
+    ]);
+    this.UserFormControls['user_password_confirm'] = new FormControl('', [
+      Validators.required,
+    ]);
   }
 
   // submitInstance(): void {

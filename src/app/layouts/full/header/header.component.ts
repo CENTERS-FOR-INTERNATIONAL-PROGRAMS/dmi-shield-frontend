@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
     private communication: CommunicationService,
     private authService: AuthService,
     private apiService: ApiService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit(): void {

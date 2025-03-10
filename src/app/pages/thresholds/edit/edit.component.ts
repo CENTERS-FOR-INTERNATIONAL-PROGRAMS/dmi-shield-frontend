@@ -32,7 +32,7 @@ export class EditComponent implements OnInit {
     private http: HttpClient,
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -97,7 +97,7 @@ export class EditComponent implements OnInit {
         this.ApiResponseStatus.success = false;
 
         this.communication.showToast(
-          'Threshold update failed. Kindly try again.'
+          'Threshold update failed. Kindly try again.',
         );
       },
       complete: () => {},

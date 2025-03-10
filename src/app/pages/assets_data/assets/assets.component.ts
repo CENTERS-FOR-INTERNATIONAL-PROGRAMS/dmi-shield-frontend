@@ -1,15 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-assets',
   template: '',
 })
-export class AssetsComponent implements OnInit{
+export class AssetsComponent implements OnInit {
+  constructor() {}
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

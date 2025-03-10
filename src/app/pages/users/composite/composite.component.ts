@@ -25,7 +25,7 @@ export class CompositeComponent implements OnInit {
   constructor(
     public awareness: AwarenessService,
     private apiService: ApiService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class CompositeComponent implements OnInit {
 
   get filteredUsers() {
     return this.Users.filter((user) =>
-      user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      user.name.toLowerCase().includes(this.searchQuery.toLowerCase()),
     );
   }
 

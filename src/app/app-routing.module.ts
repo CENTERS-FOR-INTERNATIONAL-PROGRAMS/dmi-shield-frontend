@@ -21,7 +21,7 @@ const routes: Routes = [
         data: { roles: [1, 2, 3] },
         loadChildren: () =>
           import('./pages/outbreaks/outbreaks.module').then(
-            (m) => m.OutbreaksModule
+            (m) => m.OutbreaksModule,
           ),
       },
       {
@@ -35,7 +35,7 @@ const routes: Routes = [
         path: 'analytics',
         loadChildren: () =>
           import('./pages/analytics/analytics.module').then(
-            (m) => m.AnalyticsModule
+            (m) => m.AnalyticsModule,
           ),
       },
       {
@@ -44,7 +44,7 @@ const routes: Routes = [
         data: { roles: ['admin'] },
         loadChildren: () =>
           import('./pages/settings/settings.module').then(
-            (m) => m.SettingsModule
+            (m) => m.SettingsModule,
           ),
       },
       {
@@ -58,7 +58,7 @@ const routes: Routes = [
         path: 'surveillance',
         loadChildren: () =>
           import('./pages/surveillance_data/surveillance_data.module').then(
-            (m) => m.Surveillance_dataModule
+            (m) => m.Surveillance_dataModule,
           ),
       },
       {
@@ -70,7 +70,7 @@ const routes: Routes = [
         path: 'resources',
         loadChildren: () =>
           import('./pages/resources/resources.module').then(
-            (m) => m.ResourcesModule
+            (m) => m.ResourcesModule,
           ),
       },
       { path: 'assets/:fileName', component: AssetsComponent },
@@ -88,14 +88,14 @@ const routes: Routes = [
         path: 'dashboards',
         loadChildren: () =>
           import('./pages/dashboards/dashboards.module').then(
-            (m) => m.DashboardsModule
+            (m) => m.DashboardsModule,
           ),
       },
       {
         path: 'notifications',
         loadChildren: () =>
           import('./pages/notifications/notifications.module').then(
-            (m) => m.NotificationsModule
+            (m) => m.NotificationsModule,
           ),
       },
       {
@@ -108,7 +108,7 @@ const routes: Routes = [
         path: 'thresholds',
         loadChildren: () =>
           import('./pages/thresholds/thresholds.module').then(
-            (m) => m.ThresholdsModule
+            (m) => m.ThresholdsModule,
           ),
       },
     ],
@@ -121,7 +121,7 @@ const routes: Routes = [
         path: 'authentication',
         loadChildren: () =>
           import('./pages/authentication/authentication.module').then(
-            (m) => m.AuthenticationModule
+            (m) => m.AuthenticationModule,
           ),
       },
     ],

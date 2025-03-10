@@ -49,7 +49,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
     private communication: CommunicationService,
     private awareness: AwarenessService,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -61,14 +61,14 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
           value: this.selectedDatasource,
           disabled: true,
         },
-        [Validators.required]
+        [Validators.required],
       ),
       column: new FormControl(
         {
           value: this.selectedBaseColumn,
           disabled: true,
         },
-        [Validators.required]
+        [Validators.required],
       ),
 
       method: new FormControl(
@@ -76,14 +76,14 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
           value: this.selectedBaseMethod,
           disabled: true,
         },
-        [Validators.required]
+        [Validators.required],
       ),
       operator: new FormControl(
         {
           value: this.selectedBaseColumnOperator,
           disabled: true,
         },
-        [Validators.required]
+        [Validators.required],
       ),
       combinator: new FormControl(this.selectedFiltersCombinator, [
         Validators.required,
@@ -104,7 +104,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
           this.selectedBaseColumn = column as ThresholdColumn;
           this.thresholdForm.get('operator').enable();
           this.thresholdForm.get('method').enable();
-        })
+        }),
       )
       .subscribe();
 
@@ -120,7 +120,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
           this.thresholdForm.get('column').enable();
           this.thresholdForm.get('method').disable();
           this.thresholdForm.get('operator').disable();
-        })
+        }),
       )
       .subscribe();
 
@@ -227,7 +227,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
             operator: control.get('operator')?.value.name,
             value: control.get('value')?.value,
           };
-        }
+        },
       ),
     };
 
@@ -238,10 +238,10 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
     if (this.threshold == null) return;
     if (this.datasources.length == 0) return;
     let datasource = this.datasources.find(
-      (d) => d.resource === this.threshold?.resource
+      (d) => d.resource === this.threshold?.resource,
     );
     let column = datasource.columns.find(
-      (column) => column.name === this.threshold?.default.column_name
+      (column) => column.name === this.threshold?.default.column_name,
     );
 
     this.selectedDatasource = datasource;
@@ -251,7 +251,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
       column: column,
       method: this.threshold.method,
       operator: column.operators.find(
-        (op) => op.name === this.threshold.default.operator
+        (op) => op.name === this.threshold.default.operator,
       ),
       combinator: this.threshold.filters_combine_by,
       thresholdValue: this.threshold.default.value as any,
@@ -260,7 +260,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
 
     this.threshold.filters.forEach((filter) => {
       let column = datasource.columns.find(
-        (column) => column.name === filter.column_name
+        (column) => column.name === filter.column_name,
       );
 
       let operator = column.operators.find((op) => op.name === filter.operator);

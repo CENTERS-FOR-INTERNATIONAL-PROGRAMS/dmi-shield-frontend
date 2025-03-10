@@ -11,10 +11,11 @@ export const OutbreaksRoutes: Routes = [
       {
         path: 'composite',
         component: CompositeComponent,
-      }, {
+      },
+      {
         path: 'modify',
         component: ModifyComponent,
-      }
+      },
     ],
   },
 ];

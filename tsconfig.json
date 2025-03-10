@@ -21,19 +21,16 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "esModuleInterop": true,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-//    "typeRoots": ["node_modules/@types", "./src/@types/index.d.ts"],
-//    "types" : ["node"],
-//    "skipLibCheck": false
+    "lib": ["ES2022", "dom"]
+    //    "typeRoots": ["node_modules/@types", "./src/@types/index.d.ts"],
+    //    "types" : ["node"],
+    //    "skipLibCheck": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-//    "types" : ["node"],
+    "strictTemplates": true
+    //    "types" : ["node"],
   }
 }

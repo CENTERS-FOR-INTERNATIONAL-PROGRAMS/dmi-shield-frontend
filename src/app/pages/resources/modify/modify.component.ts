@@ -43,7 +43,7 @@ export class ModifyComponent implements OnInit {
     private awareness: AwarenessService,
     private http: HttpClient,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {}
@@ -123,7 +123,7 @@ export class ModifyComponent implements OnInit {
                         successfulUploads++;
 
                         this.communication.showToast(
-                          'File uploaded succesfully.'
+                          'File uploaded succesfully.',
                         );
 
                         if (successfulUploads === totalFiles) {
@@ -136,7 +136,7 @@ export class ModifyComponent implements OnInit {
                         this.ApiResponseStatus.processing = false;
                         this.ApiResponseStatus.success = false;
                         this.communication.showToast(
-                          'File upload failed. Kindly try again.'
+                          'File upload failed. Kindly try again.',
                         );
                         throw new Error(error);
                       },
@@ -148,7 +148,7 @@ export class ModifyComponent implements OnInit {
                 this.ApiResponseStatus.processing = false;
                 this.ApiResponseStatus.success = false;
                 this.communication.showToast(
-                  'File upload failed. Kindly try again.'
+                  'File upload failed. Kindly try again.',
                 );
               },
               complete: () => {},

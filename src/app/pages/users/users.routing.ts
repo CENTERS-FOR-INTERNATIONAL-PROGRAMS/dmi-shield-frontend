@@ -15,24 +15,31 @@ export const UsersRoutes: Routes = [
       {
         path: '',
         component: CompositeComponent,
-      }, {
+      },
+      {
         path: 'composite',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] },
         component: CompositeComponent,
-      }, {
+      },
+      {
         path: 'modify',
         component: ModifyComponent,
-      }, {
+      },
+      {
         path: 'modify_password',
-        component: ModifyPasswordComponent
-      }, {
+        component: ModifyPasswordComponent,
+      },
+      {
         path: 'modify_role',
-        canActivate: [AuthGuard], data: { roles: ['admin'] },
-        component: ModifyRoleComponent
-      }, {
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] },
+        component: ModifyRoleComponent,
+      },
+      {
         path: 'view',
         component: ViewComponent,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
