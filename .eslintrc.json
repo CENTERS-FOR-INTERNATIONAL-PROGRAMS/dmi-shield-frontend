@@ -16,9 +16,11 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@angular-eslint/no-empty-lifecycle-method": "off",
+        "@typescript-eslint/no-unexpected-multiline": "off",
         "@typescript-eslint/no-this-alias": "off",
         "prefer-const": "off",
-        "no-empty": "off"
+        "no-empty": "off",
+        "no-unexpected-multiline": "off"
         //        "@angular-eslint/directive-selector": [
         //          "error",
         //          {
