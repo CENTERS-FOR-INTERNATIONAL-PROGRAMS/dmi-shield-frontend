@@ -187,6 +187,13 @@ export class HeaderComponent implements OnInit {
   }
 
   getApiNotifications() {
+    const userId = this.awareness.UserInstance.id;
+
+    if (!userId) {
+      this.ApiResponseStatus.processing = false;
+      return;
+    }
+
     if (!this.awareness.UserInstance.id || !this.awareness.UserInstance.id) {
       this.ApiResponseStatus.processing = false;
       return;
