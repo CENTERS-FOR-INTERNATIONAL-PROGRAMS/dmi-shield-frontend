@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommunicationService } from '../../../services/communication.service';
 import { AwarenessService } from '../../../services/awareness.service';
 import { HttpClient } from '@angular/common/http';
@@ -9,18 +9,15 @@ import {
   Threshold,
   ThresholdDatasource,
 } from 'src/app/interfaces/IThreshold.model';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
 })
-export class EditComponent implements OnInit, OnDestroy {
+export class EditComponent implements OnInit {
   thresholdId: string | null = null;
   datasources: ThresholdDatasource[] = [];
   threshold: Threshold | null = null;
-
-  private routeSub: Subscription;
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -39,10 +36,8 @@ export class EditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe((params) => {
-      this.thresholdId = params['id'];
-      this.loadThreshold();
-    });
+    this.thresholdId = this.route.snapshot.paramMap.get('id');
+    this.loadThreshold();
   }
 
   loadThreshold() {
@@ -74,10 +69,6 @@ export class EditComponent implements OnInit, OnDestroy {
         this.ApiResponseStatus.processing = false;
       },
     });
-  }
-
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
   }
 
   updateThreshold(threshold: Threshold) {

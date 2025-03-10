@@ -23,13 +23,11 @@ import { AwarenessService } from 'src/app/services/awareness.service';
 import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
-  // standalone: true,
   selector: 'threshold-form',
   templateUrl: './threshold.form.component.html',
-  // imports: [CommonModule],
 })
 export class ThresholdFormComponent implements OnInit, OnChanges {
-  methods: string[] = ['sum', 'avg', 'max', 'min', 'count', 'mean'];
+  methods: string[] = ['sum', 'avg', 'max', 'min', 'count'];
   combinators: string[] = ['and', 'or'];
   selectedDatasource: ThresholdDatasource | null = null;
   selectedBaseMethod: string | null = null;
@@ -125,6 +123,8 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
         })
       )
       .subscribe();
+
+    this.thresholdAttributesToForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -185,6 +185,15 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   }
 
   removeFilter(index: number) {
+    this.filters.removeAt(index);
+  }
+
+  addGroupFilter() {
+    let control = this.createFilterFormGroup();
+    this.filters.push(control);
+  }
+
+  removeGroupFilter(index: number) {
     this.filters.removeAt(index);
   }
 

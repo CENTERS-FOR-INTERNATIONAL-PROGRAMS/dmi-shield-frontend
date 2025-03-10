@@ -7,7 +7,6 @@ import { ThresholdsRoutes } from './thresholds.routing';
 import { CompositeComponent } from './composite/composite.component';
 import { ModifyComponent } from './modify/modify.component';
 import { EditComponent } from './edit/edit.component';
-import { CFieldsModule } from '../cfields/cfields.module';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { ThresholdFormComponent } from './forms/threshold.form.component';
@@ -19,7 +18,6 @@ import { ThresholdFormComponent } from './forms/threshold.form.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CFieldsModule,
     TablerIconsModule,
     NgxFileDropModule,
   ],

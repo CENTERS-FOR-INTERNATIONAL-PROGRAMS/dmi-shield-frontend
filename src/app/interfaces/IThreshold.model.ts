@@ -47,4 +47,5 @@ export type Threshold = {
   filters_combine_by: 'and' | 'or';
   filters: ThresholdFilter[];
   user_id?: string;
+  sql?: string;
 };
