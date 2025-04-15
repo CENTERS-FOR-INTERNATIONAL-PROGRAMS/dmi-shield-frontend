@@ -1,5 +1,5 @@
 # dmi-shield-frontend
-User management, Integrated Dashboards, Upload of documents
+User management, Integrated Dashboards, Upload of documents 
 
 
 ## Getting Started
