@@ -98,7 +98,7 @@ export class CompositeComponent implements OnInit {
     });
   }
 
-  parseDate(timestamp: number): string {
+  parseDate(timestamp: number) {
     return new Date(timestamp).toLocaleDateString();
   }
 }

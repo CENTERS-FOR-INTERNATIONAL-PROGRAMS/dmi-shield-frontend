@@ -50,7 +50,7 @@
       <threshold-item
         *ngFor="let threshold of thresholds"
         [threshold]="threshold"
-        (onDeleteThreshold)="deleteThreshold($event)"
+        (deleteThreshold)="deleteThreshold($event)"
       ></threshold-item>
     </mat-card-content>
   </mat-card>

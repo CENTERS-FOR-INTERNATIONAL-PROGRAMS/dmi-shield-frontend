@@ -19,7 +19,7 @@ export class ThresholdItemComponent implements OnInit, OnChanges {
   @Input() threshold: Threshold | null;
   @Input() buttonLabel: string = 'Create';
 
-  @Output() onDeleteThreshold = new EventEmitter<string>();
+  @Output() deleteThreshold = new EventEmitter<string>();
 
   constructor(private apiService: ApiService) {}
 
@@ -37,8 +37,8 @@ export class ThresholdItemComponent implements OnInit, OnChanges {
     // throw new Error("Method not implemented.");
   }
 
-  deleteThreshold(threshold_id: string) {
-    this.onDeleteThreshold.emit(threshold_id);
+  onDeleteThreshold(threshold_id: string) {
+    this.deleteThreshold.emit(threshold_id);
   }
 
   calculateValue() {
