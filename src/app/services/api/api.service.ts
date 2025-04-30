@@ -1,12 +1,46 @@
 import { CommunicationService } from '../communication.service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { config } from '../../config/config';
-import { IModelStatus } from '../../interfaces/IModel.model';
-import { ApiResponse } from '../../interfaces/IAuth.model';
 import { AwarenessService } from '../awareness.service';
 import { Router } from '@angular/router';
+
+@Injectable()
+export class LoggingInterceptor implements HttpInterceptor {
+  constructor(
+    private router: Router,
+    private awareness: AwarenessService,
+  ) {}
+
+  intercept(
+    req: HttpRequest<any>,
+    handler: HttpHandler,
+  ): Observable<HttpEvent<any>> {
+    return handler.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 403) {
+          // Clear all localStorage data
+          this.awareness.removeUserData();
+
+          // Navigate to login page
+          this.router.navigate(['/authentication/login']);
+        }
+
+        return throwError(() => error);
+      }),
+    );
+  }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +50,6 @@ export class ApiService {
     private communication: CommunicationService,
     private http: HttpClient,
     private awareness: AwarenessService,
-    private router: Router,
   ) {}
 
   deleteRequest(endpoint: string): Observable<any> {
@@ -25,17 +58,8 @@ export class ApiService {
       'Content-Type': 'application/vnd.api+json',
       Authorization: `Bearer ${this.handleGetToken()}`,
     });
-    return new Observable((observer) => {
-      this.http.delete(url, { headers: headers }).subscribe(
-        (response) => {
-          observer.next(response);
-          observer.complete();
-        },
-        (error) => {
-          observer.error(error);
-        },
-      );
-    });
+
+    return this.http.delete(url, { headers });
   }
 
   postRequest(endpoint: string, data: any): Observable<any> {
@@ -44,17 +68,8 @@ export class ApiService {
       'Content-Type': 'application/vnd.api+json',
       Authorization: `Bearer ${this.handleGetToken()}`,
     });
-    return new Observable((observer) => {
-      this.http.post(url, data, { headers: headers }).subscribe(
-        (response) => {
-          observer.next(response);
-          observer.complete();
-        },
-        (error) => {
-          observer.error(error);
-        },
-      );
-    });
+
+    return this.http.post(url, data, { headers });
   }
 
   patchRequest(endpoint: string, data: any): Observable<any> {
@@ -63,34 +78,15 @@ export class ApiService {
       'Content-Type': 'application/vnd.api+json',
       Authorization: `Bearer ${this.handleGetToken()}`,
     });
-    return new Observable((observer) => {
-      this.http.patch(url, data, { headers: headers }).subscribe(
-        (response) => {
-          observer.next(response);
-          observer.complete();
-        },
-        (error) => {
-          observer.error(error);
-        },
-      );
-    });
+
+    return this.http.patch(url, data, { headers: headers });
   }
 
   putFileRequest(preSignedUrl: string, file: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    return new Observable((observer) => {
-      this.http.put(preSignedUrl, formData).subscribe(
-        (response) => {
-          observer.next(response);
-          observer.complete();
-        },
-        (error) => {
-          observer.error(error);
-        },
-      );
-    });
+    return this.http.put(preSignedUrl, formData);
   }
 
   get(endpoint: string): Observable<any> {
@@ -101,17 +97,7 @@ export class ApiService {
       Authorization: `Bearer ${this.handleGetToken()}`,
     });
 
-    return new Observable((observer) => {
-      this.http.get(url, { headers: headers }).subscribe(
-        (response) => {
-          observer.next(response);
-          observer.complete();
-        },
-        (error) => {
-          observer.error(error);
-        },
-      );
-    });
+    return this.http.get(url, { headers: headers });
   }
 
   getAll(endpoint: string): Observable<any> {
@@ -119,27 +105,17 @@ export class ApiService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/vnd.api+json',
+      Authorization: `Bearer ${this.handleGetToken()}`,
     });
 
-    return new Observable((observer) => {
-      this.http.get(url, { headers: headers }).subscribe(
-        (response) => {
-          observer.next(response);
-          observer.complete();
-        },
-        (error) => {
-          observer.error(error);
-        },
-      );
-    });
+    return this.http.get(url, { headers: headers });
   }
 
   handleGetToken(): string {
-    const token = this.awareness.getUserData().token;
-    if (token != '') {
+    const token = this.awareness.getUserData()?.token;
+    if (token && token != '') {
       return token;
     } else {
-      this.router.navigate(['/home']);
       return '';
     }
   }

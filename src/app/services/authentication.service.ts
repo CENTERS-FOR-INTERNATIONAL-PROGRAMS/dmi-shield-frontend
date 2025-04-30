@@ -60,11 +60,14 @@ export class AuthenticationService {
     }
   }
 
-  getApiCurrentUserRole(): Observable<string> {
+  getApiCurrentUserRole(): Observable<string | null> {
     this.UserInstance = this.awareness.getUserData();
     if (!this.UserInstance || !this.UserInstance.id) {
       // Return an observable with "level1" as a default role
-      return of('level1');
+      // return of('level1');
+      return new Observable((observer) => {
+        observer.next(null);
+      });
     }
 
     const url = `user/${this.UserInstance.id}`;

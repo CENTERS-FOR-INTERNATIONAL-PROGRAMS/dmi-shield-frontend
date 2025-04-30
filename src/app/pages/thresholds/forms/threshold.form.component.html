@@ -22,28 +22,26 @@
     </div>
 
     <div style="margin-top: 24px; margin-bottom: 24px; display: flex">
-      <div style="flex: 2 1 0%; margin-right: 24px">
+      <div style="flex: 2 1 0%">
         <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-          >Select Column</mat-label
+          >Threshold Name</mat-label
         >
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <mat-label>Name</mat-label>
 
-        <mat-form-field style="width: 100%">
-          <mat-label>Columns</mat-label>
-          <mat-select formControlName="column">
-            <mat-option
-              [value]="column"
-              *ngFor="let column of selectedDatasource?.columns"
-              >{{ column.name }}</mat-option
-            >
-          </mat-select>
+          <input matInput placeholder="" formControlName="thresholdName" />
 
-          <mat-error *ngIf="thresholdForm.get('column').hasError('required')">
+          <mat-error
+            *ngIf="thresholdForm.get('thresholdName').hasError('required')"
+          >
             Required
           </mat-error>
         </mat-form-field>
       </div>
+    </div>
 
-      <div style="flex: 1 1 0%">
+    <div style="margin-top: 24px; margin-bottom: 24px; display: flex">
+      <div style="flex: 1 1 0%; margin-right: 24px">
         <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
           >Select Method</mat-label
         >
@@ -57,6 +55,36 @@
           </mat-select>
 
           <mat-error *ngIf="thresholdForm.get('method').hasError('required')">
+            Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div style="flex: 2 1 0%">
+        <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+          >Select Column</mat-label
+        >
+
+        <mat-form-field style="width: 100%">
+          <mat-label>Columns</mat-label>
+          <mat-select formControlName="column">
+            <mat-option
+              [value]="column"
+              *ngFor="let column of selectedDatasource?.columns"
+              [disabled]="column.is_dimension"
+              >{{ column.name }}
+              <span
+                style="
+                  padding: 6px 8px;
+                  background-color: #f7f7f7;
+                  font-size: 10px;
+                "
+                *ngIf="column.is_dimension"
+                >Dimension</span
+              >
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="thresholdForm.get('column').hasError('required')">
             Required
           </mat-error>
         </mat-form-field>
@@ -133,8 +161,20 @@
                 <mat-option
                   [value]="column"
                   *ngFor="let column of selectedDatasource?.columns"
-                  >{{ column.name }}</mat-option
-                >
+                  [disabled]="!column.is_dimension"
+                  >{{ column.name }}
+
+                  <mat-icon *ngIf="column.is_dimension">
+                    <span
+                      style="
+                        padding: 2px 4px;
+                        background-color: #f7f7f7;
+                        font-size: 10px;
+                      "
+                      >Dim</span
+                    >
+                  </mat-icon>
+                </mat-option>
               </mat-select>
 
               <mat-error
@@ -183,21 +223,32 @@
           <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
             >Filter By Value</mat-label
           >
+
           <mat-form-field appearance="outline" class="w-100" color="primary">
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Value</mat-label
             >
 
-            <input matInput placeholder="" formControlName="value" />
-            <!-- <mat-error
-                *ngIf="
-                  thresholdForm.controls['filters'].controls[i]
-                    .get('value')
-                    .hasError('required')
+            <mat-select formControlName="value">
+              <mat-option
+                [value]="column.value"
+                *ngFor="
+                  let column of distinctColumnValues[
+                    filter.get('column_name')?.value.name
+                  ]
                 "
-              >
-                Required
-              </mat-error> -->
+                >{{ column.value }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error
+              *ngIf="
+                filter.get('value').hasError('required') &&
+                (filter.get('value').touched || filter.get('value').dirty)
+              "
+            >
+              Required
+            </mat-error>
           </mat-form-field>
         </div>
 

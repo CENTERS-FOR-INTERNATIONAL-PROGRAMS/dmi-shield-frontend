@@ -37,7 +37,11 @@ export class CompositeComponent implements OnInit {
       next: (role) => {
         this.userRole = role;
       },
-      error: (err) => console.error('Error fetching user role', err),
+      error: (err) => {
+        console.error('Error fetching user role', err);
+
+        this.router.navigate(['/authentication/login']);
+      },
     });
     this.loadComposites();
   }

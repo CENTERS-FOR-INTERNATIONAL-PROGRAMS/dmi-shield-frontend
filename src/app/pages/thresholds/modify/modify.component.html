@@ -29,13 +29,32 @@
         <p>{{ "Create Threshold" }}</p>
       </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-      <threshold-form
-        [datasources]="datasources"
-        (formSubmit)="createThreshold($event)"
-        (showLoader)="showLoader($event)"
-        buttonLabel="Create"
-      ></threshold-form>
+    <mat-card-content style="margin-top: 3px">
+      <mat-stepper linear #stepper>
+        <mat-step
+          [stepControl]="stepperGroup1"
+          label="Configure Threshold"
+          [editable]="isEditable"
+        >
+          <threshold-form
+            [datasources]="datasources"
+            (formSubmit)="createThreshold($event, stepper)"
+            (showLoader)="showLoader($event)"
+            buttonLabel="Create"
+          ></threshold-form>
+        </mat-step>
+        <mat-step
+          [stepControl]="stepperGroup2"
+          label="Setup Alerts"
+          [editable]="isEditable"
+        >
+          <alert-form
+            (showLoader)="showLoader($event)"
+            (formSubmit)="updateThreshold($event)"
+            buttonLabel="Create"
+          ></alert-form>
+        </mat-step>
+      </mat-stepper>
     </mat-card-content>
   </mat-card>
 </div>

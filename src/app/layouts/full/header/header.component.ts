@@ -79,12 +79,14 @@ export class HeaderComponent implements OnInit {
 
     this.authenticationService.getApiCurrentUserRole().subscribe({
       next: (role) => {
-        this.userRole = role;
+        if (role) {
+          this.userRole = role;
+
+          this.getApiNotifications();
+        }
       },
       error: (err) => console.error('Error fetching user role', err),
     });
-
-    this.getApiNotifications();
   }
 
   getUser() {
@@ -182,7 +184,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  notificaionClicked() {
+  notificationClicked() {
     this.communication.showToast('No new notifications.');
   }
 
