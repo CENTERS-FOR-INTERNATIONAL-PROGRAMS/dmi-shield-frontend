@@ -238,7 +238,6 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   }
 
   thresholdAttributesToForm() {
-    console.log(this);
     if (this.threshold == null) return;
     if (this.datasources.length == 0) return;
     let datasource = this.datasources.find(
