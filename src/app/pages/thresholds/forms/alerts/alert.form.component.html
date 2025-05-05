@@ -8,7 +8,7 @@
     <mat-list-option
       *ngFor="let user of users"
       [value]="user.id"
-      [selected]="user.selected"
+      [selected]="user.selected == true"
     >
       <p matListItemTitle class="view-text--size-large">
         {{ user.name }}

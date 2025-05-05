@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AwarenessService } from '../../../services/awareness.service';
 import { Surveillance } from '../../../models/Surveillance.model';
-import { CommunicationService } from '../../../services/communication.service';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../../services/api/api.service';
-import {
-  ApiResponse,
-  ApiResponseStatus,
-} from '../../../interfaces/IAuth.model';
+import { ApiResponseStatus } from '../../../interfaces/IAuth.model';
 import { ResourceModelApi } from '../../../models/Resource.model';
-import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
@@ -47,9 +41,7 @@ export class CompositeComponent implements OnInit {
 
   constructor(
     private awareness: AwarenessService,
-    private communication: CommunicationService,
     private apiService: ApiService,
-    private router: Router,
     private authenticationService: AuthenticationService,
   ) {}
 
@@ -74,24 +66,21 @@ export class CompositeComponent implements OnInit {
   loadComposites() {
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();
-    if (!userData) {
-      this.router.navigate(['/authentication/login']);
-    } else {
-      const url = `files/uploads/?user_id=${userData.id}&limit=50&sort=-created_at`;
-      this.apiService.get(url).subscribe({
-        next: (res) => {
-          this.ApiResponseStatus.success = true;
 
-          this.ResourceModel = res.data
-            .map((item) => item.attributes)
-            .filter((attr) => attr.type !== 'resource');
-        },
-        error: (error) => {},
-        complete: () => {
-          this.ApiResponseStatus.processing = false;
-        },
-      });
-    }
+    const url = `files/uploads/?user_id=${userData.id}&limit=50&sort=-created_at`;
+    this.apiService.get(url).subscribe({
+      next: (res) => {
+        this.ApiResponseStatus.success = true;
+
+        this.ResourceModel = res.data
+          .map((item) => item.attributes)
+          .filter((attr) => attr.type !== 'resource');
+      },
+      error: (error) => {},
+      complete: () => {
+        this.ApiResponseStatus.processing = false;
+      },
+    });
   }
 
   deleteInstance(doc: any) {

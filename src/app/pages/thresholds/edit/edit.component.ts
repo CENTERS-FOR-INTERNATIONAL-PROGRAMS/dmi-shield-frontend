@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommunicationService } from '../../../services/communication.service';
-import { AwarenessService } from '../../../services/awareness.service';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../../services/api/api.service';
 import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +8,7 @@ import {
   ThresholdAlert,
   ThresholdDatasource,
 } from 'src/app/interfaces/IThreshold.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-edit',
@@ -46,8 +44,6 @@ export class EditComponent implements OnInit {
 
   constructor(
     private communication: CommunicationService,
-    private awareness: AwarenessService,
-    private http: HttpClient,
     private apiService: ApiService,
     private router: Router,
     private route: ActivatedRoute,
@@ -60,12 +56,6 @@ export class EditComponent implements OnInit {
 
   loadThreshold() {
     this.ApiResponseStatus.processing = true;
-    const userData = this.awareness.getUserData();
-
-    if (!userData) {
-      this.router.navigate(['/authentication/login']);
-      return;
-    }
 
     const url = `thresholds/${this.thresholdId}`;
 
@@ -95,7 +85,15 @@ export class EditComponent implements OnInit {
 
     let payload = {
       data: {
-        attributes: threshold,
+        attributes: {
+          ...threshold,
+          ...{
+            alert: {
+              threshold_id: this.threshold.id,
+              user_ids: [this.threshold.user_id],
+            },
+          },
+        },
         type: 'Threshold',
       },
     };

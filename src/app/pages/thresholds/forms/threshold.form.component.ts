@@ -96,10 +96,8 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
         filter((column) => column !== null),
         tap((column) => {
           this.thresholdForm.get('operator').reset();
-          // this.thresholdForm.get('method').reset();
           this.selectedBaseColumn = column as ThresholdColumn;
           this.thresholdForm.get('operator').enable();
-          // this.thresholdForm.get('method').enable();
         }),
       )
       .subscribe();
@@ -140,16 +138,14 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['datasources']) {
+    if (changes['datasources'] && changes['threshold'].currentValue) {
       this.datasources = changes['datasources'].currentValue;
     }
-    if (changes['threshold']) {
+    if (changes['threshold'] && changes['threshold'].currentValue) {
       this.threshold = changes['threshold'].currentValue;
     }
 
-    requestAnimationFrame(() => {
-      this.thresholdAttributesToForm();
-    });
+    this.thresholdAttributesToForm();
   }
 
   loadDatasources() {
@@ -160,6 +156,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.datasources = res.map((item) => item as ThresholdDatasource);
+        this.thresholdAttributesToForm();
         this.thresholdForm.get('datasource')?.enable({ emitEvent: false });
 
         this.showLoader.emit(false);
@@ -241,6 +238,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   }
 
   thresholdAttributesToForm() {
+    console.log(this);
     if (this.threshold == null) return;
     if (this.datasources.length == 0) return;
     let datasource = this.datasources.find(

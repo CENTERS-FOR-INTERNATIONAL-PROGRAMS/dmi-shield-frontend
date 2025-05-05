@@ -8,11 +8,9 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatListOption, MatSelectionListChange } from '@angular/material/list';
-import { Router } from '@angular/router';
 import { ThresholdAlert } from 'src/app/interfaces/IThreshold.model';
 import { User } from 'src/app/models/User.model';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AwarenessService } from 'src/app/services/awareness.service';
 
 @Component({
   selector: 'alert-form',
@@ -28,34 +26,21 @@ export class AlertFormComponent implements OnInit, OnChanges {
   @Output() showLoader = new EventEmitter<boolean>();
   @Output() formSubmit = new EventEmitter<string[]>();
 
-  constructor(
-    private awareness: AwarenessService,
-    private apiService: ApiService,
-    private router: Router,
-  ) {}
+  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadUsers();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['alert'] && changes['alert'].currentValue) {
       this.alert = changes['alert'].currentValue;
-
-      requestAnimationFrame(() => {
-        this.selectedUserIds = this.alert.user_ids;
-        this.loadUsers();
-      });
+      this.selectedUserIds = this.alert.user_ids ?? this.selectedUserIds;
     }
   }
 
   loadUsers() {
     this.showLoader.emit(true);
-
-    const userData = this.awareness.getUserData();
-
-    if (!userData) {
-      this.router.navigate(['/authentication/login']);
-      return;
-    }
 
     const url = `user?limit=100&sort=-created_at`;
 
