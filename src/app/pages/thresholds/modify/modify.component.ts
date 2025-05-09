@@ -8,6 +8,8 @@ import {
   Threshold,
   ThresholdDatasource,
 } from 'src/app/interfaces/IThreshold.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-modify',
@@ -15,6 +17,26 @@ import {
 })
 export class ModifyComponent implements OnInit {
   datasources: ThresholdDatasource[] = [];
+  threshold: Threshold | null;
+
+  stepperGroup1 = new FormGroup({
+    firstCtrl: new FormControl(
+      {
+        value: '',
+        disabled: false,
+      },
+      [Validators.required],
+    ),
+  });
+  stepperGroup2 = new FormGroup({
+    secondCtrl: new FormControl(
+      {
+        value: null,
+        disabled: true,
+      },
+      [Validators.required],
+    ),
+  });
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -22,6 +44,8 @@ export class ModifyComponent implements OnInit {
     processing: false,
     message: '',
   };
+
+  isEditable = false;
 
   constructor(
     private communication: CommunicationService,
@@ -32,7 +56,7 @@ export class ModifyComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  createThreshold(attributes: Threshold) {
+  createThreshold(attributes: Threshold, stepper: MatStepper) {
     this.ApiResponseStatus.processing = true;
 
     let payload = {
@@ -43,12 +67,21 @@ export class ModifyComponent implements OnInit {
     };
 
     this.apiService.postRequest('thresholds', payload).subscribe({
-      next: (_response) => {
+      next: (response) => {
         this.ApiResponseStatus.processing = false;
         this.ApiResponseStatus.success = true;
 
+        let threshold = {
+          ...response.data.attributes,
+          ...{ id: response.data.id },
+        } as Threshold;
+
+        this.threshold = threshold;
         this.communication.showToast('Threshold created succesfully');
-        this.router.navigate(['/thresholds/composites']);
+        this.stepperGroup1.disable();
+        this.stepperGroup2.setValue({ secondCtrl: '' });
+        this.stepperGroup2.enable();
+        stepper.next();
       },
 
       error: (error) => {
@@ -78,5 +111,57 @@ export class ModifyComponent implements OnInit {
 
   showLoader(value: boolean) {
     requestAnimationFrame(() => (this.ApiResponseStatus.processing = value));
+  }
+
+  updateThreshold(userIds: string[]) {
+    this.ApiResponseStatus.processing = true;
+
+    let users = userIds.filter((e) => e != this.threshold.user_id);
+
+    let payload = {
+      data: {
+        attributes: {
+          ...{
+            source: this.threshold.source,
+            name: this.threshold.name,
+            method: this.threshold.method,
+            filters: this.threshold.filters,
+            filters_combine_by: this.threshold.filters_combine_by,
+            default: this.threshold.default,
+            resource: this.threshold.resource,
+            domain: this.threshold.domain,
+          },
+          ...{
+            alert: {
+              threshold_id: this.threshold.id,
+              user_ids: [...users, this.threshold.user_id],
+            },
+          },
+        },
+        type: 'Threshold',
+      },
+    };
+
+    const url = `thresholds/${this.threshold.id}`;
+
+    this.apiService.patchRequest(url, payload).subscribe({
+      next: (_response) => {
+        this.ApiResponseStatus.processing = false;
+        this.ApiResponseStatus.success = true;
+
+        this.communication.showToast('Threshold updated succesfully');
+        this.router.navigate(['/thresholds/composites']);
+      },
+
+      error: (error) => {
+        this.ApiResponseStatus.processing = false;
+        this.ApiResponseStatus.success = false;
+
+        this.communication.showToast(
+          'Threshold update failed. Kindly try again.',
+        );
+      },
+      complete: () => {},
+    });
   }
 }

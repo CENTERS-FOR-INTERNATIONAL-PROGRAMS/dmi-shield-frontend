@@ -47,111 +47,11 @@
         <input type="string" matInput [(ngModel)]="searchQuery" />
       </mat-form-field>
 
-      <mat-card
-        class="b-1 shadow-none view-card"
+      <threshold-item
         *ngFor="let threshold of thresholds"
-      >
-        <mat-card-header>
-          <mat-card-title>
-            <h3>
-              {{ threshold.resource }}
-            </h3>
-          </mat-card-title>
-
-          <mat-card-subtitle style="margin-top: 8px">
-            <p>
-              {{ threshold.source }}
-            </p>
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-divider style="margin: 16px 8px"></mat-divider>
-
-        <mat-card-content style="margin-top: 8px">
-          <div style="display: flex">
-            <div style="flex: 1 1 0%">
-              <h1 class="mat-subtitle-2">Method</h1>
-
-              <mat-card-subtitle style="margin-top: 8px">
-                <p>
-                  {{ threshold.method }}
-                </p>
-              </mat-card-subtitle>
-            </div>
-            <div style="flex: 1 1 0%">
-              <h1 class="mat-subtitle-2">Column</h1>
-
-              <mat-card-subtitle style="margin-top: 8px">
-                <p>
-                  {{ threshold.default.column_name }}
-                </p>
-              </mat-card-subtitle>
-            </div>
-            <div style="flex: 1 1 0%">
-              <h1 class="mat-subtitle-2">Comparator</h1>
-
-              <mat-card-subtitle style="margin-top: 8px">
-                <p>
-                  {{ threshold.default.operator }}
-                </p>
-              </mat-card-subtitle>
-            </div>
-            <div style="flex: 1 1 0%">
-              <h1 class="mat-subtitle-2">Threshold Value</h1>
-
-              <mat-card-subtitle style="margin-top: 8px">
-                <p>
-                  {{ threshold.default.value }}
-                </p>
-              </mat-card-subtitle>
-            </div>
-          </div>
-        </mat-card-content>
-
-        <mat-divider style="margin-top: 12px"></mat-divider>
-
-        <mat-expansion-panel class="shadow-none">
-          <mat-expansion-panel-header>
-            <mat-panel-title style="margin-bottom: 2px">
-              View Query
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <div
-            style="
-              margin: 4px 4px;
-              padding: 12px 16px;
-              background-color: #f7f7f7;
-              border-radius: 8px;
-            "
-          >
-            <p style="white-space: pre-wrap; color: #3d3d3d">
-              {{ threshold.sql }}
-            </p>
-          </div>
-        </mat-expansion-panel>
-
-        <mat-divider></mat-divider>
-
-        <div style="display: flex; justify-content: flex-end; margin: 8px 8px">
-          <a
-            mat-stroked-button
-            color="primary"
-            class="view-button view-float--right"
-            [routerLink]="['/thresholds/edit/', threshold.id]"
-          >
-            Edit Threshold
-          </a>
-          <a
-            mat-stroked-button
-            color="warn"
-            class="view-button view-float--right"
-            (click)="deleteThreshold(threshold.id)"
-          >
-            Delete Threshold
-          </a>
-        </div>
-      </mat-card>
+        [threshold]="threshold"
+        (deleteThreshold)="deleteThreshold($event)"
+      ></threshold-item>
     </mat-card-content>
   </mat-card>
 </div>

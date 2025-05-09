@@ -37,7 +37,11 @@ export class CompositeComponent implements OnInit {
       next: (role) => {
         this.userRole = role;
       },
-      error: (err) => console.error('Error fetching user role', err),
+      error: (err) => {
+        console.error('Error fetching user role', err);
+
+        this.router.navigate(['/authentication/login']);
+      },
     });
     this.loadComposites();
   }
@@ -46,40 +50,36 @@ export class CompositeComponent implements OnInit {
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();
 
-    if (!userData) {
-      this.router.navigate(['/authentication/login']);
-    } else {
-      const url = `thresholds?user_id=${userData.id}&limit=50&sort=-created_at`;
-      this.apiService.get(url).subscribe({
-        next: (res) => {
-          this.ApiResponseStatus.processing = false;
-          this.ApiResponseStatus.success = true;
+    const url = `thresholds?user_id=${userData.id}&limit=50&sort=-created_at`;
+    this.apiService.get(url).subscribe({
+      next: (res) => {
+        this.ApiResponseStatus.processing = false;
+        this.ApiResponseStatus.success = true;
 
-          this.thresholds = res.data.map((item) => {
-            return { ...item.attributes, ...{ id: item.id } };
-          });
-        },
-        error: (error) => {},
-        complete: () => {
-          this.ApiResponseStatus.success = false;
-          this.ApiResponseStatus.processing = false;
-        },
-      });
-    }
+        this.thresholds = res.data.map((item) => {
+          return { ...item.attributes, ...{ id: item.id } };
+        });
+      },
+      error: (error) => {},
+      complete: () => {
+        this.ApiResponseStatus.success = false;
+        this.ApiResponseStatus.processing = false;
+      },
+    });
   }
 
   deleteThreshold(id: string) {
     this.ApiResponseStatus.processing = true;
 
     this.apiService.deleteRequest(`thresholds/${id}`).subscribe({
-      next: (res) => {
+      next: (_) => {
         this.ApiResponseStatus.processing = false;
         this.ApiResponseStatus.success = true;
 
         this.communication.showToast('Threshold deleted succesfully');
         this.thresholds = this.thresholds.filter((item) => item.id !== id);
       },
-      error: (error) => {
+      error: (_) => {
         this.ApiResponseStatus.processing = false;
         this.ApiResponseStatus.success = false;
 
@@ -94,7 +94,7 @@ export class CompositeComponent implements OnInit {
     });
   }
 
-  parseDate(timestamp: number): string {
+  parseDate(timestamp: number) {
     return new Date(timestamp).toLocaleDateString();
   }
 }

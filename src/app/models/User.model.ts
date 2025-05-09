@@ -8,6 +8,7 @@ export class User {
   notifications: number;
   confirmedAt?: Date;
   createdAt: Date;
+  selected?: boolean;
 
   constructor() {}
 }
