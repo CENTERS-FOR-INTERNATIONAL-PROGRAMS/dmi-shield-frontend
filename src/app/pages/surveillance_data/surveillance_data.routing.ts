@@ -9,10 +9,14 @@ export const SurveillanceDataRoutes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [AuthGuard],
+        data: { roles: ['level2', 'admin'] },
         component: CompositeComponent,
       },
       {
         path: 'composites',
+        canActivate: [AuthGuard],
+        data: { roles: ['level2', 'admin'] },
         component: CompositeComponent,
       },
       {

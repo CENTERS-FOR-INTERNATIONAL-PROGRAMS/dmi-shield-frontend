@@ -4,7 +4,10 @@
     <input type="string" matInput [(ngModel)]="searchQuery" />
   </mat-form-field>
 
-  <mat-selection-list (selectionChange)="onUsersSelected($event)">
+  <mat-selection-list
+    color="primary"
+    (selectionChange)="onUsersSelected($event)"
+  >
     <mat-list-option
       *ngFor="let user of users"
       [value]="user.id"

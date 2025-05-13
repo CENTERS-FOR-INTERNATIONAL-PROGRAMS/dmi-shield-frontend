@@ -36,6 +36,9 @@ export class AlertFormComponent implements OnInit, OnChanges {
     if (changes['alert'] && changes['alert'].currentValue) {
       this.alert = changes['alert'].currentValue;
       this.selectedUserIds = this.alert.user_ids ?? this.selectedUserIds;
+      this.users.forEach((user) => {
+        user.selected = this.selectedUserIds.includes(user.id);
+      });
     }
   }
 
