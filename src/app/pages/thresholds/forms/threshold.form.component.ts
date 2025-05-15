@@ -36,6 +36,9 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   thresholdFilter: ThresholdFilter | null = null;
   thresholdForm!: FormGroup;
 
+  selectableColumns: ThresholdColumn[] = [];
+  selectableDimensions: ThresholdColumn[] = [];
+
   @Input() datasources: ThresholdDatasource[] = [];
   @Input() threshold: Threshold | null;
   @Input() buttonLabel: string = 'Create';
@@ -111,6 +114,15 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
           this.thresholdForm.get('method').reset();
           this.thresholdForm.get('operator').reset();
           this.selectedDatasource = column as ThresholdDatasource;
+
+          this.selectableColumns = this.selectedDatasource.columns.filter(
+            (column) => column.is_dimension == false,
+          );
+
+          this.selectableDimensions = this.selectedDatasource.columns.filter(
+            (column) => column.is_dimension == true,
+          );
+
           this.thresholdForm.get('column').enable();
           this.thresholdForm.get('method').enable();
           this.thresholdForm.get('operator').disable();

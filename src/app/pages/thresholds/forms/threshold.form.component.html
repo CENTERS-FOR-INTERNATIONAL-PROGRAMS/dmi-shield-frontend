@@ -69,7 +69,7 @@
           <mat-select formControlName="column">
             <mat-option
               [value]="column"
-              *ngFor="let column of selectedDatasource?.columns"
+              *ngFor="let column of selectableColumns"
               [disabled]="column.is_dimension"
               >{{ column.name }}
               <span
@@ -160,7 +160,7 @@
               <mat-select formControlName="column_name">
                 <mat-option
                   [value]="column"
-                  *ngFor="let column of selectedDatasource?.columns"
+                  *ngFor="let column of selectableDimensions"
                   [disabled]="!column.is_dimension"
                   >{{ column.name }}
 
