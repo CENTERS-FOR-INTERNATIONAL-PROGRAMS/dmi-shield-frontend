@@ -75,9 +75,8 @@ export class CompositeComponent implements OnInit {
 
   loadComposites({
     searchQuery = null,
-    nextPage = null,
-    prevPage = null,
-  }: { searchQuery?: string; nextPage?: string; prevPage?: string } = {}) {
+    page = null,
+  }: { searchQuery?: string; page?: string } = {}) {
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();
 
@@ -85,10 +84,10 @@ export class CompositeComponent implements OnInit {
 
     if (searchQuery) {
       url = `thresholds?user_id=${userData.id}&sort=-created_at&filter[name_matches][input][search]=${searchQuery}`;
-    } else if (nextPage) {
+    } else if (page === 'next') {
       let temp = this.page.next.split('?')[1];
       url = `thresholds?${temp}`;
-    } else if (prevPage) {
+    } else if (page === 'prev') {
       let temp = this.page.prev.split('?')[1];
       url = `thresholds?${temp}`;
     } else {
@@ -156,9 +155,9 @@ export class CompositeComponent implements OnInit {
 
   onPageChanged(event: PageEvent) {
     if (event.pageIndex > event.previousPageIndex) {
-      this.loadComposites({ nextPage: 'next' });
+      this.loadComposites({ page: 'next' });
     } else if (event.previousPageIndex > event.pageIndex) {
-      this.loadComposites({ nextPage: 'prev' });
+      this.loadComposites({ page: 'prev' });
     }
   }
 }
