@@ -44,7 +44,8 @@
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-100" color="primary">
         <mat-label>Search</mat-label>
-        <input type="string" matInput [(ngModel)]="searchQuery" />
+
+        <input type="string" matInput (input)="onSearch($event)" />
       </mat-form-field>
 
       <threshold-item
@@ -52,6 +53,15 @@
         [threshold]="threshold"
         (deleteThreshold)="deleteThreshold($event)"
       ></threshold-item>
+
+      <mat-paginator
+        [length]="page.count"
+        color="primary"
+        (page)="onPageChanged($event)"
+        [pageSizeOptions]="[10]"
+        aria-label="Select page"
+      >
+      </mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>
