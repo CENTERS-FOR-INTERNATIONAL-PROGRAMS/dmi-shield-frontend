@@ -70,12 +70,10 @@ export class AlertFormComponent implements OnInit, OnChanges {
   }: { searchQuery?: string; page?: string } = {}) {
     this.showLoader.emit(true);
 
-    // const url = `user?limit=100&sort=-created_at`;
-
     let url = '';
 
     if (searchQuery) {
-      url = `user?&sort=-created_at&limit=${this.page.limit}&filter[name_matches][input][search]=${searchQuery}`;
+      url = `user?&sort=-created_at&page[limit]=${this.page.limit}&filter[name_matches][input][search]=${searchQuery}`;
     } else if (page === 'next') {
       let temp = this.page.next.split('?')[1];
       url = `user?${temp}`;
@@ -83,7 +81,7 @@ export class AlertFormComponent implements OnInit, OnChanges {
       let temp = this.page.prev.split('?')[1];
       url = `user?${temp}`;
     } else {
-      url = `user?&sort=-created_at&limit=${this.page.limit}`;
+      url = `user?&sort=-created_at&page[limit]=${this.page.limit}`;
     }
 
     this.apiService.get(url).subscribe({
