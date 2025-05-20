@@ -8,6 +8,9 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatListOption, MatSelectionListChange } from '@angular/material/list';
+import { PageEvent } from '@angular/material/paginator';
+import { debounceTime, Subject } from 'rxjs';
+import { Page } from 'src/app/interfaces/IPage.Model';
 import { ThresholdAlert } from 'src/app/interfaces/IThreshold.model';
 import { User } from 'src/app/models/User.model';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -19,7 +22,16 @@ import { ApiService } from 'src/app/services/api/api.service';
 export class AlertFormComponent implements OnInit, OnChanges {
   users: User[] = [];
   selectedUserIds: string[] = [];
-  searchQuery: string = '';
+
+  latestSearchTerm: string = '';
+  page: Page = {
+    count: 0,
+    limit: 50,
+    next: null,
+    prev: null,
+  };
+
+  private searchQuery$ = new Subject<string>();
 
   @Input() buttonLabel: string = 'Create';
   @Input() alert: ThresholdAlert | null;
@@ -30,6 +42,10 @@ export class AlertFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.loadUsers();
+
+    this.searchQuery$.pipe(debounceTime(500)).subscribe((term) => {
+      this.loadUsers({ searchQuery: term });
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,10 +58,33 @@ export class AlertFormComponent implements OnInit, OnChanges {
     }
   }
 
-  loadUsers() {
+  onSearch(event: Event): void {
+    let term = (event.target as HTMLInputElement).value;
+    this.latestSearchTerm = term;
+    this.searchQuery$.next(term);
+  }
+
+  loadUsers({
+    searchQuery = null,
+    page = null,
+  }: { searchQuery?: string; page?: string } = {}) {
     this.showLoader.emit(true);
 
-    const url = `user?limit=100&sort=-created_at`;
+    // const url = `user?limit=100&sort=-created_at`;
+
+    let url = '';
+
+    if (searchQuery) {
+      url = `user?&sort=-created_at&limit=${this.page.limit}&filter[name_matches][input][search]=${searchQuery}`;
+    } else if (page === 'next') {
+      let temp = this.page.next.split('?')[1];
+      url = `user?${temp}`;
+    } else if (page === 'prev') {
+      let temp = this.page.prev.split('?')[1];
+      url = `user?${temp}`;
+    } else {
+      url = `user?&sort=-created_at&limit=${this.page.limit}`;
+    }
 
     this.apiService.get(url).subscribe({
       next: (res) => {
@@ -58,6 +97,15 @@ export class AlertFormComponent implements OnInit, OnChanges {
         });
 
         this.users = users;
+
+        this.page = {
+          ...this.page,
+          ...{
+            next: res.links.next || res.links.prev,
+            prev: res.links.prev || res.links.next,
+            count: res.meta.page.total,
+          },
+        };
 
         this.showLoader.emit(false);
       },
@@ -81,5 +129,18 @@ export class AlertFormComponent implements OnInit, OnChanges {
     if (this.selectedUserIds.length == 0) return;
 
     this.formSubmit.emit(this.selectedUserIds);
+  }
+
+  onPageChanged(event: PageEvent) {
+    if (event.pageSize != this.page.limit) {
+      this.page.limit = event.pageSize;
+      this.loadUsers();
+      return;
+    }
+    if (event.pageIndex > event.previousPageIndex) {
+      this.loadUsers({ page: 'next' });
+    } else if (event.previousPageIndex > event.pageIndex) {
+      this.loadUsers({ page: 'prev' });
+    }
   }
 }

@@ -20,7 +20,6 @@
 
     <mat-card-header>
       <mat-card-title>Thresholds</mat-card-title>
-
       <span class="flex-1-auto"></span>
 
       <a
@@ -58,7 +57,8 @@
         [length]="page.count"
         color="primary"
         (page)="onPageChanged($event)"
-        [pageSizeOptions]="[10]"
+        [pageSize]="page.limit"
+        [pageSizeOptions]="[10, 20, 50, 100]"
         aria-label="Select page"
       >
       </mat-paginator>

@@ -83,7 +83,7 @@ export class CompositeComponent implements OnInit {
     let url = '';
 
     if (searchQuery) {
-      url = `thresholds?user_id=${userData.id}&sort=-created_at&filter[name_matches][input][search]=${searchQuery}`;
+      url = `thresholds?user_id=${userData.id}&sort=-created_at&limit=${this.page.limit}&filter[name_matches][input][search]=${searchQuery}`;
     } else if (page === 'next') {
       let temp = this.page.next.split('?')[1];
       url = `thresholds?${temp}`;
@@ -91,23 +91,22 @@ export class CompositeComponent implements OnInit {
       let temp = this.page.prev.split('?')[1];
       url = `thresholds?${temp}`;
     } else {
-      url = `thresholds?user_id=${userData.id}&sort=-created_at`;
+      url = `thresholds?user_id=${userData.id}&sort=-created_at&limit=${this.page.limit}`;
     }
 
     this.apiService.get(url).subscribe({
       next: (res) => {
-        this.ApiResponseStatus.processing = false;
-        this.ApiResponseStatus.success = true;
-
         this.thresholds = res.data.map((item) => {
           return { ...item.attributes, ...{ id: item.id } } as Threshold;
         });
 
         this.page = {
-          next: res.links.next || res.links.prev,
-          prev: res.links.prev || res.links.next,
-          limit: res.meta.page.limit || 10,
-          count: res.meta.page.total,
+          ...this.page,
+          ...{
+            next: res.links.next || res.links.prev,
+            prev: res.links.prev || res.links.next,
+            count: res.meta.page.total,
+          },
         };
       },
       error: (error) => {
@@ -128,9 +127,6 @@ export class CompositeComponent implements OnInit {
 
     this.apiService.deleteRequest(`thresholds/${id}`).subscribe({
       next: (_) => {
-        this.ApiResponseStatus.processing = false;
-        this.ApiResponseStatus.success = true;
-
         this.communication.showToast('Threshold deleted succesfully');
         this.thresholds = this.thresholds.filter((item) => item.id !== id);
       },
@@ -154,6 +150,13 @@ export class CompositeComponent implements OnInit {
   }
 
   onPageChanged(event: PageEvent) {
+    if (event.pageSize != this.page.limit) {
+      this.page.limit = event.pageSize;
+      this.loadComposites();
+
+      return;
+    }
+
     if (event.pageIndex > event.previousPageIndex) {
       this.loadComposites({ page: 'next' });
     } else if (event.previousPageIndex > event.pageIndex) {
