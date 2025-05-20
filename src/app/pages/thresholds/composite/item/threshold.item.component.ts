@@ -1,3 +1,4 @@
+import { formatNumber } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -20,6 +21,9 @@ export class ThresholdItemComponent implements OnInit, OnChanges {
   @Input() buttonLabel: string = 'Create';
 
   @Output() deleteThreshold = new EventEmitter<string>();
+
+  value: string = '';
+  description: string = '';
 
   constructor(private apiService: ApiService) {}
 
@@ -49,6 +53,14 @@ export class ThresholdItemComponent implements OnInit, OnChanges {
       next: (res) => {
         this.threshold = { ...this.threshold, ...res.data.attributes };
 
+        this.value = formatNumber(
+          Number(this.threshold.value),
+          'en-US',
+          '1.0-0',
+        );
+
+        this.buildAlertDescription();
+
         this.ApiResponseStatus.processing = false;
         this.ApiResponseStatus.success = true;
       },
@@ -65,5 +77,56 @@ export class ThresholdItemComponent implements OnInit, OnChanges {
 
   refreshValue() {
     this.calculateValue();
+  }
+
+  buildAlertDescription() {
+    let method = this.threshold.method;
+    let column_name = this.threshold.default.column_name;
+    let operator = this.mapOperatorToDescription(
+      this.threshold.default.operator,
+    );
+    let value = this.threshold.default.value;
+
+    this.description = `Alert sent when the ${method} of ${column_name} ${operator} ${value}`;
+  }
+
+  mapOperatorToDescription(operator) {
+    // | 'is_nil'
+    // | 'eq'
+    // | 'not_eq'
+    // | 'in'
+    // | 'less_than'
+    // | 'less_than_or_equal'
+    // | 'greater_than'
+    // | 'greater_than_or_equal'
+    // | 'like'
+    // | 'ilike'
+    // | 'has';
+
+    switch (operator) {
+      case 'is_nil':
+        return 'is null';
+      case 'eq':
+        return 'equals';
+      case 'not_eq':
+        return 'is not equal to';
+      case 'in':
+        return 'in';
+      case 'ilike':
+        return 'is like';
+      case 'like':
+        return 'is like';
+      case 'less_than':
+        return 'is less than';
+      case 'less_than_or_equal':
+        return 'is less than or equal to';
+      case 'greater_than':
+        return 'is greater than';
+      case 'greater_than_or_equal':
+        return 'is greater than or equal to';
+
+      default:
+        return 'unknown';
+    }
   }
 }

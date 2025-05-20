@@ -37,7 +37,7 @@
     >
       <div style="margin-right: 8px">
         <div style="margin-top: 0px">
-          <h1 class="mat-subtitle-1">{{ threshold.value }}</h1>
+          <h1 class="mat-subtitle-1">{{ value }}</h1>
         </div>
 
         <!-- <p class="mat-caption">Current Threshold Value</p> -->
@@ -61,50 +61,158 @@
     </div>
   </mat-card-header>
 
-  <mat-divider style="margin: 16px 8px"></mat-divider>
+  <mat-card-content>
+    <div
+      style="
+        display: flex;
+        justify-items: center;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        padding: 8px 12px;
+        background-color: rgb(0, 133, 219, 0.1);
+        border-radius: 4px;
+      "
+    >
+      <mat-icon
+        style="
+          display: flex;
+          justify-content: center;
+          justify-items: center;
+          margin-top: 2px;
+          color: #0085db;
+        "
+      >
+        <i-tabler name="bell-ringing" class="icon-20"></i-tabler>
+      </mat-icon>
 
-  <mat-card-content style="margin-top: 8px">
-    <div style="display: flex">
-      <div style="flex: 1 1 0%">
-        <h1 class="mat-subtitle-2">Method</h1>
-
-        <mat-card-subtitle style="margin-top: 8px">
-          <p>
-            {{ threshold.method }}
-          </p>
-        </mat-card-subtitle>
-      </div>
-      <div style="flex: 1 1 0%">
-        <h1 class="mat-subtitle-2">Column</h1>
-
-        <mat-card-subtitle style="margin-top: 8px">
-          <p>
-            {{ threshold.default.column_name }}
-          </p>
-        </mat-card-subtitle>
-      </div>
-      <div style="flex: 1 1 0%">
-        <h1 class="mat-subtitle-2">Comparator</h1>
-
-        <mat-card-subtitle style="margin-top: 8px">
-          <p>
-            {{ threshold.default.operator }}
-          </p>
-        </mat-card-subtitle>
-      </div>
-      <div style="flex: 1 1 0%">
-        <h1 class="mat-subtitle-2">Threshold Value</h1>
-
-        <mat-card-subtitle style="margin-top: 8px">
-          <p>
-            {{ threshold.default.value }}
-          </p>
-        </mat-card-subtitle>
-      </div>
+      <mat-card-subtitle style="margin-left: 8px; padding-top: 4px">
+        <p style="font-size: 15px; color: #0085db">{{ description }}</p>
+      </mat-card-subtitle>
     </div>
   </mat-card-content>
 
-  <mat-divider style="margin-top: 12px"></mat-divider>
+  <mat-divider style="margin: 8px 8px"></mat-divider>
+
+  <mat-expansion-panel class="shadow-none">
+    <mat-expansion-panel-header>
+      <mat-panel-title style="margin-bottom: 2px">
+        View Alerts
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div>
+      <mat-card-subtitle>
+        <p>Configuration</p>
+      </mat-card-subtitle>
+
+      <div
+        style="
+          display: flex;
+          padding: 12px 16px;
+          border-radius: 4px;
+          margin-top: 8px;
+          background-color: #f7f7f7;
+        "
+      >
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Method</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>
+              {{ threshold.method }}
+            </p>
+          </mat-card-subtitle>
+        </div>
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Column</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>
+              {{ threshold.default.column_name }}
+            </p>
+          </mat-card-subtitle>
+        </div>
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Comparator</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>
+              {{ threshold.default.operator }}
+            </p>
+          </mat-card-subtitle>
+        </div>
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Threshold Limit</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>
+              {{ threshold.default.value }}
+            </p>
+          </mat-card-subtitle>
+        </div>
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Alert Users</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>
+              {{ threshold.alert.user_ids.length }}
+            </p>
+          </mat-card-subtitle>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 8px">
+      <mat-card-subtitle>
+        <p>Runs</p>
+      </mat-card-subtitle>
+
+      <div
+        style="
+          display: flex;
+          padding: 12px 16px;
+          border-radius: 4px;
+          margin-top: 8px;
+          background-color: #f7f7f7;
+        "
+      >
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Last Run At</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>
+              {{ threshold.alert.last_run_at }}
+            </p>
+          </mat-card-subtitle>
+        </div>
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Next Run At</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>
+              {{ threshold.alert.next_run_at }}
+            </p>
+          </mat-card-subtitle>
+        </div>
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Last Run Value</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>-</p>
+          </mat-card-subtitle>
+        </div>
+        <div style="flex: 1 1 0%">
+          <h1 class="mat-subtitle-2">Threshold Reached</h1>
+
+          <mat-card-subtitle style="margin-top: 8px">
+            <p>false</p>
+          </mat-card-subtitle>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-divider style="margin-top: 2px"></mat-divider>
 
   <mat-expansion-panel class="shadow-none">
     <mat-expansion-panel-header>
