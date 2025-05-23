@@ -2,25 +2,30 @@ import { formatNumber } from '@angular/common';
 import {
   Component,
   OnInit,
-  OnChanges,
-  SimpleChanges,
   Input,
   EventEmitter,
   Output,
+  AfterViewInit,
+  ViewChild,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
-import { Threshold } from 'src/app/interfaces/IThreshold.model';
+import { AlertRun, Threshold } from 'src/app/interfaces/IThreshold.model';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'threshold-item',
   templateUrl: './threshold.item.component.html',
 })
-export class ThresholdItemComponent implements OnInit, OnChanges {
+export class ThresholdItemComponent implements OnInit, AfterViewInit {
   @Input() threshold: Threshold | null;
   @Input() buttonLabel: string = 'Create';
 
   @Output() deleteThreshold = new EventEmitter<string>();
+
+  runColumns: string[] = ['ran_at', 'value', 'threshold', 'threshold_reached'];
+  dataSource = new MatTableDataSource<AlertRun>([]);
 
   value: string = '';
   description: string = '';
@@ -34,11 +39,23 @@ export class ThresholdItemComponent implements OnInit, OnChanges {
     message: '',
   };
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   ngOnInit(): void {
-    this.calculateValue();
+    this.dataSource = new MatTableDataSource<AlertRun>(
+      this.threshold.alert.runs,
+    );
+
+    this.buildAlertDescription();
+
+    this.value =
+      this.threshold.alert.runs.length > 0
+        ? this.threshold.alert.runs[0].value
+        : '-';
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    // throw new Error("Method not implemented.");
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   onDeleteThreshold(threshold_id: string) {
@@ -91,18 +108,6 @@ export class ThresholdItemComponent implements OnInit, OnChanges {
   }
 
   mapOperatorToDescription(operator) {
-    // | 'is_nil'
-    // | 'eq'
-    // | 'not_eq'
-    // | 'in'
-    // | 'less_than'
-    // | 'less_than_or_equal'
-    // | 'greater_than'
-    // | 'greater_than_or_equal'
-    // | 'like'
-    // | 'ilike'
-    // | 'has';
-
     switch (operator) {
       case 'is_nil':
         return 'is null';

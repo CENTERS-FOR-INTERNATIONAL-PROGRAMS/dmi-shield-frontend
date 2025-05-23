@@ -92,4 +92,5 @@ export type Threshold = {
   sql?: string;
   value?: string | string[];
   alert?: ThresholdAlert;
+  alert_frequency?: ThresholdAggregateBy;
 };

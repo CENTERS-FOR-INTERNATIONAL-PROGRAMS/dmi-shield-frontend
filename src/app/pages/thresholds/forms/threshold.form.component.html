@@ -131,6 +131,54 @@
       </div>
     </div>
 
+    <div style="margin-top: 24px; margin-bottom: 24px; display: flex">
+      <div style="flex: 1 1 0%; margin-right: 24px">
+        <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+          >Filters Combine As</mat-label
+        >
+
+        <mat-form-field style="width: 100%">
+          <mat-label>Combinators</mat-label>
+          <mat-select formControlName="combinator">
+            <mat-option
+              [value]="combinator"
+              *ngFor="let combinator of combinators"
+              >{{ combinator }}</mat-option
+            >
+          </mat-select>
+
+          <mat-error
+            *ngIf="thresholdForm.get('combinator').hasError('required')"
+          >
+            Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div style="flex: 1 1 0%; margin-right: 24px">
+        <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+          >Alert Frequency</mat-label
+        >
+
+        <mat-form-field style="width: 100%">
+          <mat-label>Frequency</mat-label>
+          <mat-select formControlName="frequency">
+            <mat-option
+              [value]="frequency"
+              *ngFor="let frequency of selectedDatasource?.aggregate_by"
+              >{{ frequency.frequency }}</mat-option
+            >
+          </mat-select>
+
+          <mat-error
+            *ngIf="thresholdForm.get('frequency').hasError('required')"
+          >
+            Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
     <div formArrayName="filters" class="m-b-16">
       <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
         >Filters</mat-label
@@ -276,27 +324,6 @@
     <button type="button" (click)="addFilter()" mat-stroked-button>
       + Add Filter
     </button>
-
-    <div class="m-t-16">
-      <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-        >Filters Combine As</mat-label
-      >
-
-      <mat-form-field>
-        <mat-label>Combinators</mat-label>
-        <mat-select formControlName="combinator">
-          <mat-option
-            [value]="combinator"
-            *ngFor="let combinator of combinators"
-            >{{ combinator }}</mat-option
-          >
-        </mat-select>
-
-        <mat-error *ngIf="thresholdForm.get('combinator').hasError('required')">
-          Required
-        </mat-error>
-      </mat-form-field>
-    </div>
 
     <div style="display: flex; justify-content: flex-end">
       <button type="submit" mat-flat-button color="primary" class="view-button">

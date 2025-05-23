@@ -67,6 +67,8 @@ export class EditComponent implements OnInit {
         } as Threshold;
 
         this.threshold = threshold;
+
+        console.log(this.threshold);
         this.alert = threshold.alert;
 
         this.ApiResponseStatus.success = true;
@@ -135,6 +137,7 @@ export class EditComponent implements OnInit {
             method: this.threshold.method,
             filters: this.threshold.filters,
             filters_combine_by: this.threshold.filters_combine_by,
+            alert_frequency: this.threshold.alert_frequency,
             default: this.threshold.default,
             resource: this.threshold.resource,
             domain: this.threshold.domain,
@@ -149,6 +152,8 @@ export class EditComponent implements OnInit {
         type: 'Threshold',
       },
     };
+
+    console.log(payload);
 
     const url = `thresholds/${this.threshold.id}`;
 

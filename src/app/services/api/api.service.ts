@@ -8,7 +8,6 @@ import {
   HttpHeaders,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { config } from '../../config/config';
