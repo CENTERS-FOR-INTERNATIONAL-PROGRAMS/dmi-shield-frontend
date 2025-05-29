@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {
   Threshold,
+  ThresholdAggregateBy,
   ThresholdColumn,
   ThresholdColumnOperator,
   ThresholdColumnValue,
@@ -31,10 +32,14 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   selectedBaseColumn: ThresholdColumn | null = null;
   selectedBaseColumnOperator: ThresholdColumnOperator = null;
   selectedFiltersCombinator: string = 'and';
+  selectedAlertFrequency: ThresholdAggregateBy | null = null;
   thresholdValue: number | null | string = null;
   thresholdName: null | string = null;
   thresholdFilter: ThresholdFilter | null = null;
   thresholdForm!: FormGroup;
+
+  selectableColumns: ThresholdColumn[] = [];
+  selectableDimensions: ThresholdColumn[] = [];
 
   @Input() datasources: ThresholdDatasource[] = [];
   @Input() threshold: Threshold | null;
@@ -83,6 +88,13 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
       combinator: new FormControl(this.selectedFiltersCombinator, [
         Validators.required,
       ]),
+      frequency: new FormControl(
+        {
+          value: this.selectedAlertFrequency,
+          disabled: true,
+        },
+        [Validators.required],
+      ),
       thresholdValue: new FormControl(this.thresholdValue, [
         Validators.required,
       ]),
@@ -111,8 +123,18 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
           this.thresholdForm.get('method').reset();
           this.thresholdForm.get('operator').reset();
           this.selectedDatasource = column as ThresholdDatasource;
+
+          this.selectableColumns = this.selectedDatasource.columns.filter(
+            (column) => column.is_dimension == false,
+          );
+
+          this.selectableDimensions = this.selectedDatasource.columns.filter(
+            (column) => column.is_dimension == true,
+          );
+
           this.thresholdForm.get('column').enable();
           this.thresholdForm.get('method').enable();
+          this.thresholdForm.get('frequency').enable();
           this.thresholdForm.get('operator').disable();
         }),
       )
@@ -138,10 +160,10 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['datasources'] && changes['threshold'].currentValue) {
+    if (changes['datasources'] && changes['threshold']?.currentValue) {
       this.datasources = changes['datasources'].currentValue;
     }
-    if (changes['threshold'] && changes['threshold'].currentValue) {
+    if (changes['threshold'] && changes['threshold']?.currentValue) {
       this.threshold = changes['threshold'].currentValue;
     }
 
@@ -223,6 +245,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
         value: thresholdForm.get('thresholdValue')?.value,
       },
       filters_combine_by: thresholdForm.get('combinator').value as any,
+      alert_frequency: thresholdForm.get('frequency').value as any,
       filters: (thresholdForm.get('filters') as FormArray).controls.map(
         (control) => {
           return {
@@ -247,9 +270,15 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
       (column) => column.name === this.threshold?.default.column_name,
     );
 
+    let frequency = datasource.aggregate_by.find(
+      (frquency) =>
+        frquency.frequency === this.threshold?.alert_frequency?.frequency,
+    );
+
     let filters = [];
     this.selectedDatasource = datasource;
     this.selectedBaseColumn = column;
+    this.selectedAlertFrequency = frequency;
 
     this.threshold.filters.forEach((filter) => {
       let column = datasource.columns.find(
@@ -277,6 +306,7 @@ export class ThresholdFormComponent implements OnInit, OnChanges {
         (op) => op.name === this.threshold.default.operator,
       ),
       combinator: this.threshold.filters_combine_by,
+      frequency: frequency,
       thresholdValue: this.threshold.default.value as any,
       thresholdName: this.threshold.name as any,
       filters: filters,

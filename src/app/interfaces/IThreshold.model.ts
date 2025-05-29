@@ -61,10 +61,20 @@ export type ThresholdFilter = {
   value: string | number | boolean;
 };
 
+export type AlertRun = {
+  value?: string;
+  threshold?: string;
+  ran_at?: string;
+  threshold_reached?: boolean;
+};
+
 export type ThresholdAlert = {
   id?: string;
   threshold_id?: string;
   user_ids?: string[];
+  last_run_at?: string;
+  next_run_at?: string;
+  runs?: AlertRun[];
 };
 
 export type Threshold = {
@@ -82,4 +92,5 @@ export type Threshold = {
   sql?: string;
   value?: string | string[];
   alert?: ThresholdAlert;
+  alert_frequency?: ThresholdAggregateBy;
 };

@@ -67,7 +67,7 @@ export class CompositeComponent implements OnInit {
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();
 
-    const url = `files/uploads/?user_id=${userData.id}&limit=50&sort=-created_at`;
+    const url = `files/uploads/?user_id=${userData.id}&page[limit]=50&sort=-created_at`;
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;

@@ -16,22 +16,6 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'outbreaks',
-        canActivate: [AuthGuard],
-        data: { roles: [1, 2, 3] },
-        loadChildren: () =>
-          import('./pages/outbreaks/outbreaks.module').then(
-            (m) => m.OutbreaksModule,
-          ),
-      },
-      {
-        path: 'cases',
-        canActivate: [AuthGuard],
-        data: { roles: [1, 2, 3] },
-        loadChildren: () =>
-          import('./pages/cases/cases.module').then((m) => m.CasesModule),
-      },
-      {
         path: 'analytics',
         loadChildren: () =>
           import('./pages/analytics/analytics.module').then(

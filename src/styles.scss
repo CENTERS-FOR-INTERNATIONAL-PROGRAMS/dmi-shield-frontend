@@ -21,7 +21,7 @@ mat-card {
   --text-color: #333333;
   --main-color: #24abce;
   --main-bg-color: #ffffff;
-  --accent-orange: #ffa500;
+  --accent-orange: #ff6200;
   --accent-green: #20c997;
   --button-color: #007bff;
   --main-blue: #16428d;
@@ -41,7 +41,7 @@ body {
   color: var(--text-color);
 }
 
-//Banner and Navbar css start
+/* //Banner and Navbar css start */
 .top-header {
   top: 0;
   left: 0;
@@ -80,8 +80,121 @@ body {
   top: 0;
 }
 
-//Banner and Navbar css end
+.spacer {
+  flex: 1 1 auto;
+}
 
+.container {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.nav {
+  position: fixed;
+  height: 50px;
+  display: flex;
+}
+
+.nav.hide-nav {
+  display: none; /* You can play on opacity for nice transitions*/
+}
+
+.view-button {
+  margin: 5px 5px 5px 0 !important;
+}
+
+.view-icon--image {
+  width: 20px;
+  margin-right: 5px;
+  border-radius: 10px;
+}
+
+.view-icon--image:hover {
+  cursor: pointer;
+  background: rgb(230, 230, 230);
+}
+
+.view-spinner--inline {
+  width: 30px !important;
+  height: 30px !important;
+  display: inline-block !important;
+  vertical-align: middle;
+  margin: 0 10px;
+}
+
+.view-icon--inline {
+  width: 30px !important;
+  height: 30px !important;
+  display: inline-block !important;
+  vertical-align: middle;
+  margin: 0 10px;
+}
+
+.view-color--green {
+  color: green;
+}
+
+.view-color--red {
+  color: red;
+}
+
+.view-border-radius--30 {
+  border-radius: 30px !important;
+}
+
+/* View Card */
+.view-card {
+  margin: 20px 0 !important;
+}
+
+.view-float--right {
+  float: right;
+}
+
+.border-none {
+  border: 0;
+  outline: 0;
+}
+
+.view-text--size-large {
+  font-size: large;
+}
+
+.view--text-title {
+  display: inline-block;
+  margin: 0 5px 8px;
+  padding: 0 10px;
+  min-width: 180px;
+}
+
+.view--text-title .text {
+  color: black;
+}
+
+.view--text-title .title {
+  font-size: 13px;
+}
+
+mat-error {
+  margin: 0 0 20px;
+}
+
+.mat-mdc-form-field-hint-wrapper,
+.mat-mdc-form-field-error-wrapper {
+  position: relative !important;
+}
+
+/* Alignment */
+.view-align--right {
+  text-align: right;
+}
+
+.view-align--left {
+  text-align: left;
+}
+
+/* //Banner and Navbar css end */
 .bottom-header {
   position: sticky;
   top: 0;
@@ -192,7 +305,6 @@ section {
 }
 
 .help-icon-box {
-  //border: yellow 2px solid;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -249,7 +361,6 @@ section {
   -ms-overflow-style: none; /*Hide scrollbar*/
 }
 .card-container::-webkit-scrollbar {
-  //Hide scrollbar
   display: none;
 }
 
@@ -257,7 +368,7 @@ section {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  //background-color: rgba(0, 0, 0, 0.5);
+
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -411,7 +522,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // padding: 40rem 9%;
+
   padding-top: 20rem;
   padding-bottom: 10rem;
   padding-left: 9%;
@@ -450,7 +561,7 @@ section {
 .home-content h3 {
   font-size: 32px;
   font-weight: 600;
-  //color: #03062C;
+  /* //color: #03062C; */
   line-height: 40px;
   margin-top: 35px;
   color: var(--text-color-white);
@@ -460,7 +571,7 @@ section {
 .home-content h4 {
   font-size: 20px;
   font-weight: 700;
-  //color: #03062C;
+  /* //color: #03062C; */
   line-height: 30px;
   margin-top: 35px;
   color: var(--text-color-white);
@@ -486,10 +597,8 @@ section {
 .btn-box {
   position: relative;
   display: flex;
-  //justify-content: space-around;
   align-items: center;
   margin-top: 35px;
-  //width: 34.5rem;
   height: 5rem;
 }
 
@@ -536,16 +645,14 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  //margin-top: 2px;
 }
 
-//for the vertical lines after each div on the footer
+/* //for the vertical lines after each div on the footer */
 .footer-section:not(:last-child) {
   border-bottom: none;
   border-right: 2px solid #ffffff;
   padding-right: 1rem;
   margin-bottom: 1rem;
-  //margin-top: 2rem;
 }
 
 .footer-logo-container {
@@ -568,7 +675,6 @@ footer {
 }
 
 .footer-logo-container a {
-  //position: absolute;
   top: 70%;
   left: 32%;
   font-size: 17px;
@@ -577,7 +683,7 @@ footer {
   color: #ffffff;
 }
 
-//make footer logo responsive
+/* //make footer logo responsive */
 .footer-logo-container p {
   font-size: 24px;
   line-height: 30px;
@@ -586,7 +692,7 @@ footer {
   margin-top: 6px;
 }
 
-//for responsiveness
+/* for responsiveness */
 @media (max-width: 768px) {
   .footer-top {
     flex-direction: column;
@@ -617,7 +723,6 @@ footer {
   width: 178px;
   height: 100px;
   flex-shrink: 0;
-  // transform: scale(0.7);
 }
 
 .shield-logo-container .logo-text {
@@ -659,7 +764,6 @@ footer {
   color: #ffffff;
   line-height: 3rem;
   font-size: 1.8rem;
-  //margin-top: 12px;
 }
 
 .terms-container span {
@@ -667,7 +771,6 @@ footer {
   color: #ffffff;
   line-height: 3rem;
   font-size: 1.8rem;
-  //margin-top: 12px;
 }
 
 .footerItems {
@@ -686,7 +789,6 @@ footer {
   color: #ffffff;
   line-height: 3rem;
   font-size: 1.8rem;
-  //margin-top: 12px;
   text-decoration: underline;
   text-decoration-color: #20c997;
   text-decoration-thickness: 2px;
@@ -790,7 +892,7 @@ footer {
     display: block;
   }
 
-  //.navbar {
+  /* //.navbar {
   //  position: absolute;
   //  top: 100%;
   //  left: -100%;
@@ -801,15 +903,15 @@ footer {
   //  z-index: 1;
   //  transition: .25s ease;
   //  transition-delay: .25s;
-  //}
+  //} */
 
   .navbar-tools {
     display: none;
   }
 
-  .navbar img {
+  /* .navbar img {
     //display: none;
-  }
+  } */
 
   .navbar.active {
     left: 0;
@@ -823,11 +925,11 @@ footer {
     font-size: 2rem;
     color: black;
     margin: 2rem 0;
-    //transform: translateX(-20rem);
+    /* //transform: translateX(-20rem); */
     transition-delay: 0s;
     overflow: hidden;
     width: 100%;
-    //padding: 1rem;
+    /* //padding: 1rem; */
   }
 
   .navbar.active a {
@@ -835,7 +937,9 @@ footer {
     flex-direction: column;
     transform: translateX(0);
     transition-delay: 0.25s;
-    transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out,
+    transition:
+      transform 0.25s ease-in-out,
+      opacity 0.25s ease-in-out,
       max-width 0.25s ease-in-out;
     width: 100%;
     padding: 0 2rem;
