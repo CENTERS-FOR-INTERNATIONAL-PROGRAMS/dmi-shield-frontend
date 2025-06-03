@@ -5,8 +5,9 @@ import { User } from '../models/User.model';
 
 @Injectable({ providedIn: 'root' })
 export class AwarenessService {
-  AwarenessInstance: MAwareness = new MAwareness('morlig_awareness');
-  UserInstance: User = new User();
+  AwarenessInstance: MAwareness = new MAwareness('shield_awareness');
+  // UserInstance: User = new User();
+  UserInstance: User | undefined = null;
   focused: KeyValue = {};
   awake: boolean = false;
   private userDataKey = 'userData';

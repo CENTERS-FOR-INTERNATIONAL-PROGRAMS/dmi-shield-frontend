@@ -1,0 +1,64 @@
+<div style="margin-top: 8px">
+  <mat-form-field appearance="outline" class="w-100" color="primary">
+    <mat-label>Search</mat-label>
+    <input type="string" matInput (input)="onSearch($event)" />
+  </mat-form-field>
+
+  <mat-selection-list
+    color="primary"
+    (selectionChange)="onUsersSelected($event)"
+  >
+    <mat-list-option
+      *ngFor="let user of users"
+      [value]="user.id"
+      [selected]="user.selected == true"
+    >
+      <p matListItemTitle class="view-text--size-large">
+        {{ user.name }}
+      </p>
+
+      <p matListItemLine>
+        {{ user.email }}
+      </p>
+    </mat-list-option>
+  </mat-selection-list>
+
+  <mat-divider style="margin: 8px 8px"></mat-divider>
+
+  <mat-paginator
+    [length]="page.count"
+    color="primary"
+    (page)="onPageChanged($event)"
+    [pageSize]="page.limit"
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+
+  <mat-divider style="margin: 8px 8px"></mat-divider>
+
+  <div style="display: flex; justify-content: flex-end">
+    <button
+      *ngIf="selectedUserIds.length == 0"
+      type="button"
+      mat-flat-button
+      color="primary"
+      [disabled]="selectedUserIds.length < 1"
+      class="view-button"
+    >
+      {{ buttonLabel }} Alerts
+    </button>
+
+    <button
+      *ngIf="selectedUserIds.length > 0"
+      type="button"
+      mat-flat-button
+      color="primary"
+      [disabled]="selectedUserIds.length == 0"
+      (click)="onSubmit()"
+      class="view-button"
+    >
+      {{ buttonLabel }} Alerts ({{ selectedUserIds.length }})
+    </button>
+  </div>
+</div>

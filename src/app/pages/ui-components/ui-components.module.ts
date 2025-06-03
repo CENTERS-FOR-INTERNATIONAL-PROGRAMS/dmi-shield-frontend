@@ -10,11 +10,6 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
 
 import { UiComponentsRoutes } from './ui-components.routing';
 
-// ui components
-import { AppBadgeComponent } from './badge/badge.component';
-import { AppChipsComponent } from './chips/chips.component';
-import { AppListsComponent } from './lists/lists.component';
-import { AppMenuComponent } from './menu/menu.component';
 import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { MatNativeDateModule } from '@angular/material/core';
 
@@ -28,12 +23,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     TablerIconsModule.pick(TablerIcons),
     MatNativeDateModule,
   ],
-  declarations: [
-    AppBadgeComponent,
-    AppChipsComponent,
-    AppListsComponent,
-    AppMenuComponent,
-    AppTooltipsComponent,
-  ],
+  declarations: [AppTooltipsComponent],
 })
 export class UicomponentsModule {}

@@ -10,6 +10,9 @@ import { EditComponent } from './edit/edit.component';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { ThresholdFormComponent } from './forms/threshold.form.component';
+import { ThresholdItemComponent } from './composite/item/threshold.item.component';
+import { MatIconModule } from '@angular/material/icon';
+import { AlertFormComponent } from './forms/alerts/alert.form.component';
 
 @NgModule({
   imports: [
@@ -20,12 +23,15 @@ import { ThresholdFormComponent } from './forms/threshold.form.component';
     ReactiveFormsModule,
     TablerIconsModule,
     NgxFileDropModule,
+    MatIconModule,
   ],
   declarations: [
     CompositeComponent,
     ModifyComponent,
     EditComponent,
     ThresholdFormComponent,
+    ThresholdItemComponent,
+    AlertFormComponent,
   ],
 })
 export class ThresholdsModule {}

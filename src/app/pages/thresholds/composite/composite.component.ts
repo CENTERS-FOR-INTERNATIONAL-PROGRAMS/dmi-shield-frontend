@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { Threshold } from 'src/app/interfaces/IThreshold.model';
 import { CommunicationService } from 'src/app/services/communication.service';
+import { debounceTime, Subject } from 'rxjs';
+import { Page } from 'src/app/interfaces/IPage.Model';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-composites',
@@ -13,8 +16,17 @@ import { CommunicationService } from 'src/app/services/communication.service';
 })
 export class CompositeComponent implements OnInit {
   thresholds: Threshold[] = [];
+  filteredThresholds: Threshold[] = [];
   userRole: string;
-  searchQuery: string = '';
+  latestSearchTerm: string = '';
+  page: Page = {
+    count: 0,
+    limit: 10,
+    next: null,
+    prev: null,
+  };
+
+  private searchQuery$ = new Subject<string>();
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -27,7 +39,6 @@ export class CompositeComponent implements OnInit {
     private awareness: AwarenessService,
     private apiService: ApiService,
     private communication: CommunicationService,
-
     private router: Router,
     private authenticationService: AuthenticationService,
   ) {}
@@ -37,49 +48,89 @@ export class CompositeComponent implements OnInit {
       next: (role) => {
         this.userRole = role;
       },
-      error: (err) => console.error('Error fetching user role', err),
+      error: (err) => {
+        console.error('Error fetching user role', err);
+
+        this.router.navigate(['/authentication/login']);
+      },
     });
+
     this.loadComposites();
+
+    this.searchQuery$.pipe(debounceTime(500)).subscribe((term) => {
+      this.loadComposites({ searchQuery: term });
+    });
   }
 
-  loadComposites() {
+  onSearch(event: Event): void {
+    let term = (event.target as HTMLInputElement).value;
+    this.latestSearchTerm = term;
+    this.searchQuery$.next(term);
+  }
+
+  filterClientSide(items: any[], term: string): any[] {
+    const lowerTerm = term.toLowerCase();
+    return items.filter((item) => item.name.toLowerCase().includes(lowerTerm));
+  }
+
+  loadComposites({
+    searchQuery = null,
+    page = null,
+  }: { searchQuery?: string; page?: string } = {}) {
     this.ApiResponseStatus.processing = true;
     const userData = this.awareness.getUserData();
 
-    if (!userData) {
-      this.router.navigate(['/authentication/login']);
-    } else {
-      const url = `thresholds?user_id=${userData.id}&limit=50&sort=-created_at`;
-      this.apiService.get(url).subscribe({
-        next: (res) => {
-          this.ApiResponseStatus.processing = false;
-          this.ApiResponseStatus.success = true;
+    let url = '';
 
-          this.thresholds = res.data.map((item) => {
-            return { ...item.attributes, ...{ id: item.id } };
-          });
-        },
-        error: (error) => {},
-        complete: () => {
-          this.ApiResponseStatus.success = false;
-          this.ApiResponseStatus.processing = false;
-        },
-      });
+    if (searchQuery) {
+      url = `thresholds?user_id=${userData.id}&sort=-created_at&page[limit]=${this.page.limit}&filter[name_matches][input][search]=${searchQuery}`;
+    } else if (page === 'next') {
+      let temp = this.page.next.split('?')[1];
+      url = `thresholds?${temp}`;
+    } else if (page === 'prev') {
+      let temp = this.page.prev.split('?')[1];
+      url = `thresholds?${temp}`;
+    } else {
+      url = `thresholds?user_id=${userData.id}&sort=-created_at&page[limit]=${this.page.limit}`;
     }
+
+    this.apiService.get(url).subscribe({
+      next: (res) => {
+        this.thresholds = res.data.map((item) => {
+          return { ...item.attributes, ...{ id: item.id } } as Threshold;
+        });
+
+        this.page = {
+          ...this.page,
+          ...{
+            next: res.links.next || res.links.prev,
+            prev: res.links.prev || res.links.next,
+            count: res.meta.page.total,
+          },
+        };
+      },
+      error: (error) => {
+        this.ApiResponseStatus.success = false;
+        this.ApiResponseStatus.processing = false;
+
+        this.communication.showToast('Something went wrong. Kindly try again.');
+      },
+      complete: () => {
+        this.ApiResponseStatus.success = true;
+        this.ApiResponseStatus.processing = false;
+      },
+    });
   }
 
   deleteThreshold(id: string) {
     this.ApiResponseStatus.processing = true;
 
     this.apiService.deleteRequest(`thresholds/${id}`).subscribe({
-      next: (res) => {
-        this.ApiResponseStatus.processing = false;
-        this.ApiResponseStatus.success = true;
-
+      next: (_) => {
         this.communication.showToast('Threshold deleted succesfully');
         this.thresholds = this.thresholds.filter((item) => item.id !== id);
       },
-      error: (error) => {
+      error: (_) => {
         this.ApiResponseStatus.processing = false;
         this.ApiResponseStatus.success = false;
 
@@ -88,13 +139,28 @@ export class CompositeComponent implements OnInit {
         );
       },
       complete: () => {
-        this.ApiResponseStatus.success = false;
+        this.ApiResponseStatus.success = true;
         this.ApiResponseStatus.processing = false;
       },
     });
   }
 
-  parseDate(timestamp: number): string {
+  parseDate(timestamp: number) {
     return new Date(timestamp).toLocaleDateString();
+  }
+
+  onPageChanged(event: PageEvent) {
+    if (event.pageSize != this.page.limit) {
+      this.page.limit = event.pageSize;
+      this.loadComposites();
+
+      return;
+    }
+
+    if (event.pageIndex > event.previousPageIndex) {
+      this.loadComposites({ page: 'next' });
+    } else if (event.previousPageIndex > event.pageIndex) {
+      this.loadComposites({ page: 'prev' });
+    }
   }
 }
