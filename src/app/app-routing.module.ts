@@ -41,8 +41,8 @@ const routes: Routes = [
       {
         path: 'surveillance',
         loadChildren: () =>
-          import('./pages/surveillance_data/surveillance_data.module').then(
-            (m) => m.Surveillance_dataModule,
+          import('./pages/file_uploads/file_uploads.module').then(
+            (m) => m.FileUploadsModule,
           ),
       },
       {

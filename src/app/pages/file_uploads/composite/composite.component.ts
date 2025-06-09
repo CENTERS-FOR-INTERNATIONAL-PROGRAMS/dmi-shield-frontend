@@ -1,29 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { AwarenessService } from '../../../services/awareness.service';
-import { CommunicationService } from '../../../services/communication.service';
-import { User } from '../../../models/User.model';
-import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
+import { Surveillance } from '../../../models/Surveillance.model';
 import { ApiService } from '../../../services/api/api.service';
+import { ApiResponseStatus } from '../../../interfaces/IAuth.model';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { FileResource } from 'src/app/interfaces/IFile.Model';
 import { Page } from 'src/app/interfaces/IPage.Model';
-import { debounceTime, Subject } from 'rxjs';
+import { FileResource } from 'src/app/interfaces/IFile.Model';
+import { CommunicationService } from 'src/app/services/communication.service';
+import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-composite',
+  selector: 'app-composites',
   templateUrl: './composite.component.html',
-  styleUrls: ['./composite.component.scss'],
 })
 export class CompositeComponent implements OnInit {
-  resources: FileResource[] = [];
+  Surveillance: Surveillance[] = [];
+  TableHeaders: string[] = [
+    'original_filename',
+    'state',
+    'type',
+    'created_at',
+    'actions',
+  ];
+  fileStates: string[] = [
+    'Pending Processing',
+    'Validating',
+    'Rejected',
+    'Processing',
+    'Validated',
+  ];
 
-  TableHeaders: string[] = ['original_filename', 'actions'];
+  resources = new MatTableDataSource<FileResource>([]);
+  userRole: string;
 
   private searchQuery$ = new Subject<string>();
 
-  UserInstance: User = new User();
-  userRole: string;
+  ApiResponseStatus: ApiResponseStatus = {
+    success: null,
+    result: null,
+    processing: false,
+    message: '',
+  };
 
   latestSearchTerm: string = '';
   page: Page = {
@@ -33,23 +52,15 @@ export class CompositeComponent implements OnInit {
     prev: null,
   };
 
-  ApiResponseStatus: ApiResponseStatus = {
-    success: null,
-    result: null,
-    processing: false,
-    message: '',
-  };
-
   constructor(
-    public awareness: AwarenessService,
-    private communicationService: CommunicationService,
+    private awareness: AwarenessService,
     private apiService: ApiService,
     private authenticationService: AuthenticationService,
+    private communicationService: CommunicationService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userRole = this.authenticationService.getCurrentUserRole();
-
     this.loadComposites();
 
     this.searchQuery$.pipe(debounceTime(500)).subscribe((term) => {
@@ -63,52 +74,34 @@ export class CompositeComponent implements OnInit {
     this.searchQuery$.next(term);
   }
 
-  openUrl(url: string) {
-    if (
-      !this.awareness.UserInstance?.role ||
-      this.awareness.UserInstance?.role === 'level1' ||
-      this.awareness.UserInstance?.role === 'guest'
-    ) {
-      this.communicationService.showToast(
-        'Sorry, you are not authorised to download the file.',
-      );
-      return;
-    }
-    window.open(url, '_blank');
-  }
-
-  concatenate(text, limit) {
-    if (text) {
-      return text.length > limit ? `${text.slice(0, limit)}...` : text;
-    }
-  }
-
   loadComposites({
     searchQuery = null,
     page = null,
   }: { searchQuery?: string; page?: string } = {}) {
+    this.ApiResponseStatus.processing = true;
+    const userData = this.awareness.getUserData();
+
     let url = '';
 
     if (searchQuery) {
-      url = `files/uploads/resources?&sort=-created_at&page[limit]=${this.page.limit}&filter[name_matches][input][search]=${searchQuery}`;
+      url = `files/uploads?user_id=${userData.id}&sort=-created_at&page[limit]=${this.page.limit}&filter[name_matches][input][search]=${searchQuery}`;
     } else if (page === 'next') {
       let temp = this.page.next.split('?')[1];
-      url = `files/uploads/resources?${temp}`;
+      url = `files/uploads?${temp}`;
     } else if (page === 'prev') {
       let temp = this.page.prev.split('?')[1];
-      url = `files/uploads/resources?${temp}`;
+      url = `files/uploads?${temp}`;
     } else {
-      url = `files/uploads/resources?&sort=-created_at&page[limit]=${this.page.limit}`;
+      url = `files/uploads?user_id=${userData.id}&sort=-created_at&page[limit]=${this.page.limit}`;
     }
 
-    this.ApiResponseStatus.processing = true;
     this.apiService.get(url).subscribe({
       next: (res) => {
-        this.ApiResponseStatus.success = true;
-
-        this.resources = res.data.map((item) => {
+        let files = res.data.map((item) => {
           return { ...item.attributes, ...{ id: item.id } } as FileResource;
         });
+
+        this.resources = new MatTableDataSource<FileResource>(files);
 
         this.page = {
           ...this.page,
@@ -132,6 +125,29 @@ export class CompositeComponent implements OnInit {
         this.ApiResponseStatus.success = true;
       },
     });
+  }
+
+  parseDate(timestamp: number): string {
+    return new Date(timestamp).toLocaleDateString();
+  }
+
+  getValidityStatus(status: boolean): string {
+    if (status === true) {
+      return 'Valid';
+    }
+    return 'Invalid';
+  }
+
+  formatState(element: any) {
+    if (element.type === 'resource') {
+      return '-';
+    } else {
+      // Remove underscores and convert to sentence case
+      return element.state
+        .replace(/_/g, ' ')
+        .toLowerCase()
+        .replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
+    }
   }
 
   onPageChanged(event: PageEvent) {

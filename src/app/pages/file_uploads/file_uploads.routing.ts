@@ -3,7 +3,7 @@ import { CompositeComponent } from './composite/composite.component';
 import { ModifyComponent } from './modify/modify.component';
 import { AuthGuard } from '../../services/authentication.service';
 
-export const SurveillanceDataRoutes: Routes = [
+export const FileUploadsRoutes: Routes = [
   {
     path: '',
     children: [
