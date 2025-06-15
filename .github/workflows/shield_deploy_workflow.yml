@@ -31,7 +31,6 @@ jobs:
             echo "remove shareable volume..."
             docker volume rm shield_volume
             git checkout main
-            git stash
             git fetch origin
             git pull --ff-only
             cp -rf /var/lib/shield_launch/config_files/.env.* environment/
@@ -58,9 +57,7 @@ jobs:
             echo "remove shareable volume..."
             docker volume rm shield_volume
             git checkout dev
-            git stash
-            git fetch origin
-            git pull --ff-only
+            git fetch origin && git pull --ff-only
             sudo cp -rf /etc/shield_dev_env/environment/.env.* environment/
             sudo cp -rf /etc/shield_dev_env/config_files/* src/app/
             echo "--------Deploying to Test--------"
@@ -86,9 +83,7 @@ jobs:
             echo "remove shareable volume..."
             docker volume rm shield_volume
             git checkout dev
-            git stash
-            git fetch origin
-            git pull --ff-only
+            git fetch origin && git pull --ff-only
             sudo cp -rf /var/lib/shield_demo/environment/.env.demo environment/
             sudo cp -rf /var/lib/shield_demo/config_files/* src/app/
             echo "------Deploying to Demo---------"
