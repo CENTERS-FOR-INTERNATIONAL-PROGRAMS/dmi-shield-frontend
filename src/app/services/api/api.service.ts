@@ -19,6 +19,7 @@ export class LoggingInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private awareness: AwarenessService,
+    private communication: CommunicationService,
   ) {}
 
   intercept(
@@ -30,6 +31,8 @@ export class LoggingInterceptor implements HttpInterceptor {
         if (error.status === 403) {
           // Clear all localStorage data
           this.awareness.removeUserData();
+
+          this.communication.showToast('Session Expired. Kindly sign in again');
 
           // Navigate to login page
           this.router.navigate(['/authentication/login']);
@@ -46,7 +49,6 @@ export class LoggingInterceptor implements HttpInterceptor {
 })
 export class ApiService {
   constructor(
-    private communication: CommunicationService,
     private http: HttpClient,
     private awareness: AwarenessService,
   ) {}
