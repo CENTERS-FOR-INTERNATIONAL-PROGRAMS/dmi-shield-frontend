@@ -49,3 +49,5 @@ environment/.env.demo
 environment/.env.prod
 environment/.env.test
 
+package-lock.json
+
