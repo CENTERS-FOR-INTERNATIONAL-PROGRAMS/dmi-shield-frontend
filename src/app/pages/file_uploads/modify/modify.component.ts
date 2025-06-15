@@ -21,7 +21,7 @@ import { Route, Router } from '@angular/router';
 export class ModifyComponent implements OnInit {
   allowedFiles: string = '.csv, .xlsx, .xls';
   public Files: NgxFileDropEntry[] = [];
-  SurveillanceDataList: Surveillance[] = [];
+  FileUploadsList: Surveillance[] = [];
   ValidatedFileTypes: string[] = ['csv', 'xlsx', 'xls'];
   DocumentTypes: string[] = [
     'afi',
@@ -84,7 +84,7 @@ export class ModifyComponent implements OnInit {
           const parts = droppedFile.fileEntry.name.split('.');
           SurveillanceInstance.file_extension = parts[parts.length - 1];
 
-          this.SurveillanceDataList.push(SurveillanceInstance);
+          this.FileUploadsList.push(SurveillanceInstance);
         });
       } else {
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
@@ -115,7 +115,7 @@ export class ModifyComponent implements OnInit {
 
   assignDocumentType(event: any, fileIndex: number): void {
     const type = this.getKeyByValue(this.DocumentMap, event.target.value);
-    this.SurveillanceDataList[fileIndex].file_type = type;
+    this.FileUploadsList[fileIndex].file_type = type;
   }
 
   describeFileType(File: any): boolean {
@@ -163,7 +163,7 @@ export class ModifyComponent implements OnInit {
                 filename: file.name,
                 original_filename: file.name,
                 mime: file.type,
-                type: this.SurveillanceDataList[index].file_type,
+                type: this.FileUploadsList[index].file_type,
                 size: file.size,
                 visibility: 'public',
               },
@@ -214,7 +214,7 @@ export class ModifyComponent implements OnInit {
               complete: () => {},
             });
 
-          this.SurveillanceDataList.push(resourceInstance);
+          this.FileUploadsList.push(resourceInstance);
         });
       }
     }
