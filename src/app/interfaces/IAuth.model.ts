@@ -60,6 +60,10 @@ export interface ConfirmPasswordResetAttributes {
   token: string;
 }
 
+export interface ConfirmAccountAttributes {
+  token: string;
+}
+
 export interface CreatePreSignedUrlAttributes {
   filename: string;
   mime: string;
@@ -95,6 +99,7 @@ export type CreatePreSignedUrlData =
 export type ChangeUserRoleData = GenericPatchBody<ChangeUserRoleAttributes>;
 export type MarkNotificationData = GenericPatchBody<MarkNotificationAttributes>;
 export type VerifyOtpData = GenericPostBody<VerifyOtpAttributes>;
+export type ConfirmAccountData = GenericPostBody<ConfirmAccountAttributes>;
 
 export interface ApiResponse {
   message: string;

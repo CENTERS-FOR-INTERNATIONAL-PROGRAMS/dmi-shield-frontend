@@ -5,7 +5,41 @@
 </style>
 <div style="margin-top: 128px; min-height: 100vh; padding: 2rem 9%">
   <mat-card class="cardWithShadow">
-    <mat-card-header>
+    <mat-card-header style="padding-bottom: 16px">
+      <mat-card-title>
+        <h3>Confirm account</h3>
+      </mat-card-title>
+
+      <mat-card-subtitle style="margin-top: 8px">
+        <p>Please confirm your email address to access SHIELD.</p>
+      </mat-card-subtitle>
+
+      <span class="flex-1-auto"></span>
+
+      <button
+        *ngIf="!this.ApiResponseStatusConfirmation.processing"
+        mat-flat-button
+        class="view-button"
+        (click)="requestConfirmationEmail()"
+        color="primary"
+      >
+        <span style="color: white"> Request Confirmation Email </span>
+      </button>
+
+      <button
+        *ngIf="this.ApiResponseStatusConfirmation.processing"
+        mat-flat-button
+        class="view-button"
+        disabled
+        color="primary"
+      >
+        <span style="color: white"> Requesting Confirmation...</span>
+      </button>
+    </mat-card-header>
+  </mat-card>
+
+  <mat-card class="cardWithShadow">
+    <mat-card-header style="padding-bottom: 16px">
       <mat-card-title>
         <h3>
           {{ UserInstance.name }}
@@ -21,7 +55,7 @@
 
     <mat-divider></mat-divider>
 
-    <mat-card-content>
+    <mat-card-content style="padding-bottom: 16px">
       <div class="view-align--right view-padding-top-10">
         <button
           type="button"

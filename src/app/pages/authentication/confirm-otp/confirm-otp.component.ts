@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompositeFormControls } from '../../../models/CompositeFormControls.model';
-import { User } from '../../../models/User.model';
-import {
-  ApiResponse,
-  ResetPasswordData,
-  VerifyOtpData,
-} from '../../../interfaces/IAuth.model';
+import { ApiResponse, VerifyOtpData } from '../../../interfaces/IAuth.model';
 import { AuthService } from '../../../services/api/auth.service';
 import { AwarenessService } from '../../../services/awareness.service';
 import { Router } from '@angular/router';
@@ -20,7 +15,6 @@ import { FormControl, Validators } from '@angular/forms';
 export class ConfirmOtpComponent implements OnInit {
   hide: boolean = true;
   UserFormControls: CompositeFormControls = {};
-  // AuthUser: User = new User();
   userData: VerifyOtpData;
 
   constructor(

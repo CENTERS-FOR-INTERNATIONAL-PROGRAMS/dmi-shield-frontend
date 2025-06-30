@@ -797,7 +797,7 @@ footer {
   border: 1px solid #f5c6cb;
   border-radius: 10px;
   padding: 10px;
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 .bubble-success {
@@ -805,7 +805,7 @@ footer {
   border: 1px solid #73eac0;
   border-radius: 10px;
   padding: 10px;
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 .navbar .hide-fullScreen {
@@ -1071,4 +1071,9 @@ footer {
   .side-drawer {
     display: none;
   }
+}
+
+* {
+  scroll-behavior: smooth;
+  font-family: "Lato", sans-serif;
 }

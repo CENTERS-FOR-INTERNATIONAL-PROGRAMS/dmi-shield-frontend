@@ -91,6 +91,15 @@ export class AwarenessService {
     }
   }
 
+  getToken(): string {
+    const token = this.getUserData()?.token;
+    if (token && token != '') {
+      return token;
+    } else {
+      return '';
+    }
+  }
+
   setFocused(key: string, value: string, response: any = null) {
     this.AwarenessInstance.focused[key] = value;
 
