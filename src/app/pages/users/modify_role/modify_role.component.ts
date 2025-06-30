@@ -1,15 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { CompositeFormControls } from 'src/app/models/CompositeFormControls.model';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/User.model';
-import { AwarenessService } from 'src/app/services/awareness.service';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { ApiService } from '../../../services/api/api.service';
 import {
   ApiResponseStatus,
   ChangeUserRoleData,
-  CreatePreSignedUrlData,
 } from 'src/app/interfaces/IAuth.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'modify_role',
@@ -17,8 +15,13 @@ import {
 })
 export class ModifyRoleComponent implements OnInit {
   UserInstance = new User();
-  UserFormControls: CompositeFormControls = {};
+  UserFormControls = new FormGroup({
+    role: new FormControl(null, [Validators.required]),
+  });
   userRoleData: ChangeUserRoleData;
+
+  userId?: string | null = null;
+
   CompositeRoles: any[] = [
     {
       name: 'Level One',
@@ -42,40 +45,18 @@ export class ModifyRoleComponent implements OnInit {
   };
 
   constructor(
-    private awareness: AwarenessService,
     private communication: CommunicationService,
     private apiService: ApiService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.seedInstance();
-    this.initialize();
+    this.userId = this.route.snapshot.paramMap.get('id');
     this.getApiUser();
-
-    this.awareness.awaken(() => {});
-  }
-
-  initialize() {
-    this.UserInstance.id = this.awareness.getFocused('user');
-  }
-
-  seedInstance() {
-    this.UserFormControls['user_role'] = new FormControl('', [
-      Validators.required,
-    ]);
   }
 
   submitInstance(): void {
-    let is_valid = true;
-
-    Object.keys(this.UserFormControls).forEach((fc_key) => {
-      if (this.UserFormControls[fc_key].hasError('required')) {
-        is_valid = false;
-        return;
-      }
-    });
-
-    if (is_valid) {
+    if (!this.UserFormControls.get('role').hasError('required')) {
       this.changeUserRole();
     } else {
       this.communication.showToast('Kindly fill in all required fields!');
@@ -84,17 +65,18 @@ export class ModifyRoleComponent implements OnInit {
 
   changeUserRole() {
     this.ApiResponseStatus.processing = true;
+
     this.userRoleData = {
       data: {
         attributes: {
-          role: this.UserInstance.role[0],
+          role: this.UserFormControls.get('role').value[0],
         },
         id: this.UserInstance.id,
         type: 'User',
       },
     };
 
-    const url = `user/change-role/${this.UserInstance.id}`;
+    const url = `user/change-role/${this.userId}`;
     this.apiService.patchRequest(url, this.userRoleData).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
@@ -111,7 +93,7 @@ export class ModifyRoleComponent implements OnInit {
 
   getApiUser(): void {
     this.ApiResponseStatus.processing = true;
-    const url = `user/${this.UserInstance.id}`;
+    const url = `user/${this.userId}`;
 
     this.apiService.get(url).subscribe({
       next: (res) => {
@@ -119,6 +101,12 @@ export class ModifyRoleComponent implements OnInit {
           id: res.data.id,
           ...res.data.attributes,
         };
+
+        let role = this.CompositeRoles.find(
+          (e) => e.value == this.UserInstance.role,
+        );
+
+        this.UserFormControls.setValue({ role: [role.value] });
       },
       error: (error) => {
         this.ApiResponseStatus.processing = false;

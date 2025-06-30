@@ -49,6 +49,8 @@ export class ViewComponent implements OnInit {
           id: res.data.id,
           ...res.data.attributes,
         };
+
+        console.log(this.UserInstance);
       },
       error: (error) => {
         this.ApiResponseStatus.processing = false;

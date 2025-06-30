@@ -23,15 +23,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'settings',
-        canActivate: [AuthGuard],
-        data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/settings/settings.module').then(
-            (m) => m.SettingsModule,
-          ),
-      },
-      {
         path: 'users',
         canActivate: [AuthGuard],
         data: { roles: ['level1', 'level2', 'admin', 'guest'] },
