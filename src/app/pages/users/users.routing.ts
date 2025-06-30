@@ -23,21 +23,21 @@ export const UsersRoutes: Routes = [
         component: CompositeComponent,
       },
       {
-        path: 'modify',
+        path: 'me/update-profile',
         component: ModifyComponent,
       },
       {
-        path: 'modify_password',
+        path: 'me/update-password',
         component: ModifyPasswordComponent,
       },
       {
-        path: 'modify_role',
+        path: ':id/update-role',
         canActivate: [AuthGuard],
         data: { roles: ['admin'] },
         component: ModifyRoleComponent,
       },
       {
-        path: 'view',
+        path: 'me',
         component: ViewComponent,
       },
     ],

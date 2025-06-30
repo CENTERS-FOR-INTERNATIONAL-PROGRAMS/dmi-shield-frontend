@@ -184,7 +184,7 @@
         *ngIf="this.awareness.UserInstance != null; else signInLoginButton"
       >
         <a
-          [routerLink]="['/users/view']"
+          [routerLink]="['/users/me']"
           (click)="awareness.setFocused('user', this.awareness.UserInstance.id)"
         >
           <div class="icon-container">

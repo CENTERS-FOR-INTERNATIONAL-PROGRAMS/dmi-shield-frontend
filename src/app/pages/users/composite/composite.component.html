@@ -41,21 +41,11 @@
             mat-stroked-button
             color="primary"
             class="view-button view-float--right"
-            [routerLink]="['/users/modify_role']"
+            [routerLink]="[SeekUser.id, 'update-role']"
             (click)="awareness.setFocused('user', SeekUser.id)"
           >
             Edit Role
           </a>
-
-          <!--          <a mat-stroked-button color="primary" class="view-button view-float&#45;&#45;right" [routerLink]="['/users/modify']"-->
-          <!--             (click)="awareness.setFocused('user', SeekUser.id)">-->
-          <!--            Edit-->
-          <!--          </a>-->
-
-          <!--          <a mat-stroked-button color="primary" class="view-button view-float&#45;&#45;right" [routerLink]="['/users/view']"-->
-          <!--             (click)="awareness.setFocused('user', SeekUser.id)">-->
-          <!--            View-->
-          <!--          </a>-->
 
           <p class="view-text--size-large">
             {{ SeekUser.name }}
