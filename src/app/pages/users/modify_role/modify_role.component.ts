@@ -84,9 +84,13 @@ export class ModifyRoleComponent implements OnInit {
       },
       error: (error) => {
         this.ApiResponseStatus.processing = false;
+
+        this.communication.showToast('Something went wrong. Try again.');
       },
       complete: () => {
         this.ApiResponseStatus.processing = false;
+
+        this.communication.showToast('User role updated successfully');
       },
     });
   }
