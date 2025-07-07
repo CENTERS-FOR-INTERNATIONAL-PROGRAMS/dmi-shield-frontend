@@ -10,7 +10,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
   templateUrl: './user_profile.component.html',
 })
 export class UserProfileComponent implements OnInit {
-  UserInstance: User = new User();
+  currentUser: User | undefined = null;
 
   ApiResponseStatus: ApiResponseStatus = {
     success: null,
@@ -33,19 +33,19 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.UserInstance.id = this.awareness.getFocused('user');
+    this.currentUser = this.awareness.currentUser;
 
     this.getApiUser();
   }
 
   getApiUser() {
-    const url = `user/${this.UserInstance.id}`;
+    const url = `user/${this.currentUser.id}`;
 
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
 
-        this.UserInstance = {
+        this.currentUser = {
           id: res.data.id,
           ...res.data.attributes,
         };
@@ -66,7 +66,7 @@ export class UserProfileComponent implements OnInit {
     const body = {
       data: {
         attributes: {
-          email: this.UserInstance.email,
+          email: this.currentUser.email,
         },
       },
     };

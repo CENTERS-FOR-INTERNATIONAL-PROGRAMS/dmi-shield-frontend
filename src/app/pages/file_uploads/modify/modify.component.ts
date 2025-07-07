@@ -79,7 +79,7 @@ export class ModifyComponent implements OnInit {
             SurveillanceInstance._id = this.generateUniqueId();
           }
           SurveillanceInstance.file_original_name = droppedFile.fileEntry.name;
-          SurveillanceInstance.user_id = this.awareness.UserInstance.id;
+          SurveillanceInstance.user_id = this.awareness.currentUser.id;
 
           const parts = droppedFile.fileEntry.name.split('.');
           SurveillanceInstance.file_extension = parts[parts.length - 1];
@@ -152,7 +152,7 @@ export class ModifyComponent implements OnInit {
           let resourceInstance = new Resource();
 
           resourceInstance.file_original_name = droppedFile.fileEntry.name;
-          resourceInstance.user_id = this.awareness.UserInstance.id;
+          resourceInstance.user_id = this.awareness.currentUser.id;
 
           const parts = droppedFile.fileEntry.name.split('.');
           resourceInstance.file_extension = parts[parts.length - 1];

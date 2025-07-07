@@ -38,7 +38,7 @@ export class CompositeComponent implements OnInit {
   }
 
   getUser() {
-    this.awareness.UserInstance = this.awareness.getUserData();
+    this.awareness.currentUser = this.awareness.getUserData();
   }
 
   applyFilter(event: Event) {
@@ -47,14 +47,14 @@ export class CompositeComponent implements OnInit {
   }
 
   getApiNotifications() {
-    const userId = this.awareness.UserInstance.id;
+    const userId = this.awareness.currentUser.id;
 
     if (!userId) {
       this.ApiResponseStatus.processing = false;
       return;
     }
 
-    const url = `notification?user_id=${this.awareness.UserInstance.id}`;
+    const url = `notification?user_id=${this.awareness.currentUser.id}`;
     this.apiService.get(url).subscribe({
       next: (res) => {
         this.ApiResponseStatus.success = true;
@@ -78,7 +78,7 @@ export class CompositeComponent implements OnInit {
 
   markNotificationsRead() {
     this.ApiResponseStatus.processing = true;
-    const userId = this.awareness.UserInstance.id;
+    const userId = this.awareness.currentUser.id;
 
     if (!userId) {
       this.ApiResponseStatus.processing = false;

@@ -7,10 +7,10 @@ import {
   ResetPasswordData,
 } from '../../../interfaces/IAuth.model';
 import { User } from '../../../models/User.model';
-import { AuthService } from '../../../services/api/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AwarenessService } from '../../../services/awareness.service';
 import { CommunicationService } from '../../../services/communication.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -24,7 +24,7 @@ export class ForgotPasswordComponent implements OnInit {
   userData: ResetPasswordData;
 
   constructor(
-    private authService: AuthService,
+    private apiService: ApiService,
     private awareness: AwarenessService,
     private router: Router,
     private communication: CommunicationService,
@@ -77,7 +77,7 @@ export class ForgotPasswordComponent implements OnInit {
         },
       };
 
-      this.authService
+      this.apiService
         .postRequest('auth/user/password/request-reset', this.userData)
         .subscribe({
           next: (res) => {

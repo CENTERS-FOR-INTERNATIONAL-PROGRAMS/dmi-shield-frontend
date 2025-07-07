@@ -6,6 +6,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommunicationService } from '../../../services/communication.service';
 import { ApiService } from 'src/app/services/api/api.service';
+import { AwarenessService } from 'src/app/services/awareness.service';
 
 @Component({
   selector: 'app-confirm-account',
@@ -21,6 +22,7 @@ export class ConfirmAccountComponent implements OnInit {
     private router: Router,
     private communication: CommunicationService,
     private route: ActivatedRoute,
+    private awarenessService: AwarenessService,
   ) {}
 
   ngOnInit(): void {
@@ -47,22 +49,33 @@ export class ConfirmAccountComponent implements OnInit {
     };
 
     this.apiService.postRequest('auth/user/confirm', this.userData).subscribe({
-      next: (_response) => {
+      next: (response) => {
         this.ApiResponseStatus.processing = false;
         this.ApiResponseStatus.error = false;
         this.communication.showToast('Account verification confirmed.');
+
+        let user = {
+          ...response.data.attributes.user,
+          ...{ id: response.data.id },
+        };
+
+        this.awarenessService.saveUserData(user);
       },
       error: (error) => {
         this.ApiResponseStatus.error = true;
         this.ApiResponseStatus.processing = false;
         this.ApiResponseStatus.message =
-          'Expired or invalid confirmation token. Please sign in and request a new account confirmation request on your account settings page.';
+          'Expired or invalid confirmation token. Please request a new account confirmation email on your account profile page.';
 
-        this.communication.showToast('Account verification failed.');
+        this.communication.showToast(
+          'Account verification failed. Please request a new account confirmation email on your account profile page.',
+        );
+
+        this.router.navigate(['/users/me']);
       },
       complete: () => {
         this.ApiResponseStatus.processing = false;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/users/me']);
       },
     });
   }

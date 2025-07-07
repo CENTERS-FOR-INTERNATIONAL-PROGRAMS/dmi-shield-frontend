@@ -10,7 +10,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
   templateUrl: './modify_profile.component.html',
 })
 export class ModifyProfileComponent implements OnInit {
-  UserInstance = new User();
+  currentUser: User | undefined = null;
   UserFormControls: CompositeFormControls = {};
 
   constructor(
@@ -26,7 +26,7 @@ export class ModifyProfileComponent implements OnInit {
   }
 
   initialize() {
-    this.UserInstance.id = this.awareness.getFocused('user');
+    this.currentUser = this.awareness.currentUser;
   }
 
   seedInstance() {

@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './modify_role.component.html',
 })
 export class ModifyRoleComponent implements OnInit {
-  UserInstance = new User();
+  currentUser = new User();
   UserFormControls = new FormGroup({
     role: new FormControl(null, [Validators.required]),
   });
@@ -71,7 +71,7 @@ export class ModifyRoleComponent implements OnInit {
         attributes: {
           role: this.UserFormControls.get('role').value[0],
         },
-        id: this.UserInstance.id,
+        id: this.currentUser.id,
         type: 'User',
       },
     };
@@ -101,13 +101,13 @@ export class ModifyRoleComponent implements OnInit {
 
     this.apiService.get(url).subscribe({
       next: (res) => {
-        this.UserInstance = {
+        this.currentUser = {
           id: res.data.id,
           ...res.data.attributes,
         };
 
         let role = this.CompositeRoles.find(
-          (e) => e.value == this.UserInstance.role,
+          (e) => e.value == this.currentUser.role,
         );
 
         this.UserFormControls.setValue({ role: [role.value] });

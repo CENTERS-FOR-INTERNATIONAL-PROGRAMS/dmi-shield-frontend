@@ -22,7 +22,7 @@ export class CompositeComponent implements OnInit {
 
   private searchQuery$ = new Subject<string>();
 
-  UserInstance: User = new User();
+  currentUser: User = new User();
   userRole: string;
 
   latestSearchTerm: string = '';
@@ -65,9 +65,9 @@ export class CompositeComponent implements OnInit {
 
   openUrl(url: string) {
     if (
-      !this.awareness.UserInstance?.role ||
-      this.awareness.UserInstance?.role === 'level1' ||
-      this.awareness.UserInstance?.role === 'guest'
+      !this.awareness.currentUser?.role ||
+      this.awareness.currentUser?.role === 'level1' ||
+      this.awareness.currentUser?.role === 'guest'
     ) {
       this.communicationService.showToast(
         'Sorry, you are not authorised to download the file.',

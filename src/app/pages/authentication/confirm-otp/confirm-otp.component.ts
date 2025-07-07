@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CompositeFormControls } from '../../../models/CompositeFormControls.model';
 import { ApiResponse, VerifyOtpData } from '../../../interfaces/IAuth.model';
-import { AuthService } from '../../../services/api/auth.service';
 import { AwarenessService } from '../../../services/awareness.service';
 import { Router } from '@angular/router';
 import { CommunicationService } from '../../../services/communication.service';
 import { FormControl, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-confirm-otp',
@@ -18,10 +18,10 @@ export class ConfirmOtpComponent implements OnInit {
   userData: VerifyOtpData;
 
   constructor(
-    private authService: AuthService,
     private awareness: AwarenessService,
     private router: Router,
     private communication: CommunicationService,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class ConfirmOtpComponent implements OnInit {
         },
       };
 
-      this.authService
+      this.apiService
         .postRequest('auth/user/2fa/verify', this.userData)
         .subscribe({
           next: (response) => {

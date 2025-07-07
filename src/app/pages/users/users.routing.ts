@@ -19,10 +19,12 @@ export const UsersRoutes: Routes = [
         component: CompositeComponent,
       },
       {
+        canActivate: [AuthGuard],
         path: 'me/update-profile',
         component: ModifyProfileComponent,
       },
       {
+        canActivate: [AuthGuard],
         path: 'me/update-password',
         component: ModifyPasswordComponent,
       },
@@ -34,6 +36,7 @@ export const UsersRoutes: Routes = [
       },
       {
         path: 'me',
+        canActivate: [AuthGuard],
         component: UserProfileComponent,
       },
     ],
