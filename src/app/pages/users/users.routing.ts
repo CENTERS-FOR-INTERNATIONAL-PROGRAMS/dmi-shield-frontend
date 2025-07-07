@@ -2,10 +2,10 @@ import { Routes } from '@angular/router';
 
 // Pages
 import { CompositeComponent } from './composite/composite.component';
-import { ModifyComponent } from './modify/modify.component';
+import { ModifyProfileComponent } from './modify_profile/modify_profile.component';
 import { ModifyPasswordComponent } from './modify_password/modify_password.component';
 import { ModifyRoleComponent } from './modify_role/modify_role.component';
-import { ViewComponent } from './view/view.component';
+import { UserProfileComponent } from './user_profile/user_profile.component';
 import { AuthGuard } from 'src/app/services/authentication.service';
 
 export const UsersRoutes: Routes = [
@@ -14,31 +14,30 @@ export const UsersRoutes: Routes = [
     children: [
       {
         path: '',
-        component: CompositeComponent,
-      },
-      {
-        path: 'composite',
         canActivate: [AuthGuard],
         data: { roles: ['admin'] },
         component: CompositeComponent,
       },
       {
-        path: 'modify',
-        component: ModifyComponent,
+        canActivate: [AuthGuard],
+        path: 'me/update-profile',
+        component: ModifyProfileComponent,
       },
       {
-        path: 'modify_password',
+        canActivate: [AuthGuard],
+        path: 'me/update-password',
         component: ModifyPasswordComponent,
       },
       {
-        path: 'modify_role',
+        path: ':id/update-role',
         canActivate: [AuthGuard],
         data: { roles: ['admin'] },
         component: ModifyRoleComponent,
       },
       {
-        path: 'view',
-        component: ViewComponent,
+        path: 'me',
+        canActivate: [AuthGuard],
+        component: UserProfileComponent,
       },
     ],
   },

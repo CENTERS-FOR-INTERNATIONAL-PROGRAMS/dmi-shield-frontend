@@ -7,10 +7,10 @@ import {
   ResetPasswordData,
 } from '../../../interfaces/IAuth.model';
 import { User } from '../../../models/User.model';
-import { AuthService } from '../../../services/api/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AwarenessService } from '../../../services/awareness.service';
 import { CommunicationService } from '../../../services/communication.service';
+import { ApiService } from 'src/app/services/api/api.service';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -26,11 +26,11 @@ export class ResetPasswordComponent implements OnInit {
   confirmPasswordToken: string = '';
 
   constructor(
-    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private awareness: AwarenessService,
     private router: Router,
     private communication: CommunicationService,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +93,7 @@ export class ResetPasswordComponent implements OnInit {
         },
       };
 
-      this.authService
+      this.apiService
         .postRequest('auth/user/password/reset', this.confirmResetPassData)
         .subscribe({
           next: (response) => {

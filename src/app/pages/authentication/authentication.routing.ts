@@ -6,6 +6,7 @@ import { AppSideRegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ConfirmOtpComponent } from './confirm-otp/confirm-otp.component';
+import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 
 export const AuthenticationRoutes: Routes = [
   {
@@ -34,6 +35,10 @@ export const AuthenticationRoutes: Routes = [
       {
         path: 'confirm-otp',
         component: ConfirmOtpComponent,
+      },
+      {
+        path: 'confirm-account/:token',
+        component: ConfirmAccountComponent,
       },
       { path: 'reset-password/:token', component: ResetPasswordComponent },
     ],

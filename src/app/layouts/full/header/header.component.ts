@@ -12,7 +12,6 @@ import { User } from 'src/app/models/User.model';
 import { Location } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { CommunicationService } from '../../../services/communication.service';
-import { AuthService } from '../../../services/api/auth.service';
 import {
   ApiResponseStatus,
   UserSignOutData,
@@ -42,7 +41,7 @@ export class HeaderComponent implements OnInit {
   showMenu: boolean = false;
   showNotificationCard: boolean = false;
   activeRoute: string;
-  UserInstance: User = new User();
+  currentUser: User = new User();
   userData: UserSignOutData;
   Notifications: NotificationModel[] = [];
   userRole: string;
@@ -61,7 +60,6 @@ export class HeaderComponent implements OnInit {
     public awareness: AwarenessService,
     private location: Location,
     private communication: CommunicationService,
-    private authService: AuthService,
     private apiService: ApiService,
     private authenticationService: AuthenticationService,
   ) {}
@@ -90,7 +88,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser() {
-    this.awareness.UserInstance = this.awareness.getUserData();
+    this.awareness.currentUser = this.awareness.getUserData();
   }
 
   updateActiveRoute(): void {
@@ -136,37 +134,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  onClick(action: any) {
-    if (action == 'logout') {
-      this.awareness.UserInstance = new User();
-      this.requestLogOut();
-      this.awareness.removeUserData();
-      this.router.navigate(['/home']);
-      window.location.reload();
-    }
-  }
-
-  requestLogOut() {
-    const userToken = this.awareness.getUserData().token;
-
-    if (userToken != '' && userToken != null) {
-      this.userData = {
-        data: {
-          attributes: {
-            token: userToken,
-          },
-          type: 'User Authentication',
-        },
-      };
-
-      this.authService
-        .postRequest('auth/user/sign-out', this.userData)
-        .subscribe({
-          next: () => {},
-          error: () => {},
-          complete: () => {},
-        });
-    }
+  signOut() {
+    this.authenticationService.signOut();
+    this.awareness.removeUserData();
+    this.router.navigate(['/home']);
   }
 
   toggleMenu() {
@@ -189,18 +160,18 @@ export class HeaderComponent implements OnInit {
   }
 
   getApiNotifications() {
-    const userId = this.awareness.UserInstance.id;
+    const userId = this.awareness.currentUser.id;
 
     if (!userId) {
       this.ApiResponseStatus.processing = false;
       return;
     }
 
-    if (!this.awareness.UserInstance.id || !this.awareness.UserInstance.id) {
+    if (!this.awareness.currentUser.id || !this.awareness.currentUser.id) {
       this.ApiResponseStatus.processing = false;
       return;
     } else {
-      const url = `notification?user_id=${this.awareness.UserInstance.id}`;
+      const url = `notification?user_id=${this.awareness.currentUser.id}`;
 
       this.apiService.get(url).subscribe({
         next: (res) => {

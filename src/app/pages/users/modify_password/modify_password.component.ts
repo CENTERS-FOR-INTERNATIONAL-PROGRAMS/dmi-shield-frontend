@@ -11,7 +11,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
   templateUrl: './modify_password.component.html',
 })
 export class ModifyPasswordComponent implements OnInit {
-  UserInstance = new User();
+  currentUser: User | undefined = null;
   UserFormControls: CompositeFormControls = {};
   hide_password = true;
   user_password_matched: boolean = false;
@@ -24,17 +24,7 @@ export class ModifyPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.seedInstance();
-    this.UserInstance.id = this.awareness.getFocused('user');
-
-    this.awareness.awaken(() => {
-      // if (this.UserInstance._id != "") {
-      //   this.UserInstance.acquireInstance((doc: any) => {
-      //     this.UserInstance.parseInstance(doc);
-      //   }, (err: any) => {
-      //     // TODO! Handle errors
-      //   });
-      // }
-    });
+    this.currentUser = this.awareness.currentUser;
   }
 
   seedInstance() {
@@ -70,10 +60,10 @@ export class ModifyPasswordComponent implements OnInit {
   //   }
   //
   //   if (is_valid && this.user_password_matched) {
-  //     this.UserInstance.user_password = sha256(this.user_password + "mlg").toString()
+  //     this.currentUser.user_password = sha256(this.user_password + "mlg").toString()
   //
-  //     // this.UserInstance.putInstance((res: any) => {
-  //     //   this.UserInstance.user_password = "~";
+  //     // this.currentUser.putInstance((res: any) => {
+  //     //   this.currentUser.user_password = "~";
   //     //   this.location.back();
   //     //   this.communication.showSuccessToast();
   //     // }, (err: any) => {

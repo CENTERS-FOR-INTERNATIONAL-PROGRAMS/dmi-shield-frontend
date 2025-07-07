@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AuthGuard } from './services/authentication.service';
-import { AssetsComponent } from './pages/assets_data/assets/assets.component';
 
 const routes: Routes = [
   {
@@ -14,22 +13,6 @@ const routes: Routes = [
         path: '',
         redirectTo: '/authentication',
         pathMatch: 'full',
-      },
-      {
-        path: 'analytics',
-        loadChildren: () =>
-          import('./pages/analytics/analytics.module').then(
-            (m) => m.AnalyticsModule,
-          ),
-      },
-      {
-        path: 'settings',
-        canActivate: [AuthGuard],
-        data: { roles: ['admin'] },
-        loadChildren: () =>
-          import('./pages/settings/settings.module').then(
-            (m) => m.SettingsModule,
-          ),
       },
       {
         path: 'users',
@@ -48,7 +31,7 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('./pages/pages.module').then((m) => m.PagesModule),
+          import('./pages/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'resources',
@@ -57,7 +40,6 @@ const routes: Routes = [
             (m) => m.ResourcesModule,
           ),
       },
-      { path: 'assets/:fileName', component: AssetsComponent },
       {
         path: 'mohdash',
         loadChildren: () =>

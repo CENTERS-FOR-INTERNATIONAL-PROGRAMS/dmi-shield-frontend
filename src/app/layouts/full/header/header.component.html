@@ -181,12 +181,9 @@
     <nav class="navbar-tools">
       <div
         class="navbar-tools-items"
-        *ngIf="this.awareness.UserInstance != null; else signInLoginButton"
+        *ngIf="this.awareness.currentUser != null; else signInLoginButton"
       >
-        <a
-          [routerLink]="['/users/view']"
-          (click)="awareness.setFocused('user', this.awareness.UserInstance.id)"
-        >
+        <a [routerLink]="['/users/me']">
           <div class="icon-container">
             <i class="fa-solid fa-user"></i>
           </div>
@@ -205,6 +202,8 @@
         </a>
 
         <mat-menu #actionsMenu="matMenu" xPosition="before">
+          <button mat-menu-item [routerLink]="['/users/me']">My Account</button>
+
           <button
             mat-menu-item
             [routerLink]="['/users/']"
@@ -213,7 +212,7 @@
             Manage Users
           </button>
           <!--        <button mat-menu-item [routerLink]="['/thresholds/composites']" *ngIf="userRole === 'admin'">Set Thresholds</button>-->
-          <button mat-menu-item (click)="onClick('logout')">Sign Out</button>
+          <button mat-menu-item (click)="signOut()">Sign Out</button>
         </mat-menu>
       </div>
 

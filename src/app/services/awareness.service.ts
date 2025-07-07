@@ -5,9 +5,7 @@ import { User } from '../models/User.model';
 
 @Injectable({ providedIn: 'root' })
 export class AwarenessService {
-  AwarenessInstance: MAwareness = new MAwareness('shield_awareness');
-  // UserInstance: User = new User();
-  UserInstance: User | undefined = null;
+  currentUser: User | undefined = null;
   focused: KeyValue = {};
   awake: boolean = false;
   private userDataKey = 'userData';
@@ -17,8 +15,7 @@ export class AwarenessService {
     let user = this.getUserData();
 
     if (user) {
-      this.UserInstance = user as User;
-      this.AwarenessInstance.focused['user'] = this.UserInstance.id;
+      this.currentUser = user as User;
     }
   }
 
@@ -37,9 +34,11 @@ export class AwarenessService {
       notifications: AuthUser.notifications,
       confirmed_at: AuthUser.confirmed_at,
       updated_at: AuthUser.updated_at,
+      created_at: AuthUser.created_at,
       token: AuthUser.token,
     };
 
+    this.currentUser = mappedUser as User;
     this.saveUser(this.userDataKey, mappedUser);
   }
 
@@ -53,6 +52,7 @@ export class AwarenessService {
       notifications: AuthUser.notifications,
       confirmed_at: AuthUser.confirmed_at,
       updated_at: AuthUser.updated_at,
+      created_at: AuthUser.created_at,
       token: AuthUser.token,
     };
 
@@ -78,6 +78,7 @@ export class AwarenessService {
 
   removeUserData(): void {
     localStorage.removeItem(this.userDataKey);
+    this.currentUser = null;
   }
 
   removeUserDataByKey(key: string): void {
@@ -91,21 +92,12 @@ export class AwarenessService {
     }
   }
 
-  setFocused(key: string, value: string, response: any = null) {
-    this.AwarenessInstance.focused[key] = value;
-
-    return value;
-  }
-
-  getFocused(key: string): string {
-    let focused_value = '';
-
-    Object.keys(this.AwarenessInstance.focused).forEach((seek_key) => {
-      if (seek_key == key) {
-        focused_value = this.AwarenessInstance.focused[seek_key];
-      }
-    });
-
-    return focused_value;
+  getToken(): string {
+    const token = this.getUserData()?.token;
+    if (token && token != '') {
+      return token;
+    } else {
+      return '';
+    }
   }
 }

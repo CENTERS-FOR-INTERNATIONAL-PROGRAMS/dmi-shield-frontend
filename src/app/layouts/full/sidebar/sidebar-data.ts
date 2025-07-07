@@ -70,7 +70,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Profile',
     iconImage: 'icon-user--black.png',
-    route: '/users/view',
+    route: '/users/me',
   },
   {
     displayName: 'Logout',
