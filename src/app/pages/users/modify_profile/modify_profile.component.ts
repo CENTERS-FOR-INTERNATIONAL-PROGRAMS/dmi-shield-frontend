@@ -6,10 +6,10 @@ import { AwarenessService } from 'src/app/services/awareness.service';
 import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
-  selector: 'modify',
-  templateUrl: './modify.component.html',
+  selector: 'modify-profile',
+  templateUrl: './modify_profile.component.html',
 })
-export class ModifyComponent implements OnInit {
+export class ModifyProfileComponent implements OnInit {
   UserInstance = new User();
   UserFormControls: CompositeFormControls = {};
 

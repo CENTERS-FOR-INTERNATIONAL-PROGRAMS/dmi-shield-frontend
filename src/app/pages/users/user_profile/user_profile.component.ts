@@ -6,10 +6,10 @@ import { ApiResponseStatus } from 'src/app/interfaces/IAuth.model';
 import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
-  selector: 'view',
-  templateUrl: './view.component.html',
+  selector: 'user-profile',
+  templateUrl: './user_profile.component.html',
 })
-export class ViewComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
   UserInstance: User = new User();
 
   ApiResponseStatus: ApiResponseStatus = {
