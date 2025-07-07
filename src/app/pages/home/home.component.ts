@@ -18,8 +18,8 @@ import { AwarenessService } from '../../services/awareness.service';
 import { config } from '../../config/config';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: 'home-page',
+  templateUrl: './home.component.html',
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
@@ -35,7 +35,7 @@ import { config } from '../../config/config';
     NgOptimizedImage,
   ],
 })
-export class AppDashboardComponent implements OnInit {
+export class HomeComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   @ViewChild('viewMoreContent') targetElement: ElementRef;
   @ViewChild('cardContainer') cardContainer!: ElementRef;
