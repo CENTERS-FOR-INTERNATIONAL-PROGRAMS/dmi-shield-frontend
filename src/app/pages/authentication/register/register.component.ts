@@ -101,11 +101,11 @@ export class AppSideRegisterComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (response.data.attributes.user && response.data.attributes.token) {
-            response.data.attributes.user.token =
-              response.data.attributes.token;
+            this.awareness.saveToken(response.data.attributes.token);
             this.awareness.saveUserData(response.data.attributes.user);
+
             this.ApiResponseStatus.processing = false;
-            this.router.navigate(['/home']);
+            this.router.navigate(['/users/me']);
           } else if (response.errors[0].detail) {
             this.ApiResponseStatus.processing = false;
             throw new Error(response.errors[0].detail);

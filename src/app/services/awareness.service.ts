@@ -10,6 +10,7 @@ export class AwarenessService {
   awake: boolean = false;
   private userDataKey = 'userData';
   private preSignUserDataKey = 'preSignInData';
+  private authTokenKey = 'auth-token';
 
   constructor() {
     let user = this.getUserData();
@@ -24,6 +25,11 @@ export class AwarenessService {
     localStorage.setItem(dataKey, JSON.stringify(data));
   }
 
+  saveToken(token: string): void {
+    localStorage.removeItem(this.authTokenKey);
+    localStorage.setItem(this.authTokenKey, token);
+  }
+
   saveUserData(AuthUser: any): void {
     const mappedUser = {
       name: AuthUser.name,
@@ -35,7 +41,6 @@ export class AwarenessService {
       confirmed_at: AuthUser.confirmed_at,
       updated_at: AuthUser.updated_at,
       created_at: AuthUser.created_at,
-      token: AuthUser.token,
     };
 
     this.currentUser = mappedUser as User;
@@ -53,7 +58,6 @@ export class AwarenessService {
       confirmed_at: AuthUser.confirmed_at,
       updated_at: AuthUser.updated_at,
       created_at: AuthUser.created_at,
-      token: AuthUser.token,
     };
 
     this.removeUserDataByKey('preSignInData');
@@ -76,8 +80,14 @@ export class AwarenessService {
     return dataString ? JSON.parse(dataString) : null;
   }
 
+  getAuthToken(): any | null {
+    const dataString = localStorage.getItem(this.authTokenKey);
+    return dataString ? dataString : null;
+  }
+
   removeUserData(): void {
     localStorage.removeItem(this.userDataKey);
+    localStorage.removeItem(this.authTokenKey);
     this.currentUser = null;
   }
 
@@ -93,7 +103,7 @@ export class AwarenessService {
   }
 
   getToken(): string {
-    const token = this.getUserData()?.token;
+    const token = this.getAuthToken();
     if (token && token != '') {
       return token;
     } else {
