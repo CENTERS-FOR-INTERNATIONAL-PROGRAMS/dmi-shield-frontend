@@ -66,7 +66,7 @@ export class ConfirmOtpComponent implements OnInit {
           attributes: {
             code: this.UserFormControls['one_time_pass'].value,
             id: this.getUserId(),
-            token: this.handleGetToken(),
+            token: this.awareness.getAuthToken(),
           },
           type: 'User Authentication',
         },
@@ -77,8 +77,7 @@ export class ConfirmOtpComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.ApiResponseStatus.processing = false;
-            response.data.attributes.user.token =
-              response.data.attributes.token;
+            this.awareness.saveToken(response.data.attributes.token);
             this.awareness.saveUserData(response.data.attributes.user);
           },
           error: (error) => {
@@ -91,16 +90,6 @@ export class ConfirmOtpComponent implements OnInit {
             this.router.navigate(['/home']);
           },
         });
-    }
-  }
-
-  handleGetToken(): string {
-    const token = this.awareness.getPreSignUserData().token;
-    if (token != '') {
-      return token;
-    } else {
-      this.router.navigate(['/home']);
-      return '';
     }
   }
 

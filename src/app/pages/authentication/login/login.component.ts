@@ -102,8 +102,8 @@ export class AppSideLoginComponent implements OnInit {
             response.data.attributes.user &&
             response.data.attributes.token
           ) {
-            response.data.attributes.user.token =
-              response.data.attributes.token;
+            this.awareness.saveToken(response.data.attributes.token);
+
             this.awareness.savePresSignUserData(response.data.attributes.user);
             this.ApiResponseStatus.processing = false;
             // this.router.navigate(['/home'])

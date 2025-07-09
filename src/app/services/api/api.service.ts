@@ -64,6 +64,15 @@ export class LoggingInterceptor implements HttpInterceptor {
               // Navigate to login page
               this.router.navigate(['/authentication/login']);
             }
+          } else {
+            this.awareness.removeUserData();
+
+            this.communication.showToast(
+              'Session Expired. Kindly sign in again',
+            );
+
+            // Navigate to login page
+            this.router.navigate(['/authentication/login']);
           }
         }
 

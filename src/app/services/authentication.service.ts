@@ -58,7 +58,7 @@ export class AuthenticationService {
       }
       user_authenticated = true;
     } else {
-      this.router.navigate(['/authentication/login']);
+      // this.router.navigate(['/authentication/login']);
     }
 
     return [user_authenticated, user_confirmed];
