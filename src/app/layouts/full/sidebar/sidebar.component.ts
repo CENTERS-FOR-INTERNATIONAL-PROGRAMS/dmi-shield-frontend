@@ -4,6 +4,7 @@ import { NavService } from '../../../services/nav.service';
 import { AwarenessService } from 'src/app/services/awareness.service';
 import { Router } from '@angular/router';
 import { User } from '../../../models/User.model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,21 +12,23 @@ import { User } from '../../../models/User.model';
 })
 export class SidebarComponent implements OnInit {
   navItems = navItems;
-  UserInstance: User = new User();
+  currentUser: User | undefined = null;
 
   constructor(
     private router: Router,
     public navService: NavService,
     public awareness: AwarenessService,
+
+    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit(): void {}
 
   onClick(action: any) {
     if (action == 'logout') {
-      this.awareness.setFocused('authenticated', '', (res: any) => {
-        this.router.navigate(['/authentication']);
-      });
+      this.authenticationService.signOut();
+      this.awareness.removeUserData();
+      this.router.navigate(['/authentication/login']);
     }
   }
 }

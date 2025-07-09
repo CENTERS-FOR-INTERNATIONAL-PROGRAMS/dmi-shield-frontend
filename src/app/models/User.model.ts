@@ -4,10 +4,10 @@ export class User {
   status: string;
   email: string;
   role: string;
-  updatedAt: Date;
+  updated_at: Date;
   notifications: number;
-  confirmedAt?: Date;
-  createdAt: Date;
+  confirmed_at?: Date;
+  created_at: Date;
   selected?: boolean;
 
   constructor() {}

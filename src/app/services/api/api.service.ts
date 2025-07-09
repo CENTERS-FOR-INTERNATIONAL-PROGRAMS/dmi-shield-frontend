@@ -22,6 +22,22 @@ export class LoggingInterceptor implements HttpInterceptor {
     private communication: CommunicationService,
   ) {}
 
+  parseJwt(token: string) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join(''),
+    );
+
+    return JSON.parse(jsonPayload);
+  }
+
   intercept(
     req: HttpRequest<any>,
     handler: HttpHandler,
@@ -29,13 +45,35 @@ export class LoggingInterceptor implements HttpInterceptor {
     return handler.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
-          // Clear all localStorage data
-          this.awareness.removeUserData();
+          let token = this.awareness.getToken();
 
-          this.communication.showToast('Session Expired. Kindly sign in again');
+          if (token) {
+            // Decode auth token to get expiry time
+            let { exp } = this.parseJwt(token);
+            let nowTimeInUnix = Math.floor(Date.now() / 1000);
 
-          // Navigate to login page
-          this.router.navigate(['/authentication/login']);
+            // Check if current time is after token expiry
+            if (nowTimeInUnix >= exp) {
+              // Clear all localStorage data
+              this.awareness.removeUserData();
+
+              this.communication.showToast(
+                'Session Expired. Kindly sign in again',
+              );
+
+              // Navigate to login page
+              this.router.navigate(['/authentication/login']);
+            }
+          } else {
+            this.awareness.removeUserData();
+
+            this.communication.showToast(
+              'Session Expired. Kindly sign in again',
+            );
+
+            // Navigate to login page
+            this.router.navigate(['/authentication/login']);
+          }
         }
 
         return throwError(() => error);
@@ -57,7 +95,7 @@ export class ApiService {
     const url = config.API_ENDPOINT + endpoint;
     const headers = new HttpHeaders({
       'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${this.handleGetToken()}`,
+      Authorization: `Bearer ${this.awareness.getToken()}`,
     });
 
     return this.http.delete(url, { headers });
@@ -67,7 +105,7 @@ export class ApiService {
     const url = config.API_ENDPOINT + endpoint;
     const headers = new HttpHeaders({
       'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${this.handleGetToken()}`,
+      Authorization: `Bearer ${this.awareness.getToken()}`,
     });
 
     return this.http.post(url, data, { headers });
@@ -77,7 +115,7 @@ export class ApiService {
     const url = config.API_ENDPOINT + endpoint;
     const headers = new HttpHeaders({
       'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${this.handleGetToken()}`,
+      Authorization: `Bearer ${this.awareness.getToken()}`,
     });
 
     return this.http.patch(url, data, { headers: headers });
@@ -95,7 +133,7 @@ export class ApiService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${this.handleGetToken()}`,
+      Authorization: `Bearer ${this.awareness.getToken()}`,
     });
 
     return this.http.get(url, { headers: headers });
@@ -106,18 +144,9 @@ export class ApiService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${this.handleGetToken()}`,
+      Authorization: `Bearer ${this.awareness.getToken()}`,
     });
 
     return this.http.get(url, { headers: headers });
-  }
-
-  handleGetToken(): string {
-    const token = this.awareness.getUserData()?.token;
-    if (token && token != '') {
-      return token;
-    } else {
-      return '';
-    }
   }
 }

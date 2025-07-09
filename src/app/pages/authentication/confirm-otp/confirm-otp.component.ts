@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CompositeFormControls } from '../../../models/CompositeFormControls.model';
-import { User } from '../../../models/User.model';
-import {
-  ApiResponse,
-  ResetPasswordData,
-  VerifyOtpData,
-} from '../../../interfaces/IAuth.model';
-import { AuthService } from '../../../services/api/auth.service';
+import { ApiResponse, VerifyOtpData } from '../../../interfaces/IAuth.model';
 import { AwarenessService } from '../../../services/awareness.service';
 import { Router } from '@angular/router';
 import { CommunicationService } from '../../../services/communication.service';
 import { FormControl, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-confirm-otp',
@@ -20,14 +15,13 @@ import { FormControl, Validators } from '@angular/forms';
 export class ConfirmOtpComponent implements OnInit {
   hide: boolean = true;
   UserFormControls: CompositeFormControls = {};
-  // AuthUser: User = new User();
   userData: VerifyOtpData;
 
   constructor(
-    private authService: AuthService,
     private awareness: AwarenessService,
     private router: Router,
     private communication: CommunicationService,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
@@ -72,19 +66,18 @@ export class ConfirmOtpComponent implements OnInit {
           attributes: {
             code: this.UserFormControls['one_time_pass'].value,
             id: this.getUserId(),
-            token: this.handleGetToken(),
+            token: this.awareness.getAuthToken(),
           },
           type: 'User Authentication',
         },
       };
 
-      this.authService
+      this.apiService
         .postRequest('auth/user/2fa/verify', this.userData)
         .subscribe({
           next: (response) => {
             this.ApiResponseStatus.processing = false;
-            response.data.attributes.user.token =
-              response.data.attributes.token;
+            this.awareness.saveToken(response.data.attributes.token);
             this.awareness.saveUserData(response.data.attributes.user);
           },
           error: (error) => {
@@ -97,16 +90,6 @@ export class ConfirmOtpComponent implements OnInit {
             this.router.navigate(['/home']);
           },
         });
-    }
-  }
-
-  handleGetToken(): string {
-    const token = this.awareness.getPreSignUserData().token;
-    if (token != '') {
-      return token;
-    } else {
-      this.router.navigate(['/home']);
-      return '';
     }
   }
 

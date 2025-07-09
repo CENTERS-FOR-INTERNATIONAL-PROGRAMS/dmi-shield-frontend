@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { CompositeFormControls } from '../../../models/CompositeFormControls.model';
 import { User } from '../../../models/User.model';
 import { CommunicationService } from '../../../services/communication.service';
-import { AuthService } from '../../../services/api/auth.service';
 import { ApiResponse, UserRegisterData } from '../../../interfaces/IAuth.model';
 import { AwarenessService } from '../../../services/awareness.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-register',
@@ -15,14 +15,14 @@ import { AwarenessService } from '../../../services/awareness.service';
 })
 export class AppSideRegisterComponent implements OnInit {
   hide: boolean = true;
-  UserInstance: User = new User();
+  currentUser: User = new User();
   UserFormControls: CompositeFormControls = {};
   userData: UserRegisterData;
   constructor(
     private router: Router,
     private communication: CommunicationService,
-    public authService: AuthService,
     private awareness: AwarenessService,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
@@ -96,22 +96,22 @@ export class AppSideRegisterComponent implements OnInit {
       },
     };
 
-    this.authService
+    this.apiService
       .postRequest('auth/user/password/register', this.userData)
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           if (response.data.attributes.user && response.data.attributes.token) {
-            response.data.attributes.user.token =
-              response.data.attributes.token;
+            this.awareness.saveToken(response.data.attributes.token);
             this.awareness.saveUserData(response.data.attributes.user);
+
             this.ApiResponseStatus.processing = false;
-            this.router.navigate(['/home']);
+            this.router.navigate(['/users/me']);
           } else if (response.errors[0].detail) {
             this.ApiResponseStatus.processing = false;
             throw new Error(response.errors[0].detail);
           }
         },
-        (error) => {
+        error: (error) => {
           this.ApiResponseStatus.processing = false;
           this.ApiResponseStatus.error = true;
           if (error.error.errors && error.error.errors.length > 0) {
@@ -119,6 +119,6 @@ export class AppSideRegisterComponent implements OnInit {
             this.ApiResponseStatus.message = error.error.errors[0].detail;
           }
         },
-      );
+      });
   }
 }

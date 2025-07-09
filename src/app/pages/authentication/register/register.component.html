@@ -38,7 +38,7 @@
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <i class='bx bx-user' matPrefix style="font-size: 22px; padding: 0 6px;"></i>
               <input matInput [formControl]="UserFormControls['user_name']" type="text"
-                     [(ngModel)]="UserInstance.name"/>
+                     [(ngModel)]="currentUser.name"/>
 
               <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
                 <strong>Required</strong>
@@ -49,7 +49,7 @@
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <i class='bx bx-envelope' matPrefix style="font-size: 22px; padding: 0 6px;"></i>
               <input matInput [formControl]="UserFormControls['user_email']" type="email"
-                     [(ngModel)]="UserInstance.email"/>
+                     [(ngModel)]="currentUser.email"/>
 
               <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
                 <strong>Required</strong>

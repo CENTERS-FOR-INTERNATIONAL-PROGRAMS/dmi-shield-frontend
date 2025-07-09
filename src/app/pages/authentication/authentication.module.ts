@@ -22,6 +22,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ConfirmOtpComponent } from './confirm-otp/confirm-otp.component';
+import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { ConfirmOtpComponent } from './confirm-otp/confirm-otp.component';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ConfirmOtpComponent,
+    ConfirmAccountComponent,
   ],
 })
 export class AuthenticationModule {}

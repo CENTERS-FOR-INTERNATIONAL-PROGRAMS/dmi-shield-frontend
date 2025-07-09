@@ -11,10 +11,10 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
 // Components
 import { UsersRoutes } from './users.routing';
 import { CompositeComponent } from './composite/composite.component';
-import { ModifyComponent } from './modify/modify.component';
+import { ModifyProfileComponent } from './modify_profile/modify_profile.component';
 import { ModifyPasswordComponent } from './modify_password/modify_password.component';
 import { ModifyRoleComponent } from './modify_role/modify_role.component';
-import { ViewComponent } from './view/view.component';
+import { UserProfileComponent } from './user_profile/user_profile.component';
 
 @NgModule({
   imports: [
@@ -27,10 +27,10 @@ import { ViewComponent } from './view/view.component';
   ],
   declarations: [
     CompositeComponent,
-    ModifyComponent,
+    ModifyProfileComponent,
     ModifyPasswordComponent,
     ModifyRoleComponent,
-    ViewComponent,
+    UserProfileComponent,
   ],
 })
 export class UsersModule {}

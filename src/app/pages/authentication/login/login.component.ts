@@ -5,11 +5,11 @@ import { CompositeFormControls } from 'src/app/models/CompositeFormControls.mode
 import { User } from 'src/app/models/User.model';
 import { AwarenessService } from 'src/app/services/awareness.service';
 import { CommunicationService } from 'src/app/services/communication.service';
-import { AuthService } from '../../../services/api/auth.service';
 import {
   ApiResponse,
   UserAuthenticationData,
 } from '../../../interfaces/IAuth.model';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,7 @@ export class AppSideLoginComponent implements OnInit {
     private router: Router,
     private awareness: AwarenessService,
     private communication: CommunicationService,
-    public authService: AuthService,
+    private apiService: ApiService,
   ) {}
 
   ApiResponseStatus: ApiResponse = {
@@ -91,7 +91,7 @@ export class AppSideLoginComponent implements OnInit {
       },
     };
 
-    this.authService
+    this.apiService
       .postRequest('auth/user/2fa/password/sign-in', this.userData)
       .subscribe(
         (response) => {
@@ -102,8 +102,8 @@ export class AppSideLoginComponent implements OnInit {
             response.data.attributes.user &&
             response.data.attributes.token
           ) {
-            response.data.attributes.user.token =
-              response.data.attributes.token;
+            this.awareness.saveToken(response.data.attributes.token);
+
             this.awareness.savePresSignUserData(response.data.attributes.user);
             this.ApiResponseStatus.processing = false;
             // this.router.navigate(['/home'])
