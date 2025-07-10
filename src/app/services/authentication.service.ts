@@ -57,8 +57,6 @@ export class AuthenticationService {
         user_confirmed = true;
       }
       user_authenticated = true;
-    } else {
-      // this.router.navigate(['/authentication/login']);
     }
 
     return [user_authenticated, user_confirmed];
@@ -129,13 +127,23 @@ export const AuthGuard: CanActivateFn = (
   state: RouterStateSnapshot,
 ): boolean => {
   const authService = inject(AuthenticationService);
+  const awarenessService = inject(AwarenessService);
+  const router = inject(Router);
   const [isAuthorized, isConfirmed] = authService.canActivate(next, state);
+  const token = awarenessService.getToken();
 
   const communicationService = inject(CommunicationService);
   if (!isAuthorized) {
-    communicationService.showToast(
-      'Sorry, you are not authorised to perform this action.',
-    );
+    if (token == '') {
+      communicationService.showToast(
+        'Sorry, you are not authorised to perform this action. Please sign in again',
+      );
+      router.navigate(['/authentication/login']);
+    } else {
+      communicationService.showToast(
+        'Sorry, you are not authorised to perform this action.',
+      );
+    }
   }
 
   if (isAuthorized && isConfirmed == false) {

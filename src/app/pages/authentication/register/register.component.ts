@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { CompositeFormControls } from '../../../models/CompositeFormControls.model';
-import { User } from '../../../models/User.model';
-import { CommunicationService } from '../../../services/communication.service';
 import { ApiResponse, UserRegisterData } from '../../../interfaces/IAuth.model';
 import { AwarenessService } from '../../../services/awareness.service';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -15,18 +18,36 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class AppSideRegisterComponent implements OnInit {
   hide: boolean = true;
-  currentUser: User = new User();
-  UserFormControls: CompositeFormControls = {};
+  registrationForm!: FormGroup;
   userData: UserRegisterData;
+  errors: string[] = [];
+
   constructor(
     private router: Router,
-    private communication: CommunicationService,
     private awareness: AwarenessService,
     private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
-    this.seedFormInstance();
+    this.registrationForm = new FormGroup(
+      {
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5),
+        ]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        confirm_password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+      },
+
+      this.passwordMatch('password', 'confirm_password'),
+    );
   }
 
   ApiResponseStatus: ApiResponse = {
@@ -36,61 +57,43 @@ export class AppSideRegisterComponent implements OnInit {
     message: '',
   };
 
-  seedFormInstance() {
-    this.UserFormControls['user_name'] = new FormControl('', [
-      Validators.required,
-    ]);
-    this.UserFormControls['user_email'] = new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]);
-    this.UserFormControls['user_password'] = new FormControl('', [
-      Validators.required,
-    ]);
-    this.UserFormControls['confirm_password'] = new FormControl('', [
-      Validators.required,
-      this.confirmPasswordValidator.bind(this),
-    ]);
-  }
+  passwordMatch(password: string, confirmPassword: string): ValidatorFn {
+    return (formGroup: AbstractControl): { [key: string]: any } | null => {
+      const passwordControl = formGroup.get(password);
+      const confirmPasswordControl = formGroup.get(confirmPassword);
 
-  confirmPasswordValidator(control: FormControl): { [s: string]: boolean } {
-    if (control.value !== this.UserFormControls['user_password'].value) {
-      return { passwordMismatch: true };
-    }
-    return null;
-  }
-
-  validateInstance(): boolean {
-    let is_valid = true;
-
-    // Validate required fields
-    Object.keys(this.UserFormControls).forEach((fc_key) => {
-      if (
-        this.UserFormControls[fc_key].hasError('required') ||
-        this.UserFormControls[fc_key].hasError('email')
-      ) {
-        is_valid = false;
+      if (!passwordControl || !confirmPasswordControl) {
+        return null;
       }
-    });
 
-    return is_valid;
-  }
+      if (
+        confirmPasswordControl.errors &&
+        !confirmPasswordControl.errors['passwordMismatch']
+      ) {
+        return null;
+      }
 
-  submitInstance(): void {
-    if (this.validateInstance()) {
-      this.registerUser();
-    }
+      if (passwordControl.value !== confirmPasswordControl.value) {
+        confirmPasswordControl.setErrors({ passwordMismatch: true });
+        return { passwordMismatch: true };
+      } else {
+        confirmPasswordControl.setErrors(null);
+        return null;
+      }
+    };
   }
 
   registerUser() {
+    if (!this.registrationForm.valid) return;
+
     this.ApiResponseStatus.processing = true;
 
     this.userData = {
       data: {
         attributes: {
-          email: this.UserFormControls['user_email'].value,
-          name: this.UserFormControls['user_name'].value,
-          password: this.UserFormControls['user_password'].value,
+          email: this.registrationForm.get('email').value,
+          name: this.registrationForm.get('name').value,
+          password: this.registrationForm.get('password').value,
         },
         type: 'User Authentication',
       },
@@ -111,12 +114,24 @@ export class AppSideRegisterComponent implements OnInit {
             throw new Error(response.errors[0].detail);
           }
         },
-        error: (error) => {
+        error: ({ error }) => {
           this.ApiResponseStatus.processing = false;
           this.ApiResponseStatus.error = true;
-          if (error.error.errors && error.error.errors.length > 0) {
+          if (error.errors && error.errors.length > 0) {
+            let error_message = error.errors[0].detail;
+
+            if (error.errors.length > 1) {
+              [...error.errors.slice(1)].forEach((e) => {
+                let error_detail = e.detail;
+                let error_path = e.source?.pointer?.split('/');
+                let error_field = error_path[error_path.length - 1];
+
+                this.errors.push(`${error_field} ${error_detail}`);
+              });
+            }
+
             this.ApiResponseStatus.error = true;
-            this.ApiResponseStatus.message = error.error.errors[0].detail;
+            this.ApiResponseStatus.message = error_message;
           }
         },
       });
