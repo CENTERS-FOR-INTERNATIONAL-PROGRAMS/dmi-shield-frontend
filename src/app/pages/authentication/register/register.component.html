@@ -29,63 +29,83 @@
         </mat-card-header>
 
         <mat-card-content>
-          <div class="text-center bubble" *ngIf="this.ApiResponseStatus.error" style="margin: 2rem">
+          <div class="text-left bubble" *ngIf="this.ApiResponseStatus.error" style="padding: 1.2rem">
             {{ this.ApiResponseStatus.message }}
+
+            <ul style="margin-top: 8px; padding-left: 16px;" *ngIf="errors.length > 0">
+
+              <li *ngFor="let error of errors">{{error}}</li>
+            </ul>
           </div>
 
-          <form id="form_user_authenticate" (ngSubmit)="submitInstance()" class="m-t-30">
+          <form [formGroup]="registrationForm" (ngSubmit)="registerUser()" class="m-t-30">
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <i class='bx bx-user' matPrefix style="font-size: 22px; padding: 0 6px;"></i>
-              <input matInput [formControl]="UserFormControls['user_name']" type="text"
-                     [(ngModel)]="currentUser.name"/>
+              <input matInput formControlName="name" type="text"
+                     />
 
-              <mat-error *ngIf="UserFormControls['user_name'].hasError('required')">
+              <mat-error *ngIf="registrationForm.get('name').hasError('required')">
                 <strong>Required</strong>
+              </mat-error>
+
+              <mat-error *ngIf="registrationForm.get('name').hasError('minlength')">
+                <strong>Name must be at least {{ registrationForm.get('name').errors['minlength'].requiredLength }} characters long.</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">User Email</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <i class='bx bx-envelope' matPrefix style="font-size: 22px; padding: 0 6px;"></i>
-              <input matInput [formControl]="UserFormControls['user_email']" type="email"
-                     [(ngModel)]="currentUser.email"/>
+              <input matInput formControlName="email" type="email"
+                     />
 
-              <mat-error *ngIf="UserFormControls['user_email'].hasError('required')">
+              <mat-error *ngIf="registrationForm.get('email').hasError('required')">
                 <strong>Required</strong>
+              </mat-error>
+
+              <mat-error *ngIf="registrationForm.get('email').hasError('email')">
+                <strong>Invalid Email Address</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <i class='bx bx-lock' matPrefix style="font-size: 24px; padding: 0 4px;"></i>
-              <input matInput [formControl]="UserFormControls['user_password']"
+              <input matInput formControlName="password"
                      [type]="hide ? 'password' : 'text'"/>
               <img matSuffix (click)="hide = !hide"
                    src="{{hide ? 'assets/images/icons/icon-eye-invisible--black.png' : 'assets/images/icons/icon-eye-visible--black.png'}}"
                    alt="" class="view-icon--image"/>
 
-              <mat-error *ngIf="UserFormControls['user_password'].hasError('required')">
+              <mat-error *ngIf="registrationForm.get('password').hasError('required')">
                 <strong>Required</strong>
+              </mat-error>
+
+               <mat-error *ngIf="registrationForm.get('password').hasError('minlength')">
+                <strong>Password must be at least {{ registrationForm.get('password').errors['minlength'].requiredLength }} characters long.</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Confirm Password</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <i class='bx bx-lock' matPrefix style="font-size: 24px; padding: 0 4px;"></i>
-              <input matInput [formControl]="UserFormControls['confirm_password']" [type]="hide ? 'password' : 'text'"/>
-              <mat-error *ngIf="UserFormControls['confirm_password'].hasError('required')">
+              <input matInput formControlName="confirm_password" [type]="hide ? 'password' : 'text'"/>
+              <mat-error *ngIf="registrationForm.get('confirm_password').hasError('required')">
                 <strong>Required</strong>
               </mat-error>
 
-              <mat-error *ngIf="UserFormControls['confirm_password'].hasError('passwordMismatch')">
+              <mat-error *ngIf="registrationForm.get('confirm_password').hasError('minlength')">
+                <strong>Password must be at least {{ registrationForm.get('confirm_password').errors['minlength'].requiredLength }} characters long.</strong>
+              </mat-error>
+              <mat-error *ngIf="registrationForm.get('confirm_password').hasError('passwordMismatch')">
                 <strong>Passwords do not match</strong>
               </mat-error>
             </mat-form-field>
 
             <div class="auth-bottom">
 
-              <a (click)="submitInstance()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
+              <a (click)="registerUser()" style="text-decoration: none;" class="auth-button m-t-16 m-b-16">
                 Sign Up
               </a>
             </div>
@@ -97,7 +117,7 @@
           <p></p>
         </div>
         <mat-card-header>
-          <mat-card-title class="card-topic text-center with-red-line" style="">Already have an account?
+          <mat-card-title class="card-topic text-center with-red-line">Already have an account?
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -115,7 +135,7 @@
             </button>
           </div>
           <div>
-            <mat-card-title class="card-topic text-center with-red-line" style="">Contact Us</mat-card-title>
+            <mat-card-title class="card-topic text-center with-red-line">Contact Us</mat-card-title>
             <div class="support-content">
               <p>Fixed telephone: 020-000000</p>
               <p> Mobile number: 0780 000000</p>

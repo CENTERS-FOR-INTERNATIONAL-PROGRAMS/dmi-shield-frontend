@@ -58,7 +58,7 @@ export class LoggingInterceptor implements HttpInterceptor {
               this.awareness.removeUserData();
 
               this.communication.showToast(
-                'Session Expired. Kindly sign in again',
+                'Session Expired. Please sign in again',
               );
 
               // Navigate to login page
@@ -68,7 +68,7 @@ export class LoggingInterceptor implements HttpInterceptor {
             this.awareness.removeUserData();
 
             this.communication.showToast(
-              'Session Expired. Kindly sign in again',
+              'Session Expired. Please sign in again',
             );
 
             // Navigate to login page
