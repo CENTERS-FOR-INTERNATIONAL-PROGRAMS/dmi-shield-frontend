@@ -103,10 +103,8 @@ export class AppSideLoginComponent implements OnInit {
             response.data.attributes.token
           ) {
             this.awareness.saveToken(response.data.attributes.token);
-
             this.awareness.savePresSignUserData(response.data.attributes.user);
             this.ApiResponseStatus.processing = false;
-            // this.router.navigate(['/home'])
             this.router.navigate(['/authentication/confirm-otp']);
           } else {
             this.ApiResponseStatus.processing = false;
